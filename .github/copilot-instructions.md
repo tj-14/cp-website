@@ -79,7 +79,7 @@ cp-website/
 ├── web/                      # HTML website
 │   ├── index.html           # Homepage with table of contents
 │   ├── style.css            # Global styles
-│   ├── *.html               # Content pages (30+ pages)
+│   ├── *.html               # Content pages (29 pages)
 │   └── HTML_IMPROVEMENTS.md # Documentation of HTML structure
 ├── GEMINI.md                 # Project requirements and guidelines
 ├── README.md                 # Project overview
