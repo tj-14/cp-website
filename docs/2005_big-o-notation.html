@@ -147,25 +147,14 @@
                 </ul>
                 <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">f</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">f</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
                 <ul>
-                  <li>
-                    <p>การเรียกฟังก์ชัน</p>
-                    <p>จะเรียกฟังก์ชันทั้งหมด</p>
-                    <p>ครั้ง และแต่ละครั้งจะใช้ time complexity</p>
-                  </li>
-                  <li>
-                    <p>ดังนั้น time complexity รวมคือ</p>
-                  </li>
+                  <li>การเรียกฟังก์ชัน $f(n)$ จะเรียกฟังก์ชันทั้งหมด $n$ ครั้ง และแต่ละครั้งจะใช้ time complexity $O(1)$</li>
+                  <li>ดังนั้น time complexity รวมคือ $O(n) \cdot O(1) = O(n)$</li>
                   <li>อีกตัวอย่าง เช่น</li>
                 </ul>
                 <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">g</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
                 <ul>
-                  <li>
-                    <p>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี</p>
-                  </li>
-                  <li>
-                    <p>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก</p>
-                    <p>ด้วยพารามิเตอร์</p>
-                  </li>
+                  <li>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี $n=1$</li>
+                  <li>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก $g$ ด้วยพารามิเตอร์ $n$</li>
                   <li>ตารางด้านล่างแสดงจำนวนการเรียก function ที่เกิดขึ้น</li>
                 </ul>
                 <table>
@@ -177,151 +166,97 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td></td>
+                      <td>$g(n)$</td>
                       <td>1</td>
                     </tr>
                     <tr>
-                      <td></td>
+                      <td>$g(n-1)$</td>
                       <td>2</td>
                     </tr>
                     <tr>
-                      <td></td>
+                      <td>$g(n-2)$</td>
                       <td>4</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$\cdots$</td>
+                      <td>$\cdots$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$g(1)$</td>
+                      <td>$2^{n-1}$</td>
                     </tr>
                   </tbody>
                 </table>
                 <ul>
-                  <li>
-                    <p>จากตารางนี้ time complexity คือ</p>
-                  </li>
+                  <li>จากตารางนี้ time complexity คือ $1+2+4+\cdots+2^{n-1} = 2^n-1 = O(2^n)$</li>
                 </ul>
                 <h4>Complexity classes</h4>
                 <ul>
                   <li>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</li>
-                  <li>
-                    <p>constant-time algorithm</p>
+                  <li>$O(1)$ constant-time algorithm
                     <ul>
                       <li>เวลาที่ใช้ในการรันจะเป็น constant ซึ่งไม่สนใจขนาดของ input</li>
                       <li>ยกตัวอย่างเช่นอัลกอริทึมที่มีสูตรคำนวณคำตอบโดยไม่ต้องทำซ้ำใด ๆ</li>
                     </ul>
                   </li>
-                  <li>
-                    <p>logarithmic algorithm</p>
+                  <li>$O(\log n)$ logarithmic algorithm
                     <ul>
                       <li>อัลกอริทึมแบบ <strong>logarithmic</strong> ส่วนใหญ่จะหารครึ่งขนาดของ input ที่จำเป็นต้องพิจารณาในแต่ละขั้นตอน</li>
-                      <li>
-                        <p>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก</p>
-                        <p>เท่ากับจำนวนครั้งที่หาร</p>
-                        <p>ด้วย 2 จนกว่าจะเป็น 1</p>
-                      </li>
+                      <li>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก $\log_2 n$ เท่ากับจำนวนครั้งที่หาร $n$ ด้วย 2 จนกว่าจะเป็น 1</li>
                     </ul>
                   </li>
-                  <li>
-                    <p>square root algorithm</p>
+                  <li>$O(\sqrt{n})$ square root algorithm
                     <ul>
-                      <li>
-                        <p>ช้ากว่า</p>
-                        <p>แต่เร็วกว่า</p>
-                      </li>
-                      <li>
-                        <p>เป็นกรณีที่หารขนาด input</p>
-                        <p>ด้วย</p>
-                      </li>
+                      <li>ช้ากว่า $O(\log n)$ แต่เร็วกว่า $O(n)$</li>
+                      <li>เป็นกรณีที่หารขนาด input $n$ ด้วย $\sqrt{n} = n/\sqrt{n}$</li>
                     </ul>
                   </li>
-                  <li>
-                    <p>linear algorithm</p>
+                  <li>$O(n)$ linear algorithm
                     <ul>
                       <li>อัลกอริทึมแบบ <strong>linear</strong> จะวนใน input เป็นจำนวนครั้งที่แน่นอน</li>
                       <li>ส่วนใหญ่แล้วจะเป็น time complexity ที่ค่อนข้างดี เนื่องจากปกติแล้วจะจำเป็นต้องอ่านค่าทุกค่าใน input</li>
                     </ul>
                   </li>
-                  <li>
+                  <li>$O(n \log n)$
                     <ul>
                       <li>ส่วนใหญ่จะเกิดจากการเรียงข้อมูล</li>
-                      <li>
-                        <p>หรือ data structure ที่ใช้</p>
-                        <p>ในแต่ละ operation</p>
-                      </li>
+                      <li>หรือ data structure ที่ใช้ $O(\log n)$ ในแต่ละ operation</li>
                     </ul>
                   </li>
-                  <li>
-                    <p>quadratic algorithm</p>
+                  <li>$O(n^2)$ quadratic algorithm
                     <ul>
                       <li>ส่วนใหญ่ใช้ลูปสองชั้น</li>
                       <li>เช่นการพิจารณาทุกคู่ของ input</li>
                     </ul>
                   </li>
-                  <li>
-                    <p>cubic algorithm</p>
+                  <li>$O(n^3)$ cubic algorithm
                     <ul>
                       <li>ลูปสามชั้น</li>
                     </ul>
                   </li>
-                  <li>
+                  <li>$O(2^n)$
                     <ul>
                       <li>การพิจารณาทุก subsets ของ input</li>
-                      <li>
-                        <p>ตัวอย่างเช่น subsets ของ</p>
-                        <p>คือ</p>
-                      </li>
+                      <li>ตัวอย่างเช่น subsets ของ $\{1,2,3\}$ คือ $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$, $\{1,3\}$, $\{2,3\}$ และ $\{1,2,3\}$.</li>
                     </ul>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>และ</p>
-                    <p>.</p>
                   </li>
-                  <li>
+                  <li>$O(n!)$
                     <ul>
                       <li>การพิจารณาทุกการจัดเรียงของ input</li>
-                      <li>
-                        <p>ตัวอย่างเช่นการจัดเรียงของ</p>
-                        <p>คือ</p>
-                      </li>
+                      <li>ตัวอย่างเช่นการจัดเรียงของ $\{1,2,3\}$ คือ $(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$, $(3,1,2)$ and $(3,2,1)$.</li>
                     </ul>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>,</p>
-                    <p>and</p>
-                    <p>.</p>
                   </li>
                 </ul>
                 <h4>การประเมินประสิทธิภาพ</h4>
                 <ul>
                   <li>จากการคำนวณ time complexity ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement ได้</li>
-                  <li>
-                    <p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้</p>
-                    <p>(พันล้าน) คำสั่งต่อหนึ่งวินาที</p>
-                  </li>
-                  <li>
-                    <p>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ</p>
-                  </li>
-                  <li>
-                    <p>ถ้า time complexity เป็น</p>
-                    <p>อัลกอริทึมนี้จะรันทั้งหมด</p>
-                    <p>คำสั่ง</p>
-                  </li>
+                  <li>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ $1,000,000,000$ (พันล้าน) คำสั่งต่อหนึ่งวินาที</li>
+                  <li>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ $n=10^5$</li>
+                  <li>ถ้า time complexity เป็น $O(n^2)$ อัลกอริทึมนี้จะรันทั้งหมด $(10^5)^2=10^{10}$ คำสั่ง</li>
                   <li>ซึ่งโดยคร่าวใช้เวลาประมาณสิบวินาที ซึ่งจะช้าเกินไปสำหรับโจทย์ข้อนี้</li>
                   <li>ในอีกทางหนึ่ง หากว่าเรารู้ขนาด input แล้ว เราสามารถเดา time complexity ของอัลกอริทึมที่ใช้แก้ปัญหาได้เช่นกัน</li>
                   <li>ตารางต่อไปนี้บอกการประเมินที่พบบ่อยในกรณีที่ให้เวลาในการคำนวณหนึ่งวินาที</li>
-                  <li>
-                    <p>ยกตัวอย่างเช่น หากขนาดของ input เป็น</p>
-                    <p>time complexity ที่ต้องการจากอัลกอริทึมก็คือ</p>
-                    <p>หรือ</p>
-                  </li>
+                  <li>ยกตัวอย่างเช่น หากขนาดของ input เป็น $n=10^5$ time complexity ที่ต้องการจากอัลกอริทึมก็คือ $O(n)$ หรือ $O(n \log n)$</li>
                   <li>ด้วยความรู้นี้จะทำให้คิดอัลกอริทึมได้ง่ายขี้นจากการตัดอัลกอริทึมที่ใช้เวลานานออก</li>
                 </ul>
                 <table>
@@ -333,46 +268,35 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$n \leq 10$</td>
+                      <td>$O(n!)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$n \leq 20$</td>
+                      <td>$O(2^n)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$n \leq 500$</td>
+                      <td>$O(n^3)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$n \leq 5000$</td>
+                      <td>$O(n^2)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td>
-                        <p>or</p>
-                      </td>
+                      <td>$n \leq 10^6$</td>
+                      <td>$O(n \log n)$ or $O(n)$</td>
                     </tr>
                     <tr>
-                      <td>
-                        <p>is large</p>
-                      </td>
-                      <td>
-                        <p>or</p>
-                      </td>
+                      <td>$n$ is large</td>
+                      <td>$O(1)$ or $O(\log n)$</td>
                     </tr>
                   </tbody>
                 </table>
                 <h4>ตัวแปร constant</h4>
                 <ul>
                   <li>อย่างไรก็ตาม ควรจำว่า time complexity นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant factors</strong></li>
-                  <li>
-                    <p>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา</p>
-                    <p>อาจมีการคำนวณทั้งหมด</p>
-                    <p>หรือ</p>
-                    <p>คำสั่ง</p>
-                  </li>
+                  <li>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา $O(n)$ อาจมีการคำนวณทั้งหมด $n/2$ หรือ $5n$ คำสั่ง</li>
                   <li>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</li>
                 </ul>
                 <h4>space complexity</h4>
