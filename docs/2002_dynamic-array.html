@@ -7,17 +7,123 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Dynamic Array</h3>
+                <h4>คำอธิบาย</h4>
+                <ul>
+                  <li>dynamic array เป็น array ที่สามารถยืดหดขนาดได้</li>
+                  <li>ใน STL จะมี <strong>vector</strong> เป็น dynamic array ให้ใช้</li>
+                </ul>
+                <h4>แนวทาง</h4>
+                <ul>
+                  <li>เมื่อต้องการเพิ่มข้อมูลลงในอาเรย์ แต่อาเรย์นั้นเต็มแล้ว ให้สร้างฟังก์ชันโดย</li>
+                  <li>ฟังก์ชันนั้นสร้างอาเรย์ขนาดสองเท่าจากเดิม และคัดลอกข้อมูลจากอาเรย์เดิมมาใส่</li>
+                </ul>
+                <h4>การเพิ่มข้อมูล</h4>
+                <ul>
+                  <li>หากมีการขยายขนาดอาเรย์และคัดลอกข้อมูลจะทำให้ใช้เวลา O(n)</li>
+                  <li>แต่กรณีนี้เกิดขึ้นเมื่ออาเรย์เต็มเท่านั้น</li>
+                  <li>ดังนั้นในกรณีส่วนมากยังใช้เวลาเป็น O(1) อยู่ดี</li>
+                  <li>ด้วย amortized analysis สามารถถัวเฉลี่ยการเพิ่มข้อมูลเป็น O(1) ได้</li>
+                </ul>
+                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png">https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png</a></p>
+                <h4>Delete Element</h4>
+                <ul>
+                  <li>การลบข้อมูลสามารถทำได้ตามปกติเหมือนอาเรย์ทั่วไป</li>
+                  <li>ในทางทฤษฎี สามารถลดขนาดอาเรย์ลงได้ แต่ไม่จำเป็นใน competitive programming</li>
+                </ul>
+                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png">https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png</a></p>
+                <h4>ตัวอย่าง implementation แบบไม่ใช้ vector</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> cnt <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><span style="color: #d73948">int</span> sz <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;<br><span style="color: #d73948">int</span> <span style="color: #d73948">*</span>A <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[sz];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">add</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">if</span> (cnt <span style="color: #d73948">==</span> sz) {<br>    sz <span style="color: #d73948">*=</span> <span style="color: #b60157">2</span>;<br>    <span style="color: #d73948">int</span> <span style="color: #d73948">*</span>tmp <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[sz];<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>      tmp[i] <span style="color: #d73948">=</span> A[i];<br>    }<br>    <span style="color: #4b69c6">free</span>(A);<br>    A <span style="color: #d73948">=</span> tmp;<br>  }<br>  A[cnt<span style="color: #d73948">++</span>] <span style="color: #d73948">=</span> x;<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">remove</span>() { cnt<span style="color: #d73948">--</span>; }<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">removeAt</span>(<span style="color: #d73948">int</span> j) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> j; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>    A[i] <span style="color: #d73948">=</span> A[i <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>];<br>  }<br>  cnt<span style="color: #d73948">--</span>;<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">print</span>() {<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">sz = </span><span style="color: #b60157">%d</span><span style="color: #198810">, cnt = </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\\</span><span style="color: #198810">n</span><span style="color: #198810">"</span>, sz, cnt);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, A[i]);<br>  }<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\\</span><span style="color: #198810">n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">5</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">6</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">remove</span>();<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">removeAt</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">print</span>();<br>}</code></pre>
+            <div class="page-nav">
+                <a href="2001_linked-list.html" class="prev">Linked List</a>
+                <a href="2003_binary-search-tree.html" class="next">Binary Search Tree</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Dynamic Array</h3>
+                <h4>คำอธิบาย</h4>
+                <ul>
+                  <li>dynamic array เป็น array ที่สามารถยืดหดขนาดได้</li>
+                  <li>ใน STL จะมี <strong>vector</strong> เป็น dynamic array ให้ใช้</li>
+                </ul>
+                <h4>แนวทาง</h4>
+                <ul>
+                  <li>เมื่อต้องการเพิ่มข้อมูลลงในอาเรย์ แต่อาเรย์นั้นเต็มแล้ว ให้สร้างฟังก์ชันโดย</li>
+                  <li>ฟังก์ชันนั้นสร้างอาเรย์ขนาดสองเท่าจากเดิม และคัดลอกข้อมูลจากอาเรย์เดิมมาใส่</li>
+                </ul>
+                <h4>การเพิ่มข้อมูล</h4>
+                <ul>
+                  <li>หากมีการขยายขนาดอาเรย์และคัดลอกข้อมูลจะทำให้ใช้เวลา O(n)</li>
+                  <li>แต่กรณีนี้เกิดขึ้นเมื่ออาเรย์เต็มเท่านั้น</li>
+                  <li>ดังนั้นในกรณีส่วนมากยังใช้เวลาเป็น O(1) อยู่ดี</li>
+                  <li>ด้วย amortized analysis สามารถถัวเฉลี่ยการเพิ่มข้อมูลเป็น O(1) ได้</li>
+                </ul>
+                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png">https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png</a></p>
+                <h4>Delete Element</h4>
+                <ul>
+                  <li>การลบข้อมูลสามารถทำได้ตามปกติเหมือนอาเรย์ทั่วไป</li>
+                  <li>ในทางทฤษฎี สามารถลดขนาดอาเรย์ลงได้ แต่ไม่จำเป็นใน competitive programming</li>
+                </ul>
+                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png">https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png</a></p>
+                <h4>ตัวอย่าง implementation แบบไม่ใช้ vector</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> cnt <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><span style="color: #d73948">int</span> sz <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;<br><span style="color: #d73948">int</span> <span style="color: #d73948">*</span>A <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[sz];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">add</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">if</span> (cnt <span style="color: #d73948">==</span> sz) {<br>    sz <span style="color: #d73948">*=</span> <span style="color: #b60157">2</span>;<br>    <span style="color: #d73948">int</span> <span style="color: #d73948">*</span>tmp <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[sz];<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>      tmp[i] <span style="color: #d73948">=</span> A[i];<br>    }<br>    <span style="color: #4b69c6">free</span>(A);<br>    A <span style="color: #d73948">=</span> tmp;<br>  }<br>  A[cnt<span style="color: #d73948">++</span>] <span style="color: #d73948">=</span> x;<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">remove</span>() { cnt<span style="color: #d73948">--</span>; }<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">removeAt</span>(<span style="color: #d73948">int</span> j) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> j; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>    A[i] <span style="color: #d73948">=</span> A[i <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>];<br>  }<br>  cnt<span style="color: #d73948">--</span>;<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">print</span>() {<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">sz = </span><span style="color: #b60157">%d</span><span style="color: #198810">, cnt = </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\\</span><span style="color: #198810">n</span><span style="color: #198810">"</span>, sz, cnt);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, A[i]);<br>  }<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\\</span><span style="color: #198810">n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">5</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">6</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">remove</span>();<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">removeAt</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">print</span>();<br>}</code></pre>
+            <div class="page-nav">
+                <a href="2001_linked-list.html" class="prev">Linked List</a>
+                <a href="2003_binary-search-tree.html" class="next">Binary Search Tree</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

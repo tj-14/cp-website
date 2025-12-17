@@ -7,17 +7,83 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Topological sorting (implementation)</h3>
+                <p>DAG - Directed Acyclic Graph</p>
+                <p><a href="https://cp-algorithms.com/graph/topological-sort.html">https://cp-algorithms.com/graph/topological-sort.html</a></p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> n; <span style="color: #74747c">//</span><span style="color: #74747c"> number of vertices</span><br>vector&lt;vector&lt;<span style="color: #d73948">int</span>>> adj; <span style="color: #74747c">//</span><span style="color: #74747c"> adjacency list of graph</span><br>vector&lt;<span style="color: #d73948">bool</span>> visited;<br>vector&lt;<span style="color: #d73948">int</span>> ans;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> v) {<br>    visited[v] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> u <span style="color: #d73948">:</span> adj[v]) {<br>        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[u])<br>            <span style="color: #4b69c6">dfs</span>(u);<br>    }<br>    ans.<span style="color: #4b69c6">push_back</span>(v);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">topological_sort</span>() {<br>    visited.<span style="color: #4b69c6">assign</span>(n, <span style="color: #d73948">false</span>);<br>    ans.<span style="color: #4b69c6">clear</span>();<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>i) {<br>        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[i])<br>            <span style="color: #4b69c6">dfs</span>(i);<br>    }<br>    <span style="color: #4b69c6">reverse</span>(ans.<span style="color: #4b69c6">begin</span>(), ans.<span style="color: #4b69c6">end</span>());<br>}</code></pre>
+                <ul>
+                  <li><a href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></li>
+                </ul>
+            <div class="page-nav">
+                <a href="3100_graph-algorithm.html" class="prev">Graph Algorithm</a>
+                <a href="3102_path-circuit.html" class="next">Path and Circuit</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Topological sorting (implementation)</h3>
+                <p>DAG - Directed Acyclic Graph</p>
+                <p><a href="https://cp-algorithms.com/graph/topological-sort.html">https://cp-algorithms.com/graph/topological-sort.html</a></p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> n; <span style="color: #74747c">//</span><span style="color: #74747c"> number of vertices</span><br>vector&lt;vector&lt;<span style="color: #d73948">int</span>>> adj; <span style="color: #74747c">//</span><span style="color: #74747c"> adjacency list of graph</span><br>vector&lt;<span style="color: #d73948">bool</span>> visited;<br>vector&lt;<span style="color: #d73948">int</span>> ans;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> v) {<br>    visited[v] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> u <span style="color: #d73948">:</span> adj[v]) {<br>        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[u])<br>            <span style="color: #4b69c6">dfs</span>(u);<br>    }<br>    ans.<span style="color: #4b69c6">push_back</span>(v);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">topological_sort</span>() {<br>    visited.<span style="color: #4b69c6">assign</span>(n, <span style="color: #d73948">false</span>);<br>    ans.<span style="color: #4b69c6">clear</span>();<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>i) {<br>        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[i])<br>            <span style="color: #4b69c6">dfs</span>(i);<br>    }<br>    <span style="color: #4b69c6">reverse</span>(ans.<span style="color: #4b69c6">begin</span>(), ans.<span style="color: #4b69c6">end</span>());<br>}</code></pre>
+                <ul>
+                  <li><a href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></li>
+                </ul>
+            <div class="page-nav">
+                <a href="3100_graph-algorithm.html" class="prev">Graph Algorithm</a>
+                <a href="3102_path-circuit.html" class="next">Path and Circuit</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

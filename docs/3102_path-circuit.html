@@ -7,17 +7,127 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Paths and circuits</h3>
+                <h4>Eulerian</h4>
+                <h5>Path</h5>
+                <p>เป็น path ที่ท่องไปในเส้นเชื่อมทุกเส้นเพียงหนึ่งครั้งเท่านั้น</p>
+                <h5>Circuit</h5>
+                <p>เป็น Eulerian path ที่เริ่มและจบที่โหนดเดียวกัน</p>
+                <h5>Existence</h5>
+                <p>เงื่อนไขที่จะมี Eulerian path สำหรับ</p>
+                <ul>
+                  <li>
+                    <p>กราฟไม่มีทิศทาง</p>
+                    <ul>
+                      <li>ดีกรีของทุกโหนดเป็นจำนวนคู่ หรือ</li>
+                      <li>ดีกรีของสองโหนดเป็นจำนวนคี่ (🧠 เพราะอะไร?)</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>กราฟมีทิศทาง</p>
+                    <ul>
+                      <li>ในแต่ละโหนด ดีกรีเข้าจะต้องเท่ากับดีกรีออก หรือ</li>
+                      <li>มีโหนดหนึ่งมีดีกรีเข้ามากกว่าดีกรีออกเท่ากับหนึ่ง อีกโหนดหนึ่งมีดีกรีออกมากกว่าดีกรีเข้าเท่ากับหนึ่ง และโหนดที่เหลือมีดีกรีเข้่าเท่ากับดีกรีออก</li>
+                    </ul>
+                  </li>
+                </ul>
+                <h5>Hierholzer’s algorithm</h5>
+                <h4>Hamiltonian</h4>
+                <p>เป็น path ที่ท่องไปในทุกโหนดเพียงหนึ่งครั้งเท่านั้น</p>
+                <h5>Existence</h5>
+                <p>ไม่มี efficient method เนื่องจากยังเป็นปัญหาประเภท NP-hard</p>
+            <div class="page-nav">
+                <a href="3101_topo-sort.html" class="prev">Topological Sort</a>
+                <a href="4000_dp.html" class="next">Dynamic Programming Advanced</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Paths and circuits</h3>
+                <h4>Eulerian</h4>
+                <h5>Path</h5>
+                <p>เป็น path ที่ท่องไปในเส้นเชื่อมทุกเส้นเพียงหนึ่งครั้งเท่านั้น</p>
+                <h5>Circuit</h5>
+                <p>เป็น Eulerian path ที่เริ่มและจบที่โหนดเดียวกัน</p>
+                <h5>Existence</h5>
+                <p>เงื่อนไขที่จะมี Eulerian path สำหรับ</p>
+                <ul>
+                  <li>
+                    <p>กราฟไม่มีทิศทาง</p>
+                    <ul>
+                      <li>ดีกรีของทุกโหนดเป็นจำนวนคู่ หรือ</li>
+                      <li>ดีกรีของสองโหนดเป็นจำนวนคี่ (🧠 เพราะอะไร?)</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>กราฟมีทิศทาง</p>
+                    <ul>
+                      <li>ในแต่ละโหนด ดีกรีเข้าจะต้องเท่ากับดีกรีออก หรือ</li>
+                      <li>มีโหนดหนึ่งมีดีกรีเข้ามากกว่าดีกรีออกเท่ากับหนึ่ง อีกโหนดหนึ่งมีดีกรีออกมากกว่าดีกรีเข้าเท่ากับหนึ่ง และโหนดที่เหลือมีดีกรีเข้่าเท่ากับดีกรีออก</li>
+                    </ul>
+                  </li>
+                </ul>
+                <h5>Hierholzer’s algorithm</h5>
+                <h4>Hamiltonian</h4>
+                <p>เป็น path ที่ท่องไปในทุกโหนดเพียงหนึ่งครั้งเท่านั้น</p>
+                <h5>Existence</h5>
+                <p>ไม่มี efficient method เนื่องจากยังเป็นปัญหาประเภท NP-hard</p>
+            <div class="page-nav">
+                <a href="3101_topo-sort.html" class="prev">Topological Sort</a>
+                <a href="4000_dp.html" class="next">Dynamic Programming Advanced</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

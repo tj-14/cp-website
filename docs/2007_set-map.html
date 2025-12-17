@@ -7,17 +7,103 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Set &amp; Map</h3>
+                <h4>คำอธิบาย</h4>
+                <p><code>set</code> และ <code>map</code> ใน STL นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ delete เพียง $O(\log n)$</p>
+                <h4>ข้อแตกต่าง</h4>
+                <ul>
+                  <li><code>set</code> ใช้เก็บ keys แต่ <code>map</code> ใช้เก็บคู่ key-value</li>
+                  <li>ตัวอย่างเช่น หากเราต้องการแสดงค่าสมาชิกที่แตกต่างกันเท่านั้น เราสามารถใช้ set ได้เนื่องจากต้องการเก็บแค่ key</li>
+                  <li>แต่ถ้าหากเราต้องการเก็บความถี่ของแต่ละสมาชิกด้วย เราควรใช้ map เพื่อเก็บ key ตามสมาชิกโดย value เป็นความถี่</li>
+                </ul>
+                <h4>Set example</h4>
+                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> CPP program to demonstrate working of set</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span> <br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std; <br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() { <br>  set&lt;<span style="color: #d73948">int</span>> s1; <br>  <span style="color: #74747c">//</span><span style="color: #74747c"> self-balancing binary search tree</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> binary search tree ที่มีความสูงไม่เกิน O(log n) เสมอ</span><br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">2</span>); <span style="color: #74747c">//</span><span style="color: #74747c"> log(n)</span><br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">10</span>);<br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">5</span>); <br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">3</span>); <br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">6</span>); <br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">Elements in set:</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>; <br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> it <span style="color: #d73948">:</span> s1) <br>    cout <span style="color: #d73948">&lt;&lt;</span> it <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Sorted </span><br><br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>; <br>}</code></pre>
+                <p>output</p>
+                <pre><code>Elements in set:<br>2 3 5 6</code></pre>
+                <h4>Map example</h4>
+                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> CPP program to demonstrate working of map</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  map&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>> m;<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> คล้ายๆ dictionary ในภาษา python</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> โครงสร้างเดียวกับ set ก็คือ self-balancing binary search tree</span><br><br>  m[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Insertion by indexing</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Insertion of pair by make_pair</span><br>  m.<span style="color: #4b69c6">insert</span>(<span style="color: #4b69c6">make_pair</span>(<span style="color: #b60157">8</span>, <span style="color: #b60157">5</span>));<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">Elements in m:</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> it <span style="color: #d73948">:</span> m)<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">[ </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.first <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">, </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.second <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">]</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Sorted</span><br><br>  map&lt;string, <span style="color: #d73948">int</span>> m2;<br>  m2[<span style="color: #198810">"</span><span style="color: #198810">tt</span><span style="color: #198810">"</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">5</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> log(n)</span><br>  m2[<span style="color: #198810">"</span><span style="color: #198810">aw</span><span style="color: #198810">"</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">2399</span>;<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">Elements in m2:</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> it <span style="color: #d73948">:</span> m2)<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">[ </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.first <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">, </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.second <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">]</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Sorted</span><br><br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>output</p>
+                <pre><code>Elements in m:<br>[ 1, 2]<br>[ 8, 5]<br>Elements in m2:<br>[ aw, 2399]<br>[ tt, 5]</code></pre>
+            <div class="page-nav">
+                <a href="2006_priority-queue.html" class="prev">Priority Queue</a>
+                <a href="2008_heap.html" class="next">Heap</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Set &amp; Map</h3>
+                <h4>คำอธิบาย</h4>
+                <p><code>set</code> และ <code>map</code> ใน STL นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ delete เพียง $O(\log n)$</p>
+                <h4>ข้อแตกต่าง</h4>
+                <ul>
+                  <li><code>set</code> ใช้เก็บ keys แต่ <code>map</code> ใช้เก็บคู่ key-value</li>
+                  <li>ตัวอย่างเช่น หากเราต้องการแสดงค่าสมาชิกที่แตกต่างกันเท่านั้น เราสามารถใช้ set ได้เนื่องจากต้องการเก็บแค่ key</li>
+                  <li>แต่ถ้าหากเราต้องการเก็บความถี่ของแต่ละสมาชิกด้วย เราควรใช้ map เพื่อเก็บ key ตามสมาชิกโดย value เป็นความถี่</li>
+                </ul>
+                <h4>Set example</h4>
+                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> CPP program to demonstrate working of set</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span> <br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std; <br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() { <br>  set&lt;<span style="color: #d73948">int</span>> s1; <br>  <span style="color: #74747c">//</span><span style="color: #74747c"> self-balancing binary search tree</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> binary search tree ที่มีความสูงไม่เกิน O(log n) เสมอ</span><br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">2</span>); <span style="color: #74747c">//</span><span style="color: #74747c"> log(n)</span><br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">10</span>);<br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">5</span>); <br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">3</span>); <br>  s1.<span style="color: #4b69c6">insert</span>(<span style="color: #b60157">6</span>); <br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">Elements in set:</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>; <br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> it <span style="color: #d73948">:</span> s1) <br>    cout <span style="color: #d73948">&lt;&lt;</span> it <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Sorted </span><br><br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>; <br>}</code></pre>
+                <p>output</p>
+                <pre><code>Elements in set:<br>2 3 5 6</code></pre>
+                <h4>Map example</h4>
+                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> CPP program to demonstrate working of map</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  map&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>> m;<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> คล้ายๆ dictionary ในภาษา python</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> โครงสร้างเดียวกับ set ก็คือ self-balancing binary search tree</span><br><br>  m[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Insertion by indexing</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Insertion of pair by make_pair</span><br>  m.<span style="color: #4b69c6">insert</span>(<span style="color: #4b69c6">make_pair</span>(<span style="color: #b60157">8</span>, <span style="color: #b60157">5</span>));<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">Elements in m:</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> it <span style="color: #d73948">:</span> m)<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">[ </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.first <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">, </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.second <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">]</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Sorted</span><br><br>  map&lt;string, <span style="color: #d73948">int</span>> m2;<br>  m2[<span style="color: #198810">"</span><span style="color: #198810">tt</span><span style="color: #198810">"</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">5</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> log(n)</span><br>  m2[<span style="color: #198810">"</span><span style="color: #198810">aw</span><span style="color: #198810">"</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">2399</span>;<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">Elements in m2:</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> it <span style="color: #d73948">:</span> m2)<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">[ </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.first <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">, </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> it.second <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">]</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> Sorted</span><br><br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>output</p>
+                <pre><code>Elements in m:<br>[ 1, 2]<br>[ 8, 5]<br>Elements in m2:<br>[ aw, 2399]<br>[ tt, 5]</code></pre>
+            <div class="page-nav">
+                <a href="2006_priority-queue.html" class="prev">Priority Queue</a>
+                <a href="2008_heap.html" class="next">Heap</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

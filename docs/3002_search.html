@@ -7,17 +7,137 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Search</h3>
+                <h4>หลักการ</h4>
+                <ul>
+                  <li>เป็นวิธีทั่วไปที่แก้ปัญหาได้แทบจะทุกปัญหา</li>
+                  <li>เป็นการ brute force หาทุกคำตอบที่เป็นไปได้</li>
+                </ul>
+                <h4>Generating Permutations</h4>
+                <p>เขียน recursive function เพื่อ generate ทุก permutation ที่เป็นไปได้</p>
+                <h4>Graph Traversal</h4>
+                <p><a href="https://visualgo.net/en/dfsbfs?slide=1">https://visualgo.net/en/dfsbfs?slide=1</a></p>
+                <ul>
+                  <li>BFS</li>
+                  <li>
+                    <p>DFS</p>
+                    <ul>
+                      <li>preorder</li>
+                      <li>inorder</li>
+                      <li>postorder</li>
+                    </ul>
+                  </li>
+                  <li>Topological Sort</li>
+                </ul>
+                <h4>Binary Search Tree</h4>
+                <p><a href="https://visualgo.net/en/bst?slide=1">https://visualgo.net/en/bst?slide=1</a></p>
+                <ul>
+                  <li>create</li>
+                  <li>search(v)</li>
+                  <li>insert(v)</li>
+                  <li>remove(v)</li>
+                </ul>
+                <h4>Meet in the middle</h4>
+                <ul>
+                  <li>เป็นเทคนิคที่ถ้า search จากต้นทางแล้ว space ใหญ่เกินไป ให้ search จากปลายทางแล้วมาเจอกันตรงกลาง</li>
+                </ul>
+            <div class="page-nav">
+                <a href="3001_array-manipulation.html" class="prev">Array Manipulation</a>
+                <a href="3003_dynamic-programming.html" class="next">Dynamic Programming</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Search</h3>
+                <h4>หลักการ</h4>
+                <ul>
+                  <li>เป็นวิธีทั่วไปที่แก้ปัญหาได้แทบจะทุกปัญหา</li>
+                  <li>เป็นการ brute force หาทุกคำตอบที่เป็นไปได้</li>
+                </ul>
+                <h4>Generating Permutations</h4>
+                <p>เขียน recursive function เพื่อ generate ทุก permutation ที่เป็นไปได้</p>
+                <h4>Graph Traversal</h4>
+                <p><a href="https://visualgo.net/en/dfsbfs?slide=1">https://visualgo.net/en/dfsbfs?slide=1</a></p>
+                <ul>
+                  <li>BFS</li>
+                  <li>
+                    <p>DFS</p>
+                    <ul>
+                      <li>preorder</li>
+                      <li>inorder</li>
+                      <li>postorder</li>
+                    </ul>
+                  </li>
+                  <li>Topological Sort</li>
+                </ul>
+                <h4>Binary Search Tree</h4>
+                <p><a href="https://visualgo.net/en/bst?slide=1">https://visualgo.net/en/bst?slide=1</a></p>
+                <ul>
+                  <li>create</li>
+                  <li>search(v)</li>
+                  <li>insert(v)</li>
+                  <li>remove(v)</li>
+                </ul>
+                <h4>Meet in the middle</h4>
+                <ul>
+                  <li>เป็นเทคนิคที่ถ้า search จากต้นทางแล้ว space ใหญ่เกินไป ให้ search จากปลายทางแล้วมาเจอกันตรงกลาง</li>
+                </ul>
+            <div class="page-nav">
+                <a href="3001_array-manipulation.html" class="prev">Array Manipulation</a>
+                <a href="3003_dynamic-programming.html" class="next">Dynamic Programming</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

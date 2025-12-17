@@ -7,17 +7,237 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Function</h3>
+                <ul>
+                  <li>ตัวอย่างฟังก์ชันที่มีใน <code>bits/stdc++.h</code></li>
+                  <li>วิธีการเขียน user-defined functions</li>
+                  <li>เทียบมุมมองของฟังก์ชันทางคณิตศาสตร์และทางคอมพิวเตอร์</li>
+                </ul>
+                <h4>แนวคิด</h4>
+                <p>การเขียนฟังก์ชันในโปรแกรมเป็นการรวมกลุ่มคำสั่งเพื่อทำงานตามจุดประสงค์ โดยสามารถเรียกใช้งานภายหลังในโปรแกรมนั้นได้</p>
+                <h4>การเขียนโปรแกรม</h4>
+                <h5>ตัวอย่างฟังก์ชันพร้อมเรียกใช้งาน</h5>
+                <p>ใน C++ Standard Template Library (STL) จะมีฟังก์ชันพร้อมเรียกใช้งานให้ใช้ ซึ่งเมื่อ</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span></code></pre>
+                <p>แล้ว ในการเขียนโปรแกรมเชิงแข่งขันจะทำการ include STL ที่จำเป็นทั้งหมดมาให้ ซึ่งตัวอย่างฟังก์ชันที่ใช้งานบ่อยครั้งมีดังนี้</p>
+                <ul>
+                  <li>abs, pow, sqrt, log2, exp จาก cmath</li>
+                  <li>swap, min, max, __gcd, next_permutation จาก algorithm</li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">cmath examples</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">abs(-5): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">abs</span>(<span style="color: #d73948">-</span><span style="color: #b60157">5</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">pow(2, 3): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">pow</span>(<span style="color: #b60157">2</span>, <span style="color: #b60157">3</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">sqrt(64): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">sqrt</span>(<span style="color: #b60157">64</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">log2(64): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">log2</span>(<span style="color: #b60157">64</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">exp(3): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">exp</span>(<span style="color: #b60157">3</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">algorithm examples</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #d73948">int</span> a <span style="color: #d73948">=</span> <span style="color: #b60157">4</span>, b <span style="color: #d73948">=</span> <span style="color: #b60157">7</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">a b: </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> a <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #4b69c6">swap</span>(a, b);<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">a b: </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> a <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">min(a, b): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">min</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">max(a, b): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">max</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">__gcd(a, b): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">__gcd</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code data-lang="cpp">cmath <span style="color: #4b69c6">examples</span>             <br><span style="color: #4b69c6">abs</span>(<span style="color: #d73948">-</span><span style="color: #b60157">5</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">5</span>                 <br><span style="color: #4b69c6">pow</span>(<span style="color: #b60157">2</span>, <span style="color: #b60157">3</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">8</span>               <br><span style="color: #4b69c6">sqrt</span>(<span style="color: #b60157">64</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">8</span>                <br><span style="color: #4b69c6">log2</span>(<span style="color: #b60157">64</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">6</span>                <br><span style="color: #4b69c6">exp</span>(<span style="color: #b60157">3</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">20</span><span style="color: #b60157">.</span><span style="color: #b60157">0855</span>            <br><br>algorithm <span style="color: #4b69c6">examples</span>         <br><span style="color: #4b69c6">a</span> <span style="color: #4b69c6">b</span><span style="color: #d73948">:</span> <span style="color: #b60157">4</span> <span style="color: #b60157">7</span>                   <br>a b<span style="color: #d73948">:</span> <span style="color: #b60157">7</span> <span style="color: #b60157">4</span>                   <br><span style="color: #4b69c6">min</span>(a, b)<span style="color: #d73948">:</span> <span style="color: #b60157">4</span>               <br><span style="color: #4b69c6">max</span>(a, b)<span style="color: #d73948">:</span> <span style="color: #b60157">7</span> <br><span style="color: #4b69c6">__gcd</span>(a, b)<span style="color: #d73948">:</span> <span style="color: #b60157">1</span></code></pre>
+                <h5>User-defined functions</h5>
+                <p>เราสามารถเขียนฟังก์ชันด้วยตนเองได้ โดยการระบุ:</p>
+                <ul>
+                  <li>ชนิด (type) ของค่าที่จะคืนค่า</li>
+                  <li>ชื่อ (name) ที่ใช้เรียกฟังก์ชันนั้น</li>
+                  <li>พารามิเตอร์ (parameters) ที่ไว้รับค่าเข้าสู่ฟังก์ชัน</li>
+                  <li>ชุดคำสั่ง (statements) ที่ระบุวิธีการทำงานของฟังก์ชันนั้น</li>
+                </ul>
+                <p>ในรูปแบบ:</p>
+                <pre><code data-lang="cpp">type <span style="color: #4b69c6">name</span> ( param1, param2, <span style="color: #d73948">...</span>) { statements }</code></pre>
+                <p>ตัวอย่างการเขียนฟังก์ชัน:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addition</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">int</span> r;<br>  r <span style="color: #d73948">=</span> a <span style="color: #d73948">+</span> b;<br>  <span style="color: #d73948">return</span> r;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> z;<br>  z <span style="color: #d73948">=</span> <span style="color: #4b69c6">addition</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">3</span>);<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">The result is </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> z;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code>The result is 8</code></pre>
+                <h5>มุมมองของฟังก์ชัน</h5>
+                <p>ทางคณิตศาสตร์จะเขียนฟังก์ชันอยู่ในรูป</p>
+                <p>ซึ่งเมื่อเทียบกับทางคอมพิวเตอร์แล้วจะเทียบเท่าเป็นฟังก์ชันที่มี:</p>
+                <ul>
+                  <li>ไม่ได้ระบุชนิดค่าที่จะคืนออกมา</li>
+                  <li>ชื่อ f</li>
+                  <li>รับพารามิเตอร์ x</li>
+                </ul>
+                <p>ตัวอย่างฟังก์ชันเอกลักษณ์:</p>
+                <p>ในภาษา C++:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> <span style="color: #4b69c6">f</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">return</span> x;<br>}</code></pre>
+                <h4>โจทย์ตัวอย่าง - ค่าถัดไปของฟังก์ชันเวียนเกิด</h4>
+                <h5>เนื้อหาโจทย์</h5>
+                <p>จงเขียนฟังก์ชัน <code>next_a(int p, int pn)</code> หาค่า:</p>
+                <p>เมื่อทราบค่า</p>
+                <h5>รหัสเทียม</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> <span style="color: #4b69c6">next_a</span>(<span style="color: #d73948">int</span> p, <span style="color: #d73948">int</span> pn) {<br>    <span style="color: #d73948">return</span> p <span style="color: #d73948">+</span> (pn <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">*</span> <span style="color: #b60157">2</span>;<br>}</code></pre>
+                <h4>โจทย์ตัวอย่าง - ระยะห่างระหว่างสองจุด</h4>
+                <h5>เนื้อหาโจทย์</h5>
+                <p>กำหนดให้</p>
+                <p>และ</p>
+                <p>เป็นจุดสองจุดบนระนาบ</p>
+                <h5>รหัสเทียม</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">double</span> <span style="color: #4b69c6">distance</span>(<span style="color: #d73948">double</span> x1, <span style="color: #d73948">double</span> y1, <span style="color: #d73948">double</span> x2, <span style="color: #d73948">double</span> y2) {<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">sqrt</span>((x1 <span style="color: #d73948">-</span> x2) <span style="color: #d73948">*</span> (x1 <span style="color: #d73948">-</span> x2) <span style="color: #d73948">+</span> (y1 <span style="color: #d73948">-</span> y2) <span style="color: #d73948">*</span> (y1 <span style="color: #d73948">-</span> y2));<br>}</code></pre>
+                <h4>โจทย์ตัวอย่าง - ระยะห่าง Manhattan</h4>
+                <h5>เนื้อหาโจทย์</h5>
+                <p>จงเขียนฟังก์ชัน <code>manhattan(x1, y1, x2, y2)</code> เพื่อหาระยะ Manhattan ระหว่าง</p>
+                <p>และ</p>
+                <h5>รหัสเทียม</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">double</span> <span style="color: #4b69c6">manhattan</span>(<span style="color: #d73948">double</span> x1, <span style="color: #d73948">double</span> y1, <span style="color: #d73948">double</span> x2, <span style="color: #d73948">double</span> y2) {<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">abs</span>(x1 <span style="color: #d73948">-</span> x2) <span style="color: #d73948">+</span> <span style="color: #4b69c6">abs</span>(y1 <span style="color: #d73948">-</span> y2);<br>}</code></pre>
+                <h4>ปัญหาที่พบบ่อย</h4>
+                <h5>Scope of variables</h5>
+                <p>แต่ละฟังก์ชันมี scope ของตัวเอง ตัวแปรแบ่งเป็น:</p>
+                <ul>
+                  <li>Global variables</li>
+                  <li>Local variables</li>
+                </ul>
+                <p>ตัวอย่าง:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> g;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addition</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">int</span> r;<br>  g <span style="color: #d73948">=</span> b;<br>  r <span style="color: #d73948">=</span> a <span style="color: #d73948">+</span> b;<br>  <span style="color: #d73948">return</span> r;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> z;<br>  z <span style="color: #d73948">=</span> <span style="color: #4b69c6">addition</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">3</span>);<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">z is </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> z <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">g is </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> g;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code>z is 8<br>g is 3<br><br>Errors when accessing out-of-scope variables:<br><br>cout &lt;&lt; "z is " &lt;&lt; z &lt;&lt; "\n";</code></pre>
+                <h5>Return/type</h5>
+                <p>ลืม return จะเกิด warning</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addition</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">int</span> r;<br>  r <span style="color: #d73948">=</span> a <span style="color: #d73948">+</span> b;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code>warning: no return statement in function returning non-void</code></pre>
+                <h5>Arguments passed by value and by references</h5>
+                <p>เพื่อให้เปลี่ยนค่าพารามิเตอร์ใช้ &amp; ข้างหน้า</p>
+                <p>ตัวอย่าง:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">swap</span>(<span style="color: #d73948">int</span> <span style="color: #d73948">&amp;</span>a, <span style="color: #d73948">int</span> <span style="color: #d73948">&amp;</span>b) {<br>  <span style="color: #d73948">int</span> c <span style="color: #d73948">=</span> a;<br>  a <span style="color: #d73948">=</span> b;<br>  b <span style="color: #d73948">=</span> c;<br>}<br><br>in main<span style="color: #d73948">:</span> <span style="color: #b60157">0</span> <span style="color: #b60157">1</span><br><span style="color: #d73948">in</span> swap<span style="color: #d73948">:</span> <span style="color: #b60157">1</span> <span style="color: #b60157">0</span><br><span style="color: #d73948">in</span> main<span style="color: #d73948">:</span> <span style="color: #b60157">1</span> <span style="color: #b60157">0</span></code></pre>
+            <div class="page-nav">
+                <a href="1004_recursion.html" class="prev">Recursion</a>
+                <a href="2000_graph-structure.html" class="next">Graph Structure</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Function</h3>
+                <ul>
+                  <li>ตัวอย่างฟังก์ชันที่มีใน <code>bits/stdc++.h</code></li>
+                  <li>วิธีการเขียน user-defined functions</li>
+                  <li>เทียบมุมมองของฟังก์ชันทางคณิตศาสตร์และทางคอมพิวเตอร์</li>
+                </ul>
+                <h4>แนวคิด</h4>
+                <p>การเขียนฟังก์ชันในโปรแกรมเป็นการรวมกลุ่มคำสั่งเพื่อทำงานตามจุดประสงค์ โดยสามารถเรียกใช้งานภายหลังในโปรแกรมนั้นได้</p>
+                <h4>การเขียนโปรแกรม</h4>
+                <h5>ตัวอย่างฟังก์ชันพร้อมเรียกใช้งาน</h5>
+                <p>ใน C++ Standard Template Library (STL) จะมีฟังก์ชันพร้อมเรียกใช้งานให้ใช้ ซึ่งเมื่อ</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span></code></pre>
+                <p>แล้ว ในการเขียนโปรแกรมเชิงแข่งขันจะทำการ include STL ที่จำเป็นทั้งหมดมาให้ ซึ่งตัวอย่างฟังก์ชันที่ใช้งานบ่อยครั้งมีดังนี้</p>
+                <ul>
+                  <li>abs, pow, sqrt, log2, exp จาก cmath</li>
+                  <li>swap, min, max, __gcd, next_permutation จาก algorithm</li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">cmath examples</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">abs(-5): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">abs</span>(<span style="color: #d73948">-</span><span style="color: #b60157">5</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">pow(2, 3): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">pow</span>(<span style="color: #b60157">2</span>, <span style="color: #b60157">3</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">sqrt(64): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">sqrt</span>(<span style="color: #b60157">64</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">log2(64): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">log2</span>(<span style="color: #b60157">64</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">exp(3): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">exp</span>(<span style="color: #b60157">3</span>) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">algorithm examples</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #d73948">int</span> a <span style="color: #d73948">=</span> <span style="color: #b60157">4</span>, b <span style="color: #d73948">=</span> <span style="color: #b60157">7</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">a b: </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> a <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  <span style="color: #4b69c6">swap</span>(a, b);<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">a b: </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> a <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">min(a, b): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">min</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">max(a, b): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">max</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">__gcd(a, b): </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">__gcd</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code data-lang="cpp">cmath <span style="color: #4b69c6">examples</span>             <br><span style="color: #4b69c6">abs</span>(<span style="color: #d73948">-</span><span style="color: #b60157">5</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">5</span>                 <br><span style="color: #4b69c6">pow</span>(<span style="color: #b60157">2</span>, <span style="color: #b60157">3</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">8</span>               <br><span style="color: #4b69c6">sqrt</span>(<span style="color: #b60157">64</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">8</span>                <br><span style="color: #4b69c6">log2</span>(<span style="color: #b60157">64</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">6</span>                <br><span style="color: #4b69c6">exp</span>(<span style="color: #b60157">3</span>)<span style="color: #d73948">:</span> <span style="color: #b60157">20</span><span style="color: #b60157">.</span><span style="color: #b60157">0855</span>            <br><br>algorithm <span style="color: #4b69c6">examples</span>         <br><span style="color: #4b69c6">a</span> <span style="color: #4b69c6">b</span><span style="color: #d73948">:</span> <span style="color: #b60157">4</span> <span style="color: #b60157">7</span>                   <br>a b<span style="color: #d73948">:</span> <span style="color: #b60157">7</span> <span style="color: #b60157">4</span>                   <br><span style="color: #4b69c6">min</span>(a, b)<span style="color: #d73948">:</span> <span style="color: #b60157">4</span>               <br><span style="color: #4b69c6">max</span>(a, b)<span style="color: #d73948">:</span> <span style="color: #b60157">7</span> <br><span style="color: #4b69c6">__gcd</span>(a, b)<span style="color: #d73948">:</span> <span style="color: #b60157">1</span></code></pre>
+                <h5>User-defined functions</h5>
+                <p>เราสามารถเขียนฟังก์ชันด้วยตนเองได้ โดยการระบุ:</p>
+                <ul>
+                  <li>ชนิด (type) ของค่าที่จะคืนค่า</li>
+                  <li>ชื่อ (name) ที่ใช้เรียกฟังก์ชันนั้น</li>
+                  <li>พารามิเตอร์ (parameters) ที่ไว้รับค่าเข้าสู่ฟังก์ชัน</li>
+                  <li>ชุดคำสั่ง (statements) ที่ระบุวิธีการทำงานของฟังก์ชันนั้น</li>
+                </ul>
+                <p>ในรูปแบบ:</p>
+                <pre><code data-lang="cpp">type <span style="color: #4b69c6">name</span> ( param1, param2, <span style="color: #d73948">...</span>) { statements }</code></pre>
+                <p>ตัวอย่างการเขียนฟังก์ชัน:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addition</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">int</span> r;<br>  r <span style="color: #d73948">=</span> a <span style="color: #d73948">+</span> b;<br>  <span style="color: #d73948">return</span> r;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> z;<br>  z <span style="color: #d73948">=</span> <span style="color: #4b69c6">addition</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">3</span>);<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">The result is </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> z;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code>The result is 8</code></pre>
+                <h5>มุมมองของฟังก์ชัน</h5>
+                <p>ทางคณิตศาสตร์จะเขียนฟังก์ชันอยู่ในรูป</p>
+                <p>ซึ่งเมื่อเทียบกับทางคอมพิวเตอร์แล้วจะเทียบเท่าเป็นฟังก์ชันที่มี:</p>
+                <ul>
+                  <li>ไม่ได้ระบุชนิดค่าที่จะคืนออกมา</li>
+                  <li>ชื่อ f</li>
+                  <li>รับพารามิเตอร์ x</li>
+                </ul>
+                <p>ตัวอย่างฟังก์ชันเอกลักษณ์:</p>
+                <p>ในภาษา C++:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> <span style="color: #4b69c6">f</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">return</span> x;<br>}</code></pre>
+                <h4>โจทย์ตัวอย่าง - ค่าถัดไปของฟังก์ชันเวียนเกิด</h4>
+                <h5>เนื้อหาโจทย์</h5>
+                <p>จงเขียนฟังก์ชัน <code>next_a(int p, int pn)</code> หาค่า:</p>
+                <p>เมื่อทราบค่า</p>
+                <h5>รหัสเทียม</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> <span style="color: #4b69c6">next_a</span>(<span style="color: #d73948">int</span> p, <span style="color: #d73948">int</span> pn) {<br>    <span style="color: #d73948">return</span> p <span style="color: #d73948">+</span> (pn <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">*</span> <span style="color: #b60157">2</span>;<br>}</code></pre>
+                <h4>โจทย์ตัวอย่าง - ระยะห่างระหว่างสองจุด</h4>
+                <h5>เนื้อหาโจทย์</h5>
+                <p>กำหนดให้</p>
+                <p>และ</p>
+                <p>เป็นจุดสองจุดบนระนาบ</p>
+                <h5>รหัสเทียม</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">double</span> <span style="color: #4b69c6">distance</span>(<span style="color: #d73948">double</span> x1, <span style="color: #d73948">double</span> y1, <span style="color: #d73948">double</span> x2, <span style="color: #d73948">double</span> y2) {<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">sqrt</span>((x1 <span style="color: #d73948">-</span> x2) <span style="color: #d73948">*</span> (x1 <span style="color: #d73948">-</span> x2) <span style="color: #d73948">+</span> (y1 <span style="color: #d73948">-</span> y2) <span style="color: #d73948">*</span> (y1 <span style="color: #d73948">-</span> y2));<br>}</code></pre>
+                <h4>โจทย์ตัวอย่าง - ระยะห่าง Manhattan</h4>
+                <h5>เนื้อหาโจทย์</h5>
+                <p>จงเขียนฟังก์ชัน <code>manhattan(x1, y1, x2, y2)</code> เพื่อหาระยะ Manhattan ระหว่าง</p>
+                <p>และ</p>
+                <h5>รหัสเทียม</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">double</span> <span style="color: #4b69c6">manhattan</span>(<span style="color: #d73948">double</span> x1, <span style="color: #d73948">double</span> y1, <span style="color: #d73948">double</span> x2, <span style="color: #d73948">double</span> y2) {<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">abs</span>(x1 <span style="color: #d73948">-</span> x2) <span style="color: #d73948">+</span> <span style="color: #4b69c6">abs</span>(y1 <span style="color: #d73948">-</span> y2);<br>}</code></pre>
+                <h4>ปัญหาที่พบบ่อย</h4>
+                <h5>Scope of variables</h5>
+                <p>แต่ละฟังก์ชันมี scope ของตัวเอง ตัวแปรแบ่งเป็น:</p>
+                <ul>
+                  <li>Global variables</li>
+                  <li>Local variables</li>
+                </ul>
+                <p>ตัวอย่าง:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> g;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addition</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">int</span> r;<br>  g <span style="color: #d73948">=</span> b;<br>  r <span style="color: #d73948">=</span> a <span style="color: #d73948">+</span> b;<br>  <span style="color: #d73948">return</span> r;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> z;<br>  z <span style="color: #d73948">=</span> <span style="color: #4b69c6">addition</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">3</span>);<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">z is </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> z <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">g is </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> g;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code>z is 8<br>g is 3<br><br>Errors when accessing out-of-scope variables:<br><br>cout &lt;&lt; "z is " &lt;&lt; z &lt;&lt; "\n";</code></pre>
+                <h5>Return/type</h5>
+                <p>ลืม return จะเกิด warning</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addition</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">int</span> r;<br>  r <span style="color: #d73948">=</span> a <span style="color: #d73948">+</span> b;<br>}</code></pre>
+                <p>Output:</p>
+                <pre><code>warning: no return statement in function returning non-void</code></pre>
+                <h5>Arguments passed by value and by references</h5>
+                <p>เพื่อให้เปลี่ยนค่าพารามิเตอร์ใช้ &amp; ข้างหน้า</p>
+                <p>ตัวอย่าง:</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">swap</span>(<span style="color: #d73948">int</span> <span style="color: #d73948">&amp;</span>a, <span style="color: #d73948">int</span> <span style="color: #d73948">&amp;</span>b) {<br>  <span style="color: #d73948">int</span> c <span style="color: #d73948">=</span> a;<br>  a <span style="color: #d73948">=</span> b;<br>  b <span style="color: #d73948">=</span> c;<br>}<br><br>in main<span style="color: #d73948">:</span> <span style="color: #b60157">0</span> <span style="color: #b60157">1</span><br><span style="color: #d73948">in</span> swap<span style="color: #d73948">:</span> <span style="color: #b60157">1</span> <span style="color: #b60157">0</span><br><span style="color: #d73948">in</span> main<span style="color: #d73948">:</span> <span style="color: #b60157">1</span> <span style="color: #b60157">0</span></code></pre>
+            <div class="page-nav">
+                <a href="1004_recursion.html" class="prev">Recursion</a>
+                <a href="2000_graph-structure.html" class="next">Graph Structure</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

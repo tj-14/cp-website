@@ -7,17 +7,343 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>พื้นฐาน</h3>
+                <h4>โปรแกรมที่ใช้เขียน</h4>
+                <ul>
+                  <li>เริ่มด้วย VS Code<a id="loc-1" href="#loc-3" role="doc-noteref"><sup>1</sup></a> กับ plugin cph<a id="loc-2" href="#loc-4" role="doc-noteref"><sup>2</sup></a> น่าจะง่ายสุดแล้ว</li>
+                </ul>
+                <h4>โค้ดเริ่มต้น</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <ul>
+                  <li><code>bits/stdc++.h</code> เป็น library ครอบจักรวาล</li>
+                  <li>
+                    <p><code>using namespace std</code> ใช้เพื่อความสะดวก</p>
+                    <ul>
+                      <li>เดิมต้องเขียน <code>std::cout &lt;&lt; "Hello World!";</code> ในการแสดงผล <code>Hello World!</code></li>
+                      <li>ถ้ามี <code>using namespace std</code> จะไม่ต้องพิมพ์ <code>std::</code></li>
+                      <li>ก็คือจะเหลือ <code>cout &lt;&lt; "Hello World!;</code> พอ</li>
+                    </ul>
+                  </li>
+                </ul>
+                <h4>Comments</h4>
+                <p>คอมเม้นท์ไว้บอกคอมว่าไม่ต้องรันบรรทัดนั้นๆ ทำได้สองแบบ</p>
+                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> line comment </span><br><br><span style="color: #74747c">/*</span><br><span style="color: #74747c">block </span><br><span style="color: #74747c">comment</span><br><span style="color: #74747c">*/</span></code></pre>
+                <h4>Variables Data Types</h4>
+                <p>ในภาษา C++ จำเป็นจะต้องประกาศ “ชนิด” ของตัวแปรเสมอ (ต่างจาก Python)</p>
+                <p>ชนิดที่พบบ่อยคือ</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ชนิด</th>
+                      <th>ขนาด (byte)</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>bool</code></td>
+                      <td>1</td>
+                      <td>ค่าความจริง true, false (0-1)</td>
+                    </tr>
+                    <tr>
+                      <td><code>char</code></td>
+                      <td>2</td>
+                      <td>ตัวอักษร</td>
+                    </tr>
+                    <tr>
+                      <td><code>int</code></td>
+                      <td>4</td>
+                      <td>จำนวนเต็ม</td>
+                    </tr>
+                    <tr>
+                      <td><code>long long</code></td>
+                      <td>8</td>
+                      <td>จำนวนเต็มที่เก็บค่าได้มากกว่า</td>
+                    </tr>
+                    <tr>
+                      <td><code>float</code></td>
+                      <td>4</td>
+                      <td>จำนวนจริง</td>
+                    </tr>
+                    <tr>
+                      <td><code>double</code></td>
+                      <td>8</td>
+                      <td>จำนวนจริงที่เก็บค่าได้มากกว่า</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>สาเหตุที่มีชนิดเดียวกันที่เก็บค่าได้แตกต่างกันเพราะการจองพื้นที่ memory ขนาดไม่เท่ากัน</p>
+                <h4>Input/Output</h4>
+                <ul>
+                  <li>ใช้ <code>cin</code> ในการรับค่า โดยที่ <code>cin</code> จะดูชนิดของตัวแปรให้ตอนที่รับค่า</li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> a;<br>  cin <span style="color: #d73948">>></span> a;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>หากพิมพ์ <code>5</code> หลังจากรันโปรแกรมแล้ว <code>a</code> จะมีค่าเท่ากับ</p>
+                <p>ที่เป็น <code>integer</code></p>
+                <p>ถ้า</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a;<br>  cin <span style="color: #d73948">>></span> a;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>แล้วพิมพ์ <code>5</code> หลังจากรันโปรแกรมแล้ว <code>a</code> จะมีค่าเท่ากับ <code>'5'</code> ที่เป็น <code>character</code></p>
+                <p>ตัวอย่างเช่น</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a;<br>  <span style="color: #d73948">int</span> b;<br>  cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>  <span style="color: #d73948">int</span> c <span style="color: #d73948">=</span> a;<br>  cout <span style="color: #d73948">&lt;&lt;</span> c <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>แล้วพิมพ์ <code>5 5</code> จะได้ผลลัพธ์เป็น <code>53 5</code> เนื่องจาก character <code>'5'</code> มีค่า ascii เป็น</p>
+                <p>(ถูกแปลงค่า)</p>
+                <ul>
+                  <li><code>'\n'</code> เป็น special character ที่ใช้สำหรับขึ้นบรรทัดใหม่ในการแสดงผล เช่น</li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a;<br>  <span style="color: #d73948">int</span> b;<br>  cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>  <span style="color: #d73948">int</span> c <span style="color: #d73948">=</span> a;<br>  cout <span style="color: #d73948">&lt;&lt;</span> c <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>แล้วพิมพ์ <code>5 5</code> จะได้ผลลัพธ์เป็น</p>
+                <pre><code>53 <br>5</code></pre>
+                <ul>
+                  <li>
+                    <p>สังเกตว่า <code>cout</code> ต้องใช้เป็นท่อน ๆ คือส่ง <code>&lt;&lt;</code> ได้ทีละตัวแปรหรือทีละ string เท่านั้น</p>
+                  </li>
+                  <li>
+                    <p>เช่นเดียวกัน <code>cin</code> ที่ใช้เป็นท่อน ๆ คือรับ <code>>></code> เข้าทีละตัวแปร โดยตัด input ตามประเภทตัวแปร</p>
+                  </li>
+                </ul>
+                <h4>Control Structures</h4>
+                <h5>condition</h5>
+                <ul>
+                  <li><code>if</code>-<code>else if</code>-<code>else</code></li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">if</span> (x <span style="color: #d73948">></span> <span style="color: #b60157">0</span>)<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">x is positive</span><span style="color: #198810">"</span>;<br><span style="color: #d73948">else</span> <span style="color: #d73948">if</span> (x <span style="color: #d73948">&lt;</span> <span style="color: #b60157">0</span>)<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">x is negative</span><span style="color: #198810">"</span>;<br><span style="color: #d73948">else</span><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">x is 0</span><span style="color: #198810">"</span>;</code></pre>
+                <h5>loop</h5>
+                <ul>
+                  <li><code>while</code></li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><span style="color: #d73948">while</span> (i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">10</span>) {<br>  cout <span style="color: #d73948">&lt;&lt;</span> i <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>;<br>  i<span style="color: #d73948">++</span>;<br>} </code></pre>
+                <ul>
+                  <li><code>for</code></li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">10</span>; i<span style="color: #d73948">++</span>) {<br>  cout <span style="color: #d73948">&lt;&lt;</span> i <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>;<br>} </code></pre>
+                <h4>Arrays</h4>
+                <p>ใน C++ นั้นตัวแปรทุกชนิดสามารถทำเป็นตัวแปรชุด (Array) ได้ด้วยการใส่วงเล็บ <code>[]</code> ด้านหลังชื่อตัวแปร เช่น</p>
+                <p>จาก <code>int a</code> เป็นการประกาศตัวแปรที่เป็นจำนวนเต็มหนึ่งจำนวน</p>
+                <p>สามารถเป็น <code>int a[10]</code> เป็นการประกาศตัวแปรที่เป็นจำนวนเต็ม <code>10</code> จำนวน โดยจะเรียกสมาชิกได้ เช่น</p>
+                <p><code>a[0]</code> เป็นการเรียกสมาชิกตัวแรกใน array นั้น</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> n;<br>  <span style="color: #d73948">int</span> a[<span style="color: #b60157">20</span>];<br>  cin <span style="color: #d73948">>></span> n;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    cin <span style="color: #d73948">>></span> a[i];<br>  }<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนจะเป็นการรับค่า <code>n</code> เพื่อที่จะรับจำนวนเต็มต่ออีก</p>
+                <p>จำนวน (ใช้ต่อในเงื่อนไขของ for loop)</p>
+                <p>จากนั้นรับค่าเข้าสู่ <code>a[i]</code> ไปเรื่อย ๆ โดย</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> n;<br>  <span style="color: #d73948">int</span> a[<span style="color: #b60157">20</span>];<br>  cin <span style="color: #d73948">>></span> n;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    cin <span style="color: #d73948">>></span> a[i];<br>  }<br>  <span style="color: #d73948">int</span> sm <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    sm <span style="color: #d73948">+=</span> a[i];<br>  }<br>  cout <span style="color: #d73948">&lt;&lt;</span> sm;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนเป็นการนำค่าที่รับเข้ามาไปใช้หาผลรวมต่อในตัวแปร <code>sm</code></p>
+                <h4>Strings</h4>
+                <p>ใน C++ มี <code>string</code> ให้ใช้ใน STL ซึ่งถูกรวมอยู่ใน <code>bits/stdc++.h</code> แล้ว</p>
+                <p>จากที่ภาษา C ธรรมดาจะต้องใช้เป็น array of characters จึงสะดวกขึ้นเยอะ</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  string a;<br>  cin <span style="color: #d73948">>></span> a;<br>  cout <span style="color: #d73948">&lt;&lt;</span> a;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนเป็นการรับค่า string แล้วส่งออกเลย</p>
+                <h4>Functions</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addint</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">return</span> a <span style="color: #d73948">+</span> b;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">addint</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">4</span>);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนเป็นการสร้างฟังก์ชัน</p>
+                <p>โดยให้ชื่อว่า <code>addint</code> พร้อมตัวอย่างการเรียกใช้</p>
+                <h4>Array หลายมิติ</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> a[<span style="color: #b60157">5</span>][<span style="color: #b60157">5</span>];<br>  <span style="color: #d73948">int</span> n, m;<br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> m; j<span style="color: #d73948">++</span>) {<br>      cin <span style="color: #d73948">>></span> a[i][j];<br>    }<br>  }<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <section role="doc-endnotes">
+                  <ol style="list-style-type: none">
+                    <li id="loc-3"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></li>
+                    <li id="loc-4"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://marketplace.visualstudio.com/items?itemName=DivyanshuAgrawal.competitive-programming-helper">https://marketplace.visualstudio.com/items?itemName=DivyanshuAgrawal.competitive-programming-helper</a></li>
+                  </ol>
+                </section>
+            <div class="page-nav">
+                <a href="1002_stl.html" class="prev">Standard Template Library</a>
+                <a href="1004_recursion.html" class="next">Recursion</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>พื้นฐาน</h3>
+                <h4>โปรแกรมที่ใช้เขียน</h4>
+                <ul>
+                  <li>เริ่มด้วย VS Code<a id="loc-1" href="#loc-3" role="doc-noteref"><sup>1</sup></a> กับ plugin cph<a id="loc-2" href="#loc-4" role="doc-noteref"><sup>2</sup></a> น่าจะง่ายสุดแล้ว</li>
+                </ul>
+                <h4>โค้ดเริ่มต้น</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <ul>
+                  <li><code>bits/stdc++.h</code> เป็น library ครอบจักรวาล</li>
+                  <li>
+                    <p><code>using namespace std</code> ใช้เพื่อความสะดวก</p>
+                    <ul>
+                      <li>เดิมต้องเขียน <code>std::cout &lt;&lt; "Hello World!";</code> ในการแสดงผล <code>Hello World!</code></li>
+                      <li>ถ้ามี <code>using namespace std</code> จะไม่ต้องพิมพ์ <code>std::</code></li>
+                      <li>ก็คือจะเหลือ <code>cout &lt;&lt; "Hello World!;</code> พอ</li>
+                    </ul>
+                  </li>
+                </ul>
+                <h4>Comments</h4>
+                <p>คอมเม้นท์ไว้บอกคอมว่าไม่ต้องรันบรรทัดนั้นๆ ทำได้สองแบบ</p>
+                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> line comment </span><br><br><span style="color: #74747c">/*</span><br><span style="color: #74747c">block </span><br><span style="color: #74747c">comment</span><br><span style="color: #74747c">*/</span></code></pre>
+                <h4>Variables Data Types</h4>
+                <p>ในภาษา C++ จำเป็นจะต้องประกาศ “ชนิด” ของตัวแปรเสมอ (ต่างจาก Python)</p>
+                <p>ชนิดที่พบบ่อยคือ</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ชนิด</th>
+                      <th>ขนาด (byte)</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>bool</code></td>
+                      <td>1</td>
+                      <td>ค่าความจริง true, false (0-1)</td>
+                    </tr>
+                    <tr>
+                      <td><code>char</code></td>
+                      <td>2</td>
+                      <td>ตัวอักษร</td>
+                    </tr>
+                    <tr>
+                      <td><code>int</code></td>
+                      <td>4</td>
+                      <td>จำนวนเต็ม</td>
+                    </tr>
+                    <tr>
+                      <td><code>long long</code></td>
+                      <td>8</td>
+                      <td>จำนวนเต็มที่เก็บค่าได้มากกว่า</td>
+                    </tr>
+                    <tr>
+                      <td><code>float</code></td>
+                      <td>4</td>
+                      <td>จำนวนจริง</td>
+                    </tr>
+                    <tr>
+                      <td><code>double</code></td>
+                      <td>8</td>
+                      <td>จำนวนจริงที่เก็บค่าได้มากกว่า</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>สาเหตุที่มีชนิดเดียวกันที่เก็บค่าได้แตกต่างกันเพราะการจองพื้นที่ memory ขนาดไม่เท่ากัน</p>
+                <h4>Input/Output</h4>
+                <ul>
+                  <li>ใช้ <code>cin</code> ในการรับค่า โดยที่ <code>cin</code> จะดูชนิดของตัวแปรให้ตอนที่รับค่า</li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> a;<br>  cin <span style="color: #d73948">>></span> a;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>หากพิมพ์ <code>5</code> หลังจากรันโปรแกรมแล้ว <code>a</code> จะมีค่าเท่ากับ</p>
+                <p>ที่เป็น <code>integer</code></p>
+                <p>ถ้า</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a;<br>  cin <span style="color: #d73948">>></span> a;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>แล้วพิมพ์ <code>5</code> หลังจากรันโปรแกรมแล้ว <code>a</code> จะมีค่าเท่ากับ <code>'5'</code> ที่เป็น <code>character</code></p>
+                <p>ตัวอย่างเช่น</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a;<br>  <span style="color: #d73948">int</span> b;<br>  cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>  <span style="color: #d73948">int</span> c <span style="color: #d73948">=</span> a;<br>  cout <span style="color: #d73948">&lt;&lt;</span> c <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>แล้วพิมพ์ <code>5 5</code> จะได้ผลลัพธ์เป็น <code>53 5</code> เนื่องจาก character <code>'5'</code> มีค่า ascii เป็น</p>
+                <p>(ถูกแปลงค่า)</p>
+                <ul>
+                  <li><code>'\n'</code> เป็น special character ที่ใช้สำหรับขึ้นบรรทัดใหม่ในการแสดงผล เช่น</li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a;<br>  <span style="color: #d73948">int</span> b;<br>  cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>  <span style="color: #d73948">int</span> c <span style="color: #d73948">=</span> a;<br>  cout <span style="color: #d73948">&lt;&lt;</span> c <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span> <span style="color: #d73948">&lt;&lt;</span> b;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>แล้วพิมพ์ <code>5 5</code> จะได้ผลลัพธ์เป็น</p>
+                <pre><code>53 <br>5</code></pre>
+                <ul>
+                  <li>
+                    <p>สังเกตว่า <code>cout</code> ต้องใช้เป็นท่อน ๆ คือส่ง <code>&lt;&lt;</code> ได้ทีละตัวแปรหรือทีละ string เท่านั้น</p>
+                  </li>
+                  <li>
+                    <p>เช่นเดียวกัน <code>cin</code> ที่ใช้เป็นท่อน ๆ คือรับ <code>>></code> เข้าทีละตัวแปร โดยตัด input ตามประเภทตัวแปร</p>
+                  </li>
+                </ul>
+                <h4>Control Structures</h4>
+                <h5>condition</h5>
+                <ul>
+                  <li><code>if</code>-<code>else if</code>-<code>else</code></li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">if</span> (x <span style="color: #d73948">></span> <span style="color: #b60157">0</span>)<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">x is positive</span><span style="color: #198810">"</span>;<br><span style="color: #d73948">else</span> <span style="color: #d73948">if</span> (x <span style="color: #d73948">&lt;</span> <span style="color: #b60157">0</span>)<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">x is negative</span><span style="color: #198810">"</span>;<br><span style="color: #d73948">else</span><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810">x is 0</span><span style="color: #198810">"</span>;</code></pre>
+                <h5>loop</h5>
+                <ul>
+                  <li><code>while</code></li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><span style="color: #d73948">while</span> (i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">10</span>) {<br>  cout <span style="color: #d73948">&lt;&lt;</span> i <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>;<br>  i<span style="color: #d73948">++</span>;<br>} </code></pre>
+                <ul>
+                  <li><code>for</code></li>
+                </ul>
+                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">10</span>; i<span style="color: #d73948">++</span>) {<br>  cout <span style="color: #d73948">&lt;&lt;</span> i <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>;<br>} </code></pre>
+                <h4>Arrays</h4>
+                <p>ใน C++ นั้นตัวแปรทุกชนิดสามารถทำเป็นตัวแปรชุด (Array) ได้ด้วยการใส่วงเล็บ <code>[]</code> ด้านหลังชื่อตัวแปร เช่น</p>
+                <p>จาก <code>int a</code> เป็นการประกาศตัวแปรที่เป็นจำนวนเต็มหนึ่งจำนวน</p>
+                <p>สามารถเป็น <code>int a[10]</code> เป็นการประกาศตัวแปรที่เป็นจำนวนเต็ม <code>10</code> จำนวน โดยจะเรียกสมาชิกได้ เช่น</p>
+                <p><code>a[0]</code> เป็นการเรียกสมาชิกตัวแรกใน array นั้น</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> n;<br>  <span style="color: #d73948">int</span> a[<span style="color: #b60157">20</span>];<br>  cin <span style="color: #d73948">>></span> n;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    cin <span style="color: #d73948">>></span> a[i];<br>  }<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนจะเป็นการรับค่า <code>n</code> เพื่อที่จะรับจำนวนเต็มต่ออีก</p>
+                <p>จำนวน (ใช้ต่อในเงื่อนไขของ for loop)</p>
+                <p>จากนั้นรับค่าเข้าสู่ <code>a[i]</code> ไปเรื่อย ๆ โดย</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> n;<br>  <span style="color: #d73948">int</span> a[<span style="color: #b60157">20</span>];<br>  cin <span style="color: #d73948">>></span> n;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    cin <span style="color: #d73948">>></span> a[i];<br>  }<br>  <span style="color: #d73948">int</span> sm <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    sm <span style="color: #d73948">+=</span> a[i];<br>  }<br>  cout <span style="color: #d73948">&lt;&lt;</span> sm;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนเป็นการนำค่าที่รับเข้ามาไปใช้หาผลรวมต่อในตัวแปร <code>sm</code></p>
+                <h4>Strings</h4>
+                <p>ใน C++ มี <code>string</code> ให้ใช้ใน STL ซึ่งถูกรวมอยู่ใน <code>bits/stdc++.h</code> แล้ว</p>
+                <p>จากที่ภาษา C ธรรมดาจะต้องใช้เป็น array of characters จึงสะดวกขึ้นเยอะ</p>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  string a;<br>  cin <span style="color: #d73948">>></span> a;<br>  cout <span style="color: #d73948">&lt;&lt;</span> a;<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนเป็นการรับค่า string แล้วส่งออกเลย</p>
+                <h4>Functions</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">addint</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">return</span> a <span style="color: #d73948">+</span> b;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">addint</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">4</span>);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <p>ตัวอย่างด้านบนเป็นการสร้างฟังก์ชัน</p>
+                <p>โดยให้ชื่อว่า <code>addint</code> พร้อมตัวอย่างการเรียกใช้</p>
+                <h4>Array หลายมิติ</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> a[<span style="color: #b60157">5</span>][<span style="color: #b60157">5</span>];<br>  <span style="color: #d73948">int</span> n, m;<br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> m; j<span style="color: #d73948">++</span>) {<br>      cin <span style="color: #d73948">>></span> a[i][j];<br>    }<br>  }<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+                <section role="doc-endnotes">
+                  <ol style="list-style-type: none">
+                    <li id="loc-3"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></li>
+                    <li id="loc-4"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://marketplace.visualstudio.com/items?itemName=DivyanshuAgrawal.competitive-programming-helper">https://marketplace.visualstudio.com/items?itemName=DivyanshuAgrawal.competitive-programming-helper</a></li>
+                  </ol>
+                </section>
+            <div class="page-nav">
+                <a href="1002_stl.html" class="prev">Standard Template Library</a>
+                <a href="1004_recursion.html" class="next">Recursion</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>

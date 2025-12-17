@@ -7,17 +7,117 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
-</head>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$', right: '$', display: true},
+                    {left: '
 <body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h2>Anon’s Guide to DP</h2>
+                <h3>Improving from Divide &amp; Conquer - Memoization</h3>
+                <p>ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง $\mathcal{O}(\varphi^n)$ สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ $n$ ซึ่งเป็นรูปแบบการเติบโตแบบ exponential เลยทีเดียว! แล้วเราจะทำอะไรได้เพื่อลดเวลาที่ต้องใช้ในการคำนวณ?</p>
+                <p>ถ้าเราวาดแผนผังต้นไม้ในการหาจำนวนฟิโบนัชชีลำดับที่ $n$ จะเห็นว่ามีการเรียกฟังก์ชันซ้ำค่อนข้างมาก เช่น $\text{Fib}(3)$ ที่ถูกเรียกถึง 5 ครั้ง ลองจินตนาการดูว่าถ้าเราจะหา $\text{Fib}(100)$ จะต้องเรียกฟังก์ชันซ้ำมากขนาดไหน</p>
+                <p>ถ้าเรา <strong>จำ</strong> $\text{Fib}(i)$ ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง โดยให้เก็บค่าของ $\text{Fib}(i)$ และเรียกค่าจากที่เก็บมาได้ โค้ดจะมีลักษณะดังนี้:</p>
+                <pre><code data-lang="cpp">vector&lt;<span style="color: #d73948">int</span>> <span style="color: #4b69c6">v</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fib</span>(<span style="color: #d73948">int</span> i) {<br>    <span style="color: #d73948">if</span>(v[i] <span style="color: #d73948">></span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">return</span> v[i];<br>    <span style="color: #d73948">if</span>(i <span style="color: #d73948">==</span> <span style="color: #b60157">0</span> <span style="color: #d73948">||</span> i <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) {<br>        v[i] <span style="color: #d73948">=</span> i;<br>        <span style="color: #d73948">return</span> v[i];<br>    }<br>    v[i] <span style="color: #d73948">=</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">2</span>);<br>    <span style="color: #d73948">return</span> v[i];<br>}</code></pre>
+                <p>การใช้เทคนิคนี้เรียกว่า memoization โดยมาจากการเก็บค่าไว้ใน memo หรือโน้ตเตือนความจำนั่นเอง</p>
+                <h3>Definition of Dynamic Programming</h3>
+                <p>Dynamic Programming (หรือ DP) ก็คือการทำ Divide &amp; Conquer โดยนำเอา memoization มาช่วยบูสต์ให้สามารถคำนวณผลเฉลยโดยพิจารณาจาก state ก่อนหน้าหรือ state ที่เล็กกว่า ทำให้ปัญหานั้นสามารถแก้ได้ภายในเวลา Polynomial Time</p>
+                <p>DP นั้นเหมาะกับการแก้ปัญหา Optimization หรือการหาค่าที่ดีที่สุด เช่น ราคาถูกที่สุด ยาวที่สุด ได้กำไรมากที่สุด ใช้เวลาน้อยที่สุด โดยปัญหาที่ใช้ DP แก้ได้จะต้องมีองค์ประกอบ 2 อย่างด้วยกัน</p>
+                <h3>Optimal Substructure</h3>
+                <p>ปัญหาที่จะใช้ DP นั้นจะมี Optimal Substructure หรือโครงสร้างย่อยที่ดีที่สุด ก็ต่อเมื่อคำตอบที่ดีที่สุดของปัญหาใด ๆ สามารถหาได้จากการนำคำตอบที่ดีที่สุดของปัญหาย่อย ๆ มาผ่านขั้นตอนการคำนวณที่วางไว้</p>
+                <h3>Overlapping Subproblem</h3>
+                <p>ปัญหาที่จะใช้ DP นั้นจะมี Overlapping Subproblem หรือปัญหาย่อยที่ซ้อนเหลื่อมกัน ก็ต่อเมื่อปัญหานั้นสามารถแบ่งเป็นปัญหาย่อย ๆ ที่ถูกใช้ซ้ำหลาย ๆ ครั้ง</p>
+                <h3>Framework for Recursive Algorithm - SRTBOT</h3>
+                <p>• SUBPROBLEM definition: การนิยามปัญหาย่อย • RELATE subproblems to solutions recursively: หาความสัมพันธ์แบบเวียนเกิดในการหาคำตอบของปัญหาย่อย • TOPOLOGICAL order on subproblem to guarantee acyclicness: ลำดับในการแก้ปัญหาจากปัญหาที่ควรแก้ก่อนเพื่อป้องกัน infinite loop • BASE case of relation: กำหนดขั้นฐานของความสัมพันธ์เวียนเกิด • ORIGINAL problem: solve via subproblems: กำหนดปัญหาเดิมที่สามารถหาคำตอบได้ผ่านปัญหาย่อย • TIME analysis: วิเคราะห์เวลาที่ต้องใช้ (ส่วนใหญ่ผ่าน Master Theorem)</p>
+                <h3>Top-Down &amp; Bottom-up Approach to Dynamic Programming</h3>
+                <p>เมื่อนำ DP มาเขียนโค้ด จะเห็นว่าเราสามารถพิจารณาขั้นตอนการแก้ปัญหาได้ 2 แบบ คือ Top-Down (บนลงล่าง) และ Bottom-up (ล่างขึ้นบน) โดยด้านบนมักจะเป็นปัญหาที่ใหญ่กว่าด้านล่าง</p>
+                <h3>Top-Down</h3>
+                <pre><code data-lang="cpp">vector&lt;<span style="color: #d73948">int</span>> <span style="color: #4b69c6">v</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fib</span>(<span style="color: #d73948">int</span> i) {<br>    <span style="color: #d73948">if</span>(v[i] <span style="color: #d73948">></span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">return</span> v[i];<br>    <span style="color: #d73948">if</span>(i <span style="color: #d73948">==</span> <span style="color: #b60157">0</span> <span style="color: #d73948">||</span> i <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) {<br>        v[i] <span style="color: #d73948">=</span> i;<br>        <span style="color: #d73948">return</span> v[i];<br>    }<br>    v[i] <span style="color: #d73948">=</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">2</span>);<br>    <span style="color: #d73948">return</span> v[i];<br>}</code></pre>
+                <p>วิธีคิดแบบ Top-Down นั้นจะพิจารณาหาคำตอบของ Original Case โดยแบ่งไปหาให้ค่อย ๆ เล็กลงจนถึง Base Case แล้วนำมาแก้ปัญหา</p>
+                <h3>Bottom-up</h3>
+                <pre><code data-lang="cpp">vector&lt;<span style="color: #d73948">int</span>> <span style="color: #4b69c6">v</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fib</span>(<span style="color: #d73948">int</span> i) {<br>    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> i; j<span style="color: #d73948">++</span>) {<br>        <span style="color: #d73948">if</span>(j <span style="color: #d73948">==</span> <span style="color: #b60157">0</span> <span style="color: #d73948">||</span> j <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) {<br>            v[j] <span style="color: #d73948">=</span> j;<br>        } <span style="color: #d73948">else</span> v[j] <span style="color: #d73948">=</span> <span style="color: #4b69c6">fib</span>(j<span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fib</span>(j<span style="color: #d73948">-</span><span style="color: #b60157">2</span>);<br>    }<br>    <span style="color: #d73948">return</span> v[i];<br>}</code></pre>
+                <p>วิธีคิดแบบ Bottom-up จะเริ่มวนลูปจาก Base Case ไปยัง Original Case โดยค่อย ๆ สร้างคำตอบของปัญหาให้ใหญ่ขึ้นเรื่อย ๆ จนสามารถแก้ปัญหาเดิมได้ในที่สุด</p>
+            <div class="page-nav">
+                <a href="3102_path-circuit.html" class="prev">Path and Circuit</a>
+                <a href="9000_resources.html" class="next">Resources</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, right: '
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h2>Anon’s Guide to DP</h2>
+                <h3>Improving from Divide &amp; Conquer - Memoization</h3>
+                <p>ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง $\mathcal{O}(\varphi^n)$ สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ $n$ ซึ่งเป็นรูปแบบการเติบโตแบบ exponential เลยทีเดียว! แล้วเราจะทำอะไรได้เพื่อลดเวลาที่ต้องใช้ในการคำนวณ?</p>
+                <p>ถ้าเราวาดแผนผังต้นไม้ในการหาจำนวนฟิโบนัชชีลำดับที่ $n$ จะเห็นว่ามีการเรียกฟังก์ชันซ้ำค่อนข้างมาก เช่น $\text{Fib}(3)$ ที่ถูกเรียกถึง 5 ครั้ง ลองจินตนาการดูว่าถ้าเราจะหา $\text{Fib}(100)$ จะต้องเรียกฟังก์ชันซ้ำมากขนาดไหน</p>
+                <p>ถ้าเรา <strong>จำ</strong> $\text{Fib}(i)$ ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง โดยให้เก็บค่าของ $\text{Fib}(i)$ และเรียกค่าจากที่เก็บมาได้ โค้ดจะมีลักษณะดังนี้:</p>
+                <pre><code data-lang="cpp">vector&lt;<span style="color: #d73948">int</span>> <span style="color: #4b69c6">v</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fib</span>(<span style="color: #d73948">int</span> i) {<br>    <span style="color: #d73948">if</span>(v[i] <span style="color: #d73948">></span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">return</span> v[i];<br>    <span style="color: #d73948">if</span>(i <span style="color: #d73948">==</span> <span style="color: #b60157">0</span> <span style="color: #d73948">||</span> i <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) {<br>        v[i] <span style="color: #d73948">=</span> i;<br>        <span style="color: #d73948">return</span> v[i];<br>    }<br>    v[i] <span style="color: #d73948">=</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">2</span>);<br>    <span style="color: #d73948">return</span> v[i];<br>}</code></pre>
+                <p>การใช้เทคนิคนี้เรียกว่า memoization โดยมาจากการเก็บค่าไว้ใน memo หรือโน้ตเตือนความจำนั่นเอง</p>
+                <h3>Definition of Dynamic Programming</h3>
+                <p>Dynamic Programming (หรือ DP) ก็คือการทำ Divide &amp; Conquer โดยนำเอา memoization มาช่วยบูสต์ให้สามารถคำนวณผลเฉลยโดยพิจารณาจาก state ก่อนหน้าหรือ state ที่เล็กกว่า ทำให้ปัญหานั้นสามารถแก้ได้ภายในเวลา Polynomial Time</p>
+                <p>DP นั้นเหมาะกับการแก้ปัญหา Optimization หรือการหาค่าที่ดีที่สุด เช่น ราคาถูกที่สุด ยาวที่สุด ได้กำไรมากที่สุด ใช้เวลาน้อยที่สุด โดยปัญหาที่ใช้ DP แก้ได้จะต้องมีองค์ประกอบ 2 อย่างด้วยกัน</p>
+                <h3>Optimal Substructure</h3>
+                <p>ปัญหาที่จะใช้ DP นั้นจะมี Optimal Substructure หรือโครงสร้างย่อยที่ดีที่สุด ก็ต่อเมื่อคำตอบที่ดีที่สุดของปัญหาใด ๆ สามารถหาได้จากการนำคำตอบที่ดีที่สุดของปัญหาย่อย ๆ มาผ่านขั้นตอนการคำนวณที่วางไว้</p>
+                <h3>Overlapping Subproblem</h3>
+                <p>ปัญหาที่จะใช้ DP นั้นจะมี Overlapping Subproblem หรือปัญหาย่อยที่ซ้อนเหลื่อมกัน ก็ต่อเมื่อปัญหานั้นสามารถแบ่งเป็นปัญหาย่อย ๆ ที่ถูกใช้ซ้ำหลาย ๆ ครั้ง</p>
+                <h3>Framework for Recursive Algorithm - SRTBOT</h3>
+                <p>• SUBPROBLEM definition: การนิยามปัญหาย่อย • RELATE subproblems to solutions recursively: หาความสัมพันธ์แบบเวียนเกิดในการหาคำตอบของปัญหาย่อย • TOPOLOGICAL order on subproblem to guarantee acyclicness: ลำดับในการแก้ปัญหาจากปัญหาที่ควรแก้ก่อนเพื่อป้องกัน infinite loop • BASE case of relation: กำหนดขั้นฐานของความสัมพันธ์เวียนเกิด • ORIGINAL problem: solve via subproblems: กำหนดปัญหาเดิมที่สามารถหาคำตอบได้ผ่านปัญหาย่อย • TIME analysis: วิเคราะห์เวลาที่ต้องใช้ (ส่วนใหญ่ผ่าน Master Theorem)</p>
+                <h3>Top-Down &amp; Bottom-up Approach to Dynamic Programming</h3>
+                <p>เมื่อนำ DP มาเขียนโค้ด จะเห็นว่าเราสามารถพิจารณาขั้นตอนการแก้ปัญหาได้ 2 แบบ คือ Top-Down (บนลงล่าง) และ Bottom-up (ล่างขึ้นบน) โดยด้านบนมักจะเป็นปัญหาที่ใหญ่กว่าด้านล่าง</p>
+                <h3>Top-Down</h3>
+                <pre><code data-lang="cpp">vector&lt;<span style="color: #d73948">int</span>> <span style="color: #4b69c6">v</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fib</span>(<span style="color: #d73948">int</span> i) {<br>    <span style="color: #d73948">if</span>(v[i] <span style="color: #d73948">></span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">return</span> v[i];<br>    <span style="color: #d73948">if</span>(i <span style="color: #d73948">==</span> <span style="color: #b60157">0</span> <span style="color: #d73948">||</span> i <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) {<br>        v[i] <span style="color: #d73948">=</span> i;<br>        <span style="color: #d73948">return</span> v[i];<br>    }<br>    v[i] <span style="color: #d73948">=</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fib</span>(i<span style="color: #d73948">-</span><span style="color: #b60157">2</span>);<br>    <span style="color: #d73948">return</span> v[i];<br>}</code></pre>
+                <p>วิธีคิดแบบ Top-Down นั้นจะพิจารณาหาคำตอบของ Original Case โดยแบ่งไปหาให้ค่อย ๆ เล็กลงจนถึง Base Case แล้วนำมาแก้ปัญหา</p>
+                <h3>Bottom-up</h3>
+                <pre><code data-lang="cpp">vector&lt;<span style="color: #d73948">int</span>> <span style="color: #4b69c6">v</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fib</span>(<span style="color: #d73948">int</span> i) {<br>    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> i; j<span style="color: #d73948">++</span>) {<br>        <span style="color: #d73948">if</span>(j <span style="color: #d73948">==</span> <span style="color: #b60157">0</span> <span style="color: #d73948">||</span> j <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) {<br>            v[j] <span style="color: #d73948">=</span> j;<br>        } <span style="color: #d73948">else</span> v[j] <span style="color: #d73948">=</span> <span style="color: #4b69c6">fib</span>(j<span style="color: #d73948">-</span><span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fib</span>(j<span style="color: #d73948">-</span><span style="color: #b60157">2</span>);<br>    }<br>    <span style="color: #d73948">return</span> v[i];<br>}</code></pre>
+                <p>วิธีคิดแบบ Bottom-up จะเริ่มวนลูปจาก Base Case ไปยัง Original Case โดยค่อย ๆ สร้างคำตอบของปัญหาให้ใหญ่ขึ้นเรื่อย ๆ จนสามารถแก้ปัญหาเดิมได้ในที่สุด</p>
+            <div class="page-nav">
+                <a href="3102_path-circuit.html" class="prev">Path and Circuit</a>
+                <a href="9000_resources.html" class="next">Resources</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
+</html>, display: false}
+                ],
+                throwOnError: false
+            });"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    </head>
+<body hx-boost="true">
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
