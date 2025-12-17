@@ -1,105 +1,129 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Table | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h3>Hash Table</h3>
-    <h4>Idea</h4>
-    <ul>
-      <li>hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure</li>
-      <li>hash function</li>
-    </ul>
-    <p>(figure from [<a href="https://en.wikipedia.org/wiki/Hash_table">https://en.wikipedia.org/wiki/Hash_table</a>](https:%%</p>
-    <ul>
-      <li>หัวใจหลักของการทำ hashing คือการกระจาย entries (key/value pairs) ไปไว้ในช่องต่างๆใน array ที่เรากำหนด</li>
-      <li>เมื่อเรามี key แล้วกระบวนการนี้ควรจะคิด index ที่ key นี้ควรจะอาศัยอยู่</li>
-    </ul>
-    <pre><code>index = f(key, array_size)</code></pre>
-    <ul>
-      <li>ตามปกติแล้วกระบวนการนี้จะมีสองขั้นตอน คือ</li>
-    </ul>
-    <pre><code>hash = hashfunc(key) // คิดค่า hash จาก hash function ของ key<br>index = hash % array_size // mod ค่า hash ด้วย array_size เพื่อป้องกัน index error</code></pre>
-    <ul>
-      <li>
-        <p>ในกรณีนี้ การ hash จะไม่สนใจขนาดของ array แล้วค่อยจำกัดขอบเขตภายหลังด้วยการ modulo (%) ให้ index อยู่ในช่วง</p>
-      </li>
-    </ul>
-    <h4>Polynomial hashing</h4>
-    <ul>
-      <li>ตัวอย่าง hash function หนึ่งคือ polynomial hashing ซึ่งมีลักษณะดังนี้</li>
-    </ul>
-    <ul>
-      <li>
-        <p>โดย</p>
-        <p>คือค่าของแต่ละตัวอักษรของ <strong>s</strong></p>
-      </li>
-      <li>และ <strong>A</strong>, <strong>B</strong> เป็นค่าคงที่ที่เรากำหนด</li>
-    </ul>
-    <h5>ตัวอย่าง</h5>
-    <ul>
-      <li>คำว่า ALLEY จะมีค่าดังตาราง</li>
-    </ul>
-    <table>
-      <thead>
-        <tr>
-          <th>A</th>
-          <th>L</th>
-          <th>L</th>
-          <th>E</th>
-          <th>Y</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>65</td>
-          <td>76</td>
-          <td>76</td>
-          <td>69</td>
-          <td>89</td>
-        </tr>
-      </tbody>
-    </table>
-    <ul>
-      <li>หากกำหนดให้ <strong>A</strong> = 3 และ <strong>B</strong> = 97 จะทำให้ hash value มีค่าคือ</li>
-    </ul>
-    <ul>
-      <li>เราก็สามารถกำหนดได้ว่าคำว่า ALLEY ควรจะอยู่ช่องที่ 52</li>
-    </ul>
-    <h4>ตัวอย่างโปรแกรม</h4>
-    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> A <span style="color: #d73948">=</span> <span style="color: #b60157">3</span>;<br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> B <span style="color: #d73948">=</span> <span style="color: #b60157">97</span>;<br><br>string hash_table[B];<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">hash_function</span>(string s) {<br>  <span style="color: #d73948">int</span> sm <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> s) {<br>    sm <span style="color: #d73948">*=</span> A;<br>    sm <span style="color: #d73948">+=</span> <span style="color: #d73948">int</span>(x);<br>    sm <span style="color: #d73948">%=</span> B;<br>  }<br>  <span style="color: #d73948">return</span> sm;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  string s <span style="color: #d73948">=</span> <span style="color: #198810">"</span><span style="color: #198810">ALLEY</span><span style="color: #198810">"</span>;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">Hash value of </span><span style="color: #b60157">%s</span><span style="color: #198810"> is </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, s.<span style="color: #4b69c6">c_str</span>(), <span style="color: #4b69c6">hash_function</span>(s));<br>  hash_table[<span style="color: #4b69c6">hash_function</span>(s)] <span style="color: #d73948">=</span> s;<br>}</code></pre>
-    <p>ได้ output แบบนี้</p>
-    <pre><code>Hash value of ALLEY is 52</code></pre>
-    <p>💡 ข้อสังเกต</p>
-    <ul>
-      <li>hash function ควรจะเป็น deterministic function ซึ่งหมายความว่าถึงเราจะรันกี่ครั้งก็ควรจะได้ค่าเดิมเสมอ</li>
-      <li>ไม่อย่างนั้นเราจะไม่สามารถรู้ได้ว่าคำๆหนึ่งควรจะอยู่ที่ช่องอะไร หากรันสองครั้งแล้วค่าไม่เหมือนกัน</li>
-      <li>ตัวอย่างของ nondeterministic function คือการ random ค่าขึ้นมา ทำให้ไม่มีการการันตีว่ารันสองครั้งแล้วจะได้ค่าเดิม</li>
-    </ul>
-    <h4>Collision</h4>
-    <ul>
-      <li>เนื่องจากเวลาทำ hashing จะไม่สามารถการันตีได้ว่าค่า hash ของสองคำที่แตกต่างกันจะแตกต่างกันเสมอ</li>
-      <li>เช่นหาก hash value ของ “John Smith” กับ “Sandra Dee” เป็นค่าเดียวกันที่ค่า 152 จะเกิดปัญหาว่าไม่สามารถเก็บทั้งสองค่าในช่องเดียวกันได้</li>
-      <li>มีวิธีการแก้ปัญหาหลายแบบ ข้อดีข้อเสียแตกต่างกัน</li>
-    </ul>
-    <h5>Separate Chaining</h5>
-    <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png</a></p>
-    <p>(figure from <a href="https://en.wikipedia.org/wiki/Hash_table">https://en.wikipedia.org/wiki/Hash_table</a>)</p>
-    <ul>
-      <li>ทำให้แต่ละช่องเป็น linked list</li>
-    </ul>
-    <h4>Open addressing</h4>
-    <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png</a></p>
-    <p>(figure from <a href="https://en.wikipedia.org/wiki/Hash_table">https://en.wikipedia.org/wiki/Hash_table</a>)</p>
-    <ul>
-      <li>ขยับไปช่องถัดไป</li>
-    </ul>
-    <h4>เปรียบเทียบ</h4>
-    <ul>
-      <li>พิจารณาถึงตอนที่เราต้องการตรวจสอบว่ามีข้อมูลดังกล่าวอยู่ในตารางหรือไม่</li>
-      <li>พิจารณากรณีที่มีการลบข้อมูลเกิดขึ้น</li>
-    </ul>
-  </body>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Hash Table</h3>
+                <h4>Idea</h4>
+                <ul>
+                  <li>hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure</li>
+                  <li>hash function</li>
+                </ul>
+                <p>(figure from [<a href="https://en.wikipedia.org/wiki/Hash_table">https://en.wikipedia.org/wiki/Hash_table</a>](https:%%</p>
+                <ul>
+                  <li>หัวใจหลักของการทำ hashing คือการกระจาย entries (key/value pairs) ไปไว้ในช่องต่างๆใน array ที่เรากำหนด</li>
+                  <li>เมื่อเรามี key แล้วกระบวนการนี้ควรจะคิด index ที่ key นี้ควรจะอาศัยอยู่</li>
+                </ul>
+                <pre><code>index = f(key, array_size)</code></pre>
+                <ul>
+                  <li>ตามปกติแล้วกระบวนการนี้จะมีสองขั้นตอน คือ</li>
+                </ul>
+                <pre><code>hash = hashfunc(key) // คิดค่า hash จาก hash function ของ key<br>index = hash % array_size // mod ค่า hash ด้วย array_size เพื่อป้องกัน index error</code></pre>
+                <ul>
+                  <li>
+                    <p>ในกรณีนี้ การ hash จะไม่สนใจขนาดของ array แล้วค่อยจำกัดขอบเขตภายหลังด้วยการ modulo (%) ให้ index อยู่ในช่วง</p>
+                  </li>
+                </ul>
+                <h4>Polynomial hashing</h4>
+                <ul>
+                  <li>ตัวอย่าง hash function หนึ่งคือ polynomial hashing ซึ่งมีลักษณะดังนี้</li>
+                </ul>
+                <ul>
+                  <li>
+                    <p>โดย</p>
+                    <p>คือค่าของแต่ละตัวอักษรของ <strong>s</strong></p>
+                  </li>
+                  <li>และ <strong>A</strong>, <strong>B</strong> เป็นค่าคงที่ที่เรากำหนด</li>
+                </ul>
+                <h5>ตัวอย่าง</h5>
+                <ul>
+                  <li>คำว่า ALLEY จะมีค่าดังตาราง</li>
+                </ul>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>A</th>
+                      <th>L</th>
+                      <th>L</th>
+                      <th>E</th>
+                      <th>Y</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>65</td>
+                      <td>76</td>
+                      <td>76</td>
+                      <td>69</td>
+                      <td>89</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ul>
+                  <li>หากกำหนดให้ <strong>A</strong> = 3 และ <strong>B</strong> = 97 จะทำให้ hash value มีค่าคือ</li>
+                </ul>
+                <ul>
+                  <li>เราก็สามารถกำหนดได้ว่าคำว่า ALLEY ควรจะอยู่ช่องที่ 52</li>
+                </ul>
+                <h4>ตัวอย่างโปรแกรม</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> A <span style="color: #d73948">=</span> <span style="color: #b60157">3</span>;<br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> B <span style="color: #d73948">=</span> <span style="color: #b60157">97</span>;<br><br>string hash_table[B];<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">hash_function</span>(string s) {<br>  <span style="color: #d73948">int</span> sm <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> s) {<br>    sm <span style="color: #d73948">*=</span> A;<br>    sm <span style="color: #d73948">+=</span> <span style="color: #d73948">int</span>(x);<br>    sm <span style="color: #d73948">%=</span> B;<br>  }<br>  <span style="color: #d73948">return</span> sm;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  string s <span style="color: #d73948">=</span> <span style="color: #198810">"</span><span style="color: #198810">ALLEY</span><span style="color: #198810">"</span>;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">Hash value of </span><span style="color: #b60157">%s</span><span style="color: #198810"> is </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, s.<span style="color: #4b69c6">c_str</span>(), <span style="color: #4b69c6">hash_function</span>(s));<br>  hash_table[<span style="color: #4b69c6">hash_function</span>(s)] <span style="color: #d73948">=</span> s;<br>}</code></pre>
+                <p>ได้ output แบบนี้</p>
+                <pre><code>Hash value of ALLEY is 52</code></pre>
+                <p>💡 ข้อสังเกต</p>
+                <ul>
+                  <li>hash function ควรจะเป็น deterministic function ซึ่งหมายความว่าถึงเราจะรันกี่ครั้งก็ควรจะได้ค่าเดิมเสมอ</li>
+                  <li>ไม่อย่างนั้นเราจะไม่สามารถรู้ได้ว่าคำๆหนึ่งควรจะอยู่ที่ช่องอะไร หากรันสองครั้งแล้วค่าไม่เหมือนกัน</li>
+                  <li>ตัวอย่างของ nondeterministic function คือการ random ค่าขึ้นมา ทำให้ไม่มีการการันตีว่ารันสองครั้งแล้วจะได้ค่าเดิม</li>
+                </ul>
+                <h4>Collision</h4>
+                <ul>
+                  <li>เนื่องจากเวลาทำ hashing จะไม่สามารถการันตีได้ว่าค่า hash ของสองคำที่แตกต่างกันจะแตกต่างกันเสมอ</li>
+                  <li>เช่นหาก hash value ของ “John Smith” กับ “Sandra Dee” เป็นค่าเดียวกันที่ค่า 152 จะเกิดปัญหาว่าไม่สามารถเก็บทั้งสองค่าในช่องเดียวกันได้</li>
+                  <li>มีวิธีการแก้ปัญหาหลายแบบ ข้อดีข้อเสียแตกต่างกัน</li>
+                </ul>
+                <h5>Separate Chaining</h5>
+                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png</a></p>
+                <p>(figure from <a href="https://en.wikipedia.org/wiki/Hash_table">https://en.wikipedia.org/wiki/Hash_table</a>)</p>
+                <ul>
+                  <li>ทำให้แต่ละช่องเป็น linked list</li>
+                </ul>
+                <h4>Open addressing</h4>
+                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png</a></p>
+                <p>(figure from <a href="https://en.wikipedia.org/wiki/Hash_table">https://en.wikipedia.org/wiki/Hash_table</a>)</p>
+                <ul>
+                  <li>ขยับไปช่องถัดไป</li>
+                </ul>
+                <h4>เปรียบเทียบ</h4>
+                <ul>
+                  <li>พิจารณาถึงตอนที่เราต้องการตรวจสอบว่ามีข้อมูลดังกล่าวอยู่ในตารางหรือไม่</li>
+                  <li>พิจารณากรณีที่มีการลบข้อมูลเกิดขึ้น</li>
+                </ul>
+            <div class="page-nav">
+                <a href="2010_stack-queue.html" class="prev">Stack and Queue</a>
+                <a href="3000_greedy-algorithm.html" class="next">Greedy Algorithm</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
 </html>

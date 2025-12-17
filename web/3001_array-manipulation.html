@@ -1,45 +1,69 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Manipulation | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h3>Array Manipulation</h3>
-    <h4>คำอธิบาย</h4>
-    <p>Dynamic Range Sum Queries<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></p>
-    <ul>
-      <li>
-        <p>Fenwick Tree</p>
-        <ul>
-          <li><a href="https://csacademy.com/lesson/fenwick_trees/">https://csacademy.com/lesson/fenwick_trees/</a></li>
-          <li><a href="https://visualgo.net/en/fenwicktree?slide=1">https://visualgo.net/en/fenwicktree?slide=1</a></li>
-        </ul>
-      </li>
-      <li>
-        <p>Segment Tree</p>
-        <ul>
-          <li><a href="https://csacademy.com/lesson/segment_trees/">https://csacademy.com/lesson/segment_trees/</a></li>
-          <li><a href="https://visualgo.net/en/segmenttree?slide=1">https://visualgo.net/en/segmenttree?slide=1</a></li>
-        </ul>
-      </li>
-      <li>Query time vs Preprocess time</li>
-      <li>Hash <a href="https://visualgo.net/en/hashtable">https://visualgo.net/en/hashtable</a></li>
-      <li>
-        <p>Heap</p>
-        <ul>
-          <li><a href="https://csacademy.com/lesson/heaps/">https://csacademy.com/lesson/heaps/</a></li>
-          <li><a href="https://csacademy.com/lesson/heap_application_merge_k_sorted_lists/">https://csacademy.com/lesson/heap_application_merge_k_sorted_lists/</a></li>
-          <li><a href="https://visualgo.net/en/heap?slide=1">https://visualgo.net/en/heap?slide=1</a></li>
-        </ul>
-      </li>
-      <li>Union-find Disjoint Sets <a href="https://visualgo.net/en/ufds?slide=1">https://visualgo.net/en/ufds?slide=1</a></li>
-    </ul>
-    <section role="doc-endnotes">
-      <ol style="list-style-type: none">
-        <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://cses.fi/problemset/task/1648/">https://cses.fi/problemset/task/1648/</a></li>
-      </ol>
-    </section>
-  </body>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Array Manipulation</h3>
+                <h4>คำอธิบาย</h4>
+                <p>Dynamic Range Sum Queries<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></p>
+                <ul>
+                  <li>
+                    <p>Fenwick Tree</p>
+                    <ul>
+                      <li><a href="https://csacademy.com/lesson/fenwick_trees/">https://csacademy.com/lesson/fenwick_trees/</a></li>
+                      <li><a href="https://visualgo.net/en/fenwicktree?slide=1">https://visualgo.net/en/fenwicktree?slide=1</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>Segment Tree</p>
+                    <ul>
+                      <li><a href="https://csacademy.com/lesson/segment_trees/">https://csacademy.com/lesson/segment_trees/</a></li>
+                      <li><a href="https://visualgo.net/en/segmenttree?slide=1">https://visualgo.net/en/segmenttree?slide=1</a></li>
+                    </ul>
+                  </li>
+                  <li>Query time vs Preprocess time</li>
+                  <li>Hash <a href="https://visualgo.net/en/hashtable">https://visualgo.net/en/hashtable</a></li>
+                  <li>
+                    <p>Heap</p>
+                    <ul>
+                      <li><a href="https://csacademy.com/lesson/heaps/">https://csacademy.com/lesson/heaps/</a></li>
+                      <li><a href="https://csacademy.com/lesson/heap_application_merge_k_sorted_lists/">https://csacademy.com/lesson/heap_application_merge_k_sorted_lists/</a></li>
+                      <li><a href="https://visualgo.net/en/heap?slide=1">https://visualgo.net/en/heap?slide=1</a></li>
+                    </ul>
+                  </li>
+                  <li>Union-find Disjoint Sets <a href="https://visualgo.net/en/ufds?slide=1">https://visualgo.net/en/ufds?slide=1</a></li>
+                </ul>
+                <section role="doc-endnotes">
+                  <ol style="list-style-type: none">
+                    <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://cses.fi/problemset/task/1648/">https://cses.fi/problemset/task/1648/</a></li>
+                  </ol>
+                </section>
+            <div class="page-nav">
+                <a href="3000_greedy-algorithm.html" class="prev">Greedy Algorithm</a>
+                <a href="3002_search.html" class="next">Search</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
 </html>

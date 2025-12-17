@@ -1,91 +1,115 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divide and Conquer | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h3>Divide &amp; Conquer</h3>
-    <h4>หลักการ</h4>
-    <ul>
-      <li>
-        <p>ประกอบด้วยขั้นตอนหลักสามขั้นตอน</p>
-        <ul>
-          <li>Divide แบ่งปัญหาให้เป็นปัญหาเดียวกันที่ขนาดเล็กลง</li>
-          <li>Conquer แก้ปัญหาย่อยๆ ให้ได้</li>
-          <li>Combine</li>
-        </ul>
-        <p>รวบรวมคำตอบของปัญหาย่อยที่ถูกแก้แล้วมารวมกันเพื่อแก้ปัญหาเดิมที่ใหญ่กว่า</p>
-      </li>
-      <li>ปัญหาที่ยังสามารถย่อยต่อเพื่อแก้ปัญหาได้เรียกว่า recursive case</li>
-      <li>ปัญหาที่ขนาดเล็กเพียงพอที่จะแก้ปัญหาได้โดยไม่ต้องย่อยต่อเรียกว่า base case</li>
-      <li>
-        <p>ปัญหาส่วนใหญ่จะใช้เวลา</p>
-        <p>โดย</p>
-      </li>
-    </ul>
-    <p>มาจากการแบ่งปัญหาเป็นครึ่ง ๆ ไปเรื่อย ๆ</p>
-    <h5>General Pseudocode</h5>
-    <pre><code>DAC(p):<br>    if is_base_case(p):<br>        solve(p)<br>    else:<br>        divide p into p_1, p_2, ..., p_k<br>        apply DAC(p_1), DAC(p_2), ..., DAC(p_k)<br>        combine(DAC(p_1), DAC(p_2), ..., DAC(p_k))</code></pre>
-    <h4>Binary Search</h4>
-    <p>การหาจำนวน (หรือคำตอบที่ต้องการ) ในอาเรย์ที่มีการเรียงแล้ว โดยตัวอัลกอริธึมจะตรวจสอบกับตัวเลขตรงกลาง ก่อนที่จะแบ่งอาร์เรย์ออกเป็นสองฝั่งเพื่อหาตัวเลขนั้นอีกครั้ง หากตัวเลขที่กำลังหาอยู่มากกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งขวา แต่ถ้าหากตัวเลขที่กำลังหาอยู่น้อยกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งซ้าย</p>
-    <h5>Pattern</h5>
-    <pre><code data-lang="cpp"><span style="color: #d73948">int</span> lo <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, hi <span style="color: #d73948">=</span> N;<br><span style="color: #d73948">while</span> (lo <span style="color: #d73948">&lt;=</span> hi) {<br>  <span style="color: #d73948">int</span> mi <span style="color: #d73948">=</span> (lo <span style="color: #d73948">+</span> hi) <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> ระวัง overflow ตอน lo+hi</span><br>  <span style="color: #d73948">if</span> (A[mi] <span style="color: #d73948">></span> target) {<br>    hi <span style="color: #d73948">=</span> mi <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>;<br>  } <span style="color: #d73948">else</span> {<br>    lo <span style="color: #d73948">=</span> mi <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br>  }<br>}</code></pre>
-    <h5>STL</h5>
-    <ul>
-      <li>upper_bound</li>
-      <li>lower_bound</li>
-    </ul>
-    <h5>Binary Search คำตอบ</h5>
-    <ul>
-      <li>ปัญหาบางอย่างสามารถสมมุติคำตอบแล้ว check ได้เร็ว</li>
-      <li>หากคำตอบมี pattern เช่น ถ้าค่าน้อยสามารถทำได้แล้วค่าที่มากกว่าจะทำได้ด้วยเสมอ ก็จะสามารถ binary search ได้</li>
-    </ul>
-    <h4>More on Binary Search</h4>
-    <ul>
-      <li>สอน Binary Search ฉบับสมบูรณ์โคตรๆ (aquablitz11)<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></li>
-      <li><a href="https://csacademy.com/lesson/binary_search/">https://csacademy.com/lesson/binary_search/</a></li>
-    </ul>
-    <h4>Closest Pair</h4>
-    <p><a href="https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/">https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/</a></p>
-    <h4>ปัญหาเลขยกกำลัง</h4>
-    <p>พิจารณาวิธีหาค่าของ</p>
-    <p>หากทำการคูณเลขตรงๆ จะเป็น</p>
-    <p>ถ้าเราแบ่ง</p>
-    <ul>
-      <li>
-        <p>Recursive case</p>
-        <ul>
-          <li></li>
-          <li></li>
-        </ul>
-      </li>
-      <li>
-        <p>Base case</p>
-        <ul>
-          <li></li>
-          <li></li>
-        </ul>
-      </li>
-    </ul>
-    <h4>จำนวน Fibonacci</h4>
-    <p>จำนวนฟิโบนัชชี (เขียนแทนว่า</p>
-    <p>) คือลำดับจำนวนที่ถูกนิยามจากผลบวกของจำนวนฟิโบนัชชีสองตัวก่อนหน้า โดยกำหนดให้จำนวนฟิโบนัชชีสองตัวแรกเป็น 0 และ 1 ตามลำดับ นั่นคือ</p>
-    <p>โดยจะสามารถเขียนลำดับได้เป็น</p>
-    <p>เพราะฉะนั้นแล้ว base case ก็คือ</p>
-    <p>และ recursive case ก็คือ</p>
-    <h4>Merge Sort</h4>
-    <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">merge</span>(<span style="color: #d73948">int</span> array[], <span style="color: #d73948">int</span> <span style="color: #d73948">const</span> left, <span style="color: #d73948">int</span> <span style="color: #d73948">const</span> mid, <span style="color: #d73948">int</span> <span style="color: #d73948">const</span> right) {<br>  <span style="color: #d73948">auto</span> <span style="color: #d73948">const</span> subArrayOne <span style="color: #d73948">=</span> mid <span style="color: #d73948">-</span> left <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br>  <span style="color: #d73948">auto</span> <span style="color: #d73948">const</span> subArrayTwo <span style="color: #d73948">=</span> right <span style="color: #d73948">-</span> mid;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Create temp arrays</span><br>  <span style="color: #d73948">auto</span> <span style="color: #d73948">*</span>leftArray <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[subArrayOne], <span style="color: #d73948">*</span>rightArray <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[subArrayTwo];<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Copy data to temp arrays leftArray[] and rightArray[]</span><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> subArrayOne; i<span style="color: #d73948">++</span>)<br>    leftArray[i] <span style="color: #d73948">=</span> array[left <span style="color: #d73948">+</span> i];<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> subArrayTwo; j<span style="color: #d73948">++</span>)<br>    rightArray[j] <span style="color: #d73948">=</span> array[mid <span style="color: #d73948">+</span> <span style="color: #b60157">1</span> <span style="color: #d73948">+</span> j];<br><br>  <span style="color: #d73948">auto</span> indexOfSubArrayOne <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>,   <span style="color: #74747c">//</span><span style="color: #74747c"> Initial index of first sub-array</span><br>      indexOfSubArrayTwo <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;    <span style="color: #74747c">//</span><span style="color: #74747c"> Initial index of second sub-array</span><br>  <span style="color: #d73948">int</span> indexOfMergedArray <span style="color: #d73948">=</span> left; <span style="color: #74747c">//</span><span style="color: #74747c"> Initial index of merged array</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Merge the temp arrays back into array[left..right]</span><br>  <span style="color: #d73948">while</span> (indexOfSubArrayOne <span style="color: #d73948">&lt;</span> subArrayOne <span style="color: #d73948">&amp;&amp;</span> indexOfSubArrayTwo <span style="color: #d73948">&lt;</span> subArrayTwo) {<br>    <span style="color: #d73948">if</span> (leftArray[indexOfSubArrayOne] <span style="color: #d73948">&lt;=</span> rightArray[indexOfSubArrayTwo]) {<br>      array[indexOfMergedArray] <span style="color: #d73948">=</span> leftArray[indexOfSubArrayOne];<br>      indexOfSubArrayOne<span style="color: #d73948">++</span>;<br>    } <span style="color: #d73948">else</span> {<br>      array[indexOfMergedArray] <span style="color: #d73948">=</span> rightArray[indexOfSubArrayTwo];<br>      indexOfSubArrayTwo<span style="color: #d73948">++</span>;<br>    }<br>    indexOfMergedArray<span style="color: #d73948">++</span>;<br>  }<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Copy the remaining elements of</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> left[], if there are any</span><br>  <span style="color: #d73948">while</span> (indexOfSubArrayOne <span style="color: #d73948">&lt;</span> subArrayOne) {<br>    array[indexOfMergedArray] <span style="color: #d73948">=</span> leftArray[indexOfSubArrayOne];<br>    indexOfSubArrayOne<span style="color: #d73948">++</span>;<br>    indexOfMergedArray<span style="color: #d73948">++</span>;<br>  }<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Copy the remaining elements of</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> right[], if there are any</span><br>  <span style="color: #d73948">while</span> (indexOfSubArrayTwo <span style="color: #d73948">&lt;</span> subArrayTwo) {<br>    array[indexOfMergedArray] <span style="color: #d73948">=</span> rightArray[indexOfSubArrayTwo];<br>    indexOfSubArrayTwo<span style="color: #d73948">++</span>;<br>    indexOfMergedArray<span style="color: #d73948">++</span>;<br>  }<br>}</code></pre>
-    <h4>Square Root Decomposition</h4>
-    <ul>
-      <li><a href="https://usaco.guide/plat/sqrt?lang=cpp">https://usaco.guide/plat/sqrt?lang=cpp</a></li>
-      <li><a href="https://cp-algorithms.com/data_structures/sqrt_decomposition.html">https://cp-algorithms.com/data_structures/sqrt_decomposition.html</a></li>
-    </ul>
-    <section role="doc-endnotes">
-      <ol style="list-style-type: none">
-        <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html">https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html</a></li>
-      </ol>
-    </section>
-  </body>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Divide &amp; Conquer</h3>
+                <h4>หลักการ</h4>
+                <ul>
+                  <li>
+                    <p>ประกอบด้วยขั้นตอนหลักสามขั้นตอน</p>
+                    <ul>
+                      <li>Divide แบ่งปัญหาให้เป็นปัญหาเดียวกันที่ขนาดเล็กลง</li>
+                      <li>Conquer แก้ปัญหาย่อยๆ ให้ได้</li>
+                      <li>Combine</li>
+                    </ul>
+                    <p>รวบรวมคำตอบของปัญหาย่อยที่ถูกแก้แล้วมารวมกันเพื่อแก้ปัญหาเดิมที่ใหญ่กว่า</p>
+                  </li>
+                  <li>ปัญหาที่ยังสามารถย่อยต่อเพื่อแก้ปัญหาได้เรียกว่า recursive case</li>
+                  <li>ปัญหาที่ขนาดเล็กเพียงพอที่จะแก้ปัญหาได้โดยไม่ต้องย่อยต่อเรียกว่า base case</li>
+                  <li>
+                    <p>ปัญหาส่วนใหญ่จะใช้เวลา</p>
+                    <p>โดย</p>
+                  </li>
+                </ul>
+                <p>มาจากการแบ่งปัญหาเป็นครึ่ง ๆ ไปเรื่อย ๆ</p>
+                <h5>General Pseudocode</h5>
+                <pre><code>DAC(p):<br>    if is_base_case(p):<br>        solve(p)<br>    else:<br>        divide p into p_1, p_2, ..., p_k<br>        apply DAC(p_1), DAC(p_2), ..., DAC(p_k)<br>        combine(DAC(p_1), DAC(p_2), ..., DAC(p_k))</code></pre>
+                <h4>Binary Search</h4>
+                <p>การหาจำนวน (หรือคำตอบที่ต้องการ) ในอาเรย์ที่มีการเรียงแล้ว โดยตัวอัลกอริธึมจะตรวจสอบกับตัวเลขตรงกลาง ก่อนที่จะแบ่งอาร์เรย์ออกเป็นสองฝั่งเพื่อหาตัวเลขนั้นอีกครั้ง หากตัวเลขที่กำลังหาอยู่มากกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งขวา แต่ถ้าหากตัวเลขที่กำลังหาอยู่น้อยกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งซ้าย</p>
+                <h5>Pattern</h5>
+                <pre><code data-lang="cpp"><span style="color: #d73948">int</span> lo <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, hi <span style="color: #d73948">=</span> N;<br><span style="color: #d73948">while</span> (lo <span style="color: #d73948">&lt;=</span> hi) {<br>  <span style="color: #d73948">int</span> mi <span style="color: #d73948">=</span> (lo <span style="color: #d73948">+</span> hi) <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> ระวัง overflow ตอน lo+hi</span><br>  <span style="color: #d73948">if</span> (A[mi] <span style="color: #d73948">></span> target) {<br>    hi <span style="color: #d73948">=</span> mi <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>;<br>  } <span style="color: #d73948">else</span> {<br>    lo <span style="color: #d73948">=</span> mi <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br>  }<br>}</code></pre>
+                <h5>STL</h5>
+                <ul>
+                  <li>upper_bound</li>
+                  <li>lower_bound</li>
+                </ul>
+                <h5>Binary Search คำตอบ</h5>
+                <ul>
+                  <li>ปัญหาบางอย่างสามารถสมมุติคำตอบแล้ว check ได้เร็ว</li>
+                  <li>หากคำตอบมี pattern เช่น ถ้าค่าน้อยสามารถทำได้แล้วค่าที่มากกว่าจะทำได้ด้วยเสมอ ก็จะสามารถ binary search ได้</li>
+                </ul>
+                <h4>More on Binary Search</h4>
+                <ul>
+                  <li>สอน Binary Search ฉบับสมบูรณ์โคตรๆ (aquablitz11)<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></li>
+                  <li><a href="https://csacademy.com/lesson/binary_search/">https://csacademy.com/lesson/binary_search/</a></li>
+                </ul>
+                <h4>Closest Pair</h4>
+                <p><a href="https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/">https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/</a></p>
+                <h4>ปัญหาเลขยกกำลัง</h4>
+                <p>พิจารณาวิธีหาค่าของ</p>
+                <p>หากทำการคูณเลขตรงๆ จะเป็น</p>
+                <p>ถ้าเราแบ่ง</p>
+                <ul>
+                  <li>
+                    <p>Recursive case</p>
+                    <ul>
+                      <li></li>
+                      <li></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>Base case</p>
+                    <ul>
+                      <li></li>
+                      <li></li>
+                    </ul>
+                  </li>
+                </ul>
+                <h4>จำนวน Fibonacci</h4>
+                <p>จำนวนฟิโบนัชชี (เขียนแทนว่า</p>
+                <p>) คือลำดับจำนวนที่ถูกนิยามจากผลบวกของจำนวนฟิโบนัชชีสองตัวก่อนหน้า โดยกำหนดให้จำนวนฟิโบนัชชีสองตัวแรกเป็น 0 และ 1 ตามลำดับ นั่นคือ</p>
+                <p>โดยจะสามารถเขียนลำดับได้เป็น</p>
+                <p>เพราะฉะนั้นแล้ว base case ก็คือ</p>
+                <p>และ recursive case ก็คือ</p>
+                <h4>Merge Sort</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">merge</span>(<span style="color: #d73948">int</span> array[], <span style="color: #d73948">int</span> <span style="color: #d73948">const</span> left, <span style="color: #d73948">int</span> <span style="color: #d73948">const</span> mid, <span style="color: #d73948">int</span> <span style="color: #d73948">const</span> right) {<br>  <span style="color: #d73948">auto</span> <span style="color: #d73948">const</span> subArrayOne <span style="color: #d73948">=</span> mid <span style="color: #d73948">-</span> left <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br>  <span style="color: #d73948">auto</span> <span style="color: #d73948">const</span> subArrayTwo <span style="color: #d73948">=</span> right <span style="color: #d73948">-</span> mid;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Create temp arrays</span><br>  <span style="color: #d73948">auto</span> <span style="color: #d73948">*</span>leftArray <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[subArrayOne], <span style="color: #d73948">*</span>rightArray <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[subArrayTwo];<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Copy data to temp arrays leftArray[] and rightArray[]</span><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> subArrayOne; i<span style="color: #d73948">++</span>)<br>    leftArray[i] <span style="color: #d73948">=</span> array[left <span style="color: #d73948">+</span> i];<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> subArrayTwo; j<span style="color: #d73948">++</span>)<br>    rightArray[j] <span style="color: #d73948">=</span> array[mid <span style="color: #d73948">+</span> <span style="color: #b60157">1</span> <span style="color: #d73948">+</span> j];<br><br>  <span style="color: #d73948">auto</span> indexOfSubArrayOne <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>,   <span style="color: #74747c">//</span><span style="color: #74747c"> Initial index of first sub-array</span><br>      indexOfSubArrayTwo <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;    <span style="color: #74747c">//</span><span style="color: #74747c"> Initial index of second sub-array</span><br>  <span style="color: #d73948">int</span> indexOfMergedArray <span style="color: #d73948">=</span> left; <span style="color: #74747c">//</span><span style="color: #74747c"> Initial index of merged array</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Merge the temp arrays back into array[left..right]</span><br>  <span style="color: #d73948">while</span> (indexOfSubArrayOne <span style="color: #d73948">&lt;</span> subArrayOne <span style="color: #d73948">&amp;&amp;</span> indexOfSubArrayTwo <span style="color: #d73948">&lt;</span> subArrayTwo) {<br>    <span style="color: #d73948">if</span> (leftArray[indexOfSubArrayOne] <span style="color: #d73948">&lt;=</span> rightArray[indexOfSubArrayTwo]) {<br>      array[indexOfMergedArray] <span style="color: #d73948">=</span> leftArray[indexOfSubArrayOne];<br>      indexOfSubArrayOne<span style="color: #d73948">++</span>;<br>    } <span style="color: #d73948">else</span> {<br>      array[indexOfMergedArray] <span style="color: #d73948">=</span> rightArray[indexOfSubArrayTwo];<br>      indexOfSubArrayTwo<span style="color: #d73948">++</span>;<br>    }<br>    indexOfMergedArray<span style="color: #d73948">++</span>;<br>  }<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Copy the remaining elements of</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> left[], if there are any</span><br>  <span style="color: #d73948">while</span> (indexOfSubArrayOne <span style="color: #d73948">&lt;</span> subArrayOne) {<br>    array[indexOfMergedArray] <span style="color: #d73948">=</span> leftArray[indexOfSubArrayOne];<br>    indexOfSubArrayOne<span style="color: #d73948">++</span>;<br>    indexOfMergedArray<span style="color: #d73948">++</span>;<br>  }<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Copy the remaining elements of</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> right[], if there are any</span><br>  <span style="color: #d73948">while</span> (indexOfSubArrayTwo <span style="color: #d73948">&lt;</span> subArrayTwo) {<br>    array[indexOfMergedArray] <span style="color: #d73948">=</span> rightArray[indexOfSubArrayTwo];<br>    indexOfSubArrayTwo<span style="color: #d73948">++</span>;<br>    indexOfMergedArray<span style="color: #d73948">++</span>;<br>  }<br>}</code></pre>
+                <h4>Square Root Decomposition</h4>
+                <ul>
+                  <li><a href="https://usaco.guide/plat/sqrt?lang=cpp">https://usaco.guide/plat/sqrt?lang=cpp</a></li>
+                  <li><a href="https://cp-algorithms.com/data_structures/sqrt_decomposition.html">https://cp-algorithms.com/data_structures/sqrt_decomposition.html</a></li>
+                </ul>
+                <section role="doc-endnotes">
+                  <ol style="list-style-type: none">
+                    <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html">https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html</a></li>
+                  </ol>
+                </section>
+            <div class="page-nav">
+                <a href="3004_adhoc.html" class="prev">Ad-hoc Problems</a>
+                <a href="3100_graph-algorithm.html" class="next">Graph Algorithm</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
 </html>
