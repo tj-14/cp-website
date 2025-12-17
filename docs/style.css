@@ -53,9 +53,23 @@ nav h2 {
     margin-top: 0;
 }
 
+nav h3 {
+    color: #2c3e50;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    border-left: 4px solid #007bff;
+    font-size: 1.1rem;
+}
+
+nav h3:first-of-type {
+    margin-top: 1rem;
+}
+
 nav ul {
     list-style-type: none;
     padding: 0;
+    margin-bottom: 0.5rem;
 }
 
 nav ul li a {
