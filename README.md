@@ -30,7 +30,7 @@ A guide website for Thai high school students interested in Computer Olympiad co
 ### ดูเว็บไซต์ในเครื่อง (Local Development)
 
 ```bash
-cd web
+cd docs
 python3 -m http.server 8080
 ```
 
@@ -43,7 +43,7 @@ cp-website/
 ├── book/              # ซอร์สโค้ด Typst (ต้นฉบับ)
 │   ├── content/      # ไฟล์เนื้อหา .typ
 │   └── comp_book.typ # ไฟล์หลัก
-├── web/              # เว็บไซต์ HTML
+├── docs/              # เว็บไซต์ HTML (GitHub Pages)
 │   ├── index.html    # หน้าแรก
 │   ├── style.css     # สไตล์ทั่วทั้งเว็บ
 │   └── *.html        # หน้าเนื้อหาต่างๆ
