@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>การเขียนโปรแกรมเชิงแข่งขัน | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
 </head>
 <body>
     <header>
@@ -36,27 +46,14 @@
                   <li>ก่อนจะเริ่มลงมือเขียนโปรแกรม เราควรจะรู้ให้ได้ว่าสิ่งที่เราเขียนจะได้กี่คะแนนสำหรับปัญหานั้น</li>
                   <li>Big O Notation เป็นสิ่งสำคัญที่ควรจะคาดคะเนให้ได้ว่าเราจะได้คะแนนเท่าไร</li>
                   <li>
-                    <p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้</p>
-                    <p>(พันล้าน) คำสั่งต่อหนึ่งวินาที ซึ่งหมายความว่า</p>
+                    <p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ $1,000,000,000$ (พันล้าน) คำสั่งต่อหนึ่งวินาที ซึ่งหมายความว่า</p>
                     <ul>
-                      <li>
-                        <p>สามารถคิดวิธี</p>
-                        <p>ได้แบบฉิวเฉียด</p>
-                        <p>ได้อย่างปลอดภัย</p>
-                      </li>
-                      <li>
-                        <p>ควรจะ</p>
-                      </li>
-                      <li>
-                        <p>อาจจะเป็น</p>
-                      </li>
+                      <li>$N=1,000$ สามารถคิดวิธี $O(N^3)$ ได้แบบฉิวเฉียด $O(N^2 \log N)$ ได้อย่างปลอดภัย</li>
+                      <li>$N=1,000,000$ ควรจะ $O(N \log N)$</li>
+                      <li>$N=20$ อาจจะเป็น $O(2^N)$</li>
                     </ul>
                   </li>
-                  <li>
-                    <p>จำว่า</p>
-                    <p>มีค่าประมาณ</p>
-                    <p>(หนึ่งล้าน)</p>
-                  </li>
+                  <li>จำว่า $2^{20}$ มีค่าประมาณ $1,000,000$ (หนึ่งล้าน)</li>
                 </ul>
                 <table>
                   <thead>
@@ -67,34 +64,28 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$N \leq 10$</td>
+                      <td>$O(N!)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$N \leq 20$</td>
+                      <td>$O(2^N)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$N \leq 500$</td>
+                      <td>$O(N^3)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>$N \leq 5000$</td>
+                      <td>$O(N^2)$</td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td>
-                        <p>or</p>
-                      </td>
+                      <td>$N \leq 10^6$</td>
+                      <td>$O(N \log N)$ or $O(N)$</td>
                     </tr>
                     <tr>
-                      <td>
-                        <p>is large</p>
-                      </td>
-                      <td>
-                        <p>or</p>
-                      </td>
+                      <td>$N$ is large</td>
+                      <td>$O(1)$ or $O(\log N)$</td>
                     </tr>
                   </tbody>
                 </table>
