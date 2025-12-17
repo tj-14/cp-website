@@ -66,6 +66,26 @@ nav h3:first-of-type {
     margin-top: 1rem;
 }
 
+/* Three-column layout for table of contents */
+.toc-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.toc-column {
+    min-width: 0; /* Prevent grid blowout */
+}
+
+.toc-column h3 {
+    margin-top: 0;
+}
+
+.toc-column h3:not(:first-child) {
+    margin-top: 1.5rem;
+}
+
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -287,6 +307,14 @@ footer a:hover {
     margin-bottom: 0.5rem;
 }
 
+/* Responsive design for tablets */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .toc-columns {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
     header h1 {
@@ -320,6 +348,12 @@ footer a:hover {
     nav ul li a {
         font-size: 0.9rem;
         padding: 0.6rem 0.8rem;
+    }
+    
+    /* Stack columns on mobile */
+    .toc-columns {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
     .page-nav {
