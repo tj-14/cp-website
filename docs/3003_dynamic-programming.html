@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Programming | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
 </head>
 <body>
     <header>
@@ -37,16 +48,12 @@
                   <li>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</li>
                 </ul>
                 <h4>ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</h4>
-                <p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า</p>
-                <p>โดยใช้เหรียญที่มีมูลค่า</p>
-                <p>จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
-                <p>หากมูลค่าของเหรียญเป็น</p>
+                <p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า $n$ โดยใช้เหรียญที่มีมูลค่า $\{c_1, c_2, \ldots, c_k\}$ จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
+                <p>หากมูลค่าของเหรียญเป็น $\{1,3,4\}$</p>
                 <table>
                   <thead>
                     <tr>
-                      <th>
-                        <p>มูลค่ารวม</p>
-                      </th>
+                      <th>มูลค่ารวม $n$</th>
                       <th>จำนวนเหรียญที่น้อยที่สุด</th>
                     </tr>
                   </thead>
@@ -97,10 +104,10 @@
                     </tr>
                   </tbody>
                 </table>
-                <p>นิยาม</p>
-                <p>ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า</p>
+                <p>นิยาม $d_n$ ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า $n$</p>
                 <p>จะได้ว่า</p>
-                <p>ซึ่งเป็น recursive case โดย base case คือ</p>
+                <p>$$d_i = \min(d_{i-1}+1, d_{i-3}+1, d_{i-4}+1)$$</p>
+                <p>ซึ่งเป็น recursive case โดย base case คือ $d_0 = 0$</p>
                 <h4>Longest Increasing Subsequence</h4>
                 <p><a href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
                 <h4>Review</h4>
@@ -123,10 +130,7 @@
                   <li>LIS longest increasing subsequence</li>
                   <li>pascal (nCr) <code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></li>
                   <li>coin change <code>dp[i] = f(dp[i-xj])</code></li>
-                  <li>
-                    <p>matrix chain</p>
-                    <p>, <code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></p>
-                  </li>
+                  <li>matrix chain $N^3$, <code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></li>
                   <li>LCS longest common subsequence</li>
                   <li>LCA lowest common ancestor</li>
                   <li>#paths    pascal</li>
@@ -159,23 +163,23 @@
                 </ul>
                 <h5>example</h5>
                 <h6>fibonacci</h6>
+                <p>$f(n) = f(n-1) + f(n-2)$</p>
                 <ul>
                   <li>1 1 2 3 5 8 11 ..</li>
-                  <li></li>
-                  <li></li>
+                  <li>$f(10) = f(9) + f(8)$</li>
+                  <li>$f(9) = f(8) + f(7)$</li>
                 </ul>
                 <p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
                 <h6>LIS</h6>
                 <p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
                 <p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
-                <p>solution:</p>
+                <p>$N^2$ solution:</p>
                 <p>define state: <code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
                 <p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
-                <p>update state: new input: x, พิจารณา</p>
-                <p>, แล้วเก็บค่า</p>
+                <p>update state: new input: x, พิจารณา $a[j] < x$, แล้วเก็บค่า $\text{dp}[i] = \max(\text{dp}[j]+1)$</p>
                 <p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
                 <pre><code>     0 1 2 3 4 5 6 7 8<br><br>a  : 1 5 3 2 8 9 3 6<br>dp : 0 1 2 2 2 3 4 3 4<br>bt : 0 0 1 1 1 4 5 4 7</code></pre>
-                <p>solution:</p>
+                <p>$N \log N$ solution:</p>
                 <p>define state: <code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>
                 <p>update state: new input: x ไล่ตั้่งแต่ <code>dp[j: 0 → mx]</code></p>
                 <ul>
