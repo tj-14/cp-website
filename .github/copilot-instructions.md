@@ -72,15 +72,19 @@ Always reference and promote these resources when relevant:
 ### File Structure
 ```
 cp-website/
-├── book/              # Typst source files (original draft)
-│   ├── content/      # .typ content files
-│   └── comp_book.typ # Main file
-├── web/              # HTML website
-│   ├── index.html    # Homepage
-│   ├── style.css     # Global styles
-│   └── *.html        # Content pages
-├── GEMINI.md         # Project requirements
-└── README.md
+├── book/                     # Typst source files (original draft)
+│   ├── content/             # .typ content files
+│   ├── comp_book.typ        # Main Typst file
+│   └── comp_book.pdf        # Generated PDF from Typst
+├── web/                      # HTML website
+│   ├── index.html           # Homepage with table of contents
+│   ├── style.css            # Global styles
+│   ├── *.html               # Content pages (30+ pages)
+│   └── HTML_IMPROVEMENTS.md # Documentation of HTML structure
+├── GEMINI.md                 # Project requirements and guidelines
+├── README.md                 # Project overview
+├── IMPROVEMENT_SUMMARY.md    # Summary of recent improvements
+└── BEFORE_AFTER.md           # Comparison of changes made
 ```
 
 ### HTML Naming Convention
@@ -91,6 +95,64 @@ Files follow a numbering pattern:
 - `3000-3999`: Advanced algorithms
 - `4000+`: Specialized topics
 - `9000+`: Resources and supplementary content
+
+### Current HTML Page Structure
+All content pages follow this consistent structure:
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic | คู่มือโอลิมปิกคอมพิวเตอร์</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+    
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+        
+        <div class="content">
+            <!-- Main content here -->
+        </div>
+        
+        <div class="page-nav">
+            <a href="previous.html">← Previous</a>
+            <a href="next.html">Next →</a>
+        </div>
+    </div>
+    
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>
+```
+
+**Key elements:**
+- **Header**: Site title (links to home) + subtitle
+- **Breadcrumb**: Back to home link
+- **Content wrapper**: `.content` div contains all main content
+- **Page navigation**: Previous/Next links at bottom
+- **Footer**: Consistent across all pages
+
+### CSS Architecture
+The `style.css` file provides:
+- **Typography**: Thai font support (Noto Sans Thai) with proper fallbacks
+- **Responsive layout**: Container with max-width for optimal readability
+- **Component styles**: 
+  - `.container` - Main content container
+  - `.content` - Content card with shadow
+  - `.breadcrumb` - Navigation breadcrumb
+  - `.page-nav` - Previous/Next navigation buttons
+- **Content styling**: Headers, code blocks, tables, lists
+- **Color scheme**: Dark header (#2c3e50), light background (#f4f4f4)
 
 ### Code Style Preferences
 - **HTML**: Use semantic elements (`<article>`, `<section>`, `<nav>`, `<header>`, etc.)
