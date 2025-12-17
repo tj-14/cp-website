@@ -24,7 +24,7 @@ python3 -m http.server 8080
 
 ### Inspiration
 - **Primary reference**: https://cp-algorithms.com/index.html (clean, minimal, content-focused)
-- **Secondary reference**: https://usaco.guide (but keep simpler and less featureful)
+- **Secondary reference**: https://usaco.guide (but keep simpler and less feature-rich)
 
 ### Key Principles
 - **Minimal**: No unnecessary features or complexity
