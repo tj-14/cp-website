@@ -100,69 +100,43 @@
                 </ul>
                 <h4>กฏของการคำนวณ</h4>
                 <ul>
-                  <li>
-                    <p>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์</p>
-                    <p>โดยจุดสามจุดแสดงถึงฟังก์ชันใด ๆ</p>
-                  </li>
-                  <li>
-                    <p>โดยทั่วไปแล้ว ตัวแปร</p>
-                    <p>แสดงถึงขนาดของ input</p>
-                  </li>
-                  <li>
-                    <p>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข</p>
-                    <p>จะเป็นขนาดของอาเรย์นั้น และหาก input เป็น string</p>
-                    <p>จะเป็นความยาวของ string นั้น</p>
-                  </li>
+                  <li>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ $O(\cdots)$ โดยจุดสามจุดแสดงถึงฟังก์ชันใด ๆ</li>
+                  <li>โดยทั่วไปแล้ว ตัวแปร $n$ แสดงถึงขนาดของ input</li>
+                  <li>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข $n$ จะเป็นขนาดของอาเรย์นั้น และหาก input เป็น string $n$ จะเป็นความยาวของ string นั้น</li>
                 </ul>
                 <h4>การวนซ้ำ</h4>
                 <ul>
                   <li>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ input</li>
                   <li>ยิ่งวนซ้ำหลายชั้น อัลกอริทีมจะยิ่งช้า</li>
-                  <li>
-                    <p>หากมีการวนซ้ำ</p>
-                    <p>ชั้น time complexity จะเป็น</p>
-                  </li>
+                  <li>หากมีการวนซ้ำ $k$ ชั้น time complexity จะเป็น $O(n^k)$</li>
                 </ul>
-                <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น</p>
+                <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น $O(n)$</p>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>และ time complexity ของโค้ดด้านล่างนี้</p>
+                <p>และ time complexity ของโค้ดด้านล่างนี้ $O(n^2)$</p>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {    <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 1</span><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {  <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 2</span><br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
                 <h4>Order of magnitude</h4>
                 <ul>
                   <li>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ order of magnitude</li>
-                  <li>
-                    <p>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น</p>
-                    <p>,</p>
-                    <p>และ</p>
-                    <p>ครั้ง แต่ time complexity นั้นเท่ากันคือ</p>
-                  </li>
+                  <li>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น $3n$, $n+5$ และ $\lceil n/2 \rceil$ ครั้ง แต่ time complexity นั้นเท่ากันคือ $O(n)$</li>
                 </ul>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">3</span><span style="color: #d73948">*</span>n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n<span style="color: #d73948">+</span><span style="color: #b60157">5</span>; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i <span style="color: #d73948">+=</span> <span style="color: #b60157">2</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น</p>
+                <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น $O(n^2)$</p>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i<span style="color: #d73948">+</span><span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>   <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
                 <h4>Phase</h4>
                 <ul>
                   <li>ถ้าอัลกอริทึมประกอบไปด้วยหลาย phase ติดต่อกันแล้ว complexity จะเป็น time complexity ที่สูงสุดของ phase หนึ่ง</li>
                   <li>เนื่องจาก bottleneck จะอยู่ที่ phase ที่ช้าที่สุด</li>
-                  <li>
-                    <p>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity</p>
-                    <p>,</p>
-                    <p>และ</p>
-                  </li>
-                  <li>
-                    <p>ดังนั้นคอขวดจะเป็น</p>
-                  </li>
+                  <li>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity $O(n)$, $O(n^2)$ และ $O(n)$</li>
+                  <li>ดังนั้นคอขวดจะเป็น $O(n^2)$</li>
                 </ul>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n^2)</span><br>  }<br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}</code></pre>
                 <h4>กรณีหลายตัวแปร</h4>
                 <ul>
                   <li>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</li>
                   <li>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</li>
-                  <li>
-                    <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น</p>
-                  </li>
+                  <li>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น $O(nm)$</li>
                 </ul>
                 <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> m; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
                 <h4>Recursion</h4>
