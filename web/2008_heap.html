@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h3>Heap</h3>
+    <h4>คำอธิบาย</h4>
+    <ul>
+      <li>Heap เป็นโครงสร้างข้อมูลต้นไม้ (tree) ที่มีเงื่อนไขพิเศษ และเป็น complete binary tree</li>
+      <li>
+        <p>โดยทั่วไปแล้ว heap มีสองประเภท</p>
+        <ul>
+          <li>Max-Heap: ใน max heap นั้น key ที่ root จะมีค่าที่มากที่สุด และคุณสมบัตินี้เป็นจริงในทุก ๆ sub-trees</li>
+          <li>Min-Heap: ใน min heap นั้น key ที่ root จะมีค่าที่น้อยที่สุด และคุณสมบัตินี้เป็นจริงในทุก ๆ sub-trees</li>
+        </ul>
+      </li>
+    </ul>
+    <p><a href="https://www.geeksforgeeks.org/wp-content/uploads/MinHeapAndMaxHeap.png">https://www.geeksforgeeks.org/wp-content/uploads/MinHeapAndMaxHeap.png</a></p>
+    <h4>คุณสมบัติ</h4>
+    <p>Binary Heap เป็น Binary Tree ที่มีคุณสมบัติเพิ่มเติมดังนี้</p>
+    <ul>
+      <li>เป็น complete tree (ทุกระดับจะมีโหนดเต็มระดับยกเว้นระดับสุดท้ายซึ่งระดับสุดท้ายจะต้องมีโหนดทางซ้ายให้ได้มากที่สุด</li>
+      <li>คุณสมบัตินี้ทำให้ Binary Heap เหมาะกับการใช้ array ในการเก็บ</li>
+      <li>
+        <p>Binary Heap นั้นเป็น Min Heap หรือ Max Heap</p>
+        <ul>
+          <li>ใน Min Binary Heap นั้น ค่าที่ root จะเป็นค่าที่น้อยที่สุด และคุณสมบัตินี้ต้องเป็นจริงสำหรับทุก node ใน Binary Tree</li>
+          <li>Max Binary Heap นั้นแค่เปลี่ยนจากค่าที่น้อยที่สุดเป็นมากที่สุด</li>
+        </ul>
+      </li>
+    </ul>
+    <h4>Operations (Min Heap)</h4>
+    <ul>
+      <li>
+        <p><code>getMin()</code>: คืนค่า root ของ Min Heap ได้เลย ซึ่งใช้เวลา</p>
+      </li>
+      <li>
+        <p><code>extractMin()</code>: นำค่าที่น้อยที่สุดใน MinHeap ออก ซึ่งใช้เวลา</p>
+        <p>เพราะเมื่อนำ root ออกแล้วจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap</p>
+      </li>
+      <li>
+        <p><code>decreaseKey()</code>: ลดค่าของโหนดที่ระบุ ซึ่งใช้เวลา</p>
+        <p>เพราะจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap</p>
+      </li>
+      <li>
+        <p><code>insert()</code>: เพิ่มโหนดใหม่ ซึ่งใช้เวลา</p>
+        <p>เพราะสามารถเพิ่มโหนดที่ตำแหน่งสุดท้าย แล้วค่อยปรับโครงสร้างให้ตรงคุณสมบัติ heap</p>
+      </li>
+      <li>
+        <p><code>delete()</code>: ลบโหนด ซึ่งใช้เวลา</p>
+        <p>เพราะสามารถ <code>decreaseKey()</code> ให้เป็น</p>
+        <p>แล้ว <code>extractMin()</code></p>
+      </li>
+    </ul>
+    <h4>ตัวอย่างการ implement</h4>
+    <ul>
+      <li>
+        <p>implement subroutine สองฟังก์ชันคือ</p>
+        <ul>
+          <li><code>jom</code> เป็นการปรับโหนดตำแหน่งที่ระบุให้จมลงไปตามคุณสมบัติของ heap</li>
+          <li><code>loy</code> เป็นการปรับโหนดตำแหน่งที่ระบุให้ลอยขึ้นตามคุณสมบัติของ heap</li>
+        </ul>
+      </li>
+    </ul>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">int</span> d[<span style="color: #b60157">100010</span>] <span style="color: #d73948">=</span> {};<br><span style="color: #d73948">int</span> cnt <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, heap[<span style="color: #b60157">100010</span>] <span style="color: #d73948">=</span> {};<br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">jom</span>(<span style="color: #d73948">int</span> i) {<br>  <span style="color: #d73948">while</span> (i <span style="color: #d73948">&lt;=</span> cnt <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>) {<br>    <span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i;<br>    <span style="color: #d73948">if</span> (i <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">&lt;</span> cnt)<br>      <span style="color: #d73948">if</span> (d[heap[i <span style="color: #d73948">*</span> <span style="color: #b60157">2</span>]] <span style="color: #d73948">&lt;</span> d[heap[j]])<br>        j <span style="color: #d73948">=</span> i <span style="color: #d73948">*</span> <span style="color: #b60157">2</span>;<br>    <span style="color: #d73948">if</span> (i <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span> <span style="color: #d73948">&lt;</span> cnt)<br>      <span style="color: #d73948">if</span> (d[heap[i <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>]] <span style="color: #d73948">&lt;</span> d[heap[j]])<br>        j <span style="color: #d73948">=</span> i <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br>    <span style="color: #d73948">if</span> (j <span style="color: #d73948">==</span> i)<br>      <span style="color: #d73948">break</span>;<br>    <span style="color: #4b69c6">swap</span>(heap[i], heap[j]);<br>    i <span style="color: #d73948">=</span> j;<br>  }<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">loy</span>(<span style="color: #d73948">int</span> i) {<br>  <span style="color: #d73948">while</span> (i <span style="color: #d73948">></span> <span style="color: #b60157">1</span>) {<br>    <span style="color: #d73948">if</span> (d[heap[i <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>]] <span style="color: #d73948">></span> d[heap[i]]) {<br>      <span style="color: #4b69c6">swap</span>(heap[i <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>], heap[i]);<br>      i <span style="color: #d73948">/=</span> <span style="color: #b60157">2</span>;<br>    } <span style="color: #d73948">else</span><br>      <span style="color: #d73948">break</span>;<br>  }<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">insertKey</span>(<span style="color: #d73948">int</span> k) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> First insert the new key at the end</span><br>  d[<span style="color: #d73948">++</span>cnt] <span style="color: #d73948">=</span> k;<br>  heap[cnt] <span style="color: #d73948">=</span> cnt;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Fix the min heap property if it is violated</span><br>  <span style="color: #4b69c6">loy</span>(cnt);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">decreaseKey</span>(<span style="color: #d73948">int</span> i, <span style="color: #d73948">int</span> new_val) {<br>  d[heap[i]] <span style="color: #d73948">=</span> new_val;<br>  <span style="color: #4b69c6">loy</span>(i);<br>}<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> Method to remove minimum element (or root) from min heap</span><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">extractMin</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Store the minimum value, and remove it from heap</span><br>  <span style="color: #d73948">int</span> root <span style="color: #d73948">=</span> heap[<span style="color: #b60157">1</span>];<br>  heap[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> heap[cnt];<br>  cnt<span style="color: #d73948">--</span>;<br>  <span style="color: #4b69c6">jom</span>(<span style="color: #b60157">1</span>);<br>  <span style="color: #d73948">return</span> d[root];<br>}<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> This function deletes key at index i. It first reduced value to minus</span><br><span style="color: #74747c">//</span><span style="color: #74747c"> infinite, then calls extractMin()</span><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">deleteKey</span>(<span style="color: #d73948">int</span> i) {<br>  <span style="color: #4b69c6">decreaseKey</span>(i, INT_MIN);<br>  <span style="color: #4b69c6">extractMin</span>();<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">getMin</span>() { <span style="color: #d73948">return</span> d[heap[<span style="color: #b60157">1</span>]]; }<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">printHeap</span>() {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> cnt; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, d[heap[i]]);<br>  }<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #4b69c6">insertKey</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">insertKey</span>(<span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">printHeap</span>();<br>  <span style="color: #4b69c6">deleteKey</span>(<span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">printHeap</span>();<br>  <span style="color: #4b69c6">insertKey</span>(<span style="color: #b60157">15</span>);<br>  <span style="color: #4b69c6">insertKey</span>(<span style="color: #b60157">5</span>);<br>  <span style="color: #4b69c6">insertKey</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">insertKey</span>(<span style="color: #b60157">45</span>);<br>  <span style="color: #4b69c6">printHeap</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">extractMin </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, <span style="color: #4b69c6">extractMin</span>());<br>  <span style="color: #4b69c6">printHeap</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">getMin </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, <span style="color: #4b69c6">getMin</span>());<br>  <span style="color: #4b69c6">decreaseKey</span>(<span style="color: #b60157">2</span>, <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">printHeap</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">getMin </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, <span style="color: #4b69c6">getMin</span>());<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+  </body>
+</html>

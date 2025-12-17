@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h3>Priority Queue</h3>
+    <h4>คำอธิบาย</h4>
+    <ul>
+      <li>
+        <p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
+        <ul>
+          <li>ทุก ๆ สมาชิกจะมี priority ของตนเอง</li>
+          <li>สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority ต่ำกว่า</li>
+          <li>หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue</li>
+        </ul>
+      </li>
+      <li>ใน priority queue ด้านล่าง สมาชิกที่มีค่า ASCII มากจะมี priority สูง</li>
+    </ul>
+    <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png</a></p>
+    <h4>Operations</h4>
+    <ul>
+      <li><code>insert(item, priority)</code>: เพิ่มสมาชิกพร้อมระบุ priority</li>
+      <li><code>getHighestPriority()</code>: คืนค่าสมาชิกที่มี priority สูงสุด</li>
+      <li><code>deleteHighestPriority()</code>: นำออกสมาชิกที่มี priority สูงสุด</li>
+    </ul>
+    <h4>Implementation</h4>
+    <ul>
+      <li>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</li>
+      <li>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</li>
+    </ul>
+    <h4>ตัวอย่าง (STL)</h4>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  priority_queue<span style="color: #d73948">&lt;</span><span style="color: #d73948">int</span>, vector&lt;<span style="color: #d73948">int</span>>, greater&lt;<span style="color: #d73948">int</span>><span style="color: #d73948">></span> q;<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">3</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">2</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">15</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">5</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">4</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">45</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+  </body>
+</html>

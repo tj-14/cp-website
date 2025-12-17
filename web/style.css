@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+nav {
+    background-color: #eee;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 8px;
+}
+
+nav h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li a {
+    display: block;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #ddd;
+    color: #007bff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #ddd;
+    color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    background-color: #333;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+footer a {
+    color: #61dafb;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Basic styling for content pages */
+.content-section {
+    background-color: #fff;
+    margin: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.content-section h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.content-section p {
+    margin-bottom: 1rem;
+}
+
+.content-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 1rem;
+}
+
+.content-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+/* Specific styling for the generated HTML from Typst */
+/* Since Typst outputs raw body content, we need to wrap it in a div or style its direct children */
+body > h3,
+body > p,
+body > ul {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px; /* Limit content width for readability */
+    padding: 0 1rem;
+}
+
+/* Ensure the main content is within a readable width */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body > *:not(header):not(footer):not(nav) {
+    flex-grow: 1;
+}

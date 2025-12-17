@@ -1,0 +1,8 @@
+- the goal is to turn incomplete content in my book draft into an interactive educational website
+- take https://cp-algorithms.com/index.html as inspiration/example, but targeted to Thai high school students that want to join Computer Olympiad camps.
+- try to use Thai as much as possible, but introduce English terms that will be good to know in the long run for competitive programming career. For example, use "Dynamic programming" instead of "กำหนดการพลวัต"
+- i taught Computer Olympiad camps for three years and this was a collected content. 
+- main grader sites that i would like to introduce are 1) https://programming.in.th/, 2) https://cses.fi/problemset/
+- these books are useful: https://cses.fi/book/book.pdf, https://www.csc.kth.se/~jsannemo/slask/main.pdf
+- https://usaco.guide could be a good example too, but it's too featureful to my liking. keep things minimal and to the point.
+- use boring tech stack so it doesn't need much maintenance. i'm thinking about html, css, htmx. i'm open to other stuff too. i would like to deploy this repo to Github Pages.

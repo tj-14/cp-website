@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h3>Binary Tree</h3>
+    <h4>คำอธิบาย</h4>
+    <ul>
+      <li>tree เป็นโครงสร้างข้อมูลแบบมีชนชั้น ซึ่งแตกต่างจาก array, linked list, stack และ queue ที่เป็นโครงสร้างเชิงเส้น</li>
+      <li>ตัวอย่าง tree เบื้องต้นคือ binary tree โดยแต่ละ node สามารถมีลูกได้มากที่สุดไม่เกิน 2 ลูก ดังรูป</li>
+      <li>ซึ่งเราสามารถเรียกลูกว่า left และ right child ได้</li>
+    </ul>
+    <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/binary-tree-to-DLL.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/binary-tree-to-DLL.png</a></p>
+    <h4>คำศัพท์</h4>
+    <ul>
+      <li>node ด้านบนสุดจะถูกเรียกว่า <strong>root</strong></li>
+      <li>ลูกด้านล่างที่อยู่ติดกับ node โดยตรงจะเรียกว่า <strong>children</strong></li>
+      <li>node ด้านบนจะเรียกว่า <strong>parent</strong></li>
+      <li>เช่น <code>a</code> เป็น child ของ <code>f</code> และ <code>f</code> เป็น parent ของ <code>a</code></li>
+      <li>และ node ที่ไม่มีลูกเลยจะเรียกว่า <strong>leaves</strong></li>
+    </ul>
+    <pre><code data-lang="cpp">      tree<br>      <span style="color: #d73948">--</span><span style="color: #d73948">--</span><br>       j    &lt;<span style="color: #d73948">--</span> root<br>     <span style="color: #d73948">/</span>   \<br>   f      k<br> <span style="color: #d73948">/</span>   \      \<br>a     h      z    &lt;<span style="color: #d73948">--</span> leaves</code></pre>
+    <h4>เมื่อไรถึงใช้ tree?</h4>
+    <ul>
+      <li>หากต้องการเก็บข้อมูลที่มีลำดับขั้น เช่น ระบบไฟล์ในคอมพิวเตอร์</li>
+    </ul>
+    <pre><code>file system<br>-----------<br>     /    &lt;-- root<br>   /      \<br> ...       home<br>        /          \<br>     ugrad        course<br>      /       /      |     \<br>   ...      cs101  cs112  cs113<br></code></pre>
+    <ul>
+      <li>tree (ประกอบกับ ordering บางอย่าง e.g., BST) สามารถเข้าถึงข้อมูลได้เร็วกว่า linear data structure</li>
+      <li>tree สามารถเพิ่มลบข้อมูลได้สะดวกกว่าในบางกรณี</li>
+      <li>tree สามารถ implement ในรูปแบบคล้ายกับ linked list ได้</li>
+    </ul>
+    <h4>Binary Tree</h4>
+    <ul>
+      <li>คือ tree ที่แต่ละ node มีลูกไม่เกินสองลูก คือ left และ right</li>
+    </ul>
+    <h4>ตัวอย่าง</h4>
+    <ul>
+      <li>
+        <p>Binary Tree node มีส่วนประกอบต่อไปนี้</p>
+        <ul>
+          <li>ข้อมูล</li>
+          <li>Pointer to left child</li>
+          <li>Pointer to right child</li>
+        </ul>
+      </li>
+    </ul>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> data;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>left;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>right;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> val is the key or the value that</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> has to be added to the data part</span><br>  <span style="color: #4b69c6">Node</span>(<span style="color: #d73948">int</span> val) {<br>    data <span style="color: #d73948">=</span> val;<br><br>    <span style="color: #74747c">//</span><span style="color: #74747c"> Left and right child for node</span><br>    <span style="color: #74747c">//</span><span style="color: #74747c"> will be initialized to null</span><br>    left <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>    right <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  }<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">/*</span><span style="color: #74747c">create root</span><span style="color: #74747c">*/</span><br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>root <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>(<span style="color: #b60157">1</span>);<br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> following is the tree after above statement</span><br><br><span style="color: #74747c">     1</span><br><span style="color: #74747c">     / \</span><br><span style="color: #74747c">     NULL NULL</span><br><span style="color: #74747c">   </span><span style="color: #74747c">*/</span><br><br>  root->left <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>(<span style="color: #b60157">2</span>);<br>  root->right <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> 2 and 3 become left and right children of 1</span><br><span style="color: #74747c">     1</span><br><span style="color: #74747c">     / \\</span><br><span style="color: #74747c">     2     3</span><br><span style="color: #74747c">     / \\    /  \\</span><br><span style="color: #74747c">     NULL NULL NULL NULL</span><br><span style="color: #74747c">   </span><span style="color: #74747c">*/</span><br><br>  root->left->left <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> 4 becomes left child of 2</span><br><span style="color: #74747c">        1</span><br><span style="color: #74747c">     /     \\</span><br><span style="color: #74747c">     2        3</span><br><span style="color: #74747c">     / \\     / \\</span><br><span style="color: #74747c">     4 NULL NULL NULL</span><br><span style="color: #74747c">     / \\</span><br><span style="color: #74747c">     NULL NULL</span><br><span style="color: #74747c">   </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+    <h4>ใช้ array ในการสร้าง binary tree</h4>
+    <ul>
+      <li>ขนาดเรารู้ขนาดของ binary tree แล้วเราสามารถใช้ array ได้</li>
+      <li>
+        <p>Consider node <code>A[i]</code> has</p>
+        <ul>
+          <li><code>A[i*2]</code> as left child</li>
+          <li><code>A[i*2+1]</code> as right child</li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>

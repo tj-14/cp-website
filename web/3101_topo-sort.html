@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h3>Topological sorting (implementation)</h3>
+    <p>DAG - Directed Acyclic Graph</p>
+    <p><a href="https://cp-algorithms.com/graph/topological-sort.html">https://cp-algorithms.com/graph/topological-sort.html</a></p>
+    <pre><code data-lang="cpp"><span style="color: #d73948">int</span> n; <span style="color: #74747c">//</span><span style="color: #74747c"> number of vertices</span><br>vector&lt;vector&lt;<span style="color: #d73948">int</span>>> adj; <span style="color: #74747c">//</span><span style="color: #74747c"> adjacency list of graph</span><br>vector&lt;<span style="color: #d73948">bool</span>> visited;<br>vector&lt;<span style="color: #d73948">int</span>> ans;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> v) {<br>    visited[v] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> u <span style="color: #d73948">:</span> adj[v]) {<br>        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[u])<br>            <span style="color: #4b69c6">dfs</span>(u);<br>    }<br>    ans.<span style="color: #4b69c6">push_back</span>(v);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">topological_sort</span>() {<br>    visited.<span style="color: #4b69c6">assign</span>(n, <span style="color: #d73948">false</span>);<br>    ans.<span style="color: #4b69c6">clear</span>();<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>i) {<br>        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[i])<br>            <span style="color: #4b69c6">dfs</span>(i);<br>    }<br>    <span style="color: #4b69c6">reverse</span>(ans.<span style="color: #4b69c6">begin</span>(), ans.<span style="color: #4b69c6">end</span>());<br>}</code></pre>
+    <ul>
+      <li><a href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></li>
+    </ul>
+  </body>
+</html>

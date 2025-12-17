@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h3>Recursion</h3>
+    <h4>แนวคิด</h4>
+    <ul>
+      <li>Recursion คือกระบวนการเรียกตัวเอง</li>
+      <li>
+        <p>ตามปกติแล้วแบ่งกรณีเป็น</p>
+        <ul>
+          <li>base case</li>
+          <li>recursion case</li>
+        </ul>
+        <p>โดยที่จะย่อยปัญหาให้เล็กลงจนกระทั่งแก้ได้ด้วย base case</p>
+      </li>
+    </ul>
+    <h4>การเขียนโปรแกรม</h4>
+    <p>จะเขียนกระบวนการนั้นด้วยฟังก์ชัน และการเรียกตัวเองจะเป็นการเรียกฟังก์ชันที่เขียนขึ้นมาภายในฟังก์ชันนั้น</p>
+    <p>ตัวอย่างการเขียน recursive function ในภาษา C++ โดยยังไม่คำนึงถึงการนำไปใช้แก้โจทย์ปัญหา</p>
+    <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">recursive_function</span>() {<br>    <span style="color: #d73948">if</span> (base condition)<br>        <span style="color: #d73948">return</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> base case</span><br>    <span style="color: #d73948">else</span><br>        <span style="color: #4b69c6">recursive_function</span>(); <span style="color: #74747c">//</span><span style="color: #74747c"> recursion case</span><br>}</code></pre>
+    <h4>วิเคราะห์ประสิทธิภาพ</h4>
+    <p>จะใช้วิธีการนับจำนวนครั้งที่จะมีการเรียกฟังก์ชันเกิดขึ้นตามพารามิเตอร์ของฟังก์ชันนั้น</p>
+    <h4>โจทย์ตัวอย่าง - Factorial</h4>
+    <h5>เนื้อหาโจทย์</h5>
+    <p>จงหาค่าของ</p>
+    <p>โดย</p>
+    <h5>แนวคิด</h5>
+    <p>โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้ แต่นำมาเป็นตัวอย่างเริ่มต้นในการใช้โครงสร้างของ recursion ในการแก้ปัญหา</p>
+    <p>โดยมองค่าของ</p>
+    <p>เป็น recursive function ดังนี้</p>
+    <h5>รหัสเทียม</h5>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">factorial</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">1</span>) { <span style="color: #74747c">//</span><span style="color: #74747c"> base case</span><br>    <span style="color: #d73948">return</span> n;<br>  } <span style="color: #d73948">else</span> {<br>    <span style="color: #d73948">return</span> n <span style="color: #d73948">*</span> <span style="color: #4b69c6">factorial</span>(n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>);<br>  }<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">factorial</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+    <p>จะได้ output</p>
+    <pre><code>24</code></pre>
+    <h4>โจทย์ตัวอย่าง - Fibonacci</h4>
+    <h5>เนื้อหาโจทย์</h5>
+    <p>จงหาค่าของเลขฟิโบนัชชีลำดับที่</p>
+    <p>โดยที่ เลขฟิโบนัชชีลำดับที่</p>
+    <p>จะมีค่าเท่ากับผลบวกของเลขฟิโบนัชชีลำดับที่</p>
+    <p>และ</p>
+    <h5>แนวคิด</h5>
+    <p>โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้เช่นกัน แต่นำมาเป็นอีกตัวอย่างหนึ่งในการใช้โครงสร้างของ recursion ในการแก้ปัญหา</p>
+    <p>โดยมองค่าของเลขฟิโบนัชชีลำดับที่</p>
+    <p>เป็น recursive function ดังนี้</p>
+    <h5>รหัสเทียม</h5>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">fibo</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">1</span>) { <span style="color: #74747c">//</span><span style="color: #74747c"> base case</span><br>    <span style="color: #d73948">return</span> <span style="color: #b60157">1</span>;<br>  } <span style="color: #d73948">else</span> {<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">fibo</span>(n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">+</span> <span style="color: #4b69c6">fibo</span>(n <span style="color: #d73948">-</span> <span style="color: #b60157">2</span>);<br>  }<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">fibo</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+    <p>จะได้ output</p>
+    <pre><code>3</code></pre>
+    <h4>โจทย์ตัวอย่าง - Permutation</h4>
+    <h5>เนื้อหาโจทย์</h5>
+    <p>จงหาลำดับที่มีสมาชิก</p>
+    <p>ตัว โดยที่แต่ละสมาชิกมีค่าน้อยกว่า</p>
+    <p>ทั้งหมดที่เป็นไปได้ (จำเป็นต้องใช้ array)</p>
+    <h5>แนวคิด</h5>
+    <p>เป็นการค้นทุกวิธีที่เป็นไปได้ (complete search) ซึ่งจะนำ recursive function เข้ามาใช้ โดยเริ่มต้นด้วยการสร้างลำดับที่ยังไม่มีสมาชิกใด ๆ และค่อย ๆ เติมสมาชิกเข้าไปในลำดับนั้น</p>
+    <p>base case จะเป็นเงื่อนไขเมื่อลำดับมีสมาชิกครบ</p>
+    <p>recursive case จะเป็นการเติมสมาชิกลำดับถัดไปด้วยทุกค่าที่เป็นไปได้</p>
+    <h5>รหัสเทียม</h5>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> a[<span style="color: #b60157">10</span>];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">perm</span>(<span style="color: #d73948">int</span> d, <span style="color: #d73948">int</span> r, <span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (d <span style="color: #d73948">==</span> n) { <span style="color: #74747c">//</span><span style="color: #74747c"> base case</span><br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>      cout <span style="color: #d73948">&lt;&lt;</span> a[i] <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #198810"> </span><span style="color: #198810">"</span>;<br>    }<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>;<br>    <span style="color: #d73948">return</span>;<br>  }<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> r; i<span style="color: #d73948">++</span>) {<br>    a[d] <span style="color: #d73948">=</span> i;<br>    <span style="color: #4b69c6">perm</span>(d <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>, r, n); <span style="color: #74747c">//</span><span style="color: #74747c"> recursive case</span><br>  }<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() { <span style="color: #4b69c6">perm</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">3</span>, <span style="color: #b60157">3</span>); }</code></pre>
+    <p>จะได้ output</p>
+    <pre><code>0 0 0<br>0 0 1<br>...<br>2 2 2</code></pre>
+    <h4>ปัญหาที่พบบ่อย</h4>
+    <h5>Overflow</h5>
+    <p>กรณีไม่มี base case หรือ base case ไม่ครอบคลุม จะทำให้เกิดการ overflow ได้</p>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">factorial</span>(<span style="color: #d73948">int</span> n) { <span style="color: #d73948">return</span> n <span style="color: #d73948">*</span> <span style="color: #4b69c6">factorial</span>(n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>); }<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">factorial</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
+    <p>จะเกิด error เช่น:</p>
+    <pre><code>"./a.out" terminated by signal SIGSEGV (Address boundary error)</code></pre>
+    <h4>โจทย์แนะนำ</h4>
+    <ul>
+      <li>
+        <p>หาลำดับ permutation โดยมีเงื่อนไขที่แตกต่างกัน</p>
+        <ul>
+          <li>จำนวน 5 หลัก และแต่ละหลักมีค่าไม่เกิน 6</li>
+          <li>ตัวเลขก่อนหน้าต้องน้อยกว่าหรือเท่ากับตัวถัดไป</li>
+          <li>ตัวเลขห้ามซ้ำ</li>
+        </ul>
+      </li>
+      <li>
+        <p>กลับข้อความ (reverse string) ห้ามใช้ loop, array หรือ string</p>
+        <ul>
+          <li>กลับทั้งข้อความ เช่น: “iamastring” เป็น “gnirtsamai”</li>
+          <li>กลับเฉพาะภายในคำที่คั่นด้วยเว้นวรรค เช่น: “i am a string” เป็น “i ma a gnirts”</li>
+        </ul>
+      </li>
+      <li>
+        <p>Programming.in.th</p>
+        <ul>
+          <li>0019 Perket</li>
+          <li>0039 Food</li>
+        </ul>
+      </li>
+      <li>
+        <p>cses.fi</p>
+        <ul>
+          <li>2205 Gray Code</li>
+          <li>2165 Tower of Hanoi</li>
+          <li>1622 Creating Strings</li>
+          <li>1623 Apple Division</li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>

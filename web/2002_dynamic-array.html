@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h3>Dynamic Array</h3>
+    <h4>คำอธิบาย</h4>
+    <ul>
+      <li>dynamic array เป็น array ที่สามารถยืดหดขนาดได้</li>
+      <li>ใน STL จะมี <strong>vector</strong> เป็น dynamic array ให้ใช้</li>
+    </ul>
+    <h4>แนวทาง</h4>
+    <ul>
+      <li>เมื่อต้องการเพิ่มข้อมูลลงในอาเรย์ แต่อาเรย์นั้นเต็มแล้ว ให้สร้างฟังก์ชันโดย</li>
+      <li>ฟังก์ชันนั้นสร้างอาเรย์ขนาดสองเท่าจากเดิม และคัดลอกข้อมูลจากอาเรย์เดิมมาใส่</li>
+    </ul>
+    <h4>การเพิ่มข้อมูล</h4>
+    <ul>
+      <li>หากมีการขยายขนาดอาเรย์และคัดลอกข้อมูลจะทำให้ใช้เวลา O(n)</li>
+      <li>แต่กรณีนี้เกิดขึ้นเมื่ออาเรย์เต็มเท่านั้น</li>
+      <li>ดังนั้นในกรณีส่วนมากยังใช้เวลาเป็น O(1) อยู่ดี</li>
+      <li>ด้วย amortized analysis สามารถถัวเฉลี่ยการเพิ่มข้อมูลเป็น O(1) ได้</li>
+    </ul>
+    <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png">https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png</a></p>
+    <h4>Delete Element</h4>
+    <ul>
+      <li>การลบข้อมูลสามารถทำได้ตามปกติเหมือนอาเรย์ทั่วไป</li>
+      <li>ในทางทฤษฎี สามารถลดขนาดอาเรย์ลงได้ แต่ไม่จำเป็นใน competitive programming</li>
+    </ul>
+    <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png">https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png</a></p>
+    <h4>ตัวอย่าง implementation แบบไม่ใช้ vector</h4>
+    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> cnt <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><span style="color: #d73948">int</span> sz <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;<br><span style="color: #d73948">int</span> <span style="color: #d73948">*</span>A <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[sz];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">add</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">if</span> (cnt <span style="color: #d73948">==</span> sz) {<br>    sz <span style="color: #d73948">*=</span> <span style="color: #b60157">2</span>;<br>    <span style="color: #d73948">int</span> <span style="color: #d73948">*</span>tmp <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[sz];<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>      tmp[i] <span style="color: #d73948">=</span> A[i];<br>    }<br>    <span style="color: #4b69c6">free</span>(A);<br>    A <span style="color: #d73948">=</span> tmp;<br>  }<br>  A[cnt<span style="color: #d73948">++</span>] <span style="color: #d73948">=</span> x;<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">remove</span>() { cnt<span style="color: #d73948">--</span>; }<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">removeAt</span>(<span style="color: #d73948">int</span> j) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> j; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>    A[i] <span style="color: #d73948">=</span> A[i <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>];<br>  }<br>  cnt<span style="color: #d73948">--</span>;<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">print</span>() {<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">sz = </span><span style="color: #b60157">%d</span><span style="color: #198810">, cnt = </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\\</span><span style="color: #198810">n</span><span style="color: #198810">"</span>, sz, cnt);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> cnt; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, A[i]);<br>  }<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\\</span><span style="color: #198810">n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">5</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">add</span>(<span style="color: #b60157">6</span>);<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">remove</span>();<br>  <span style="color: #4b69c6">print</span>();<br>  <span style="color: #4b69c6">removeAt</span>(<span style="color: #b60157">3</span>);<br>  <span style="color: #4b69c6">print</span>();<br>}</code></pre>
+  </body>
+</html>
