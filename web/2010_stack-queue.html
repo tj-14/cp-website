@@ -1,80 +1,104 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack and Queue | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h3>Stack &amp; Queue</h3>
-    <h4>Stack</h4>
-    <ul>
-      <li>เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า <strong>top</strong></li>
-      <li>stack (กองซ้อน) จะใช้หลักเกณฑ์ LIFO (Last In First Out) ก็คือข้อมูลที่ถูกเพิ่มทีหลังสุดจะเป็นข้อมูลที่จะถูกนำออกก่อน</li>
-      <li>การเพิ่มข้อมูลลงใน stack จะเรียกว่าการ <strong>push</strong> ส่วนการลบข้อมูลจะเรียกว่าการ <strong>pop</strong></li>
-      <li>ใน stack เราจะมีตัวแปรเก็บตำแหน่งข้อมูลที่เข้าหลังสุดอยู่เสมอ โดยจะเรียกว่า <strong>top</strong></li>
-    </ul>
-    <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/geek-stack-1.png">https://media.geeksforgeeks.org/wp-content/uploads/geek-stack-1.png</a></p>
-    <h4>ตัวอย่างการใช้ vector เพื่อ implement stack</h4>
-    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">printvec</span>(vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span>a) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> a)<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, x);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> stack</span><br>  vector&lt;<span style="color: #d73948">int</span>> a;<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">1</span>);<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">2</span>);<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">3</span>);<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">printvec</span>(a); <span style="color: #74747c">//</span><span style="color: #74747c"> 1 2 3 4</span><br>  a.<span style="color: #4b69c6">pop_back</span>();<br>  a.<span style="color: #4b69c6">pop_back</span>();<br>  <span style="color: #4b69c6">printvec</span>(a); <span style="color: #74747c">//</span><span style="color: #74747c"> 1 2</span><br>}</code></pre>
-    <h4>Queue</h4>
-    <ul>
-      <li>queue (แถวคอย) เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลจะเข้าได้ทางหนึ่งที่เรียกว่า <strong>rear</strong> และจะถูกนำออกได้ในอีกทางที่เรียกว่า <strong>front</strong></li>
-      <li>queue จะหลักกร (First In First Out) ก็คือข้อมูลที่ถูกนำเข้าแรกสุดจะเป็นข้อมูลที่ถูกนำออกแรกสุด</li>
-      <li>การเพิ่มข้อมูลเข้า queue จะเรียกว่า <strong>enqueue</strong> และการลบข้อมูลจะเรียกว่า <strong>dequeue</strong></li>
-      <li>
-        <p>ใน queue นั้นเราจะมีตัวแปรเก็บตำแหน่งสองตำแหน่ง</p>
-        <ul>
-          <li><strong>front</strong> ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า <strong>แรก</strong> สุด</li>
-          <li><strong>rear</strong> ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า <strong>หลัง</strong> สุด</li>
-        </ul>
-      </li>
-    </ul>
-    <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/geek-queue-1.png">https://media.geeksforgeeks.org/wp-content/uploads/geek-queue-1.png</a></p>
-    <h4>Stack vs Queue</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Stack</th>
-          <th>Queue</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>LIFO</td>
-          <td>FIFO</td>
-        </tr>
-        <tr>
-          <td>one pointer (top)</td>
-          <td>two pointers (front, rear)</td>
-        </tr>
-        <tr>
-          <td>push</td>
-          <td>enqueue</td>
-        </tr>
-        <tr>
-          <td>pop</td>
-          <td>dequeue</td>
-        </tr>
-        <tr>
-          <td>recursion</td>
-          <td>sequential</td>
-        </tr>
-      </tbody>
-    </table>
-    <h4>Deque (double-ended queue)</h4>
-    <ul>
-      <li>
-        <p>ใน STL จะมีโครงสร้างข้อมูลชื่อ deque โดยจะเป็นโครงสร้างข้อมูลเชิงเส้นที่สามารถเพิ่มลบข้อมูลได้ทั้งสองทิศทางด้วยคำสั่ง</p>
-        <ul>
-          <li>push_front</li>
-          <li>push_back</li>
-          <li>pop_front</li>
-          <li>pop_back</li>
-        </ul>
-      </li>
-    </ul>
-    <h4>ตัวอย่าง deque</h4>
-    <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">printq</span>(deque&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span>a) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> a)<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, x);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> double-ended queue</span><br>  deque&lt;<span style="color: #d73948">int</span>> b;<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">1</span>);<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">2</span>);<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">3</span>);<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">printq</span>(b); <span style="color: #74747c">//</span><span style="color: #74747c"> 1 2 3 4</span><br>  b.<span style="color: #4b69c6">pop_front</span>();<br>  b.<span style="color: #4b69c6">pop_front</span>();<br>  <span style="color: #4b69c6">printq</span>(b); <span style="color: #74747c">//</span><span style="color: #74747c"> 3 4</span><br>  b.<span style="color: #4b69c6">pop_back</span>();<br>  <span style="color: #4b69c6">printq</span>(b); <span style="color: #74747c">//</span><span style="color: #74747c"> 3</span><br>}</code></pre>
-  </body>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+        </div>
+
+        <div class="content">
+            <h3>Stack &amp; Queue</h3>
+                <h4>Stack</h4>
+                <ul>
+                  <li>เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า <strong>top</strong></li>
+                  <li>stack (กองซ้อน) จะใช้หลักเกณฑ์ LIFO (Last In First Out) ก็คือข้อมูลที่ถูกเพิ่มทีหลังสุดจะเป็นข้อมูลที่จะถูกนำออกก่อน</li>
+                  <li>การเพิ่มข้อมูลลงใน stack จะเรียกว่าการ <strong>push</strong> ส่วนการลบข้อมูลจะเรียกว่าการ <strong>pop</strong></li>
+                  <li>ใน stack เราจะมีตัวแปรเก็บตำแหน่งข้อมูลที่เข้าหลังสุดอยู่เสมอ โดยจะเรียกว่า <strong>top</strong></li>
+                </ul>
+                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/geek-stack-1.png">https://media.geeksforgeeks.org/wp-content/uploads/geek-stack-1.png</a></p>
+                <h4>ตัวอย่างการใช้ vector เพื่อ implement stack</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">printvec</span>(vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span>a) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> a)<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, x);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> stack</span><br>  vector&lt;<span style="color: #d73948">int</span>> a;<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">1</span>);<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">2</span>);<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">3</span>);<br>  a.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">printvec</span>(a); <span style="color: #74747c">//</span><span style="color: #74747c"> 1 2 3 4</span><br>  a.<span style="color: #4b69c6">pop_back</span>();<br>  a.<span style="color: #4b69c6">pop_back</span>();<br>  <span style="color: #4b69c6">printvec</span>(a); <span style="color: #74747c">//</span><span style="color: #74747c"> 1 2</span><br>}</code></pre>
+                <h4>Queue</h4>
+                <ul>
+                  <li>queue (แถวคอย) เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลจะเข้าได้ทางหนึ่งที่เรียกว่า <strong>rear</strong> และจะถูกนำออกได้ในอีกทางที่เรียกว่า <strong>front</strong></li>
+                  <li>queue จะหลักกร (First In First Out) ก็คือข้อมูลที่ถูกนำเข้าแรกสุดจะเป็นข้อมูลที่ถูกนำออกแรกสุด</li>
+                  <li>การเพิ่มข้อมูลเข้า queue จะเรียกว่า <strong>enqueue</strong> และการลบข้อมูลจะเรียกว่า <strong>dequeue</strong></li>
+                  <li>
+                    <p>ใน queue นั้นเราจะมีตัวแปรเก็บตำแหน่งสองตำแหน่ง</p>
+                    <ul>
+                      <li><strong>front</strong> ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า <strong>แรก</strong> สุด</li>
+                      <li><strong>rear</strong> ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า <strong>หลัง</strong> สุด</li>
+                    </ul>
+                  </li>
+                </ul>
+                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/geek-queue-1.png">https://media.geeksforgeeks.org/wp-content/uploads/geek-queue-1.png</a></p>
+                <h4>Stack vs Queue</h4>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Stack</th>
+                      <th>Queue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>LIFO</td>
+                      <td>FIFO</td>
+                    </tr>
+                    <tr>
+                      <td>one pointer (top)</td>
+                      <td>two pointers (front, rear)</td>
+                    </tr>
+                    <tr>
+                      <td>push</td>
+                      <td>enqueue</td>
+                    </tr>
+                    <tr>
+                      <td>pop</td>
+                      <td>dequeue</td>
+                    </tr>
+                    <tr>
+                      <td>recursion</td>
+                      <td>sequential</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h4>Deque (double-ended queue)</h4>
+                <ul>
+                  <li>
+                    <p>ใน STL จะมีโครงสร้างข้อมูลชื่อ deque โดยจะเป็นโครงสร้างข้อมูลเชิงเส้นที่สามารถเพิ่มลบข้อมูลได้ทั้งสองทิศทางด้วยคำสั่ง</p>
+                    <ul>
+                      <li>push_front</li>
+                      <li>push_back</li>
+                      <li>pop_front</li>
+                      <li>pop_back</li>
+                    </ul>
+                  </li>
+                </ul>
+                <h4>ตัวอย่าง deque</h4>
+                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">printq</span>(deque&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span>a) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> a)<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, x);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> double-ended queue</span><br>  deque&lt;<span style="color: #d73948">int</span>> b;<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">1</span>);<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">2</span>);<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">3</span>);<br>  b.<span style="color: #4b69c6">push_back</span>(<span style="color: #b60157">4</span>);<br>  <span style="color: #4b69c6">printq</span>(b); <span style="color: #74747c">//</span><span style="color: #74747c"> 1 2 3 4</span><br>  b.<span style="color: #4b69c6">pop_front</span>();<br>  b.<span style="color: #4b69c6">pop_front</span>();<br>  <span style="color: #4b69c6">printq</span>(b); <span style="color: #74747c">//</span><span style="color: #74747c"> 3 4</span><br>  b.<span style="color: #4b69c6">pop_back</span>();<br>  <span style="color: #4b69c6">printq</span>(b); <span style="color: #74747c">//</span><span style="color: #74747c"> 3</span><br>}</code></pre>
+            <div class="page-nav">
+                <a href="2009_review.html" class="prev">Review</a>
+                <a href="2011_hash-table.html" class="next">Hash Table</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
+        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+</body>
 </html>
