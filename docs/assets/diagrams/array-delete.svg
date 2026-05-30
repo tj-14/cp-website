@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250" role="img" aria-labelledby="title desc">
+  <title id="title">Array deletion by shifting elements</title>
+  <desc id="desc">Deleting one array element shifts the following elements left.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2b5c84"/>
+    </marker>
+  </defs>
+  <rect width="760" height="250" fill="#ffffff"/>
+  <g font-family="Avenir, Arial, sans-serif" fill="#1f2d3a">
+    <text x="70" y="48" font-size="22">before delete index 2</text>
+    <g transform="translate(70 72)" font-size="20">
+      <rect width="300" height="52" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="60" y1="0" x2="60" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="120" y1="0" x2="120" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="180" y1="0" x2="180" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="240" y1="0" x2="240" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <rect x="120" y="0" width="60" height="52" fill="#ffe8e8" stroke="#d66" stroke-width="2"/>
+      <text x="30" y="34" text-anchor="middle">4</text>
+      <text x="90" y="34" text-anchor="middle">7</text>
+      <text x="150" y="34" text-anchor="middle">9</text>
+      <text x="210" y="34" text-anchor="middle">2</text>
+      <text x="270" y="34" text-anchor="middle">6</text>
+    </g>
+    <path d="M390 98 H470" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <text x="430" y="86" text-anchor="middle" font-size="17" fill="#526477">shift left</text>
+    <text x="500" y="48" font-size="22">after</text>
+    <g transform="translate(500 72)" font-size="20">
+      <rect width="300" height="52" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="60" y1="0" x2="60" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="120" y1="0" x2="120" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="180" y1="0" x2="180" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="240" y1="0" x2="240" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="30" y="34" text-anchor="middle">4</text>
+      <text x="90" y="34" text-anchor="middle">7</text>
+      <text x="150" y="34" text-anchor="middle">2</text>
+      <text x="210" y="34" text-anchor="middle">6</text>
+      <text x="270" y="34" text-anchor="middle" fill="#9aa8b5">_</text>
+    </g>
+    <text x="70" y="178" font-size="18" fill="#526477">Deleting from the middle costs O(n) because later values move one step left.</text>
+  </g>
+</svg>

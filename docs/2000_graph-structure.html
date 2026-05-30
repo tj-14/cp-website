@@ -7,211 +7,230 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Graph Structure</h3>
-                <h4>คำอธิบาย</h4>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
                 <ul>
-                  <li>กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ edge</li>
-                  <li>
-                    <p>มีนิยามดังนี้</p>
-                    <p>> A Graph consists of a finite set of vertices (or nodes) and set of Edges which connect a pair of nodes</p>
-                  </li>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
                 </ul>
-                <h4>Example</h4>
-                <p><a href="https://www.geeksforgeeks.org/wp-content/uploads/undirectedgraph.png">https://www.geeksforgeeks.org/wp-content/uploads/undirectedgraph.png</a></p>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                  <li>
-                    <p>ในกราฟด้านบนประกอบด้วย set of vertices</p>
-                    <p>และ set of edges</p>
-                    <p>.</p>
-                  </li>
-                  <li>กราฟสามารถใช้ในการแก้ปัญหาจริงได้หลายปัญหา</li>
-                  <li>กราฟสามารถใช้แสดงแทนเครือข่าย</li>
-                  <li>เช่น เส้นทางในเมือง หรือเครือข่ายโทรศัพท์ หรือวงจรไฟฟ้า เป็นต้น</li>
-                  <li>กราฟถูกใช้ใน social network เช่น LinkedIn และ Facebook</li>
-                  <li>เช่น ใน Facebook บุคคลเป็น node ที่เก็บข้อมูลไอดี ชื่อ เพศ ต่าง ๆ และเชื่อมกันด้วยเส้นเชื่อมประเภทต่าง ๆ เช่น การเป็นเพื่อน</li>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
                 </ul>
-                <h4>Type</h4>
-                <p><a href="https://csacademy.com/lesson/introduction_to_graphs/">https://csacademy.com/lesson/introduction_to_graphs/</a></p>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
                 <ul>
-                  <li>Undirected graph</li>
-                  <li>Directed graph</li>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html" aria-current="page">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
                 </ul>
-                <h4>Representation</h4>
-                <p><a href="https://csacademy.com/lesson/graph_representation/">https://csacademy.com/lesson/graph_representation/</a></p>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
                 <ul>
-                  <li>adjacency matrix</li>
-                  <li>adjacency list</li>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
                 </ul>
-                <h4>Traversal</h4>
-                <p><a href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
                 <ul>
-                  <li>graph traversal</li>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
                 </ul>
-            <div class="page-nav">
-                <a href="1005_function.html" class="prev">Function</a>
-                <a href="2001_linked-list.html" class="next">Linked List</a>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
-        </div>
+
+            <article class="content">
+<h3>Graph Structure</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
+                    <li><a href="#example">Example</a></li>
+                    <li><a href="#type">Type</a></li>
+                    <li><a href="#terminology">Terminology</a></li>
+                    <li><a href="#representation">Representation</a></li>
+                    <li><a href="#traversal">Traversal</a></li>
+                </ul>
+            </nav>
+
+<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<ul>
+<li><p>กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ
+edge</p></li>
+<li><p>มีนิยามดังนี้</p>
+<p>&gt; A Graph consists of a finite set of vertices (or nodes) and set
+of Edges which connect a pair of nodes</p></li>
+</ul>
+<h4 id="example">Example</h4>
+<figure>
+<p><img
+src="assets/diagrams/undirected-graph.svg"
+style="width:82.0%" /></p>
+<figcaption><p>Undirected graph. Original diagram for this
+guide.</p></figcaption>
+</figure>
+<ul>
+<li><p>ในกราฟด้านบนประกอบด้วย set of vertices <span
+class="math inline"><em>V</em> = {0, 1, 2, 3, 4}</span> และ set of edges
+<span
+class="math inline"><em>E</em> = {01, 12, 23, 34, 04, 14, 13}</span>.</p></li>
+<li><p>กราฟสามารถใช้ในการแก้ปัญหาจริงได้หลายปัญหา</p></li>
+<li><p>กราฟสามารถใช้แสดงแทนเครือข่าย</p></li>
+<li><p>เช่น เส้นทางในเมือง หรือเครือข่ายโทรศัพท์ หรือวงจรไฟฟ้า เป็นต้น</p></li>
+<li><p>กราฟถูกใช้ใน social network เช่น LinkedIn และ Facebook</p></li>
+<li><p>เช่น ใน Facebook บุคคลเป็น node ที่เก็บข้อมูลไอดี ชื่อ เพศ ต่าง ๆ
+และเชื่อมกันด้วยเส้นเชื่อมประเภทต่าง ๆ เช่น การเป็นเพื่อน</p></li>
+</ul>
+<h4 id="type">Type</h4>
+<p>Interactive reference: Introduction to Graphs by CS Academy <a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<ul>
+<li><p>Undirected graph</p></li>
+<li><p>Directed graph</p></li>
+<li><p>Weighted graph คือกราฟที่ edge มีค่าน้ำหนัก เช่น
+ระยะทางหรือค่าใช้จ่าย</p></li>
+<li><p>Unweighted graph คือกราฟที่ edge ทุกเส้นนับเท่ากัน</p></li>
+<li><p>Simple graph คือไม่มี self-loop และไม่มี edge ซ้ำระหว่างคู่เดิม</p></li>
+</ul>
+<h4 id="terminology">Terminology</h4>
+<ul>
+<li><p>vertex หรือ node: จุดในกราฟ</p></li>
+<li><p>edge: เส้นเชื่อมระหว่าง vertex</p></li>
+<li><p>degree: จำนวน edge ที่ติดกับ vertex หนึ่ง</p></li>
+<li><p>path: ลำดับของ vertex ที่เดินตาม edge ได้</p></li>
+<li><p>cycle: path ที่เริ่มและจบที่ vertex เดิม</p></li>
+<li><p>connected component: กลุ่ม vertex ที่เดินถึงกันได้</p></li>
+</ul>
+<p>ในกราฟมีทิศทางจะมีคำว่า indegree และ outdegree</p>
+<ul>
+<li><p>indegree: จำนวน edge ที่ชี้เข้ามา</p></li>
+<li><p>outdegree: จำนวน edge ที่ชี้ออกไป</p></li>
+</ul>
+<h4 id="representation">Representation</h4>
+<p>Interactive reference: Graph Representation by CS Academy <a
+href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></p>
+<ul>
+<li><p>adjacency matrix</p></li>
+<li><p>adjacency list</p></li>
+</ul>
+<h5>Adjacency matrix</h5>
+<p>ใช้ตาราง <span class="math inline"><em>n</em> × <em>n</em></span>
+เก็บว่า edge ระหว่างคู่ vertex มีหรือไม่</p>
+<ul>
+<li><p>ตรวจว่ามี edge จาก <span class="math inline"><em>u</em></span> ไป
+<span class="math inline"><em>v</em></span> ได้ใน <span
+class="math inline"><em>O</em>(1)</span></p></li>
+<li><p>ใช้หน่วยความจำ <span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p></li>
+<li><p>เหมาะกับกราฟหนาแน่นหรือ <span class="math inline"><em>n</em></span>
+เล็ก</p></li>
+</ul>
+<pre class="cpp"><code>vector&lt;vector&lt;int&gt;&gt; adj(n, vector&lt;int&gt;(n, 0));
+adj[u][v] = 1;
+adj[v][u] = 1; // ถ้าเป็น undirected graph</code></pre>
+<h5>Adjacency list</h5>
+<p>เก็บรายชื่อเพื่อนบ้านของแต่ละ vertex</p>
+<ul>
+<li><p>ใช้หน่วยความจำ <span
+class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></li>
+<li><p>เหมาะกับกราฟส่วนใหญ่ในการแข่งขัน</p></li>
+<li><p>เดิน edge ทั้งหมดได้เร็ว</p></li>
+</ul>
+<pre class="cpp"><code>vector&lt;vector&lt;int&gt;&gt; adj(n);
+adj[u].push_back(v);
+adj[v].push_back(u); // ถ้าเป็น undirected graph</code></pre>
+<p>ถ้าเป็น weighted graph ให้เก็บ pair</p>
+<pre class="cpp"><code>vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj(n);
+adj[u].push_back({v, w});</code></pre>
+<h4 id="traversal">Traversal</h4>
+<p><a
+href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
+<ul>
+<li><p>graph traversal</p></li>
+<li><p>DFS เหมาะกับการหา connected component, cycle และ topological
+sort</p></li>
+<li><p>BFS เหมาะกับ shortest path ใน unweighted graph</p></li>
+</ul>
+<p>เวลาทำงานของ traversal บน adjacency list คือ <span
+class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="https://csacademy.com/lesson/introduction_to_graphs/">https://csacademy.com/lesson/introduction_to_graphs/</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://csacademy.com/lesson/graph_representation/">https://csacademy.com/lesson/graph_representation/</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+            <div class="page-nav">
+                <a href="2007_set-map.html" class="prev">Set and Map</a>
+                <a href="2011_hash-table.html" class="next">Hash Table</a>
+            </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Graph Structure</h3>
-                <h4>คำอธิบาย</h4>
-                <ul>
-                  <li>กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ edge</li>
-                  <li>
-                    <p>มีนิยามดังนี้</p>
-                    <p>> A Graph consists of a finite set of vertices (or nodes) and set of Edges which connect a pair of nodes</p>
-                  </li>
-                </ul>
-                <h4>Example</h4>
-                <p><a href="https://www.geeksforgeeks.org/wp-content/uploads/undirectedgraph.png">https://www.geeksforgeeks.org/wp-content/uploads/undirectedgraph.png</a></p>
-                <ul>
-                  <li>
-                    <p>ในกราฟด้านบนประกอบด้วย set of vertices</p>
-                    <p>และ set of edges</p>
-                    <p>.</p>
-                  </li>
-                  <li>กราฟสามารถใช้ในการแก้ปัญหาจริงได้หลายปัญหา</li>
-                  <li>กราฟสามารถใช้แสดงแทนเครือข่าย</li>
-                  <li>เช่น เส้นทางในเมือง หรือเครือข่ายโทรศัพท์ หรือวงจรไฟฟ้า เป็นต้น</li>
-                  <li>กราฟถูกใช้ใน social network เช่น LinkedIn และ Facebook</li>
-                  <li>เช่น ใน Facebook บุคคลเป็น node ที่เก็บข้อมูลไอดี ชื่อ เพศ ต่าง ๆ และเชื่อมกันด้วยเส้นเชื่อมประเภทต่าง ๆ เช่น การเป็นเพื่อน</li>
-                </ul>
-                <h4>Type</h4>
-                <p><a href="https://csacademy.com/lesson/introduction_to_graphs/">https://csacademy.com/lesson/introduction_to_graphs/</a></p>
-                <ul>
-                  <li>Undirected graph</li>
-                  <li>Directed graph</li>
-                </ul>
-                <h4>Representation</h4>
-                <p><a href="https://csacademy.com/lesson/graph_representation/">https://csacademy.com/lesson/graph_representation/</a></p>
-                <ul>
-                  <li>adjacency matrix</li>
-                  <li>adjacency list</li>
-                </ul>
-                <h4>Traversal</h4>
-                <p><a href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
-                <ul>
-                  <li>graph traversal</li>
-                </ul>
-            <div class="page-nav">
-                <a href="1005_function.html" class="prev">Function</a>
-                <a href="2001_linked-list.html" class="next">Linked List</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Graph Structure</h3>
-                <h4>คำอธิบาย</h4>
-                <ul>
-                  <li>กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ edge</li>
-                  <li>
-                    <p>มีนิยามดังนี้</p>
-                    <p>> A Graph consists of a finite set of vertices (or nodes) and set of Edges which connect a pair of nodes</p>
-                  </li>
-                </ul>
-                <h4>Example</h4>
-                <p><a href="https://www.geeksforgeeks.org/wp-content/uploads/undirectedgraph.png">https://www.geeksforgeeks.org/wp-content/uploads/undirectedgraph.png</a></p>
-                <ul>
-                  <li>
-                    <p>ในกราฟด้านบนประกอบด้วย set of vertices</p>
-                    <p>และ set of edges</p>
-                    <p>.</p>
-                  </li>
-                  <li>กราฟสามารถใช้ในการแก้ปัญหาจริงได้หลายปัญหา</li>
-                  <li>กราฟสามารถใช้แสดงแทนเครือข่าย</li>
-                  <li>เช่น เส้นทางในเมือง หรือเครือข่ายโทรศัพท์ หรือวงจรไฟฟ้า เป็นต้น</li>
-                  <li>กราฟถูกใช้ใน social network เช่น LinkedIn และ Facebook</li>
-                  <li>เช่น ใน Facebook บุคคลเป็น node ที่เก็บข้อมูลไอดี ชื่อ เพศ ต่าง ๆ และเชื่อมกันด้วยเส้นเชื่อมประเภทต่าง ๆ เช่น การเป็นเพื่อน</li>
-                </ul>
-                <h4>Type</h4>
-                <p><a href="https://csacademy.com/lesson/introduction_to_graphs/">https://csacademy.com/lesson/introduction_to_graphs/</a></p>
-                <ul>
-                  <li>Undirected graph</li>
-                  <li>Directed graph</li>
-                </ul>
-                <h4>Representation</h4>
-                <p><a href="https://csacademy.com/lesson/graph_representation/">https://csacademy.com/lesson/graph_representation/</a></p>
-                <ul>
-                  <li>adjacency matrix</li>
-                  <li>adjacency list</li>
-                </ul>
-                <h4>Traversal</h4>
-                <p><a href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
-                <ul>
-                  <li>graph traversal</li>
-                </ul>
-            <div class="page-nav">
-                <a href="1005_function.html" class="prev">Function</a>
-                <a href="2001_linked-list.html" class="next">Linked List</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

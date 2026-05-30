@@ -15,118 +15,215 @@
             ],
             throwOnError: false
         });"></script>
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+
 </head>
-<body hx-boost="true">
+<body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1001_basic.html" aria-current="page">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
 
-        <div class="content">
-            <h3>การเขียนโปรแกรมเชิงแข่งขัน</h3>
-                <h4>หลักการ</h4>
-                <p>การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ</p>
-                <h5>การออกแบบวิธีการคิด</h5>
-                <p>ส่วนนี้จะเน้นเรื่องทักษะการแก้ปัญหาและพื้นฐานการคิด บางทีต้องมีความคิดสร้างสรรค์ ประกอบกับทฤษฎีต่างๆ โดยทั่วไปแล้ววิธีการแก้ปัญหาจะประกอบด้วยเทคนิคที่รู้กันทั่วไปร่วมกับความเป็นเอกลักษณ์ของปัญหานั้นๆ</p>
-                <h5>การเขียนโปรแกรมตามวิธี</h5>
-                <p>ส่วนนี้จะเน้นว่าเราสามารถถ่ายทอดวิธีการคิดของเราสู่โปรแกรมคอมพิวเตอร์ได้อย่างถูกต้อง ปกติแล้วแค่วิธีคิดถูกต้องนั้นไม่เพียงพอในการแข่งขันเขียนโปรแกรมให้ได้ดี ข้อแตกต่างสำคัญกับการเขียนโปรแกรมทั่วไปคือโปรแกรมในการแข่งขันจะสั้น (มากที่สุดหลักไม่กี่ร้อยบรรทัด) และไม่จำเป็นต้องดูแลโปรแกรมหลังจากแข่งเสร็จ</p>
-                <h4>การบริหารเวลา</h4>
-                <p>เป็นสิ่งสำคัญที่สุดในการแข่งขัน</p>
+            <article class="content">
+<h3>การเขียนโปรแกรมเชิงแข่งขัน</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
                 <ul>
-                  <li>ให้คำนึงให้ได้ว่าเราจะใช้เวลาเท่าไรในการทำโจทย์ลักษณะนี้ แล้วจะได้คะแนนเท่าไร แล้วลำดับความสำคัญในการเลือกโจทย์ให้ได้</li>
-                  <li>พยายามสร้างกฏที่เหมาะสมกับตัวเอง เช่น ถ้าบัคเกินสามสิบนาทีแบบไม่มีความคืบหน้า ให้เปลี่ยนไปอ่านข้ออื่นอย่างน้อยห้านาที</li>
+                    <li><a href="#หลักการ">หลักการ</a></li>
+                    <li><a href="#การบริหารเวลา">การบริหารเวลา</a></li>
+                    <li><a href="#time-complexity">Time Complexity</a></li>
                 </ul>
-                <h4>Time Complexity</h4>
-                <ul>
-                  <li>ก่อนจะเริ่มลงมือเขียนโปรแกรม เราควรจะรู้ให้ได้ว่าสิ่งที่เราเขียนจะได้กี่คะแนนสำหรับปัญหานั้น</li>
-                  <li>Big O Notation เป็นสิ่งสำคัญที่ควรจะคาดคะเนให้ได้ว่าเราจะได้คะแนนเท่าไร</li>
-                  <li>
-                    <p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ $1,000,000,000$ (พันล้าน) คำสั่งต่อหนึ่งวินาที ซึ่งหมายความว่า</p>
-                    <ul>
-                      <li>$N=1,000$ สามารถคิดวิธี $O(N^3)$ ได้แบบฉิวเฉียด $O(N^2 \log N)$ ได้อย่างปลอดภัย</li>
-                      <li>$N=1,000,000$ ควรจะ $O(N \log N)$</li>
-                      <li>$N=20$ อาจจะเป็น $O(2^N)$</li>
-                    </ul>
-                  </li>
-                  <li>จำว่า $2^{20}$ มีค่าประมาณ $1,000,000$ (หนึ่งล้าน)</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ขนาด N</th>
-                      <th>เวลาที่ควรใช้</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$N \leq 10$</td>
-                      <td>$O(N!)$</td>
-                    </tr>
-                    <tr>
-                      <td>$N \leq 20$</td>
-                      <td>$O(2^N)$</td>
-                    </tr>
-                    <tr>
-                      <td>$N \leq 500$</td>
-                      <td>$O(N^3)$</td>
-                    </tr>
-                    <tr>
-                      <td>$N \leq 5000$</td>
-                      <td>$O(N^2)$</td>
-                    </tr>
-                    <tr>
-                      <td>$N \leq 10^6$</td>
-                      <td>$O(N \log N)$ or $O(N)$</td>
-                    </tr>
-                    <tr>
-                      <td>$N$ is large</td>
-                      <td>$O(1)$ or $O(\log N)$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>สัญลักษณ์</th>
-                      <th>ความหมาย</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>P</td>
-                      <td>ถูกต้อง</td>
-                    </tr>
-                    <tr>
-                      <td>-</td>
-                      <td>Incorrect Output</td>
-                    </tr>
-                    <tr>
-                      <td>X</td>
-                      <td>Error</td>
-                    </tr>
-                    <tr>
-                      <td>T</td>
-                      <td>Timeout</td>
-                    </tr>
-                  </tbody>
-                </table>
+            </nav>
+
+<h4 id="หลักการ">หลักการ</h4>
+<p>การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ</p>
+<h5>การออกแบบวิธีการคิด</h5>
+<p>ส่วนนี้จะเน้นเรื่องทักษะการแก้ปัญหาและพื้นฐานการคิด บางทีต้องมีความคิดสร้างสรรค์
+ประกอบกับทฤษฎีต่างๆ
+โดยทั่วไปแล้ววิธีการแก้ปัญหาจะประกอบด้วยเทคนิคที่รู้กันทั่วไปร่วมกับความเป็นเอกลักษณ์ของปัญหานั้นๆ</p>
+<h5>การเขียนโปรแกรมตามวิธี</h5>
+<p>ส่วนนี้จะเน้นว่าเราสามารถถ่ายทอดวิธีการคิดของเราสู่โปรแกรมคอมพิวเตอร์ได้อย่างถูกต้อง
+ปกติแล้วแค่วิธีคิดถูกต้องนั้นไม่เพียงพอในการแข่งขันเขียนโปรแกรมให้ได้ดี
+ข้อแตกต่างสำคัญกับการเขียนโปรแกรมทั่วไปคือโปรแกรมในการแข่งขันจะสั้น
+(มากที่สุดหลักไม่กี่ร้อยบรรทัด) และไม่จำเป็นต้องดูแลโปรแกรมหลังจากแข่งเสร็จ</p>
+<h4 id="การบริหารเวลา">การบริหารเวลา</h4>
+<p>เป็นสิ่งสำคัญที่สุดในการแข่งขัน</p>
+<ul>
+<li><p>ให้คำนึงให้ได้ว่าเราจะใช้เวลาเท่าไรในการทำโจทย์ลักษณะนี้ แล้วจะได้คะแนนเท่าไร
+แล้วลำดับความสำคัญในการเลือกโจทย์ให้ได้</p></li>
+<li><p>พยายามสร้างกฏที่เหมาะสมกับตัวเอง เช่น ถ้าบัคเกินสามสิบนาทีแบบไม่มีความคืบหน้า
+ให้เปลี่ยนไปอ่านข้ออื่นอย่างน้อยห้านาที</p></li>
+</ul>
+<h4 id="time-complexity">Time Complexity</h4>
+<ul>
+<li><p>ก่อนจะเริ่มลงมือเขียนโปรแกรม
+เราควรจะรู้ให้ได้ว่าสิ่งที่เราเขียนจะได้กี่คะแนนสำหรับปัญหานั้น</p></li>
+<li><p>Big O Notation
+เป็นสิ่งสำคัญที่ควรจะคาดคะเนให้ได้ว่าเราจะได้คะแนนเท่าไร</p></li>
+<li><p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ <span
+class="math inline">1, 000, 000, 000</span> (พันล้าน) คำสั่งต่อหนึ่งวินาที
+ซึ่งหมายความว่า</p>
+<ul>
+<li><p><span class="math inline"><em>N</em> = 1, 000</span> สามารถคิดวิธี
+<span class="math inline"><em>O</em>(<em>N</em><sup>3</sup>)</span>
+ได้แบบฉิวเฉียด <span
+class="math inline"><em>O</em>(<em>N</em><sup>2</sup>log <em>N</em>)</span>
+ได้อย่างปลอดภัย</p></li>
+<li><p><span class="math inline"><em>N</em> = 1, 000, 000</span> ควรจะ
+<span
+class="math inline"><em>O</em>(<em>N</em>log <em>N</em>)</span></p></li>
+<li><p><span class="math inline"><em>N</em> = 20</span> อาจจะเป็น <span
+class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></li>
+</ul></li>
+<li><p>จำว่า <span class="math inline">2<sup>20</sup></span> มีค่าประมาณ
+<span class="math inline">1, 000, 000</span> (หนึ่งล้าน)</p></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><p>ขนาด N</p></th>
+<th><p>เวลาที่ควรใช้</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 10</span></p></td>
+<td><p><span class="math inline"><em>O</em>(<em>N</em>!)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 20</span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 500</span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(<em>N</em><sup>3</sup>)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 5000</span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(<em>N</em><sup>2</sup>)</span></p></td>
+</tr>
+<tr>
+<td><p><span
+class="math inline"><em>N</em> ≤ 10<sup>6</sup></span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(<em>N</em>log <em>N</em>)</span> or <span
+class="math inline"><em>O</em>(<em>N</em>)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em></span> is large</p></td>
+<td><p><span class="math inline"><em>O</em>(1)</span> or <span
+class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><p>สัญลักษณ์</p></th>
+<th><p>ความหมาย</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>P</p></td>
+<td><p>ถูกต้อง</p></td>
+</tr>
+<tr>
+<td><p>-</p></td>
+<td><p>Incorrect Output</p></td>
+</tr>
+<tr>
+<td><p>X</p></td>
+<td><p>Error</p></td>
+</tr>
+<tr>
+<td><p>T</p></td>
+<td><p>Timeout</p></td>
+</tr>
+</tbody>
+</table>
+
             <div class="page-nav">
                 <a href="0000_competitive-programming-starter.html" class="prev">โครงสร้างเนื้อหาการสอน</a>
                 <a href="1002_stl.html" class="next">Standard Template Library</a>
             </div>
-        </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

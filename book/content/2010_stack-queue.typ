@@ -10,7 +10,10 @@
 - การเพิ่มข้อมูลลงใน stack จะเรียกว่าการ *push* ส่วนการลบข้อมูลจะเรียกว่าการ *pop*
 - ใน stack เราจะมีตัวแปรเก็บตำแหน่งข้อมูลที่เข้าหลังสุดอยู่เสมอ โดยจะเรียกว่า *top*
 
-https://media.geeksforgeeks.org/wp-content/uploads/geek-stack-1.png
+#figure(
+  image("../assets/diagrams/stack-queue.svg", width: 88%),
+  caption: [Stack and queue behavior. Original diagram for this guide.],
+)
 
 === ตัวอย่างการใช้ vector เพื่อ implement stack
 
@@ -48,7 +51,7 @@ int main() {
     - *front* ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า *แรก* สุด
     - *rear* ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า *หลัง* สุด
 
-https://media.geeksforgeeks.org/wp-content/uploads/geek-queue-1.png
+ดูภาพรวม queue ในรูปเดียวกับ stack ด้านบน
 
 === Stack vs Queue
 

@@ -19,14 +19,20 @@
 - ดังนั้นในกรณีส่วนมากยังใช้เวลาเป็น O(1) อยู่ดี
 - ด้วย amortized analysis สามารถถัวเฉลี่ยการเพิ่มข้อมูลเป็น O(1) ได้
 
-https://media.geeksforgeeks.org/wp-content/uploads/dynamicarray.png
+#figure(
+  image("../assets/diagrams/dynamic-array.svg", width: 88%),
+  caption: [Dynamic array resize. Original diagram for this guide.],
+)
 
 === Delete Element
 
 - การลบข้อมูลสามารถทำได้ตามปกติเหมือนอาเรย์ทั่วไป
 - ในทางทฤษฎี สามารถลดขนาดอาเรย์ลงได้ แต่ไม่จำเป็นใน competitive programming
 
-https://media.geeksforgeeks.org/wp-content/uploads/DeleteArray.png
+#figure(
+  image("../assets/diagrams/array-delete.svg", width: 88%),
+  caption: [Deleting an array element by shifting later elements left. Original diagram for this guide.],
+)
 
 === ตัวอย่าง implementation แบบไม่ใช้ vector
 

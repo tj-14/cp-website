@@ -7,208 +7,235 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>แนวทางการฝึกด้วยตัวเอง</h3>
-                <p>อ้างอิงเนื้อหาตามลำดับของค่าย สอวน. เพราะเป็นแนวทางหลักในเส้นทางการเขียนโปรแกรมเชิงแข่งขัน</p>
-                <h4>สำหรับก่อน สอวน. ค่าย 1</h4>
-                <p>ถ้าหากไม่เคยเขียนภาษา C++ มาก่อน แนะนำให้เริ่มจากหนังสือ C++ Language Tutorial<a id="loc-1" href="#loc-9" role="doc-noteref"><sup>1</sup></a> แล้วใช้หนังสือ Competitive Programmer’s Handbook<a id="loc-2" href="#loc-10" role="doc-noteref"><sup>2</sup></a></p>
-                <h4>สำหรับขั้นต่อไป</h4>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
                 <ul>
-                  <li>
-                    <p>หากไม่เข้าใจแล้วอยากอ่านเพิ่มเป็นหัวข้อ</p>
-                    <ul>
-                      <li>USACO Guide<a id="loc-3" href="#loc-11" role="doc-noteref"><sup>3</sup></a></li>
-                      <li>CP-Algorithm<a id="loc-4" href="#loc-12" role="doc-noteref"><sup>4</sup></a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>เว็บไซต์สำหรับทำโจทย์ (graders)</p>
-                    <ul>
-                      <li><a href="https://cses.fi/problemset/">https://cses.fi/problemset/</a> แหล่งเดียวกับหนังสือหลัก</li>
-                      <li><a href="https://beta.programming.in.th/">https://beta.programming.in.th/</a> เว็บหลักในไทย</li>
-                      <li><a href="https://otog.in.th/">https://otog.in.th/</a> เว็บที่นักเรียน สอวน ช่วยกันทำขึ้นมาเอง</li>
-                      <li><a href="https://codeforces.com/">https://codeforces.com/</a> เว็บหลักในต่างประเทศ</li>
-                      <li>Kattis<a id="loc-5" href="#loc-13" role="doc-noteref"><sup>5</sup></a></li>
-                      <li>AtCoder<a id="loc-6" href="#loc-14" role="doc-noteref"><sup>6</sup></a> (ใช้ร่วมกับ Kenkoooo<a id="loc-7" href="#loc-15" role="doc-noteref"><sup>7</sup></a>)</li>
-                    </ul>
-                  </li>
-                  <li>หนังสือเพิ่มเติม (เนื้อหาจะซ้ำซ้อนกับด้านบน) <a href="https://usaco.guide/PAPS.pdf">https://usaco.guide/PAPS.pdf</a></li>
-                  <li>การบรรยายวิชา การออกแบบและวิเคราะห์อัลกอริทึม โดย สมชาย ประสิทธิ์จูตระกูล<a id="loc-8" href="#loc-16" role="doc-noteref"><sup>8</sup></a></li>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
                 </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-9"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://cplusplus.com/files/tutorial.pdf">https://cplusplus.com/files/tutorial.pdf</a></li>
-                    <li id="loc-10"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://cses.fi/book/book.pdf">https://cses.fi/book/book.pdf</a></li>
-                    <li id="loc-11"><a href="#loc-3" role="doc-backlink"><sup>3</sup></a><a href="https://usaco.guide/">https://usaco.guide/</a></li>
-                    <li id="loc-12"><a href="#loc-4" role="doc-backlink"><sup>4</sup></a><a href="https://cp-algorithms.com/">https://cp-algorithms.com/</a></li>
-                    <li id="loc-13"><a href="#loc-5" role="doc-backlink"><sup>5</sup></a><a href="https://open.kattis.com/">https://open.kattis.com/</a></li>
-                    <li id="loc-14"><a href="#loc-6" role="doc-backlink"><sup>6</sup></a><a href="https://atcoder.jp/">https://atcoder.jp/</a></li>
-                    <li id="loc-15"><a href="#loc-7" role="doc-backlink"><sup>7</sup></a><a href="https://kenkoooo.com/atcoder#/table/">https://kenkoooo.com/atcoder#/table/</a></li>
-                    <li id="loc-16"><a href="#loc-8" role="doc-backlink"><sup>8</sup></a><a href="https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m">https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m</a></li>
-                  </ol>
-                </section>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html" aria-current="page">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
+
+            <article class="content">
+<h3>แนวทางการฝึกด้วยตัวเอง</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#สำหรับก่อน-สอวน-ค่าย-1">สำหรับก่อน สอวน. ค่าย 1</a></li>
+                    <li><a href="#สำหรับ-สอวน-ค่าย-1">สำหรับ สอวน. ค่าย 1</a></li>
+                    <li><a href="#สำหรับ-สอวน-ค่าย-2">สำหรับ สอวน. ค่าย 2</a></li>
+                    <li><a href="#สำหรับขั้นต่อไป">สำหรับขั้นต่อไป</a></li>
+                    <li><a href="#วิธีใช้เวลาอ่านเฉลย">วิธีใช้เวลาอ่านเฉลย</a></li>
+                    <li><a href="#checklist-การฝึก">Checklist การฝึก</a></li>
+                </ul>
+            </nav>
+
+<p>อ้างอิงเนื้อหาตามลำดับของค่าย สอวน.
+เพราะเป็นแนวทางหลักในเส้นทางการเขียนโปรแกรมเชิงแข่งขัน</p>
+<h4 id="สำหรับก่อน-สอวน-ค่าย-1">สำหรับก่อน สอวน. ค่าย 1</h4>
+<p>ถ้าหากไม่เคยเขียนภาษา C++ มาก่อน แนะนำให้เริ่มจากหนังสือ C++ Language Tutorial
+<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> แล้วใช้หนังสือ Competitive Programmer’s
+Handbook <a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></p>
+<p>เป้าหมายของช่วงนี้คือเขียนโปรแกรมพื้นฐานได้คล่อง</p>
+<ul>
+<li><p>input/output</p></li>
+<li><p>if/else และ loop</p></li>
+<li><p>array และ string</p></li>
+<li><p>function</p></li>
+<li><p>recursion แบบง่าย</p></li>
+</ul>
+<p>ควรฝึกโจทย์ที่ไม่ต้องใช้อัลกอริทึมซับซ้อนก่อน เพื่อให้ชินกับการอ่านโจทย์และ debug</p>
+<h4 id="สำหรับ-สอวน-ค่าย-1">สำหรับ สอวน. ค่าย 1</h4>
+<p>หัวข้อที่ควรมั่นใจ</p>
+<ul>
+<li><p>C++ syntax และ STL พื้นฐาน เช่น <code>vector</code>,
+<code>pair</code>, <code>sort</code></p></li>
+<li><p>การคิด brute force และ simulation</p></li>
+<li><p>recursion</p></li>
+<li><p>time complexity เบื้องต้น</p></li>
+<li><p>การจัดการ array และ string</p></li>
+</ul>
+<p>วิธีฝึกที่แนะนำคือเลือกโจทย์ง่ายวันละ 2-3 ข้อ แล้วหลังทำเสร็จให้จดว่าโจทย์นั้นใช้ pattern
+อะไร</p>
+<h4 id="สำหรับ-สอวน-ค่าย-2">สำหรับ สอวน. ค่าย 2</h4>
+<p>หัวข้อหลักจะเริ่มเป็น data structures และ algorithms</p>
+<ul>
+<li><p>stack, queue, priority queue</p></li>
+<li><p>set, map, hash table</p></li>
+<li><p>tree และ graph representation</p></li>
+<li><p>BFS/DFS</p></li>
+<li><p>binary search</p></li>
+<li><p>greedy</p></li>
+<li><p>dynamic programming เบื้องต้น</p></li>
+</ul>
+<p>ในช่วงนี้ควรเริ่มอ่านเฉลยหลังพยายามเองพอสมควร เพราะสิ่งสำคัญคือการสะสม pattern
+ของโจทย์</p>
+<h4 id="สำหรับขั้นต่อไป">สำหรับขั้นต่อไป</h4>
+<ul>
+<li><p>หากไม่เข้าใจแล้วอยากอ่านเพิ่มเป็นหัวข้อ</p>
+<ul>
+<li><p>USACO Guide <a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p></li>
+<li><p>CP-Algorithm <a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></p></li>
+</ul></li>
+<li><p>เว็บไซต์สำหรับทำโจทย์ (graders)</p>
+<ul>
+<li><p><a
+href="https://cses.fi/problemset/">https://cses.fi/problemset/</a>
+แหล่งเดียวกับหนังสือหลัก</p></li>
+<li><p><a
+href="https://beta.programming.in.th/">https://beta.programming.in.th/</a>
+เว็บหลักในไทย</p></li>
+<li><p><a href="https://otog.in.th/">https://otog.in.th/</a> เว็บที่นักเรียน
+สอวน ช่วยกันทำขึ้นมาเอง</p></li>
+<li><p><a href="https://codeforces.com/">https://codeforces.com/</a>
+เว็บหลักในต่างประเทศ</p></li>
+<li><p>Kattis <a href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a></p></li>
+<li><p>AtCoder <a href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a> (ใช้ร่วมกับ Kenkoooo <a href="#fn7"
+class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a>)</p></li>
+</ul></li>
+<li><p>หนังสือเพิ่มเติม (เนื้อหาจะซ้ำซ้อนกับด้านบน) <a
+href="https://usaco.guide/PAPS.pdf">https://usaco.guide/PAPS.pdf</a></p></li>
+<li><p>การบรรยายวิชา การออกแบบและวิเคราะห์อัลกอริทึม โดย สมชาย ประสิทธิ์จูตระกูล <a
+href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a></p></li>
+</ul>
+<h4 id="วิธีใช้เวลาอ่านเฉลย">วิธีใช้เวลาอ่านเฉลย</h4>
+<ul>
+<li><p>อ่านเฉพาะ idea ก่อน อย่าเพิ่งดู code</p></li>
+<li><p>ปิดเฉลยแล้วลอง implement เอง</p></li>
+<li><p>ถ้าติด ให้เทียบเฉพาะส่วนที่ต่าง</p></li>
+<li><p>หลังผ่านแล้ว ให้เขียนสรุป 2-3 บรรทัดว่าโจทย์นี้สอน pattern อะไร</p></li>
+</ul>
+<h4 id="checklist-การฝึก">Checklist การฝึก</h4>
+<ul>
+<li><p>ทำโจทย์ง่ายให้เร็วและถูกก่อนเพิ่มความยาก</p></li>
+<li><p>หลัง contest ให้ upsolve ข้อที่ทำไม่ได้อย่างน้อย 1 ข้อ</p></li>
+<li><p>เก็บ template ที่ใช้บ่อย แต่ต้องเข้าใจทุกบรรทัด</p></li>
+<li><p>วัดความก้าวหน้าจากจำนวน pattern ที่จำได้ ไม่ใช่จำนวนโจทย์อย่างเดียว</p></li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="https://cplusplus.com/files/tutorial.pdf">https://cplusplus.com/files/tutorial.pdf</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://cses.fi/book/book.pdf">https://cses.fi/book/book.pdf</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a
+href="https://usaco.guide/">https://usaco.guide/</a><a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a
+href="https://cp-algorithms.com/">https://cp-algorithms.com/</a><a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a
+href="https://open.kattis.com/">https://open.kattis.com/</a><a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://atcoder.jp/">https://atcoder.jp/</a><a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a
+href="https://kenkoooo.com/atcoder#/table/">https://kenkoooo.com/atcoder#/table/</a><a
+href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a
+href="https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m">https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m</a><a
+href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
             <div class="page-nav">
                 <a href="4000_dp.html" class="prev">Dynamic Programming Advanced</a>
-                <span></span>
+                
             </div>
-        </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>แนวทางการฝึกด้วยตัวเอง</h3>
-                <p>อ้างอิงเนื้อหาตามลำดับของค่าย สอวน. เพราะเป็นแนวทางหลักในเส้นทางการเขียนโปรแกรมเชิงแข่งขัน</p>
-                <h4>สำหรับก่อน สอวน. ค่าย 1</h4>
-                <p>ถ้าหากไม่เคยเขียนภาษา C++ มาก่อน แนะนำให้เริ่มจากหนังสือ C++ Language Tutorial<a id="loc-1" href="#loc-9" role="doc-noteref"><sup>1</sup></a> แล้วใช้หนังสือ Competitive Programmer’s Handbook<a id="loc-2" href="#loc-10" role="doc-noteref"><sup>2</sup></a></p>
-                <h4>สำหรับขั้นต่อไป</h4>
-                <ul>
-                  <li>
-                    <p>หากไม่เข้าใจแล้วอยากอ่านเพิ่มเป็นหัวข้อ</p>
-                    <ul>
-                      <li>USACO Guide<a id="loc-3" href="#loc-11" role="doc-noteref"><sup>3</sup></a></li>
-                      <li>CP-Algorithm<a id="loc-4" href="#loc-12" role="doc-noteref"><sup>4</sup></a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>เว็บไซต์สำหรับทำโจทย์ (graders)</p>
-                    <ul>
-                      <li><a href="https://cses.fi/problemset/">https://cses.fi/problemset/</a> แหล่งเดียวกับหนังสือหลัก</li>
-                      <li><a href="https://beta.programming.in.th/">https://beta.programming.in.th/</a> เว็บหลักในไทย</li>
-                      <li><a href="https://otog.in.th/">https://otog.in.th/</a> เว็บที่นักเรียน สอวน ช่วยกันทำขึ้นมาเอง</li>
-                      <li><a href="https://codeforces.com/">https://codeforces.com/</a> เว็บหลักในต่างประเทศ</li>
-                      <li>Kattis<a id="loc-5" href="#loc-13" role="doc-noteref"><sup>5</sup></a></li>
-                      <li>AtCoder<a id="loc-6" href="#loc-14" role="doc-noteref"><sup>6</sup></a> (ใช้ร่วมกับ Kenkoooo<a id="loc-7" href="#loc-15" role="doc-noteref"><sup>7</sup></a>)</li>
-                    </ul>
-                  </li>
-                  <li>หนังสือเพิ่มเติม (เนื้อหาจะซ้ำซ้อนกับด้านบน) <a href="https://usaco.guide/PAPS.pdf">https://usaco.guide/PAPS.pdf</a></li>
-                  <li>การบรรยายวิชา การออกแบบและวิเคราะห์อัลกอริทึม โดย สมชาย ประสิทธิ์จูตระกูล<a id="loc-8" href="#loc-16" role="doc-noteref"><sup>8</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-9"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://cplusplus.com/files/tutorial.pdf">https://cplusplus.com/files/tutorial.pdf</a></li>
-                    <li id="loc-10"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://cses.fi/book/book.pdf">https://cses.fi/book/book.pdf</a></li>
-                    <li id="loc-11"><a href="#loc-3" role="doc-backlink"><sup>3</sup></a><a href="https://usaco.guide/">https://usaco.guide/</a></li>
-                    <li id="loc-12"><a href="#loc-4" role="doc-backlink"><sup>4</sup></a><a href="https://cp-algorithms.com/">https://cp-algorithms.com/</a></li>
-                    <li id="loc-13"><a href="#loc-5" role="doc-backlink"><sup>5</sup></a><a href="https://open.kattis.com/">https://open.kattis.com/</a></li>
-                    <li id="loc-14"><a href="#loc-6" role="doc-backlink"><sup>6</sup></a><a href="https://atcoder.jp/">https://atcoder.jp/</a></li>
-                    <li id="loc-15"><a href="#loc-7" role="doc-backlink"><sup>7</sup></a><a href="https://kenkoooo.com/atcoder#/table/">https://kenkoooo.com/atcoder#/table/</a></li>
-                    <li id="loc-16"><a href="#loc-8" role="doc-backlink"><sup>8</sup></a><a href="https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m">https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m</a></li>
-                  </ol>
-                </section>
-            <div class="page-nav">
-                <a href="4000_dp.html" class="prev">Dynamic Programming Advanced</a>
-                <span></span>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>แนวทางการฝึกด้วยตัวเอง</h3>
-                <p>อ้างอิงเนื้อหาตามลำดับของค่าย สอวน. เพราะเป็นแนวทางหลักในเส้นทางการเขียนโปรแกรมเชิงแข่งขัน</p>
-                <h4>สำหรับก่อน สอวน. ค่าย 1</h4>
-                <p>ถ้าหากไม่เคยเขียนภาษา C++ มาก่อน แนะนำให้เริ่มจากหนังสือ C++ Language Tutorial<a id="loc-1" href="#loc-9" role="doc-noteref"><sup>1</sup></a> แล้วใช้หนังสือ Competitive Programmer’s Handbook<a id="loc-2" href="#loc-10" role="doc-noteref"><sup>2</sup></a></p>
-                <h4>สำหรับขั้นต่อไป</h4>
-                <ul>
-                  <li>
-                    <p>หากไม่เข้าใจแล้วอยากอ่านเพิ่มเป็นหัวข้อ</p>
-                    <ul>
-                      <li>USACO Guide<a id="loc-3" href="#loc-11" role="doc-noteref"><sup>3</sup></a></li>
-                      <li>CP-Algorithm<a id="loc-4" href="#loc-12" role="doc-noteref"><sup>4</sup></a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>เว็บไซต์สำหรับทำโจทย์ (graders)</p>
-                    <ul>
-                      <li><a href="https://cses.fi/problemset/">https://cses.fi/problemset/</a> แหล่งเดียวกับหนังสือหลัก</li>
-                      <li><a href="https://beta.programming.in.th/">https://beta.programming.in.th/</a> เว็บหลักในไทย</li>
-                      <li><a href="https://otog.in.th/">https://otog.in.th/</a> เว็บที่นักเรียน สอวน ช่วยกันทำขึ้นมาเอง</li>
-                      <li><a href="https://codeforces.com/">https://codeforces.com/</a> เว็บหลักในต่างประเทศ</li>
-                      <li>Kattis<a id="loc-5" href="#loc-13" role="doc-noteref"><sup>5</sup></a></li>
-                      <li>AtCoder<a id="loc-6" href="#loc-14" role="doc-noteref"><sup>6</sup></a> (ใช้ร่วมกับ Kenkoooo<a id="loc-7" href="#loc-15" role="doc-noteref"><sup>7</sup></a>)</li>
-                    </ul>
-                  </li>
-                  <li>หนังสือเพิ่มเติม (เนื้อหาจะซ้ำซ้อนกับด้านบน) <a href="https://usaco.guide/PAPS.pdf">https://usaco.guide/PAPS.pdf</a></li>
-                  <li>การบรรยายวิชา การออกแบบและวิเคราะห์อัลกอริทึม โดย สมชาย ประสิทธิ์จูตระกูล<a id="loc-8" href="#loc-16" role="doc-noteref"><sup>8</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-9"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="https://cplusplus.com/files/tutorial.pdf">https://cplusplus.com/files/tutorial.pdf</a></li>
-                    <li id="loc-10"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://cses.fi/book/book.pdf">https://cses.fi/book/book.pdf</a></li>
-                    <li id="loc-11"><a href="#loc-3" role="doc-backlink"><sup>3</sup></a><a href="https://usaco.guide/">https://usaco.guide/</a></li>
-                    <li id="loc-12"><a href="#loc-4" role="doc-backlink"><sup>4</sup></a><a href="https://cp-algorithms.com/">https://cp-algorithms.com/</a></li>
-                    <li id="loc-13"><a href="#loc-5" role="doc-backlink"><sup>5</sup></a><a href="https://open.kattis.com/">https://open.kattis.com/</a></li>
-                    <li id="loc-14"><a href="#loc-6" role="doc-backlink"><sup>6</sup></a><a href="https://atcoder.jp/">https://atcoder.jp/</a></li>
-                    <li id="loc-15"><a href="#loc-7" role="doc-backlink"><sup>7</sup></a><a href="https://kenkoooo.com/atcoder#/table/">https://kenkoooo.com/atcoder#/table/</a></li>
-                    <li id="loc-16"><a href="#loc-8" role="doc-backlink"><sup>8</sup></a><a href="https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m">https://www.youtube.com/watch?v=1S0mP_I8YzU&amp;list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m</a></li>
-                  </ol>
-                </section>
-            <div class="page-nav">
-                <a href="4000_dp.html" class="prev">Dynamic Programming Advanced</a>
-                <span></span>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260" role="img" aria-labelledby="title desc">
+  <title id="title">Stack and queue</title>
+  <desc id="desc">A stack uses LIFO and a queue uses FIFO.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2b5c84"/>
+    </marker>
+  </defs>
+  <rect width="760" height="260" fill="#ffffff"/>
+  <g font-family="Avenir, Arial, sans-serif" fill="#1f2d3a">
+    <text x="120" y="40" font-size="24">Stack: LIFO</text>
+    <g transform="translate(125 65)" font-size="20">
+      <rect width="130" height="42" fill="#eaf2fb" stroke="#9fb3c8"/>
+      <rect y="42" width="130" height="42" fill="#f7f9fb" stroke="#9fb3c8"/>
+      <rect y="84" width="130" height="42" fill="#f7f9fb" stroke="#9fb3c8"/>
+      <text x="65" y="28" text-anchor="middle">3</text>
+      <text x="65" y="70" text-anchor="middle">2</text>
+      <text x="65" y="112" text-anchor="middle">1</text>
+    </g>
+    <path d="M270 86 H340" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <text x="305" y="75" font-size="16" text-anchor="middle" fill="#526477">pop</text>
+    <text x="480" y="40" font-size="24">Queue: FIFO</text>
+    <g transform="translate(440 92)" font-size="20">
+      <rect width="210" height="54" fill="#f7f9fb" stroke="#9fb3c8"/>
+      <line x1="70" y1="0" x2="70" y2="54" stroke="#9fb3c8"/>
+      <line x1="140" y1="0" x2="140" y2="54" stroke="#9fb3c8"/>
+      <text x="35" y="34" text-anchor="middle">1</text>
+      <text x="105" y="34" text-anchor="middle">2</text>
+      <text x="175" y="34" text-anchor="middle">3</text>
+    </g>
+    <path d="M405 119 H350" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <path d="M675 119 H720" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <text x="378" y="108" font-size="16" text-anchor="middle" fill="#526477">dequeue</text>
+    <text x="697" y="108" font-size="16" text-anchor="middle" fill="#526477">enqueue</text>
+  </g>
+</svg>

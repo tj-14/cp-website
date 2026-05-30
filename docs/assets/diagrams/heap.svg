@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">Min heap and array representation</title>
+  <desc id="desc">A min heap tree and the same values in an array.</desc>
+  <rect width="760" height="300" fill="#ffffff"/>
+  <g stroke="#2b5c84" stroke-width="3">
+    <line x1="210" y1="60" x2="130" y2="130"/>
+    <line x1="210" y1="60" x2="290" y2="130"/>
+    <line x1="130" y1="130" x2="90" y2="205"/>
+    <line x1="130" y1="130" x2="170" y2="205"/>
+    <line x1="290" y1="130" x2="250" y2="205"/>
+    <line x1="290" y1="130" x2="330" y2="205"/>
+  </g>
+  <g font-family="Avenir, Arial, sans-serif" font-size="20" fill="#1f2d3a" text-anchor="middle">
+    <g><circle cx="210" cy="60" r="27" fill="#eaf2fb" stroke="#9fb3c8" stroke-width="2"/><text x="210" y="67">1</text></g>
+    <g><circle cx="130" cy="130" r="25" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/><text x="130" y="137">3</text></g>
+    <g><circle cx="290" cy="130" r="25" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/><text x="290" y="137">5</text></g>
+    <g><circle cx="90" cy="205" r="23" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/><text x="90" y="212">7</text></g>
+    <g><circle cx="170" cy="205" r="23" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/><text x="170" y="212">9</text></g>
+    <g><circle cx="250" cy="205" r="23" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/><text x="250" y="212">8</text></g>
+    <g><circle cx="330" cy="205" r="23" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/><text x="330" y="212">10</text></g>
+    <text x="555" y="62" font-size="22">array</text>
+    <g transform="translate(450 90)">
+      <rect width="210" height="48" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="30" y1="0" x2="30" y2="48" stroke="#9fb3c8"/>
+      <line x1="60" y1="0" x2="60" y2="48" stroke="#9fb3c8"/>
+      <line x1="90" y1="0" x2="90" y2="48" stroke="#9fb3c8"/>
+      <line x1="120" y1="0" x2="120" y2="48" stroke="#9fb3c8"/>
+      <line x1="150" y1="0" x2="150" y2="48" stroke="#9fb3c8"/>
+      <line x1="180" y1="0" x2="180" y2="48" stroke="#9fb3c8"/>
+      <text x="15" y="31">1</text><text x="45" y="31">3</text><text x="75" y="31">5</text>
+      <text x="105" y="31">7</text><text x="135" y="31">9</text><text x="165" y="31">8</text><text x="195" y="31">10</text>
+    </g>
+  </g>
+</svg>

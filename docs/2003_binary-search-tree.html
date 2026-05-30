@@ -7,175 +7,207 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Binary Search Tree</h3>
-                <h4>Description</h4>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
                 <ul>
-                  <li>
-                    <p>Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม</p>
-                    <ul>
-                      <li>ทุกโหนดใน subtree ด้านซ้ายจะต้องมีค่าน้อยกว่า root</li>
-                      <li>ทุกโหนดใน subtree ด้านขวาจะต้องมีค่ามากกว่า root</li>
-                      <li>subtree ด้านซ้ายและด้านขวาจะต้องเป็น binary search tree</li>
-                    </ul>
-                  </li>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
                 </ul>
-                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png">https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png</a></p>
-                <h4>Operations</h4>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                  <li>Search</li>
-                  <li>Insertion</li>
-                  <li>
-                    <p>Traversal</p>
-                    <ul>
-                      <li>Pre-order</li>
-                      <li>In-order</li>
-                      <li>Post-order</li>
-                    </ul>
-                  </li>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
                 </ul>
-                <h4>Example</h4>
-                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">cstdio</span><span style="color: #198810">></span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">cstring</span><span style="color: #198810">></span><br><span style="color: #d73948">int</span> tree[<span style="color: #b60157">1000</span>];<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">insert</span>(<span style="color: #d73948">int</span> n, <span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span> p;<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">&lt;</span> tree[p])<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">insert</span>(n, p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #d73948">else</span><br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">insert</span>(n, p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">pre</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>  <span style="color: #4b69c6">pre</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">pre</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">in</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">in</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>  <span style="color: #4b69c6">in</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">pos</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">pos</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">pos</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a[<span style="color: #b60157">5</span>];<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%s</span><span style="color: #198810">"</span>, a);<br>  <span style="color: #d73948">int</span> x;<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>x);<br>  <span style="color: #d73948">int</span> i;<br>  <span style="color: #d73948">for</span> (i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">1000</span>; i<span style="color: #d73948">++</span>)<br>    tree[i] <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>;<br>  <span style="color: #d73948">while</span> (x<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> n;<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>n);<br>    <span style="color: #d73948">if</span> (tree[<span style="color: #b60157">0</span>] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>      tree[<span style="color: #b60157">0</span>] <span style="color: #d73948">=</span> n;<br>    <span style="color: #d73948">else</span><br>      tree[<span style="color: #4b69c6">insert</span>(n, <span style="color: #b60157">0</span>)] <span style="color: #d73948">=</span> n;<br>  }<br><br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">PRE</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">pre</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">POS</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">pos</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">INF</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">in</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">BRF</span><span style="color: #198810">"</span>))<br>    <span style="color: #d73948">for</span> (i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">1000</span>; i<span style="color: #d73948">++</span>)<br>      <span style="color: #d73948">if</span> (tree[i] <span style="color: #d73948">!=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>        <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[i]);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2002_dynamic-array.html" class="prev">Dynamic Array</a>
-                <a href="2004_binary-tree.html" class="next">Binary Tree</a>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html" aria-current="page">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
-        </div>
+
+            <article class="content">
+<h3>Binary Search Tree</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#description">Description</a></li>
+                    <li><a href="#operations">Operations</a></li>
+                    <li><a href="#example">Example</a></li>
+                </ul>
+            </nav>
+
+<h4 id="description">Description</h4>
+<ul>
+<li><p>Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม</p>
+<ul>
+<li><p>ทุกโหนดใน subtree ด้านซ้ายจะต้องมีค่าน้อยกว่า root</p></li>
+<li><p>ทุกโหนดใน subtree ด้านขวาจะต้องมีค่ามากกว่า root</p></li>
+<li><p>subtree ด้านซ้ายและด้านขวาจะต้องเป็น binary search tree</p></li>
+</ul></li>
+</ul>
+<figure>
+<p><img
+src="assets/diagrams/binary-tree.svg"
+style="width:82.0%" /></p>
+<figcaption><p>Binary tree shape used as a basis for binary search
+trees. Original diagram for this guide.</p></figcaption>
+</figure>
+<h4 id="operations">Operations</h4>
+<ul>
+<li><p>Search</p></li>
+<li><p>Insertion</p></li>
+<li><p>Traversal</p>
+<ul>
+<li><p>Pre-order</p></li>
+<li><p>In-order</p></li>
+<li><p>Post-order</p></li>
+</ul></li>
+</ul>
+<h4 id="example">Example</h4>
+<pre class="cpp"><code>#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+int tree[1000];
+
+int insert(int n, int p) {
+  if (tree[p] == -1)
+    return p;
+  if (n &lt; tree[p])
+    return insert(n, p * 2 + 1);
+  else
+    return insert(n, p * 2 + 2);
+}
+
+void pre(int p) {
+  if (tree[p] == -1)
+    return;
+  printf(&quot;%d\n&quot;, tree[p]);
+  pre(p * 2 + 1);
+  pre(p * 2 + 2);
+}
+
+void in(int p) {
+  if (tree[p] == -1)
+    return;
+  in(p * 2 + 1);
+  printf(&quot;%d\n&quot;, tree[p]);
+  in(p * 2 + 2);
+}
+
+void pos(int p) {
+  if (tree[p] == -1)
+    return;
+  pos(p * 2 + 1);
+  pos(p * 2 + 2);
+  printf(&quot;%d\n&quot;, tree[p]);
+}
+
+int main() {
+  char a[5];
+  scanf(&quot;%s&quot;, a);
+  int x;
+  scanf(&quot;%d&quot;, &amp;x);
+  int i;
+  for (i = 0; i &lt; 1000; i++)
+    tree[i] = -1;
+  while (x--) {
+    int n;
+    scanf(&quot;%d&quot;, &amp;n);
+    if (tree[0] == -1)
+      tree[0] = n;
+    else
+      tree[insert(n, 0)] = n;
+  }
+
+  if (!strcmp(a, &quot;PRE&quot;))
+    pre(0);
+  if (!strcmp(a, &quot;POS&quot;))
+    pos(0);
+  if (!strcmp(a, &quot;INF&quot;))
+    in(0);
+  if (!strcmp(a, &quot;BRF&quot;))
+    for (i = 0; i &lt; 1000; i++)
+      if (tree[i] != -1)
+        printf(&quot;%d\n&quot;, tree[i]);
+  return 0;
+}</code></pre>
+
+            <div class="page-nav">
+                <a href="2006_priority-queue.html" class="prev">Priority Queue</a>
+                <a href="2007_set-map.html" class="next">Set and Map</a>
+            </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Binary Search Tree</h3>
-                <h4>Description</h4>
-                <ul>
-                  <li>
-                    <p>Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม</p>
-                    <ul>
-                      <li>ทุกโหนดใน subtree ด้านซ้ายจะต้องมีค่าน้อยกว่า root</li>
-                      <li>ทุกโหนดใน subtree ด้านขวาจะต้องมีค่ามากกว่า root</li>
-                      <li>subtree ด้านซ้ายและด้านขวาจะต้องเป็น binary search tree</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png">https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png</a></p>
-                <h4>Operations</h4>
-                <ul>
-                  <li>Search</li>
-                  <li>Insertion</li>
-                  <li>
-                    <p>Traversal</p>
-                    <ul>
-                      <li>Pre-order</li>
-                      <li>In-order</li>
-                      <li>Post-order</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Example</h4>
-                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">cstdio</span><span style="color: #198810">></span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">cstring</span><span style="color: #198810">></span><br><span style="color: #d73948">int</span> tree[<span style="color: #b60157">1000</span>];<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">insert</span>(<span style="color: #d73948">int</span> n, <span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span> p;<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">&lt;</span> tree[p])<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">insert</span>(n, p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #d73948">else</span><br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">insert</span>(n, p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">pre</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>  <span style="color: #4b69c6">pre</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">pre</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">in</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">in</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>  <span style="color: #4b69c6">in</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">pos</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">pos</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">pos</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a[<span style="color: #b60157">5</span>];<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%s</span><span style="color: #198810">"</span>, a);<br>  <span style="color: #d73948">int</span> x;<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>x);<br>  <span style="color: #d73948">int</span> i;<br>  <span style="color: #d73948">for</span> (i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">1000</span>; i<span style="color: #d73948">++</span>)<br>    tree[i] <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>;<br>  <span style="color: #d73948">while</span> (x<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> n;<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>n);<br>    <span style="color: #d73948">if</span> (tree[<span style="color: #b60157">0</span>] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>      tree[<span style="color: #b60157">0</span>] <span style="color: #d73948">=</span> n;<br>    <span style="color: #d73948">else</span><br>      tree[<span style="color: #4b69c6">insert</span>(n, <span style="color: #b60157">0</span>)] <span style="color: #d73948">=</span> n;<br>  }<br><br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">PRE</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">pre</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">POS</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">pos</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">INF</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">in</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">BRF</span><span style="color: #198810">"</span>))<br>    <span style="color: #d73948">for</span> (i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">1000</span>; i<span style="color: #d73948">++</span>)<br>      <span style="color: #d73948">if</span> (tree[i] <span style="color: #d73948">!=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>        <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[i]);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2002_dynamic-array.html" class="prev">Dynamic Array</a>
-                <a href="2004_binary-tree.html" class="next">Binary Tree</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Binary Search Tree</h3>
-                <h4>Description</h4>
-                <ul>
-                  <li>
-                    <p>Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม</p>
-                    <ul>
-                      <li>ทุกโหนดใน subtree ด้านซ้ายจะต้องมีค่าน้อยกว่า root</li>
-                      <li>ทุกโหนดใน subtree ด้านขวาจะต้องมีค่ามากกว่า root</li>
-                      <li>subtree ด้านซ้ายและด้านขวาจะต้องเป็น binary search tree</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png">https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png</a></p>
-                <h4>Operations</h4>
-                <ul>
-                  <li>Search</li>
-                  <li>Insertion</li>
-                  <li>
-                    <p>Traversal</p>
-                    <ul>
-                      <li>Pre-order</li>
-                      <li>In-order</li>
-                      <li>Post-order</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Example</h4>
-                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">cstdio</span><span style="color: #198810">></span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">cstring</span><span style="color: #198810">></span><br><span style="color: #d73948">int</span> tree[<span style="color: #b60157">1000</span>];<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">insert</span>(<span style="color: #d73948">int</span> n, <span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span> p;<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">&lt;</span> tree[p])<br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">insert</span>(n, p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #d73948">else</span><br>    <span style="color: #d73948">return</span> <span style="color: #4b69c6">insert</span>(n, p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">pre</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>  <span style="color: #4b69c6">pre</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">pre</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">in</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">in</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>  <span style="color: #4b69c6">in</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">pos</span>(<span style="color: #d73948">int</span> p) {<br>  <span style="color: #d73948">if</span> (tree[p] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>    <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">pos</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">pos</span>(p <span style="color: #d73948">*</span> <span style="color: #b60157">2</span> <span style="color: #d73948">+</span> <span style="color: #b60157">2</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[p]);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">char</span> a[<span style="color: #b60157">5</span>];<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%s</span><span style="color: #198810">"</span>, a);<br>  <span style="color: #d73948">int</span> x;<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>x);<br>  <span style="color: #d73948">int</span> i;<br>  <span style="color: #d73948">for</span> (i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">1000</span>; i<span style="color: #d73948">++</span>)<br>    tree[i] <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>;<br>  <span style="color: #d73948">while</span> (x<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> n;<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>n);<br>    <span style="color: #d73948">if</span> (tree[<span style="color: #b60157">0</span>] <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>      tree[<span style="color: #b60157">0</span>] <span style="color: #d73948">=</span> n;<br>    <span style="color: #d73948">else</span><br>      tree[<span style="color: #4b69c6">insert</span>(n, <span style="color: #b60157">0</span>)] <span style="color: #d73948">=</span> n;<br>  }<br><br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">PRE</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">pre</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">POS</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">pos</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">INF</span><span style="color: #198810">"</span>))<br>    <span style="color: #4b69c6">in</span>(<span style="color: #b60157">0</span>);<br>  <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">strcmp</span>(a, <span style="color: #198810">"</span><span style="color: #198810">BRF</span><span style="color: #198810">"</span>))<br>    <span style="color: #d73948">for</span> (i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> <span style="color: #b60157">1000</span>; i<span style="color: #d73948">++</span>)<br>      <span style="color: #d73948">if</span> (tree[i] <span style="color: #d73948">!=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>)<br>        <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, tree[i]);<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2002_dynamic-array.html" class="prev">Dynamic Array</a>
-                <a href="2004_binary-tree.html" class="next">Binary Tree</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

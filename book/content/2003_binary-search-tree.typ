@@ -9,7 +9,10 @@
     - ทุกโหนดใน subtree ด้านขวาจะต้องมีค่ามากกว่า root
     - subtree ด้านซ้ายและด้านขวาจะต้องเป็น binary search tree
 
-https://media.geeksforgeeks.org/wp-content/uploads/BSTSearch.png
+#figure(
+  image("../assets/diagrams/binary-tree.svg", width: 82%),
+  caption: [Binary tree shape used as a basis for binary search trees. Original diagram for this guide.],
+)
 
 === Operations
 

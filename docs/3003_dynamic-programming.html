@@ -7,601 +7,322 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html" aria-current="page">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
 
-        <div class="content">
-            <h3>Dynamic Programming</h3>
-                <h4>หลักการ</h4>
+            <article class="content">
+<h3>Dynamic Programming</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
                 <ul>
-                  <li>Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy</li>
-                  <li>DP จะแก้ปัญหาได้หากปัญหานั้นสามารถแบ่งออกมาเป็นปัญหาย่อยที่ทับซ้อนกันและสามารถแก้ได้อย่างมีประสิทธิภาพ</li>
-                  <li>
-                    <p>ประโยชน์หลักของ DP คือ</p>
-                    <ul>
-                      <li>หาวิธีแก้ปัญหาที่ optimal</li>
-                      <li>หาจำนวนวิธีแก้ปัญหา</li>
-                    </ul>
-                  </li>
-                  <li>ไอเดีย DP เป็นไอเดียที่ง่ายแต่ส่วนที่ยากจะเป็นการนำไปใช้กับปัญหาจริง</li>
+                    <li><a href="#หลักการ">หลักการ</a></li>
+                    <li><a href="#ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</a></li>
+                    <li><a href="#longest-increasing-subsequence">Longest Increasing Subsequence</a></li>
+                    <li><a href="#review">Review</a></li>
+                    <li><a href="#เพิ่มเติม">เพิ่มเติม</a></li>
                 </ul>
-                <p>ซึ่งต้องใช้ประสบการณ์</p>
-                <ul>
-                  <li>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</li>
-                </ul>
-                <h4>ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</h4>
-                <p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า $n$ โดยใช้เหรียญที่มีมูลค่า $\{c_1, c_2, \ldots, c_k\}$ จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
-                <p>หากมูลค่าของเหรียญเป็น $\{1,3,4\}$</p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>มูลค่ารวม $n$</th>
-                      <th>จำนวนเหรียญที่น้อยที่สุด</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>3</td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>3</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p>นิยาม $d_n$ ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า $n$</p>
-                <p>จะได้ว่า</p>
-                <p>$$d_i = \min(d_{i-1}+1, d_{i-3}+1, d_{i-4}+1)$$</p>
-                <p>ซึ่งเป็น recursive case โดย base case คือ $d_0 = 0$</p>
-                <h4>Longest Increasing Subsequence</h4>
-                <p><a href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
-                <h4>Review</h4>
-                <h5>คืออะไร?</h5>
-                <ul>
-                  <li>คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่</li>
-                  <li>recursion ที่เรียก overlapping sub-problem</li>
-                </ul>
-                <p>แล้วเอามาใช้ได้เลยโดยไม่ต้องไปคำนวณใหม่</p>
-                <ul>
-                  <li>แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ</li>
-                  <li>หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก</li>
-                </ul>
-                <h5>มีอะไรบ้าง?</h5>
-                <ul>
-                  <li>quicksum <code>dp[i] = dp[i-1] + a[i]</code></li>
-                  <li>knapsack <code>dp[i] = max(dp[i-wi] + ci)</code></li>
-                  <li>fibonacci <code>dp[i] = dp[i-2] + dp[i-1]</code></li>
-                  <li>dijkstra <code>dp[v] = min(dp[u] + w)</code></li>
-                  <li>LIS longest increasing subsequence</li>
-                  <li>pascal (nCr) <code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></li>
-                  <li>coin change <code>dp[i] = f(dp[i-xj])</code></li>
-                  <li>matrix chain $N^3$, <code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></li>
-                  <li>LCS longest common subsequence</li>
-                  <li>LCA lowest common ancestor</li>
-                  <li>#paths    pascal</li>
-                  <li>longest common substring    lis</li>
-                  <li>
-                    <p>matrix exponential    divide&amp;conquer/bitwise</p>
-                    <ul>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                    </ul>
-                  </li>
-                  <li>KMP Knutt-Morris-Pratt</li>
-                  <li>z-function</li>
-                  <li>
-                    <p>floyd-warshall    matrix chain</p>
-                    <p>, <code>dp[i][j] = min(f(dp[i][k], dp[k][j]))</code></p>
-                  </li>
-                  <li>Manacher algorithm</li>
-                  <li>
-                    <p>TSP travelling salesman</p>
-                    <p>, <code>dp[i][j]</code> โดยที่</p>
-                    <p>เป็น set</p>
-                  </li>
-                </ul>
-                <p>ของเมืองที่เคยผ่านไปแล้ว และ</p>
-                <p>เป็นเมืองสุดท้ายที่อยู่ตอนนั้น</p>
-                <ul>
-                  <li>tribonacci</li>
-                </ul>
-                <h5>example</h5>
-                <h6>fibonacci</h6>
-                <p>$f(n) = f(n-1) + f(n-2)$</p>
-                <ul>
-                  <li>1 1 2 3 5 8 11 ..</li>
-                  <li>$f(10) = f(9) + f(8)$</li>
-                  <li>$f(9) = f(8) + f(7)$</li>
-                </ul>
-                <p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
-                <h6>LIS</h6>
-                <p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
-                <p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
-                <p>$N^2$ solution:</p>
-                <p>define state: <code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
-                <p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
-                <p>update state: new input: x, พิจารณา $a[j] < x$, แล้วเก็บค่า $\text{dp}[i] = \max(\text{dp}[j]+1)$</p>
-                <p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
-                <pre><code>     0 1 2 3 4 5 6 7 8<br><br>a  : 1 5 3 2 8 9 3 6<br>dp : 0 1 2 2 2 3 4 3 4<br>bt : 0 0 1 1 1 4 5 4 7</code></pre>
-                <p>$N \log N$ solution:</p>
-                <p>define state: <code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>
-                <p>update state: new input: x ไล่ตั้่งแต่ <code>dp[j: 0 → mx]</code></p>
-                <ul>
-                  <li>ถ้าค่า dp[j] มากกว่า x และ j มีค่าน้อยที่สุด, <code>dp[j] = x</code>,</li>
-                  <li>แต่ถ้าหาไม่ได้เลย ก็ให้ <code>dp[mx+1] = x</code></li>
-                </ul>
-                <p>คำตอบสุดท้าย mx</p>
-                <pre><code>dp[0] = 0 <br>dp[1] = 1<br>dp[2] = 2<br>dp[3] = 3<br>dp[4] = 6<br>dp[5] =</code></pre>
-                <h4>เพิ่มเติม</h4>
-                <ul>
-                  <li>An Introduction to Dynamic Programming (aquablitz11)<a id="loc-1" href="#loc-3" role="doc-noteref"><sup>1</sup></a></li>
-                  <li>Dynamic Programming by Aj. Nattee<a id="loc-2" href="#loc-4" role="doc-noteref"><sup>2</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-3"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html">http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html</a></li>
-                    <li id="loc-4"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf">https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf</a></li>
-                  </ol>
-                </section>
+            </nav>
+
+<h4 id="หลักการ">หลักการ</h4>
+<ul>
+<li><p>Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ
+greedy</p></li>
+<li><p>DP
+จะแก้ปัญหาได้หากปัญหานั้นสามารถแบ่งออกมาเป็นปัญหาย่อยที่ทับซ้อนกันและสามารถแก้ได้อย่างมีประสิทธิภาพ</p></li>
+<li><p>ประโยชน์หลักของ DP คือ</p>
+<ul>
+<li><p>หาวิธีแก้ปัญหาที่ optimal</p></li>
+<li><p>หาจำนวนวิธีแก้ปัญหา</p></li>
+</ul></li>
+<li><p>ไอเดีย DP เป็นไอเดียที่ง่ายแต่ส่วนที่ยากจะเป็นการนำไปใช้กับปัญหาจริง</p></li>
+</ul>
+<p>ซึ่งต้องใช้ประสบการณ์</p>
+<ul>
+<li><p>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</p></li>
+</ul>
+<h4 id="ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</h4>
+<p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า <span
+class="math inline"><em>n</em></span> โดยใช้เหรียญที่มีมูลค่า <span
+class="math inline">{<em>c</em><sub>1</sub>, <em>c</em><sub>2</sub>, ⋯, <em>c</em><sub><em>k</em></sub>}</span>
+จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
+<p>หากมูลค่าของเหรียญเป็น</p>
+<p><span class="math inline">{1, 3, 4}</span></p>
+<table>
+<thead>
+<tr>
+<th><p>มูลค่ารวม <span class="math inline"><em>n</em></span></p></th>
+<th><p>จำนวนเหรียญที่น้อยที่สุด</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr>
+<td><p>2</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>3</p></td>
+<td><p>1</p></td>
+</tr>
+<tr>
+<td><p>4</p></td>
+<td><p>1</p></td>
+</tr>
+<tr>
+<td><p>5</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>6</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>7</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>8</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>9</p></td>
+<td><p>3</p></td>
+</tr>
+<tr>
+<td><p>10</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+<p>นิยาม <span class="math inline"><em>d</em><sub><em>n</em></sub></span>
+ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า <span
+class="math inline"><em>n</em></span></p>
+<p>จะได้ว่า</p>
+<p><span
+class="math inline"><em>d</em><sub><em>i</em></sub> = <em>m</em> ∈ {(<em>d</em><sub>{<em>i</em> − 1}</sub> + 1, <em>d</em><sub>{<em>i</em> − 3}</sub> + 1, <em>d</em><sub>{<em>i</em> − 4}</sub> + 1)}</span></p>
+<p>ซึ่งเป็น recursive case โดย base case คือ <span
+class="math inline"><em>d</em><sub>0</sub> = 0</span></p>
+<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence</h4>
+<p><a
+href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
+<h4 id="review">Review</h4>
+<h5>คืออะไร?</h5>
+<ul>
+<li><p>คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่</p></li>
+<li><p>recursion ที่เรียก overlapping sub-problem</p></li>
+</ul>
+<p>แล้วเอามาใช้ได้เลยโดยไม่ต้องไปคำนวณใหม่</p>
+<ul>
+<li><p>แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ</p></li>
+<li><p>หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก</p></li>
+</ul>
+<h5>มีอะไรบ้าง?</h5>
+<ul>
+<li><p>quicksum <code>dp[i] = dp[i-1] + a[i]</code></p></li>
+<li><p>knapsack <code>dp[i] = max(dp[i-wi] + ci)</code></p></li>
+<li><p>fibonacci <code>dp[i] = dp[i-2] + dp[i-1]</code></p></li>
+<li><p>dijkstra <code>dp[v] = min(dp[u] + w)</code></p></li>
+<li><p>LIS longest increasing subsequence</p></li>
+<li><p>pascal (nCr)
+<code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></p></li>
+<li><p>coin change <code>dp[i] = f(dp[i-xj])</code></p></li>
+<li><p>matrix chain <span
+class="math inline"><em>N</em><sup>3</sup></span>,
+<code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></p></li>
+<li><p>LCS longest common subsequence</p></li>
+<li><p>LCA lowest common ancestor</p></li>
+<li><p>#paths    pascal</p></li>
+<li><p>longest common substring    lis</p></li>
+<li><p>matrix exponential    divide&amp;conquer/bitwise</p>
+<ul>
+<li><p><span class="math inline"><em>x</em><sup>9</sup></span></p></li>
+<li><p><span class="math inline">9 = {1001}<sub>2</sub></span></p></li>
+<li><p><span
+class="math inline"><em>x</em><sup>1</sup> * <em>x</em><sup>8</sup></span></p></li>
+</ul></li>
+<li><p>KMP Knutt-Morris-Pratt</p></li>
+<li><p>z-function</p></li>
+<li><p>floyd-warshall    matrix chain <span
+class="math inline"><em>N</em><sup>3</sup></span>,
+<code>dp[i][j] = min(f(dp[i][k], dp[k][j]))</code></p></li>
+<li><p>Manacher algorithm</p></li>
+<li><p>TSP travelling salesman <span
+class="math inline">2<sup><em>n</em></sup> * <em>n</em></span>,
+<code>dp[i][j]</code> โดยที่ <span class="math inline"><em>i</em></span>
+เป็น set</p></li>
+</ul>
+<p>ของเมืองที่เคยผ่านไปแล้ว และ <span class="math inline"><em>j</em></span>
+เป็นเมืองสุดท้ายที่อยู่ตอนนั้น</p>
+<ul>
+<li><p>tribonacci</p></li>
+</ul>
+<h5>example</h5>
+<h6>fibonacci</h6>
+<p><span
+class="math inline"><em>f</em>(<em>n</em>) = <em>f</em>(<em>n</em> − 1) + <em>f</em>(<em>n</em> − 2)</span></p>
+<ul>
+<li><p>1 1 2 3 5 8 11 ..</p></li>
+<li><p><span
+class="math inline"><em>f</em>(10) = <em>f</em>(9) + <em>f</em>(8)</span></p></li>
+<li><p><span
+class="math inline"><em>f</em>(9) = <em>f</em>(8) + <em>f</em>(7)</span></p></li>
+</ul>
+<p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
+<h6>LIS</h6>
+<p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
+<p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
+<p><span class="math inline"><em>N</em><sup>2</sup></span> solution:</p>
+<p>define state:
+<code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
+<p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
+<p>update state: new input: x, พิจารณา <span
+class="math inline"><em>a</em>[<em>j</em>] &lt; <em>x</em></span>,
+แล้วเก็บค่า <span
+class="math inline">dp[<em>i</em>] = max (dp[<em>j</em>] + 1)</span></p>
+<p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
+<pre><code>     0 1 2 3 4 5 6 7 8
+
+a  : 1 5 3 2 8 9 3 6
+dp : 0 1 2 2 2 3 4 3 4
+bt : 0 0 1 1 1 4 5 4 7</code></pre>
+<p><span class="math inline"><em>N</em>log {<em>N</em>}</span>
+solution:</p>
+<p>define state:
+<code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>
+<p>update state: new input: x ไล่ตั้่งแต่ <code>dp[j: 0 → mx]</code></p>
+<ul>
+<li><p>ถ้าค่า dp[j] มากกว่า x และ j มีค่าน้อยที่สุด,
+<code>dp[j] = x</code>,</p></li>
+<li><p>แต่ถ้าหาไม่ได้เลย ก็ให้ <code>dp[mx+1] = x</code></p></li>
+</ul>
+<p>คำตอบสุดท้าย mx</p>
+<pre><code>dp[0] = 0 
+dp[1] = 1
+dp[2] = 2
+dp[3] = 3
+dp[4] = 6
+dp[5] =</code></pre>
+<h4 id="เพิ่มเติม">เพิ่มเติม</h4>
+<ul>
+<li><p>An Introduction to Dynamic Programming (aquablitz11) <a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>Dynamic Programming by Aj. Nattee <a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></p></li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html">http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf">https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
             <div class="page-nav">
                 <a href="3002_search.html" class="prev">Search</a>
                 <a href="3004_adhoc.html" class="next">Ad-hoc Problems</a>
             </div>
-        </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Dynamic Programming</h3>
-                <h4>หลักการ</h4>
-                <ul>
-                  <li>Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy</li>
-                  <li>DP จะแก้ปัญหาได้หากปัญหานั้นสามารถแบ่งออกมาเป็นปัญหาย่อยที่ทับซ้อนกันและสามารถแก้ได้อย่างมีประสิทธิภาพ</li>
-                  <li>
-                    <p>ประโยชน์หลักของ DP คือ</p>
-                    <ul>
-                      <li>หาวิธีแก้ปัญหาที่ optimal</li>
-                      <li>หาจำนวนวิธีแก้ปัญหา</li>
-                    </ul>
-                  </li>
-                  <li>ไอเดีย DP เป็นไอเดียที่ง่ายแต่ส่วนที่ยากจะเป็นการนำไปใช้กับปัญหาจริง</li>
-                </ul>
-                <p>ซึ่งต้องใช้ประสบการณ์</p>
-                <ul>
-                  <li>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</li>
-                </ul>
-                <h4>ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</h4>
-                <p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า $n$ โดยใช้เหรียญที่มีมูลค่า $\{c_1, c_2, \ldots, c_k\}$ จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
-                <p>หากมูลค่าของเหรียญเป็น $\{1,3,4\}$</p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>มูลค่ารวม $n$</th>
-                      <th>จำนวนเหรียญที่น้อยที่สุด</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>3</td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>3</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p>นิยาม $d_n$ ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า $n$</p>
-                <p>จะได้ว่า</p>
-                <p>$$d_i = \min(d_{i-1}+1, d_{i-3}+1, d_{i-4}+1)$$</p>
-                <p>ซึ่งเป็น recursive case โดย base case คือ $d_0 = 0$</p>
-                <h4>Longest Increasing Subsequence</h4>
-                <p><a href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
-                <h4>Review</h4>
-                <h5>คืออะไร?</h5>
-                <ul>
-                  <li>คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่</li>
-                  <li>recursion ที่เรียก overlapping sub-problem</li>
-                </ul>
-                <p>แล้วเอามาใช้ได้เลยโดยไม่ต้องไปคำนวณใหม่</p>
-                <ul>
-                  <li>แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ</li>
-                  <li>หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก</li>
-                </ul>
-                <h5>มีอะไรบ้าง?</h5>
-                <ul>
-                  <li>quicksum <code>dp[i] = dp[i-1] + a[i]</code></li>
-                  <li>knapsack <code>dp[i] = max(dp[i-wi] + ci)</code></li>
-                  <li>fibonacci <code>dp[i] = dp[i-2] + dp[i-1]</code></li>
-                  <li>dijkstra <code>dp[v] = min(dp[u] + w)</code></li>
-                  <li>LIS longest increasing subsequence</li>
-                  <li>pascal (nCr) <code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></li>
-                  <li>coin change <code>dp[i] = f(dp[i-xj])</code></li>
-                  <li>matrix chain $N^3$, <code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></li>
-                  <li>LCS longest common subsequence</li>
-                  <li>LCA lowest common ancestor</li>
-                  <li>#paths    pascal</li>
-                  <li>longest common substring    lis</li>
-                  <li>
-                    <p>matrix exponential    divide&amp;conquer/bitwise</p>
-                    <ul>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                    </ul>
-                  </li>
-                  <li>KMP Knutt-Morris-Pratt</li>
-                  <li>z-function</li>
-                  <li>
-                    <p>floyd-warshall    matrix chain</p>
-                    <p>, <code>dp[i][j] = min(f(dp[i][k], dp[k][j]))</code></p>
-                  </li>
-                  <li>Manacher algorithm</li>
-                  <li>
-                    <p>TSP travelling salesman</p>
-                    <p>, <code>dp[i][j]</code> โดยที่</p>
-                    <p>เป็น set</p>
-                  </li>
-                </ul>
-                <p>ของเมืองที่เคยผ่านไปแล้ว และ</p>
-                <p>เป็นเมืองสุดท้ายที่อยู่ตอนนั้น</p>
-                <ul>
-                  <li>tribonacci</li>
-                </ul>
-                <h5>example</h5>
-                <h6>fibonacci</h6>
-                <p>$f(n) = f(n-1) + f(n-2)$</p>
-                <ul>
-                  <li>1 1 2 3 5 8 11 ..</li>
-                  <li>$f(10) = f(9) + f(8)$</li>
-                  <li>$f(9) = f(8) + f(7)$</li>
-                </ul>
-                <p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
-                <h6>LIS</h6>
-                <p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
-                <p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
-                <p>$N^2$ solution:</p>
-                <p>define state: <code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
-                <p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
-                <p>update state: new input: x, พิจารณา $a[j] < x$, แล้วเก็บค่า $\text{dp}[i] = \max(\text{dp}[j]+1)$</p>
-                <p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
-                <pre><code>     0 1 2 3 4 5 6 7 8<br><br>a  : 1 5 3 2 8 9 3 6<br>dp : 0 1 2 2 2 3 4 3 4<br>bt : 0 0 1 1 1 4 5 4 7</code></pre>
-                <p>$N \log N$ solution:</p>
-                <p>define state: <code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>
-                <p>update state: new input: x ไล่ตั้่งแต่ <code>dp[j: 0 → mx]</code></p>
-                <ul>
-                  <li>ถ้าค่า dp[j] มากกว่า x และ j มีค่าน้อยที่สุด, <code>dp[j] = x</code>,</li>
-                  <li>แต่ถ้าหาไม่ได้เลย ก็ให้ <code>dp[mx+1] = x</code></li>
-                </ul>
-                <p>คำตอบสุดท้าย mx</p>
-                <pre><code>dp[0] = 0 <br>dp[1] = 1<br>dp[2] = 2<br>dp[3] = 3<br>dp[4] = 6<br>dp[5] =</code></pre>
-                <h4>เพิ่มเติม</h4>
-                <ul>
-                  <li>An Introduction to Dynamic Programming (aquablitz11)<a id="loc-1" href="#loc-3" role="doc-noteref"><sup>1</sup></a></li>
-                  <li>Dynamic Programming by Aj. Nattee<a id="loc-2" href="#loc-4" role="doc-noteref"><sup>2</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-3"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html">http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html</a></li>
-                    <li id="loc-4"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf">https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf</a></li>
-                  </ol>
-                </section>
-            <div class="page-nav">
-                <a href="3002_search.html" class="prev">Search</a>
-                <a href="3004_adhoc.html" class="next">Ad-hoc Problems</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Dynamic Programming</h3>
-                <h4>หลักการ</h4>
-                <ul>
-                  <li>Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy</li>
-                  <li>DP จะแก้ปัญหาได้หากปัญหานั้นสามารถแบ่งออกมาเป็นปัญหาย่อยที่ทับซ้อนกันและสามารถแก้ได้อย่างมีประสิทธิภาพ</li>
-                  <li>
-                    <p>ประโยชน์หลักของ DP คือ</p>
-                    <ul>
-                      <li>หาวิธีแก้ปัญหาที่ optimal</li>
-                      <li>หาจำนวนวิธีแก้ปัญหา</li>
-                    </ul>
-                  </li>
-                  <li>ไอเดีย DP เป็นไอเดียที่ง่ายแต่ส่วนที่ยากจะเป็นการนำไปใช้กับปัญหาจริง</li>
-                </ul>
-                <p>ซึ่งต้องใช้ประสบการณ์</p>
-                <ul>
-                  <li>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</li>
-                </ul>
-                <h4>ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</h4>
-                <p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า $n$ โดยใช้เหรียญที่มีมูลค่า $\{c_1, c_2, \ldots, c_k\}$ จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
-                <p>หากมูลค่าของเหรียญเป็น $\{1,3,4\}$</p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>มูลค่ารวม $n$</th>
-                      <th>จำนวนเหรียญที่น้อยที่สุด</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>3</td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>3</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p>นิยาม $d_n$ ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า $n$</p>
-                <p>จะได้ว่า</p>
-                <p>$$d_i = \min(d_{i-1}+1, d_{i-3}+1, d_{i-4}+1)$$</p>
-                <p>ซึ่งเป็น recursive case โดย base case คือ $d_0 = 0$</p>
-                <h4>Longest Increasing Subsequence</h4>
-                <p><a href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
-                <h4>Review</h4>
-                <h5>คืออะไร?</h5>
-                <ul>
-                  <li>คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่</li>
-                  <li>recursion ที่เรียก overlapping sub-problem</li>
-                </ul>
-                <p>แล้วเอามาใช้ได้เลยโดยไม่ต้องไปคำนวณใหม่</p>
-                <ul>
-                  <li>แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ</li>
-                  <li>หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก</li>
-                </ul>
-                <h5>มีอะไรบ้าง?</h5>
-                <ul>
-                  <li>quicksum <code>dp[i] = dp[i-1] + a[i]</code></li>
-                  <li>knapsack <code>dp[i] = max(dp[i-wi] + ci)</code></li>
-                  <li>fibonacci <code>dp[i] = dp[i-2] + dp[i-1]</code></li>
-                  <li>dijkstra <code>dp[v] = min(dp[u] + w)</code></li>
-                  <li>LIS longest increasing subsequence</li>
-                  <li>pascal (nCr) <code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></li>
-                  <li>coin change <code>dp[i] = f(dp[i-xj])</code></li>
-                  <li>matrix chain $N^3$, <code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></li>
-                  <li>LCS longest common subsequence</li>
-                  <li>LCA lowest common ancestor</li>
-                  <li>#paths    pascal</li>
-                  <li>longest common substring    lis</li>
-                  <li>
-                    <p>matrix exponential    divide&amp;conquer/bitwise</p>
-                    <ul>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                    </ul>
-                  </li>
-                  <li>KMP Knutt-Morris-Pratt</li>
-                  <li>z-function</li>
-                  <li>
-                    <p>floyd-warshall    matrix chain</p>
-                    <p>, <code>dp[i][j] = min(f(dp[i][k], dp[k][j]))</code></p>
-                  </li>
-                  <li>Manacher algorithm</li>
-                  <li>
-                    <p>TSP travelling salesman</p>
-                    <p>, <code>dp[i][j]</code> โดยที่</p>
-                    <p>เป็น set</p>
-                  </li>
-                </ul>
-                <p>ของเมืองที่เคยผ่านไปแล้ว และ</p>
-                <p>เป็นเมืองสุดท้ายที่อยู่ตอนนั้น</p>
-                <ul>
-                  <li>tribonacci</li>
-                </ul>
-                <h5>example</h5>
-                <h6>fibonacci</h6>
-                <p>$f(n) = f(n-1) + f(n-2)$</p>
-                <ul>
-                  <li>1 1 2 3 5 8 11 ..</li>
-                  <li>$f(10) = f(9) + f(8)$</li>
-                  <li>$f(9) = f(8) + f(7)$</li>
-                </ul>
-                <p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
-                <h6>LIS</h6>
-                <p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
-                <p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
-                <p>$N^2$ solution:</p>
-                <p>define state: <code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
-                <p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
-                <p>update state: new input: x, พิจารณา $a[j] < x$, แล้วเก็บค่า $\text{dp}[i] = \max(\text{dp}[j]+1)$</p>
-                <p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
-                <pre><code>     0 1 2 3 4 5 6 7 8<br><br>a  : 1 5 3 2 8 9 3 6<br>dp : 0 1 2 2 2 3 4 3 4<br>bt : 0 0 1 1 1 4 5 4 7</code></pre>
-                <p>$N \log N$ solution:</p>
-                <p>define state: <code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>
-                <p>update state: new input: x ไล่ตั้่งแต่ <code>dp[j: 0 → mx]</code></p>
-                <ul>
-                  <li>ถ้าค่า dp[j] มากกว่า x และ j มีค่าน้อยที่สุด, <code>dp[j] = x</code>,</li>
-                  <li>แต่ถ้าหาไม่ได้เลย ก็ให้ <code>dp[mx+1] = x</code></li>
-                </ul>
-                <p>คำตอบสุดท้าย mx</p>
-                <pre><code>dp[0] = 0 <br>dp[1] = 1<br>dp[2] = 2<br>dp[3] = 3<br>dp[4] = 6<br>dp[5] =</code></pre>
-                <h4>เพิ่มเติม</h4>
-                <ul>
-                  <li>An Introduction to Dynamic Programming (aquablitz11)<a id="loc-1" href="#loc-3" role="doc-noteref"><sup>1</sup></a></li>
-                  <li>Dynamic Programming by Aj. Nattee<a id="loc-2" href="#loc-4" role="doc-noteref"><sup>2</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-3"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html">http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html</a></li>
-                    <li id="loc-4"><a href="#loc-2" role="doc-backlink"><sup>2</sup></a><a href="https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf">https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf</a></li>
-                  </ol>
-                </section>
-            <div class="page-nav">
-                <a href="3002_search.html" class="prev">Search</a>
-                <a href="3004_adhoc.html" class="next">Ad-hoc Problems</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

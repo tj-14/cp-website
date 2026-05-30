@@ -7,271 +7,172 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>review</h3>
-                <h4>stack and queue</h4>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
                 <ul>
-                  <li>
-                    <p>stack: first in last out</p>
-                    <ul>
-                      <li>นึกถึงกองจาน</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>queue: first in first out</p>
-                    <ul>
-                      <li>คิวทั่วไป</li>
-                    </ul>
-                  </li>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
                 </ul>
-                <h4>linked list</h4>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                  <li>
-                    <p>เป็น concept ที่เป็นโครงสร้างแนวเดียวกับ array แต่ข้อดีข้อเสียต่างกัน</p>
-                    <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png</a></p>
-                  </li>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
                 </ul>
-                <h4>dynamic array</h4>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
                 <ul>
-                  <li>ใช้ vector ของ stl</li>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html" aria-current="page">Review</a></li>
                 </ul>
-                <h4>binary tree</h4>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg">https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg</a></p>
-                <h4>heap</h4>
-                <p><a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png</a></p>
-                <h4>priority queue</h4>
-                <p><a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png">https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png</a></p>
-                <h4>binary search tree</h4>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg">https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg</a></p>
-                <h4>set, map</h4>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
                 <ul>
-                  <li>เหมือน set ทางคณิตศาสตร์</li>
-                  <li>
-                    <p>map</p>
-                    <ul>
-                      <li>เหมือน dictionary ใน Python</li>
-                      <li>เสมือน array ที่ index เป็นอะไรก็ได้</li>
-                    </ul>
-                  </li>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
                 </ul>
-                <h4>graph</h4>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
                 <ul>
-                  <li>
-                    <p>มี cycle</p>
-                    <ul>
-                      <li>tree เป็น graph ที่ไม่มี cycle</li>
-                    </ul>
-                  </li>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
                 </ul>
-                <h4>hash table</h4>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
                 <ul>
-                  <li>data structure ที่ใช้บีบข้อมูลให้เล็กลงโดยอาจจะเสียความละเอียดไป</li>
-                  <li>เช่น บีบ string ให้เหลือแค่ int ผ่าน hash function แต่ก็มีโอกาสชนกันเป็นปัญหา collision</li>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
                 </ul>
-            <div class="page-nav">
-                <a href="2008_heap.html" class="prev">Heap</a>
-                <a href="2010_stack-queue.html" class="next">Stack and Queue</a>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
-        </div>
+
+            <article class="content">
+<h3>review</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#stack-and-queue">stack and queue</a></li>
+                    <li><a href="#linked-list">linked list</a></li>
+                    <li><a href="#dynamic-array">dynamic array</a></li>
+                    <li><a href="#binary-tree">binary tree</a></li>
+                    <li><a href="#heap">heap</a></li>
+                    <li><a href="#priority-queue">priority queue</a></li>
+                    <li><a href="#binary-search-tree">binary search tree</a></li>
+                    <li><a href="#set-map">set, map</a></li>
+                    <li><a href="#graph">graph</a></li>
+                    <li><a href="#hash-table">hash table</a></li>
+                </ul>
+            </nav>
+
+<h4 id="stack-and-queue">stack and queue</h4>
+<ul>
+<li><p>stack: first in last out</p>
+<ul>
+<li><p>นึกถึงกองจาน</p></li>
+</ul></li>
+</ul>
+<ul>
+<li><p>queue: first in first out</p>
+<ul>
+<li><p>คิวทั่วไป</p></li>
+</ul></li>
+</ul>
+<h4 id="linked-list">linked list</h4>
+<ul>
+<li><p>เป็น concept ที่เป็นโครงสร้างแนวเดียวกับ array แต่ข้อดีข้อเสียต่างกัน</p>
+<figure class="external-figure"><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png" target="_blank" rel="noopener"><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png" alt="GeeksforGeeks visual reference" loading="lazy"></a><figcaption>GeeksforGeeks visual reference. Source: <a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png" target="_blank" rel="noopener">media.geeksforgeeks.org</a></figcaption></figure></li>
+</ul>
+<h4 id="dynamic-array">dynamic array</h4>
+<ul>
+<li><p>ใช้ vector ของ stl</p></li>
+</ul>
+<h4 id="binary-tree">binary tree</h4>
+<figure class="external-figure"><a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" alt="Wikimedia Commons visual reference" loading="lazy"></a><figcaption>Wikimedia Commons visual reference. Source: <a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" target="_blank" rel="noopener">upload.wikimedia.org</a></figcaption></figure>
+<h4 id="heap">heap</h4>
+<figure class="external-figure"><a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png" target="_blank" rel="noopener"><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png" alt="External reference: s3-us-west-2.amazonaws.com" loading="lazy"></a><figcaption>External reference: s3-us-west-2.amazonaws.com. Source: <a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png" target="_blank" rel="noopener">s3-us-west-2.amazonaws.com</a></figcaption></figure>
+<h4 id="priority-queue">priority queue</h4>
+<figure class="external-figure"><a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png" target="_blank" rel="noopener"><img src="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png" alt="Programiz visual reference" loading="lazy"></a><figcaption>Programiz visual reference. Source: <a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png" target="_blank" rel="noopener">cdn.programiz.com</a></figcaption></figure>
+<h4 id="binary-search-tree">binary search tree</h4>
+<figure class="external-figure"><a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" alt="Wikimedia Commons visual reference" loading="lazy"></a><figcaption>Wikimedia Commons visual reference. Source: <a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" target="_blank" rel="noopener">upload.wikimedia.org</a></figcaption></figure>
+<h4 id="set-map">set, map</h4>
+<ul>
+<li><p>เหมือน set ทางคณิตศาสตร์</p></li>
+<li><p>map</p>
+<ul>
+<li><p>เหมือน dictionary ใน Python</p></li>
+<li><p>เสมือน array ที่ index เป็นอะไรก็ได้</p></li>
+</ul></li>
+</ul>
+<h4 id="graph">graph</h4>
+<ul>
+<li><p>มี cycle</p>
+<ul>
+<li><p>tree เป็น graph ที่ไม่มี cycle</p></li>
+</ul></li>
+</ul>
+<h4 id="hash-table">hash table</h4>
+<ul>
+<li><p>data structure ที่ใช้บีบข้อมูลให้เล็กลงโดยอาจจะเสียความละเอียดไป</p></li>
+<li><p>เช่น บีบ string ให้เหลือแค่ int ผ่าน hash function แต่ก็มีโอกาสชนกันเป็นปัญหา
+collision</p></li>
+</ul>
+
+            <div class="page-nav">
+                <a href="2011_hash-table.html" class="prev">Hash Table</a>
+                <a href="3000_greedy-algorithm.html" class="next">Greedy Algorithm</a>
+            </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>review</h3>
-                <h4>stack and queue</h4>
-                <ul>
-                  <li>
-                    <p>stack: first in last out</p>
-                    <ul>
-                      <li>นึกถึงกองจาน</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>queue: first in first out</p>
-                    <ul>
-                      <li>คิวทั่วไป</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>linked list</h4>
-                <ul>
-                  <li>
-                    <p>เป็น concept ที่เป็นโครงสร้างแนวเดียวกับ array แต่ข้อดีข้อเสียต่างกัน</p>
-                    <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png</a></p>
-                  </li>
-                </ul>
-                <h4>dynamic array</h4>
-                <ul>
-                  <li>ใช้ vector ของ stl</li>
-                </ul>
-                <h4>binary tree</h4>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg">https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg</a></p>
-                <h4>heap</h4>
-                <p><a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png</a></p>
-                <h4>priority queue</h4>
-                <p><a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png">https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png</a></p>
-                <h4>binary search tree</h4>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg">https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg</a></p>
-                <h4>set, map</h4>
-                <ul>
-                  <li>เหมือน set ทางคณิตศาสตร์</li>
-                  <li>
-                    <p>map</p>
-                    <ul>
-                      <li>เหมือน dictionary ใน Python</li>
-                      <li>เสมือน array ที่ index เป็นอะไรก็ได้</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>graph</h4>
-                <ul>
-                  <li>
-                    <p>มี cycle</p>
-                    <ul>
-                      <li>tree เป็น graph ที่ไม่มี cycle</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>hash table</h4>
-                <ul>
-                  <li>data structure ที่ใช้บีบข้อมูลให้เล็กลงโดยอาจจะเสียความละเอียดไป</li>
-                  <li>เช่น บีบ string ให้เหลือแค่ int ผ่าน hash function แต่ก็มีโอกาสชนกันเป็นปัญหา collision</li>
-                </ul>
-            <div class="page-nav">
-                <a href="2008_heap.html" class="prev">Heap</a>
-                <a href="2010_stack-queue.html" class="next">Stack and Queue</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>review</h3>
-                <h4>stack and queue</h4>
-                <ul>
-                  <li>
-                    <p>stack: first in last out</p>
-                    <ul>
-                      <li>นึกถึงกองจาน</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>queue: first in first out</p>
-                    <ul>
-                      <li>คิวทั่วไป</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>linked list</h4>
-                <ul>
-                  <li>
-                    <p>เป็น concept ที่เป็นโครงสร้างแนวเดียวกับ array แต่ข้อดีข้อเสียต่างกัน</p>
-                    <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png</a></p>
-                  </li>
-                </ul>
-                <h4>dynamic array</h4>
-                <ul>
-                  <li>ใช้ vector ของ stl</li>
-                </ul>
-                <h4>binary tree</h4>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg">https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg</a></p>
-                <h4>heap</h4>
-                <p><a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png</a></p>
-                <h4>priority queue</h4>
-                <p><a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png">https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png</a></p>
-                <h4>binary search tree</h4>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg">https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg</a></p>
-                <h4>set, map</h4>
-                <ul>
-                  <li>เหมือน set ทางคณิตศาสตร์</li>
-                  <li>
-                    <p>map</p>
-                    <ul>
-                      <li>เหมือน dictionary ใน Python</li>
-                      <li>เสมือน array ที่ index เป็นอะไรก็ได้</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>graph</h4>
-                <ul>
-                  <li>
-                    <p>มี cycle</p>
-                    <ul>
-                      <li>tree เป็น graph ที่ไม่มี cycle</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>hash table</h4>
-                <ul>
-                  <li>data structure ที่ใช้บีบข้อมูลให้เล็กลงโดยอาจจะเสียความละเอียดไป</li>
-                  <li>เช่น บีบ string ให้เหลือแค่ int ผ่าน hash function แต่ก็มีโอกาสชนกันเป็นปัญหา collision</li>
-                </ul>
-            <div class="page-nav">
-                <a href="2008_heap.html" class="prev">Heap</a>
-                <a href="2010_stack-queue.html" class="next">Stack and Queue</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

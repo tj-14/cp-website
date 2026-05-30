@@ -8,7 +8,10 @@
 - ตัวอย่าง tree เบื้องต้นคือ binary tree โดยแต่ละ node สามารถมีลูกได้มากที่สุดไม่เกิน 2 ลูก ดังรูป
 - ซึ่งเราสามารถเรียกลูกว่า left และ right child ได้
 
-https://media.geeksforgeeks.org/wp-content/cdn-uploads/binary-tree-to-DLL.png
+#figure(
+  image("../assets/diagrams/binary-tree.svg", width: 82%),
+  caption: [Binary tree. Original diagram for this guide.],
+)
 
 === คำศัพท์
 

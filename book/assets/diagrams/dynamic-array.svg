@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250" role="img" aria-labelledby="title desc">
+  <title id="title">Dynamic array resize</title>
+  <desc id="desc">A full array is copied into a larger array with more capacity.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2b5c84"/>
+    </marker>
+  </defs>
+  <rect width="760" height="250" fill="#ffffff"/>
+  <g font-family="Avenir, Arial, sans-serif" fill="#1f2d3a">
+    <text x="70" y="52" font-size="22">capacity = 4</text>
+    <text x="450" y="52" font-size="22">capacity = 8</text>
+    <g transform="translate(70 78)" font-size="20">
+      <rect width="240" height="52" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="60" y1="0" x2="60" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="120" y1="0" x2="120" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="180" y1="0" x2="180" y2="52" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="30" y="34" text-anchor="middle">4</text>
+      <text x="90" y="34" text-anchor="middle">7</text>
+      <text x="150" y="34" text-anchor="middle">9</text>
+      <text x="210" y="34" text-anchor="middle">2</text>
+    </g>
+    <path d="M330 105 H420" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <text x="375" y="92" text-anchor="middle" font-size="17" fill="#526477">resize</text>
+    <g transform="translate(450 78)" font-size="20">
+      <rect width="240" height="52" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="30" y1="0" x2="30" y2="52" stroke="#9fb3c8"/>
+      <line x1="60" y1="0" x2="60" y2="52" stroke="#9fb3c8"/>
+      <line x1="90" y1="0" x2="90" y2="52" stroke="#9fb3c8"/>
+      <line x1="120" y1="0" x2="120" y2="52" stroke="#9fb3c8"/>
+      <line x1="150" y1="0" x2="150" y2="52" stroke="#9fb3c8"/>
+      <line x1="180" y1="0" x2="180" y2="52" stroke="#9fb3c8"/>
+      <line x1="210" y1="0" x2="210" y2="52" stroke="#9fb3c8"/>
+      <text x="15" y="34" text-anchor="middle">4</text>
+      <text x="45" y="34" text-anchor="middle">7</text>
+      <text x="75" y="34" text-anchor="middle">9</text>
+      <text x="105" y="34" text-anchor="middle">2</text>
+      <text x="135" y="34" text-anchor="middle" fill="#9aa8b5">_</text>
+      <text x="165" y="34" text-anchor="middle" fill="#9aa8b5">_</text>
+      <text x="195" y="34" text-anchor="middle" fill="#9aa8b5">_</text>
+      <text x="225" y="34" text-anchor="middle" fill="#9aa8b5">_</text>
+    </g>
+    <text x="70" y="178" font-size="18" fill="#526477">append is usually O(1), resize copies O(n) occasionally</text>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="title desc">
+  <title id="title">Hash table with chaining</title>
+  <desc id="desc">Keys map to buckets; collisions are stored in linked lists.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2b5c84"/>
+    </marker>
+  </defs>
+  <rect width="760" height="280" fill="#ffffff"/>
+  <g font-family="Avenir, Arial, sans-serif" font-size="18" fill="#1f2d3a">
+    <text x="70" y="38" font-size="24">buckets</text>
+    <g transform="translate(70 60)">
+      <rect width="92" height="150" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="0" y1="30" x2="92" y2="30" stroke="#9fb3c8"/>
+      <line x1="0" y1="60" x2="92" y2="60" stroke="#9fb3c8"/>
+      <line x1="0" y1="90" x2="92" y2="90" stroke="#9fb3c8"/>
+      <line x1="0" y1="120" x2="92" y2="120" stroke="#9fb3c8"/>
+      <text x="46" y="22" text-anchor="middle">0</text>
+      <text x="46" y="52" text-anchor="middle">1</text>
+      <text x="46" y="82" text-anchor="middle">2</text>
+      <text x="46" y="112" text-anchor="middle">3</text>
+      <text x="46" y="142" text-anchor="middle">4</text>
+    </g>
+    <path d="M162 75 H230" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <path d="M162 135 H230" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <path d="M390 135 H450" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <g transform="translate(230 52)">
+      <rect width="160" height="46" rx="5" fill="#eaf2fb" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle">key: apple</text>
+    </g>
+    <g transform="translate(230 112)">
+      <rect width="160" height="46" rx="5" fill="#eaf2fb" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle">key: cat</text>
+    </g>
+    <g transform="translate(450 112)">
+      <rect width="160" height="46" rx="5" fill="#eaf2fb" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle">key: car</text>
+    </g>
+    <text x="230" y="218" fill="#526477">collision: multiple keys in the same bucket</text>
+  </g>
+</svg>

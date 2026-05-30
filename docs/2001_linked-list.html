@@ -7,256 +7,336 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html" aria-current="page">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
 
-        <div class="content">
-            <h3>Linked List</h3>
-                <h4>คำอธิบาย</h4>
+            <article class="content">
+<h3>Linked List</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
                 <ul>
-                  <li>linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน</li>
-                  <li>ข้อมูลใน linked list ถูกเชื่อมต่อกันด้วย pointers ดังรูปด้านล่าง</li>
+                    <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
+                    <li><a href="#singly-linked-list">Singly Linked List</a></li>
+                    <li><a href="#ตัวอย่างการ-implement-singly-linked-list">ตัวอย่างการ implement singly linked list</a></li>
+                    <li><a href="#operations">Operations</a></li>
+                    <li><a href="#doubly-linked-list">Doubly Linked List</a></li>
                 </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg">https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg</a></p>
-                <ul>
-                  <li>
-                    <p>จากรูปจะมีข้อมูลสามชุด ซึ่งเราเรียกว่า <strong>node</strong></p>
-                    <ul>
-                      <li>ใน node แรกจะเก็บเลข 12 และ pointer ที่ชี้ node ถัดไป</li>
-                      <li>node ที่สองเก็บเลข 99 และ pointer ที่ชี้ node ถัดไป</li>
-                      <li>node ที่สามเก็บเลข 37 และ pointer ซึ่งยังไม่ได้ชี้ node อื่น</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Singly Linked List</h4>
-                <ul>
-                  <li>เป็น linked list ประเภทที่ง่ายที่สุด</li>
-                  <li>โดยหนึ่ง node จะเก็บข้อมูล และ pointer เพื่อชี้ตำแหน่งของ node ถัดไป</li>
-                </ul>
-                <h4>ตัวอย่างการ implement singly linked list</h4>
-                <ul>
-                  <li>โดยสร้าง struct Node เพื่อเก็บข้อมูล</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> A simple CPP program to introduce</span><br><span style="color: #74747c">//</span><span style="color: #74747c"> a linked list</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> A linked list node</span><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> data;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>next;<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Program to create a simple linked</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> list with 3 nodes</span><br>  Node <span style="color: #d73948">*</span>head <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  Node <span style="color: #d73948">*</span>second <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  Node <span style="color: #d73948">*</span>third <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> allocate 3 nodes in the heap</span><br>  head <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br>  second <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br>  third <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> Three blocks have been allocated dynamically.</span><br><span style="color: #74747c">     We have pointers to these three blocks as head,</span><br><span style="color: #74747c">     second and third</span><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +----+----+   +----+----+   +----+----+</span><br><span style="color: #74747c">     | #  |  # |   | #  | #  |   | #  | #  |</span><br><span style="color: #74747c">     +----+----+   +----+----+   +----+----+</span><br><br><span style="color: #74747c">  # represents any random value.</span><br><span style="color: #74747c">  Data is random because we haven’t assigned</span><br><span style="color: #74747c">  anything yet </span><span style="color: #74747c">*/</span><br><br>  head->data <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;      <span style="color: #74747c">//</span><span style="color: #74747c"> assign data in first node</span><br>  head->next <span style="color: #d73948">=</span> second; <span style="color: #74747c">//</span><span style="color: #74747c"> Link first node with</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> the second node</span><br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of first</span><br><span style="color: #74747c">     block (block pointed by the head). And next</span><br><span style="color: #74747c">     pointer of the first block points to second.</span><br><span style="color: #74747c">     So they both are linked.</span><br><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +---+---+     +----+----+   +-----+----+</span><br><span style="color: #74747c">     | 1 | o-----> | #  | #  |   | #   | #  |</span><br><span style="color: #74747c">     +---+---+     +----+----+   +-----+----+</span><br><span style="color: #74747c">   </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> assign data to second node</span><br>  second->data <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Link second node with the third node</span><br>  second->next <span style="color: #d73948">=</span> third;<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of the second</span><br><span style="color: #74747c">     block (block pointed by second). And next</span><br><span style="color: #74747c">     pointer of the second block points to the third</span><br><span style="color: #74747c">     block. So all three blocks are linked.</span><br><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+----+</span><br><span style="color: #74747c">     | 1 | o-----> | 2 | o-----> | #  | #  |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+----+     </span><span style="color: #74747c">*/</span><br><br>  third->data <span style="color: #d73948">=</span> <span style="color: #b60157">3</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> assign data to third node</span><br>  third->next <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of the third</span><br><span style="color: #74747c">     block (block pointed by third). And next pointer</span><br><span style="color: #74747c">     of the third block is made NULL to indicate</span><br><span style="color: #74747c">     that the linked list is terminated here.</span><br><br><span style="color: #74747c">     We have the linked list ready.</span><br><br><span style="color: #74747c">     head</span><br><span style="color: #74747c">     |</span><br><span style="color: #74747c">     |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+------+</span><br><span style="color: #74747c">     | 1 | o-----> | 2 | o-----> | 3  | NULL |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+------+</span><br><br><span style="color: #74747c">     Note that only the head is sufficient to represent</span><br><span style="color: #74747c">     the whole list. We can traverse the complete</span><br><span style="color: #74747c">     list by following the next pointers. </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #d73948">while</span> (head <span style="color: #d73948">!=</span> <span style="color: #d73948">NULL</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, head->data);<br>    head <span style="color: #d73948">=</span> head->next;<br>  }<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> This code is contributed by rathbhupendra</span><br>}</code></pre>
-                <h4>Operations</h4>
-                <ul>
-                  <li>
-                    <p>insert การเพิ่มข้อมูลใน linked list โดย</p>
-                    <ul>
-                      <li>สร้าง node ใหม่ชื่อว่า newNode (37)</li>
-                      <li>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะแทรก (12) ชี้ไปที่ newNode (37)</li>
-                      <li>นำ pointer ของ newNode ไปชี้ที่ pointer ของโหนดตำแหน่งก่อนหน้าเคยชี้ (99)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png</a></p>
-                <ul>
-                  <li>
-                    <p>delete การลบข้อมูลใน linked list โดย</p>
-                    <ul>
-                      <li>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะลบ (12) ชี้ข้ามไปที่ node ในตำแหน่งถัดไป (37)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png</a></p>
-                <h4>Doubly Linked List</h4>
-                <ul>
-                  <li>เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย</li>
-                  <li>node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า <strong>prev</strong> และโหนดถัดไป <strong>next</strong></li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png</a></p>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> linked.c</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> what a node look like internally</span><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> idx;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_next;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_prev;<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> define 3 nodes</span><br>  <span style="color: #d73948">struct</span> Node n0, n1, n2;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> initialize the nodes</span><br>  n0.idx <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;       <span style="color: #74747c">//</span><span style="color: #74747c"> the first node has an index of 0</span><br>  n0.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n1;  <span style="color: #74747c">//</span><span style="color: #74747c"> with a reference to the second node</span><br>  n0.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> and a reference to NULL b/c there's no previous node</span><br><br>  n1.idx <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;<br>  n1.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n2;<br>  n1.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n0;<br><br>  n2.idx <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>;<br>  n2.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  n2.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n1;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> create a new reference to n0 called r_first_element</span><br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_first_element <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n0;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The first node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The first node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->idx);<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> print n1 info</span><br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The second node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The second node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->idx);<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> print n2 info</span><br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The third node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->r_next);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The third node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->r_next->idx);<br>}</code></pre>
+            </nav>
+
+<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<ul>
+<li><p>linked list เป็นโครงสร้างข้อมูลเชิงเส้น
+โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน</p></li>
+<li><p>ข้อมูลใน linked list ถูกเชื่อมต่อกันด้วย pointers ดังรูปด้านล่าง</p></li>
+</ul>
+<figure>
+<p><img
+src="assets/diagrams/linked-list.svg"
+style="width:86.0%" /></p>
+<figcaption><p>Singly linked list. Original diagram for this
+guide.</p></figcaption>
+</figure>
+<ul>
+<li><p>จากรูปจะมีข้อมูลสามชุด ซึ่งเราเรียกว่า <strong>node</strong></p>
+<ul>
+<li><p>ใน node แรกจะเก็บเลข 12 และ pointer ที่ชี้ node ถัดไป</p></li>
+<li><p>node ที่สองเก็บเลข 99 และ pointer ที่ชี้ node ถัดไป</p></li>
+<li><p>node ที่สามเก็บเลข 37 และ pointer ซึ่งยังไม่ได้ชี้ node อื่น</p></li>
+</ul></li>
+</ul>
+<h4 id="singly-linked-list">Singly Linked List</h4>
+<ul>
+<li><p>เป็น linked list ประเภทที่ง่ายที่สุด</p></li>
+<li><p>โดยหนึ่ง node จะเก็บข้อมูล และ pointer เพื่อชี้ตำแหน่งของ node
+ถัดไป</p></li>
+</ul>
+<h4 id="ตัวอย่างการ-implement-singly-linked-list">ตัวอย่างการ implement singly linked list</h4>
+<ul>
+<li><p>โดยสร้าง struct Node เพื่อเก็บข้อมูล</p></li>
+</ul>
+<pre class="cpp"><code>// A simple CPP program to introduce
+// a linked list
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// A linked list node
+struct Node {
+  int data;
+  struct Node *next;
+};
+
+int main() {
+  // Program to create a simple linked
+  // list with 3 nodes
+  Node *head = NULL;
+  Node *second = NULL;
+  Node *third = NULL;
+
+  // allocate 3 nodes in the heap
+  head = new Node();
+  second = new Node();
+  third = new Node();
+
+  /* Three blocks have been allocated dynamically.
+     We have pointers to these three blocks as head,
+     second and third
+     head         second         third
+     |             |             |
+     |             |             |
+     +----+----+   +----+----+   +----+----+
+     | #  |  # |   | #  | #  |   | #  | #  |
+     +----+----+   +----+----+   +----+----+
+
+  # represents any random value.
+  Data is random because we haven’t assigned
+  anything yet */
+
+  head-&gt;data = 1;      // assign data in first node
+  head-&gt;next = second; // Link first node with
+  // the second node
+
+  /* data has been assigned to the data part of first
+     block (block pointed by the head). And next
+     pointer of the first block points to second.
+     So they both are linked.
+
+     head         second         third
+     |             |             |
+     |             |             |
+     +---+---+     +----+----+   +-----+----+
+     | 1 | o-----&gt; | #  | #  |   | #   | #  |
+     +---+---+     +----+----+   +-----+----+
+   */
+
+  // assign data to second node
+  second-&gt;data = 2;
+
+  // Link second node with the third node
+  second-&gt;next = third;
+
+  /* data has been assigned to the data part of the second
+     block (block pointed by second). And next
+     pointer of the second block points to the third
+     block. So all three blocks are linked.
+
+     head         second         third
+     |             |             |
+     |             |             |
+     +---+---+     +---+---+     +----+----+
+     | 1 | o-----&gt; | 2 | o-----&gt; | #  | #  |
+     +---+---+     +---+---+     +----+----+     */
+
+  third-&gt;data = 3; // assign data to third node
+  third-&gt;next = NULL;
+
+  /* data has been assigned to the data part of the third
+     block (block pointed by third). And next pointer
+     of the third block is made NULL to indicate
+     that the linked list is terminated here.
+
+     We have the linked list ready.
+
+     head
+     |
+     |
+     +---+---+     +---+---+     +----+------+
+     | 1 | o-----&gt; | 2 | o-----&gt; | 3  | NULL |
+     +---+---+     +---+---+     +----+------+
+
+     Note that only the head is sufficient to represent
+     the whole list. We can traverse the complete
+     list by following the next pointers. */
+
+  while (head != NULL) {
+    printf(&quot;%d &quot;, head-&gt;data);
+    head = head-&gt;next;
+  }
+
+  // This code is contributed by rathbhupendra
+}</code></pre>
+<h4 id="operations">Operations</h4>
+<ul>
+<li><p>insert การเพิ่มข้อมูลใน linked list โดย</p>
+<ul>
+<li><p>สร้าง node ใหม่ชื่อว่า newNode (37)</p></li>
+<li><p>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะแทรก (12) ชี้ไปที่ newNode
+(37)</p></li>
+<li><p>นำ pointer ของ newNode ไปชี้ที่ pointer ของโหนดตำแหน่งก่อนหน้าเคยชี้
+(99)</p></li>
+</ul></li>
+</ul>
+<p>Visual reference: adding a node in a linked list, Wikimedia Commons
+<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<ul>
+<li><p>delete การลบข้อมูลใน linked list โดย</p>
+<ul>
+<li><p>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะลบ (12) ชี้ข้ามไปที่ node
+ในตำแหน่งถัดไป (37)</p></li>
+</ul></li>
+</ul>
+<p>Visual reference: deleting a node in a linked list, Wikimedia Commons
+<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></p>
+<h4 id="doubly-linked-list">Doubly Linked List</h4>
+<ul>
+<li><p>เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย</p></li>
+<li><p>node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า
+<strong>prev</strong> และโหนดถัดไป <strong>next</strong></p></li>
+</ul>
+<figure>
+<p><img
+src="assets/diagrams/linked-list.svg"
+style="width:86.0%" /></p>
+<figcaption><p>Pointer-based linked-list structure. Original diagram for
+this guide.</p></figcaption>
+</figure>
+<pre class="cpp"><code>// linked.c
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// what a node look like internally
+struct Node {
+  int idx;
+  struct Node *r_next;
+  struct Node *r_prev;
+};
+
+int main() {
+  // define 3 nodes
+  struct Node n0, n1, n2;
+
+  // initialize the nodes
+  n0.idx = 0;       // the first node has an index of 0
+  n0.r_next = &amp;n1;  // with a reference to the second node
+  n0.r_prev = NULL; // and a reference to NULL b/c there&#39;s no previous node
+
+  n1.idx = 1;
+  n1.r_next = &amp;n2;
+  n1.r_prev = &amp;n0;
+
+  n2.idx = 2;
+  n2.r_next = NULL;
+  n2.r_prev = &amp;n1;
+
+  // create a new reference to n0 called r_first_element
+  struct Node *r_first_element = &amp;n0;
+  printf(&quot;The first node lives @ %p\n&quot;, r_first_element);
+  printf(&quot;The first node has idx: %d\n&quot;, r_first_element-&gt;idx);
+
+  // print n1 info
+  printf(&quot;The second node lives @ %p\n&quot;, r_first_element-&gt;r_next);
+  printf(&quot;The second node has idx: %d\n&quot;, r_first_element-&gt;r_next-&gt;idx);
+
+  // print n2 info
+  printf(&quot;The third node lives @ %p\n&quot;, r_first_element-&gt;r_next-&gt;r_next);
+  printf(&quot;The third node has idx: %d\n&quot;, r_first_element-&gt;r_next-&gt;r_next-&gt;idx);
+}</code></pre>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
             <div class="page-nav">
-                <a href="2000_graph-structure.html" class="prev">Graph Structure</a>
+                <a href="2010_stack-queue.html" class="prev">Stack and Queue</a>
                 <a href="2002_dynamic-array.html" class="next">Dynamic Array</a>
             </div>
-        </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Linked List</h3>
-                <h4>คำอธิบาย</h4>
-                <ul>
-                  <li>linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน</li>
-                  <li>ข้อมูลใน linked list ถูกเชื่อมต่อกันด้วย pointers ดังรูปด้านล่าง</li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg">https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg</a></p>
-                <ul>
-                  <li>
-                    <p>จากรูปจะมีข้อมูลสามชุด ซึ่งเราเรียกว่า <strong>node</strong></p>
-                    <ul>
-                      <li>ใน node แรกจะเก็บเลข 12 และ pointer ที่ชี้ node ถัดไป</li>
-                      <li>node ที่สองเก็บเลข 99 และ pointer ที่ชี้ node ถัดไป</li>
-                      <li>node ที่สามเก็บเลข 37 และ pointer ซึ่งยังไม่ได้ชี้ node อื่น</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Singly Linked List</h4>
-                <ul>
-                  <li>เป็น linked list ประเภทที่ง่ายที่สุด</li>
-                  <li>โดยหนึ่ง node จะเก็บข้อมูล และ pointer เพื่อชี้ตำแหน่งของ node ถัดไป</li>
-                </ul>
-                <h4>ตัวอย่างการ implement singly linked list</h4>
-                <ul>
-                  <li>โดยสร้าง struct Node เพื่อเก็บข้อมูล</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> A simple CPP program to introduce</span><br><span style="color: #74747c">//</span><span style="color: #74747c"> a linked list</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> A linked list node</span><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> data;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>next;<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Program to create a simple linked</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> list with 3 nodes</span><br>  Node <span style="color: #d73948">*</span>head <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  Node <span style="color: #d73948">*</span>second <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  Node <span style="color: #d73948">*</span>third <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> allocate 3 nodes in the heap</span><br>  head <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br>  second <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br>  third <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> Three blocks have been allocated dynamically.</span><br><span style="color: #74747c">     We have pointers to these three blocks as head,</span><br><span style="color: #74747c">     second and third</span><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +----+----+   +----+----+   +----+----+</span><br><span style="color: #74747c">     | #  |  # |   | #  | #  |   | #  | #  |</span><br><span style="color: #74747c">     +----+----+   +----+----+   +----+----+</span><br><br><span style="color: #74747c">  # represents any random value.</span><br><span style="color: #74747c">  Data is random because we haven’t assigned</span><br><span style="color: #74747c">  anything yet </span><span style="color: #74747c">*/</span><br><br>  head->data <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;      <span style="color: #74747c">//</span><span style="color: #74747c"> assign data in first node</span><br>  head->next <span style="color: #d73948">=</span> second; <span style="color: #74747c">//</span><span style="color: #74747c"> Link first node with</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> the second node</span><br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of first</span><br><span style="color: #74747c">     block (block pointed by the head). And next</span><br><span style="color: #74747c">     pointer of the first block points to second.</span><br><span style="color: #74747c">     So they both are linked.</span><br><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +---+---+     +----+----+   +-----+----+</span><br><span style="color: #74747c">     | 1 | o-----> | #  | #  |   | #   | #  |</span><br><span style="color: #74747c">     +---+---+     +----+----+   +-----+----+</span><br><span style="color: #74747c">   </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> assign data to second node</span><br>  second->data <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Link second node with the third node</span><br>  second->next <span style="color: #d73948">=</span> third;<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of the second</span><br><span style="color: #74747c">     block (block pointed by second). And next</span><br><span style="color: #74747c">     pointer of the second block points to the third</span><br><span style="color: #74747c">     block. So all three blocks are linked.</span><br><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+----+</span><br><span style="color: #74747c">     | 1 | o-----> | 2 | o-----> | #  | #  |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+----+     </span><span style="color: #74747c">*/</span><br><br>  third->data <span style="color: #d73948">=</span> <span style="color: #b60157">3</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> assign data to third node</span><br>  third->next <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of the third</span><br><span style="color: #74747c">     block (block pointed by third). And next pointer</span><br><span style="color: #74747c">     of the third block is made NULL to indicate</span><br><span style="color: #74747c">     that the linked list is terminated here.</span><br><br><span style="color: #74747c">     We have the linked list ready.</span><br><br><span style="color: #74747c">     head</span><br><span style="color: #74747c">     |</span><br><span style="color: #74747c">     |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+------+</span><br><span style="color: #74747c">     | 1 | o-----> | 2 | o-----> | 3  | NULL |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+------+</span><br><br><span style="color: #74747c">     Note that only the head is sufficient to represent</span><br><span style="color: #74747c">     the whole list. We can traverse the complete</span><br><span style="color: #74747c">     list by following the next pointers. </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #d73948">while</span> (head <span style="color: #d73948">!=</span> <span style="color: #d73948">NULL</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, head->data);<br>    head <span style="color: #d73948">=</span> head->next;<br>  }<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> This code is contributed by rathbhupendra</span><br>}</code></pre>
-                <h4>Operations</h4>
-                <ul>
-                  <li>
-                    <p>insert การเพิ่มข้อมูลใน linked list โดย</p>
-                    <ul>
-                      <li>สร้าง node ใหม่ชื่อว่า newNode (37)</li>
-                      <li>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะแทรก (12) ชี้ไปที่ newNode (37)</li>
-                      <li>นำ pointer ของ newNode ไปชี้ที่ pointer ของโหนดตำแหน่งก่อนหน้าเคยชี้ (99)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png</a></p>
-                <ul>
-                  <li>
-                    <p>delete การลบข้อมูลใน linked list โดย</p>
-                    <ul>
-                      <li>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะลบ (12) ชี้ข้ามไปที่ node ในตำแหน่งถัดไป (37)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png</a></p>
-                <h4>Doubly Linked List</h4>
-                <ul>
-                  <li>เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย</li>
-                  <li>node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า <strong>prev</strong> และโหนดถัดไป <strong>next</strong></li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png</a></p>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> linked.c</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> what a node look like internally</span><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> idx;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_next;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_prev;<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> define 3 nodes</span><br>  <span style="color: #d73948">struct</span> Node n0, n1, n2;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> initialize the nodes</span><br>  n0.idx <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;       <span style="color: #74747c">//</span><span style="color: #74747c"> the first node has an index of 0</span><br>  n0.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n1;  <span style="color: #74747c">//</span><span style="color: #74747c"> with a reference to the second node</span><br>  n0.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> and a reference to NULL b/c there's no previous node</span><br><br>  n1.idx <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;<br>  n1.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n2;<br>  n1.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n0;<br><br>  n2.idx <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>;<br>  n2.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  n2.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n1;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> create a new reference to n0 called r_first_element</span><br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_first_element <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n0;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The first node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The first node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->idx);<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> print n1 info</span><br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The second node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The second node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->idx);<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> print n2 info</span><br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The third node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->r_next);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The third node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->r_next->idx);<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2000_graph-structure.html" class="prev">Graph Structure</a>
-                <a href="2002_dynamic-array.html" class="next">Dynamic Array</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Linked List</h3>
-                <h4>คำอธิบาย</h4>
-                <ul>
-                  <li>linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน</li>
-                  <li>ข้อมูลใน linked list ถูกเชื่อมต่อกันด้วย pointers ดังรูปด้านล่าง</li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg">https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg</a></p>
-                <ul>
-                  <li>
-                    <p>จากรูปจะมีข้อมูลสามชุด ซึ่งเราเรียกว่า <strong>node</strong></p>
-                    <ul>
-                      <li>ใน node แรกจะเก็บเลข 12 และ pointer ที่ชี้ node ถัดไป</li>
-                      <li>node ที่สองเก็บเลข 99 และ pointer ที่ชี้ node ถัดไป</li>
-                      <li>node ที่สามเก็บเลข 37 และ pointer ซึ่งยังไม่ได้ชี้ node อื่น</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Singly Linked List</h4>
-                <ul>
-                  <li>เป็น linked list ประเภทที่ง่ายที่สุด</li>
-                  <li>โดยหนึ่ง node จะเก็บข้อมูล และ pointer เพื่อชี้ตำแหน่งของ node ถัดไป</li>
-                </ul>
-                <h4>ตัวอย่างการ implement singly linked list</h4>
-                <ul>
-                  <li>โดยสร้าง struct Node เพื่อเก็บข้อมูล</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> A simple CPP program to introduce</span><br><span style="color: #74747c">//</span><span style="color: #74747c"> a linked list</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> A linked list node</span><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> data;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>next;<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Program to create a simple linked</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> list with 3 nodes</span><br>  Node <span style="color: #d73948">*</span>head <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  Node <span style="color: #d73948">*</span>second <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  Node <span style="color: #d73948">*</span>third <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> allocate 3 nodes in the heap</span><br>  head <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br>  second <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br>  third <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Node</span>();<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> Three blocks have been allocated dynamically.</span><br><span style="color: #74747c">     We have pointers to these three blocks as head,</span><br><span style="color: #74747c">     second and third</span><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +----+----+   +----+----+   +----+----+</span><br><span style="color: #74747c">     | #  |  # |   | #  | #  |   | #  | #  |</span><br><span style="color: #74747c">     +----+----+   +----+----+   +----+----+</span><br><br><span style="color: #74747c">  # represents any random value.</span><br><span style="color: #74747c">  Data is random because we haven’t assigned</span><br><span style="color: #74747c">  anything yet </span><span style="color: #74747c">*/</span><br><br>  head->data <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;      <span style="color: #74747c">//</span><span style="color: #74747c"> assign data in first node</span><br>  head->next <span style="color: #d73948">=</span> second; <span style="color: #74747c">//</span><span style="color: #74747c"> Link first node with</span><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> the second node</span><br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of first</span><br><span style="color: #74747c">     block (block pointed by the head). And next</span><br><span style="color: #74747c">     pointer of the first block points to second.</span><br><span style="color: #74747c">     So they both are linked.</span><br><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +---+---+     +----+----+   +-----+----+</span><br><span style="color: #74747c">     | 1 | o-----> | #  | #  |   | #   | #  |</span><br><span style="color: #74747c">     +---+---+     +----+----+   +-----+----+</span><br><span style="color: #74747c">   </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> assign data to second node</span><br>  second->data <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> Link second node with the third node</span><br>  second->next <span style="color: #d73948">=</span> third;<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of the second</span><br><span style="color: #74747c">     block (block pointed by second). And next</span><br><span style="color: #74747c">     pointer of the second block points to the third</span><br><span style="color: #74747c">     block. So all three blocks are linked.</span><br><br><span style="color: #74747c">     head         second         third</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     |             |             |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+----+</span><br><span style="color: #74747c">     | 1 | o-----> | 2 | o-----> | #  | #  |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+----+     </span><span style="color: #74747c">*/</span><br><br>  third->data <span style="color: #d73948">=</span> <span style="color: #b60157">3</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> assign data to third node</span><br>  third->next <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br><br>  <span style="color: #74747c">/*</span><span style="color: #74747c"> data has been assigned to the data part of the third</span><br><span style="color: #74747c">     block (block pointed by third). And next pointer</span><br><span style="color: #74747c">     of the third block is made NULL to indicate</span><br><span style="color: #74747c">     that the linked list is terminated here.</span><br><br><span style="color: #74747c">     We have the linked list ready.</span><br><br><span style="color: #74747c">     head</span><br><span style="color: #74747c">     |</span><br><span style="color: #74747c">     |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+------+</span><br><span style="color: #74747c">     | 1 | o-----> | 2 | o-----> | 3  | NULL |</span><br><span style="color: #74747c">     +---+---+     +---+---+     +----+------+</span><br><br><span style="color: #74747c">     Note that only the head is sufficient to represent</span><br><span style="color: #74747c">     the whole list. We can traverse the complete</span><br><span style="color: #74747c">     list by following the next pointers. </span><span style="color: #74747c">*/</span><br><br>  <span style="color: #d73948">while</span> (head <span style="color: #d73948">!=</span> <span style="color: #d73948">NULL</span>) {<br>    <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #198810">"</span>, head->data);<br>    head <span style="color: #d73948">=</span> head->next;<br>  }<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> This code is contributed by rathbhupendra</span><br>}</code></pre>
-                <h4>Operations</h4>
-                <ul>
-                  <li>
-                    <p>insert การเพิ่มข้อมูลใน linked list โดย</p>
-                    <ul>
-                      <li>สร้าง node ใหม่ชื่อว่า newNode (37)</li>
-                      <li>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะแทรก (12) ชี้ไปที่ newNode (37)</li>
-                      <li>นำ pointer ของ newNode ไปชี้ที่ pointer ของโหนดตำแหน่งก่อนหน้าเคยชี้ (99)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png</a></p>
-                <ul>
-                  <li>
-                    <p>delete การลบข้อมูลใน linked list โดย</p>
-                    <ul>
-                      <li>นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะลบ (12) ชี้ข้ามไปที่ node ในตำแหน่งถัดไป (37)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png</a></p>
-                <h4>Doubly Linked List</h4>
-                <ul>
-                  <li>เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย</li>
-                  <li>node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า <strong>prev</strong> และโหนดถัดไป <strong>next</strong></li>
-                </ul>
-                <p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png</a></p>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> linked.c</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #74747c">//</span><span style="color: #74747c"> what a node look like internally</span><br><span style="color: #d73948">struct</span> <span style="color: #4b69c6">Node</span> {<br>  <span style="color: #d73948">int</span> idx;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_next;<br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_prev;<br>};<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> define 3 nodes</span><br>  <span style="color: #d73948">struct</span> Node n0, n1, n2;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> initialize the nodes</span><br>  n0.idx <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;       <span style="color: #74747c">//</span><span style="color: #74747c"> the first node has an index of 0</span><br>  n0.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n1;  <span style="color: #74747c">//</span><span style="color: #74747c"> with a reference to the second node</span><br>  n0.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>; <span style="color: #74747c">//</span><span style="color: #74747c"> and a reference to NULL b/c there's no previous node</span><br><br>  n1.idx <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>;<br>  n1.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n2;<br>  n1.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n0;<br><br>  n2.idx <span style="color: #d73948">=</span> <span style="color: #b60157">2</span>;<br>  n2.r_next <span style="color: #d73948">=</span> <span style="color: #d73948">NULL</span>;<br>  n2.r_prev <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n1;<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> create a new reference to n0 called r_first_element</span><br>  <span style="color: #d73948">struct</span> Node <span style="color: #d73948">*</span>r_first_element <span style="color: #d73948">=</span> <span style="color: #d73948">&amp;</span>n0;<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The first node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The first node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->idx);<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> print n1 info</span><br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The second node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The second node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->idx);<br><br>  <span style="color: #74747c">//</span><span style="color: #74747c"> print n2 info</span><br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The third node lives @ </span><span style="color: #b60157">%p</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->r_next);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">The third node has idx: </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, r_first_element->r_next->r_next->idx);<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2000_graph-structure.html" class="prev">Graph Structure</a>
-                <a href="2002_dynamic-array.html" class="next">Dynamic Array</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

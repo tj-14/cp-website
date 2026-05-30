@@ -1,6 +1,6 @@
-#import "@preview/ilm:1.4.0": *
+#import "template/ilm.typ": *
 
-#set text(lang: "th", font: "Laksaman")
+#set text(lang: "th", font: ("Avenir Book", "Sarabun"))
 
 #show: ilm.with(
   title: [a way in competitive programming],

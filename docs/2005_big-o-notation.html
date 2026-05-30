@@ -7,931 +7,546 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Big-O Notation</h3>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
                 <ul>
-                  <li>introduction</li>
-                  <li>time complexity</li>
-                  <li>space complexity</li>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
                 </ul>
-                <h4>การเขียนโปรแกรมแข่งขันประกอบด้วย</h4>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                  <li>การออกแบบอัลกอริทึม</li>
-                  <li>การ implement สร้างอัลกอริทึม</li>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
                 </ul>
-                <h4>การออกแบบอัลกอริทึม</h4>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
                 <ul>
-                  <li>ใช้ทักษะ problem solving</li>
-                  <li>และ mathematical thinking</li>
-                  <li>โดยจำเป็นต้องวิเคราะห์ปัญหาและแก้ปัญหาอย่างสร้างสรรค์</li>
-                  <li>อัลกอริทึมที่ใช้แก้ปัญหาจะต้องถูกต้องแล้วมีประสิทธิภาพ</li>
-                  <li>หลักสำคัญของโจทย์ปัญหาส่วนใหญ่จะเป็นการคิดสร้างสรรค์อัลกอริทึมที่มีประสิทธิภาพ</li>
-                  <li>ความรู้ทางทฤษฎีของอัลกอริทึมเป็นสิ่งสำคัญต่อนักเขียนโปรแกรมเชิงแข่งขัน</li>
-                  <li>โดยทั่วไปแล้ว เฉลย (solution) ของปัญหาหนึ่งนั้นจะเป็นการใช้เทคนิคที่แพร่หลายร่วมกับ insight ใหม่ตามโจทย์</li>
-                  <li>เทคนิคในการเขียนโปรแกรมเชิงแข่งขันยังเป็นพื้นฐานในการวิจัยสายอัลกอริทึมอีกด้วย</li>
+                <li><a href="2005_big-o-notation.html" aria-current="page">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
                 </ul>
-                <h4>การ implement สร้างอัลกอริทึม</h4>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
                 <ul>
-                  <li>ใช้ทักษะการเขียนโปรแกรมที่ดี</li>
-                  <li>ในการเขียนโปรแกรมเชิงแข่งขันนั้น เฉลยจะถูกตรวจสอบอัลกอริทึมด้วยชุดทดสอบ</li>
-                  <li>ดังนั้น การที่ไอเดียของอัลกอริทึมถูกต้องเท่านั้นยังไม่เพียงพอ แต่การ implement สร้างอัลกอริทึมจะต้องถูกต้องด้วยเช่นกัน</li>
-                  <li>style ในการเขียนโค้ดในการแข่งขันจะตรงไปตรงมาและกระทัดรัด</li>
-                  <li>โปรแกรมควรถูกเขียนอย่างรวดเร็ว เพราะเวลาจะมีอยู่อย่างจำกัด</li>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
                 </ul>
-                <h4>การวิเคราะห์อัลกอรึทึม</h4>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
                 <ul>
-                  <li>ปัญหาที่กำหนดให้สามารถแก้ปัญหาด้วยอัลกอริทึมหลายแบบในสภาพเงื่อนไขเดียวกัน</li>
-                  <li>จำเป็นต้องเรียนรู้วิธีการเปรียบเทียบประสิทธิภาพการทำงานของแต่ละอัลกอริทึม</li>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
                 </ul>
-                <p>เพื่อพิจารณาเลือกใช้ได้อย่างถูกวิธี</p>
-                <h4>Motivation problem</h4>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
                 <ul>
-                  <li>เราจะรู้ได้อย่างไรว่าโค้ดใดนี้มีประสิทธิภาพที่ดีกว่ากัน ระหว่าง</li>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
                 </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <ul>
-                  <li>และ</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j <span style="color: #d73948">+=</span> i) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>ประสิทธิภาพของอัลกอริทึม</h4>
-                <ul>
-                  <li>
-                    <p>สามารถแบ่งได้เป็นสองประเภท คือ</p>
-                    <ul>
-                      <li>การใช้เนื้อที่ในหน่วยความจำ หรือความต้องการในการใช้เนื้อที่ของความจำในการเก็บข้อมูล</li>
-                      <li>ประสิทธิภาพของเวลาในการทำงาน หรือระยะเวลาที่ใช้ในการประมวลผลข้อมูล</li>
-                    </ul>
-                  </li>
-                  <li>โดยทั่วไปแล้วประสิทธิภาพทั้งสองประเภทจะพัฒนาไปพร้อมกันได้ยาก</li>
-                </ul>
-                <p>และส่วนมากจะให้จความสำคัญกับการใช้เวลาอย่างมีประสิทธิภาพมากกว่าเนื้อที่</p>
-                <ul>
-                  <li><strong>Big O Notation</strong> หรืออันดับขนาด (order of magnitude) เป็นเครื่องมือหลักในการวิเคราะห์อัลกอริทึม</li>
-                </ul>
-                <h4>Time complexity</h4>
-                <ul>
-                  <li>ประสิทธิภาพของอัลกอริทึมเป็นสิ่งสำคัญในการเขียนโปรแกรมเชิงแข่งขัน</li>
-                  <li>โดยทั่วไปนั้นจะง่ายที่จะออกแบบอัลกอริทึมที่แก้ปัญหาได้ช้า แต่ความท้าทายจะอยู่ที่อยากออกแบบอัลกอริทึมที่รวดเร็ว</li>
-                  <li>หากอัลกอริทึมนั้นช้าเกินไป จะได้รับคะแนนบางส่วนหรรือไม่ได้เลย</li>
-                  <li>การคาดการณ์เวลาที่อัลกอริทึมใช้สำหรับ input ต่าง ๆ</li>
-                  <li>หลักการคือการแสดงประสิทธิภาพในรูปแบบของฟังก์ชันโดยมีพารามิเตอร์เป็นขนาดของ input</li>
-                  <li>ด้วยการคำนวณ time complexity เราสามารถตรวจสอบความเร็วของอัลกอริทึมได้โดยไม่ต้อง implement ขึ้นมาก่อน</li>
-                </ul>
-                <h4>กฏของการคำนวณ</h4>
-                <ul>
-                  <li>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ $O(\cdots)$ โดยจุดสามจุดแสดงถึงฟังก์ชันใด ๆ</li>
-                  <li>โดยทั่วไปแล้ว ตัวแปร $n$ แสดงถึงขนาดของ input</li>
-                  <li>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข $n$ จะเป็นขนาดของอาเรย์นั้น และหาก input เป็น string $n$ จะเป็นความยาวของ string นั้น</li>
-                </ul>
-                <h4>การวนซ้ำ</h4>
-                <ul>
-                  <li>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ input</li>
-                  <li>ยิ่งวนซ้ำหลายชั้น อัลกอริทีมจะยิ่งช้า</li>
-                  <li>หากมีการวนซ้ำ $k$ ชั้น time complexity จะเป็น $O(n^k)$</li>
-                </ul>
-                <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น $O(n)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>และ time complexity ของโค้ดด้านล่างนี้ $O(n^2)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {    <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 1</span><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {  <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 2</span><br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Order of magnitude</h4>
-                <ul>
-                  <li>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ order of magnitude</li>
-                  <li>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น $3n$, $n+5$ และ $\lceil n/2 \rceil$ ครั้ง แต่ time complexity นั้นเท่ากันคือ $O(n)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">3</span><span style="color: #d73948">*</span>n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n<span style="color: #d73948">+</span><span style="color: #b60157">5</span>; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i <span style="color: #d73948">+=</span> <span style="color: #b60157">2</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น $O(n^2)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i<span style="color: #d73948">+</span><span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>   <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Phase</h4>
-                <ul>
-                  <li>ถ้าอัลกอริทึมประกอบไปด้วยหลาย phase ติดต่อกันแล้ว complexity จะเป็น time complexity ที่สูงสุดของ phase หนึ่ง</li>
-                  <li>เนื่องจาก bottleneck จะอยู่ที่ phase ที่ช้าที่สุด</li>
-                  <li>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity $O(n)$, $O(n^2)$ และ $O(n)$</li>
-                  <li>ดังนั้นคอขวดจะเป็น $O(n^2)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n^2)</span><br>  }<br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}</code></pre>
-                <h4>กรณีหลายตัวแปร</h4>
-                <ul>
-                  <li>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</li>
-                  <li>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</li>
-                  <li>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น $O(nm)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> m; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Recursion</h4>
-                <ul>
-                  <li>time complexity ของฟังก์ชัน recursive จะขึ้นอยู่กับจำนวนครั้งที่ฟังก์ชันนั้นถูกเรื่องและ time complexity ของการเรียกฟังก์ชันแต่ละครั้ง</li>
-                  <li>ซึ่งจะนำสองค่านี้มาคูณกัน</li>
-                  <li>ยกตัวอย่างเช่น</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">f</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">f</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
-                <ul>
-                  <li>การเรียกฟังก์ชัน $f(n)$ จะเรียกฟังก์ชันทั้งหมด $n$ ครั้ง และแต่ละครั้งจะใช้ time complexity $O(1)$</li>
-                  <li>ดังนั้น time complexity รวมคือ $O(n) \cdot O(1) = O(n)$</li>
-                  <li>อีกตัวอย่าง เช่น</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">g</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
-                <ul>
-                  <li>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี $n=1$</li>
-                  <li>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก $g$ ด้วยพารามิเตอร์ $n$</li>
-                  <li>ตารางด้านล่างแสดงจำนวนการเรียก function ที่เกิดขึ้น</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>function call</th>
-                      <th>number of calls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$g(n)$</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>$g(n-1)$</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>$g(n-2)$</td>
-                      <td>4</td>
-                    </tr>
-                    <tr>
-                      <td>$\cdots$</td>
-                      <td>$\cdots$</td>
-                    </tr>
-                    <tr>
-                      <td>$g(1)$</td>
-                      <td>$2^{n-1}$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <ul>
-                  <li>จากตารางนี้ time complexity คือ $1+2+4+\cdots+2^{n-1} = 2^n-1 = O(2^n)$</li>
-                </ul>
-                <h4>Complexity classes</h4>
-                <ul>
-                  <li>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</li>
-                  <li>$O(1)$ constant-time algorithm
-                    <ul>
-                      <li>เวลาที่ใช้ในการรันจะเป็น constant ซึ่งไม่สนใจขนาดของ input</li>
-                      <li>ยกตัวอย่างเช่นอัลกอริทึมที่มีสูตรคำนวณคำตอบโดยไม่ต้องทำซ้ำใด ๆ</li>
-                    </ul>
-                  </li>
-                  <li>$O(\log n)$ logarithmic algorithm
-                    <ul>
-                      <li>อัลกอริทึมแบบ <strong>logarithmic</strong> ส่วนใหญ่จะหารครึ่งขนาดของ input ที่จำเป็นต้องพิจารณาในแต่ละขั้นตอน</li>
-                      <li>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก $\log_2 n$ เท่ากับจำนวนครั้งที่หาร $n$ ด้วย 2 จนกว่าจะเป็น 1</li>
-                    </ul>
-                  </li>
-                  <li>$O(\sqrt{n})$ square root algorithm
-                    <ul>
-                      <li>ช้ากว่า $O(\log n)$ แต่เร็วกว่า $O(n)$</li>
-                      <li>เป็นกรณีที่หารขนาด input $n$ ด้วย $\sqrt{n} = n/\sqrt{n}$</li>
-                    </ul>
-                  </li>
-                  <li>$O(n)$ linear algorithm
-                    <ul>
-                      <li>อัลกอริทึมแบบ <strong>linear</strong> จะวนใน input เป็นจำนวนครั้งที่แน่นอน</li>
-                      <li>ส่วนใหญ่แล้วจะเป็น time complexity ที่ค่อนข้างดี เนื่องจากปกติแล้วจะจำเป็นต้องอ่านค่าทุกค่าใน input</li>
-                    </ul>
-                  </li>
-                  <li>$O(n \log n)$
-                    <ul>
-                      <li>ส่วนใหญ่จะเกิดจากการเรียงข้อมูล</li>
-                      <li>หรือ data structure ที่ใช้ $O(\log n)$ ในแต่ละ operation</li>
-                    </ul>
-                  </li>
-                  <li>$O(n^2)$ quadratic algorithm
-                    <ul>
-                      <li>ส่วนใหญ่ใช้ลูปสองชั้น</li>
-                      <li>เช่นการพิจารณาทุกคู่ของ input</li>
-                    </ul>
-                  </li>
-                  <li>$O(n^3)$ cubic algorithm
-                    <ul>
-                      <li>ลูปสามชั้น</li>
-                    </ul>
-                  </li>
-                  <li>$O(2^n)$
-                    <ul>
-                      <li>การพิจารณาทุก subsets ของ input</li>
-                      <li>ตัวอย่างเช่น subsets ของ $\{1,2,3\}$ คือ $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$, $\{1,3\}$, $\{2,3\}$ และ $\{1,2,3\}$.</li>
-                    </ul>
-                  </li>
-                  <li>$O(n!)$
-                    <ul>
-                      <li>การพิจารณาทุกการจัดเรียงของ input</li>
-                      <li>ตัวอย่างเช่นการจัดเรียงของ $\{1,2,3\}$ คือ $(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$, $(3,1,2)$ and $(3,2,1)$.</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>การประเมินประสิทธิภาพ</h4>
-                <ul>
-                  <li>จากการคำนวณ time complexity ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement ได้</li>
-                  <li>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ $1,000,000,000$ (พันล้าน) คำสั่งต่อหนึ่งวินาที</li>
-                  <li>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ $n=10^5$</li>
-                  <li>ถ้า time complexity เป็น $O(n^2)$ อัลกอริทึมนี้จะรันทั้งหมด $(10^5)^2=10^{10}$ คำสั่ง</li>
-                  <li>ซึ่งโดยคร่าวใช้เวลาประมาณสิบวินาที ซึ่งจะช้าเกินไปสำหรับโจทย์ข้อนี้</li>
-                  <li>ในอีกทางหนึ่ง หากว่าเรารู้ขนาด input แล้ว เราสามารถเดา time complexity ของอัลกอริทึมที่ใช้แก้ปัญหาได้เช่นกัน</li>
-                  <li>ตารางต่อไปนี้บอกการประเมินที่พบบ่อยในกรณีที่ให้เวลาในการคำนวณหนึ่งวินาที</li>
-                  <li>ยกตัวอย่างเช่น หากขนาดของ input เป็น $n=10^5$ time complexity ที่ต้องการจากอัลกอริทึมก็คือ $O(n)$ หรือ $O(n \log n)$</li>
-                  <li>ด้วยความรู้นี้จะทำให้คิดอัลกอริทึมได้ง่ายขี้นจากการตัดอัลกอริทึมที่ใช้เวลานานออก</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>input size</th>
-                      <th>required time complexity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$n \leq 10$</td>
-                      <td>$O(n!)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 20$</td>
-                      <td>$O(2^n)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 500$</td>
-                      <td>$O(n^3)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 5000$</td>
-                      <td>$O(n^2)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 10^6$</td>
-                      <td>$O(n \log n)$ or $O(n)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n$ is large</td>
-                      <td>$O(1)$ or $O(\log n)$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <h4>ตัวแปร constant</h4>
-                <ul>
-                  <li>อย่างไรก็ตาม ควรจำว่า time complexity นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant factors</strong></li>
-                  <li>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา $O(n)$ อาจมีการคำนวณทั้งหมด $n/2$ หรือ $5n$ คำสั่ง</li>
-                  <li>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</li>
-                </ul>
-                <h4>space complexity</h4>
-                <ul>
-                  <li>ใช้ Big O Notation เป็นเครื่องมือเช่นกัน</li>
-                  <li>
-                    <p>เปลี่ยนจากการนับขนาดเวลา เป็นนับขนาด memory เช่น</p>
-                    <ul>
-                      <li>ขนาดของ array ที่เราประกาศ</li>
-                    </ul>
-                  </li>
-                </ul>
-            <div class="page-nav">
-                <a href="2004_binary-tree.html" class="prev">Binary Tree</a>
-                <a href="2006_priority-queue.html" class="next">Priority Queue</a>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
-        </div>
+
+            <article class="content">
+<h3>Big-O Notation</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#การเขียนโปรแกรมแข่งขันประกอบด้วย">การเขียนโปรแกรมแข่งขันประกอบด้วย</a></li>
+                    <li><a href="#การออกแบบอัลกอริทึม">การออกแบบอัลกอริทึม</a></li>
+                    <li><a href="#การ-implement-สร้างอัลกอริทึม">การ implement สร้างอัลกอริทึม</a></li>
+                    <li><a href="#การวิเคราะห์อัลกอรึทึม">การวิเคราะห์อัลกอรึทึม</a></li>
+                    <li><a href="#motivation-problem">Motivation problem</a></li>
+                    <li><a href="#ประสิทธิภาพของอัลกอริทึม">ประสิทธิภาพของอัลกอริทึม</a></li>
+                    <li><a href="#time-complexity">Time complexity</a></li>
+                    <li><a href="#กฏของการคำนวณ">กฏของการคำนวณ</a></li>
+                    <li><a href="#การวนซ้ำ">การวนซ้ำ</a></li>
+                    <li><a href="#order-of-magnitude">Order of magnitude</a></li>
+                    <li><a href="#phase">Phase</a></li>
+                    <li><a href="#กรณีหลายตัวแปร">กรณีหลายตัวแปร</a></li>
+                    <li><a href="#recursion">Recursion</a></li>
+                    <li><a href="#complexity-classes">Complexity classes</a></li>
+                    <li><a href="#การประเมินประสิทธิภาพ">การประเมินประสิทธิภาพ</a></li>
+                    <li><a href="#ตัวแปร-constant">ตัวแปร constant</a></li>
+                    <li><a href="#space-complexity">space complexity</a></li>
+                </ul>
+            </nav>
+
+<ul>
+<li><p>introduction</p></li>
+<li><p>time complexity</p></li>
+<li><p>space complexity</p></li>
+</ul>
+<h4 id="การเขียนโปรแกรมแข่งขันประกอบด้วย">การเขียนโปรแกรมแข่งขันประกอบด้วย</h4>
+<ul>
+<li><p>การออกแบบอัลกอริทึม</p></li>
+<li><p>การ implement สร้างอัลกอริทึม</p></li>
+</ul>
+<h4 id="การออกแบบอัลกอริทึม">การออกแบบอัลกอริทึม</h4>
+<ul>
+<li><p>ใช้ทักษะ problem solving</p></li>
+<li><p>และ mathematical thinking</p></li>
+<li><p>โดยจำเป็นต้องวิเคราะห์ปัญหาและแก้ปัญหาอย่างสร้างสรรค์</p></li>
+<li><p>อัลกอริทึมที่ใช้แก้ปัญหาจะต้องถูกต้องแล้วมีประสิทธิภาพ</p></li>
+<li><p>หลักสำคัญของโจทย์ปัญหาส่วนใหญ่จะเป็นการคิดสร้างสรรค์อัลกอริทึมที่มีประสิทธิภาพ</p></li>
+<li><p>ความรู้ทางทฤษฎีของอัลกอริทึมเป็นสิ่งสำคัญต่อนักเขียนโปรแกรมเชิงแข่งขัน</p></li>
+<li><p>โดยทั่วไปแล้ว เฉลย (solution)
+ของปัญหาหนึ่งนั้นจะเป็นการใช้เทคนิคที่แพร่หลายร่วมกับ insight ใหม่ตามโจทย์</p></li>
+<li><p>เทคนิคในการเขียนโปรแกรมเชิงแข่งขันยังเป็นพื้นฐานในการวิจัยสายอัลกอริทึมอีกด้วย</p></li>
+</ul>
+<h4 id="การ-implement-สร้างอัลกอริทึม">การ implement สร้างอัลกอริทึม</h4>
+<ul>
+<li><p>ใช้ทักษะการเขียนโปรแกรมที่ดี</p></li>
+<li><p>ในการเขียนโปรแกรมเชิงแข่งขันนั้น
+เฉลยจะถูกตรวจสอบอัลกอริทึมด้วยชุดทดสอบ</p></li>
+<li><p>ดังนั้น การที่ไอเดียของอัลกอริทึมถูกต้องเท่านั้นยังไม่เพียงพอ แต่การ implement
+สร้างอัลกอริทึมจะต้องถูกต้องด้วยเช่นกัน</p></li>
+<li><p>style ในการเขียนโค้ดในการแข่งขันจะตรงไปตรงมาและกระทัดรัด</p></li>
+<li><p>โปรแกรมควรถูกเขียนอย่างรวดเร็ว เพราะเวลาจะมีอยู่อย่างจำกัด</p></li>
+</ul>
+<h4 id="การวิเคราะห์อัลกอรึทึม">การวิเคราะห์อัลกอรึทึม</h4>
+<ul>
+<li><p>ปัญหาที่กำหนดให้สามารถแก้ปัญหาด้วยอัลกอริทึมหลายแบบในสภาพเงื่อนไขเดียวกัน</p></li>
+<li><p>จำเป็นต้องเรียนรู้วิธีการเปรียบเทียบประสิทธิภาพการทำงานของแต่ละอัลกอริทึม</p></li>
+</ul>
+<p>เพื่อพิจารณาเลือกใช้ได้อย่างถูกวิธี</p>
+<h4 id="motivation-problem">Motivation problem</h4>
+<ul>
+<li><p>เราจะรู้ได้อย่างไรว่าโค้ดใดนี้มีประสิทธิภาพที่ดีกว่ากัน ระหว่าง</p></li>
+</ul>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
+  for (int j = i + 1; j &lt;= n; j++) {
+    // code
+  }
+}</code></pre>
+<ul>
+<li><p>และ</p></li>
+</ul>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
+  for (int j = 1; j &lt;= n; j += i) {
+    // code
+  }
+}</code></pre>
+<h4 id="ประสิทธิภาพของอัลกอริทึม">ประสิทธิภาพของอัลกอริทึม</h4>
+<ul>
+<li><p>สามารถแบ่งได้เป็นสองประเภท คือ</p>
+<ul>
+<li><p>การใช้เนื้อที่ในหน่วยความจำ
+หรือความต้องการในการใช้เนื้อที่ของความจำในการเก็บข้อมูล</p></li>
+<li><p>ประสิทธิภาพของเวลาในการทำงาน
+หรือระยะเวลาที่ใช้ในการประมวลผลข้อมูล</p></li>
+</ul></li>
+<li><p>โดยทั่วไปแล้วประสิทธิภาพทั้งสองประเภทจะพัฒนาไปพร้อมกันได้ยาก</p></li>
+</ul>
+<p>และส่วนมากจะให้จความสำคัญกับการใช้เวลาอย่างมีประสิทธิภาพมากกว่าเนื้อที่</p>
+<ul>
+<li><p><strong>Big O Notation</strong> หรืออันดับขนาด (order of magnitude)
+เป็นเครื่องมือหลักในการวิเคราะห์อัลกอริทึม</p></li>
+</ul>
+<h4 id="time-complexity">Time complexity</h4>
+<ul>
+<li><p>ประสิทธิภาพของอัลกอริทึมเป็นสิ่งสำคัญในการเขียนโปรแกรมเชิงแข่งขัน</p></li>
+<li><p>โดยทั่วไปนั้นจะง่ายที่จะออกแบบอัลกอริทึมที่แก้ปัญหาได้ช้า
+แต่ความท้าทายจะอยู่ที่อยากออกแบบอัลกอริทึมที่รวดเร็ว</p></li>
+<li><p>หากอัลกอริทึมนั้นช้าเกินไป จะได้รับคะแนนบางส่วนหรรือไม่ได้เลย</p></li>
+<li><p>การคาดการณ์เวลาที่อัลกอริทึมใช้สำหรับ input ต่าง ๆ</p></li>
+<li><p>หลักการคือการแสดงประสิทธิภาพในรูปแบบของฟังก์ชันโดยมีพารามิเตอร์เป็นขนาดของ
+input</p></li>
+<li><p>ด้วยการคำนวณ time complexity
+เราสามารถตรวจสอบความเร็วของอัลกอริทึมได้โดยไม่ต้อง implement ขึ้นมาก่อน</p></li>
+</ul>
+<h4 id="กฏของการคำนวณ">กฏของการคำนวณ</h4>
+<ul>
+<li><p>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ <span
+class="math inline"><em>O</em>(⋯)</span> โดยจุดสามจุดแสดงถึงฟังก์ชันใด
+ๆ</p></li>
+<li><p>โดยทั่วไปแล้ว ตัวแปร <span class="math inline"><em>n</em></span>
+แสดงถึงขนาดของ input</p></li>
+<li><p>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข <span
+class="math inline"><em>n</em></span> จะเป็นขนาดของอาเรย์นั้น และหาก input
+เป็น string <span class="math inline"><em>n</em></span> จะเป็นความยาวของ
+string นั้น</p></li>
+</ul>
+<h4 id="การวนซ้ำ">การวนซ้ำ</h4>
+<ul>
+<li><p>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ
+input</p></li>
+<li><p>ยิ่งวนซ้ำหลายชั้น อัลกอริทีมจะยิ่งช้า</p></li>
+<li><p>หากมีการวนซ้ำ <span class="math inline"><em>k</em></span> ชั้น time
+complexity จะเป็น <span
+class="math inline"><em>O</em>(<em>n</em><sup><em>k</em></sup>)</span></p></li>
+</ul>
+<p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น <span
+class="math inline"><em>O</em>(<em>n</em>)</span></p>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
+  // code
+}</code></pre>
+<p>และ time complexity ของโค้ดด้านล่างนี้ <span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {    // ชั้นที่ 1
+  for (int j = 1; j &lt;= n; j++) {  // ชั้นที่ 2
+    // code
+  }
+}</code></pre>
+<h4 id="order-of-magnitude">Order of magnitude</h4>
+<ul>
+<li><p>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ
+order of magnitude</p></li>
+<li><p>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น <span
+class="math inline">3<em>n</em></span>, <span
+class="math inline"><em>n</em> + 5</span> และ <span
+class="math inline">$l\frac{n}{2}r$</span> ครั้ง แต่ time complexity
+นั้นเท่ากันคือ <span
+class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
+</ul>
+<pre class="cpp"><code>for (int i = 1; i &lt;= 3*n; i++) {
+  // code
+}</code></pre>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n+5; i++) {
+  // code
+}</code></pre>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i += 2) {
+  // code
+}</code></pre>
+<p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น <span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
+  for (int j = i+1; j &lt;= n; j++) {
+   // code
+  }
+}</code></pre>
+<h4 id="phase">Phase</h4>
+<ul>
+<li><p>ถ้าอัลกอริทึมประกอบไปด้วยหลาย phase ติดต่อกันแล้ว complexity จะเป็น time
+complexity ที่สูงสุดของ phase หนึ่ง</p></li>
+<li><p>เนื่องจาก bottleneck จะอยู่ที่ phase ที่ช้าที่สุด</p></li>
+<li><p>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity <span
+class="math inline"><em>O</em>(<em>n</em>)</span>, <span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span> และ <span
+class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
+<li><p>ดังนั้นคอขวดจะเป็น <span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p></li>
+</ul>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
+  // code O(n)
+}
+for (int i = 1; i &lt;= n; i++) {
+  for (int j = 1; j &lt;= n; j++) {
+    // code O(n^2)
+  }
+}
+for (int i = 1; i &lt;= n; i++) {
+  // code O(n)
+}</code></pre>
+<h4 id="กรณีหลายตัวแปร">กรณีหลายตัวแปร</h4>
+<ul>
+<li><p>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</p></li>
+<li><p>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</p></li>
+<li><p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น <span
+class="math inline"><em>O</em>(<em>n</em><em>m</em>)</span></p></li>
+</ul>
+<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
+  for (int j = 1; j &lt;= m; j++) {
+    // code
+  }
+}</code></pre>
+<h4 id="recursion">Recursion</h4>
+<ul>
+<li><p>time complexity ของฟังก์ชัน recursive
+จะขึ้นอยู่กับจำนวนครั้งที่ฟังก์ชันนั้นถูกเรื่องและ time complexity
+ของการเรียกฟังก์ชันแต่ละครั้ง</p></li>
+<li><p>ซึ่งจะนำสองค่านี้มาคูณกัน</p></li>
+<li><p>ยกตัวอย่างเช่น</p></li>
+</ul>
+<pre class="cpp"><code>void f(int n) {
+  if (n == 1) return;
+  f(n-1);
+}</code></pre>
+<ul>
+<li><p>การเรียกฟังก์ชัน <span
+class="math inline"><em>f</em>(<em>n</em>)</span> จะเรียกฟังก์ชันทั้งหมด <span
+class="math inline"><em>n</em></span> ครั้ง และแต่ละครั้งจะใช้ time complexity
+<span class="math inline"><em>O</em>(1)</span></p></li>
+<li><p>ดังนั้น time complexity รวมคือ <span
+class="math inline"><em>O</em>(<em>n</em>) ⋅ <em>O</em>(1) = <em>O</em>(<em>n</em>)</span></p></li>
+<li><p>อีกตัวอย่าง เช่น</p></li>
+</ul>
+<pre class="cpp"><code>void g(int n) {
+  if (n == 1) return;
+  g(n-1);
+  g(n-1);
+}</code></pre>
+<ul>
+<li><p>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี <span
+class="math inline"><em>n</em> = 1</span></p></li>
+<li><p>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก <span
+class="math inline"><em>g</em></span> ด้วยพารามิเตอร์ <span
+class="math inline"><em>n</em></span></p></li>
+<li><p>ตารางด้านล่างแสดงจำนวนการเรียก function ที่เกิดขึ้น</p></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><p>function call</p></th>
+<th><p>number of calls</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><span class="math inline"><em>g</em>(<em>n</em>)</span></p></td>
+<td><p>1</p></td>
+</tr>
+<tr>
+<td><p><span
+class="math inline"><em>g</em>(<em>n</em> − 1)</span></p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p><span
+class="math inline"><em>g</em>(<em>n</em> − 2)</span></p></td>
+<td><p>4</p></td>
+</tr>
+<tr>
+<td><p><span class="math inline">⋯</span></p></td>
+<td><p><span class="math inline">⋯</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>g</em>(1)</span></p></td>
+<td><p><span
+class="math inline">2<sup><em>n</em> − 1</sup></span></p></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>จากตารางนี้ time complexity คือ <span
+class="math inline">1 + 2 + 4 + ⋯ + 2<sup><em>n</em> − 1</sup> = 2<sup><em>n</em></sup> − 1 = <em>O</em>(2<sup><em>n</em></sup>)</span></p></li>
+</ul>
+<h4 id="complexity-classes">Complexity classes</h4>
+<ul>
+<li><p>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</p></li>
+<li><p><span class="math inline"><em>O</em>(1)</span> constant-time
+algorithm</p>
+<ul>
+<li><p>เวลาที่ใช้ในการรันจะเป็น constant ซึ่งไม่สนใจขนาดของ input</p></li>
+<li><p>ยกตัวอย่างเช่นอัลกอริทึมที่มีสูตรคำนวณคำตอบโดยไม่ต้องทำซ้ำใด ๆ</p></li>
+</ul></li>
+<li><p><span class="math inline"><em>O</em>(log <em>n</em>)</span>
+logarithmic algorithm</p>
+<ul>
+<li><p>อัลกอริทึมแบบ <strong>logarithmic</strong> ส่วนใหญ่จะหารครึ่งขนาดของ
+input ที่จำเป็นต้องพิจารณาในแต่ละขั้นตอน</p></li>
+<li><p>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก <span
+class="math inline">log<sub>2</sub><em>n</em></span> เท่ากับจำนวนครั้งที่หาร
+<span class="math inline"><em>n</em></span> ด้วย 2 จนกว่าจะเป็น 1</p></li>
+</ul></li>
+<li><p><span class="math inline">$O\left( \sqrt{n} \right)$</span>
+square root algorithm</p>
+<ul>
+<li><p>ช้ากว่า <span class="math inline"><em>O</em>(log <em>n</em>)</span>
+แต่เร็วกว่า <span
+class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
+<li><p>เป็นกรณีที่หารขนาด input <span class="math inline"><em>n</em></span>
+ด้วย <span class="math inline">$\sqrt{n} =
+\frac{n}{\sqrt{n}}$</span></p></li>
+</ul></li>
+<li><p><span class="math inline"><em>O</em>(<em>n</em>)</span> linear
+algorithm</p>
+<ul>
+<li><p>อัลกอริทึมแบบ <strong>linear</strong> จะวนใน input
+เป็นจำนวนครั้งที่แน่นอน</p></li>
+<li><p>ส่วนใหญ่แล้วจะเป็น time complexity ที่ค่อนข้างดี
+เนื่องจากปกติแล้วจะจำเป็นต้องอ่านค่าทุกค่าใน input</p></li>
+</ul></li>
+<li><p><span
+class="math inline"><em>O</em>(<em>n</em>log <em>n</em>)</span></p>
+<ul>
+<li><p>ส่วนใหญ่จะเกิดจากการเรียงข้อมูล</p></li>
+<li><p>หรือ data structure ที่ใช้ <span
+class="math inline"><em>O</em>(log <em>n</em>)</span> ในแต่ละ
+operation</p></li>
+</ul></li>
+<li><p><span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span> quadratic
+algorithm</p>
+<ul>
+<li><p>ส่วนใหญ่ใช้ลูปสองชั้น</p></li>
+<li><p>เช่นการพิจารณาทุกคู่ของ input</p></li>
+</ul></li>
+<li><p><span
+class="math inline"><em>O</em>(<em>n</em><sup>3</sup>)</span> cubic
+algorithm</p>
+<ul>
+<li><p>ลูปสามชั้น</p></li>
+</ul></li>
+<li><p><span
+class="math inline"><em>O</em>(2<sup><em>n</em></sup>)</span></p>
+<ul>
+<li><p>การพิจารณาทุก subsets ของ input</p></li>
+<li><p>ตัวอย่างเช่น subsets ของ <span class="math inline">{1, 2, 3}</span>
+คือ</p></li>
+</ul>
+<p><span class="math inline">⌀</span>, <span
+class="math inline">{1}</span>, <span class="math inline">{2}</span>,
+<span class="math inline">{3}</span>, <span
+class="math inline">{1, 2}</span>, <span
+class="math inline">{1, 3}</span>, <span
+class="math inline">{2, 3}</span> และ <span
+class="math inline">{1, 2, 3}</span>.</p></li>
+<li><p><span class="math inline"><em>O</em>(<em>n</em>!)</span></p>
+<ul>
+<li><p>การพิจารณาทุกการจัดเรียงของ input</p></li>
+<li><p>ตัวอย่างเช่นการจัดเรียงของ <span class="math inline">{1, 2, 3}</span>
+คือ</p></li>
+</ul>
+<p><span class="math inline">(1, 2, 3)</span>, <span
+class="math inline">(1, 3, 2)</span>, <span
+class="math inline">(2, 1, 3)</span>, <span
+class="math inline">(2, 3, 1)</span>, <span
+class="math inline">(3, 1, 2)</span> and <span
+class="math inline">(3, 2, 1)</span>.</p></li>
+</ul>
+<h4 id="การประเมินประสิทธิภาพ">การประเมินประสิทธิภาพ</h4>
+<ul>
+<li><p>จากการคำนวณ time complexity
+ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement
+ได้</p></li>
+<li><p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ <span
+class="math inline">1, 000, 000, 000</span> (พันล้าน)
+คำสั่งต่อหนึ่งวินาที</p></li>
+<li><p>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ <span
+class="math inline"><em>n</em> = 10<sup>5</sup></span></p></li>
+<li><p>ถ้า time complexity เป็น <span
+class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span>
+อัลกอริทึมนี้จะรันทั้งหมด <span
+class="math inline">(10<sup>5</sup>)<sup>2</sup> = 10<sup>{10}</sup></span>
+คำสั่ง</p></li>
+<li><p>ซึ่งโดยคร่าวใช้เวลาประมาณสิบวินาที ซึ่งจะช้าเกินไปสำหรับโจทย์ข้อนี้</p></li>
+<li><p>ในอีกทางหนึ่ง หากว่าเรารู้ขนาด input แล้ว เราสามารถเดา time complexity
+ของอัลกอริทึมที่ใช้แก้ปัญหาได้เช่นกัน</p></li>
+<li><p>ตารางต่อไปนี้บอกการประเมินที่พบบ่อยในกรณีที่ให้เวลาในการคำนวณหนึ่งวินาที</p></li>
+<li><p>ยกตัวอย่างเช่น หากขนาดของ input เป็น <span
+class="math inline"><em>n</em> = 10<sup>5</sup></span> time complexity
+ที่ต้องการจากอัลกอริทึมก็คือ <span
+class="math inline"><em>O</em>(<em>n</em>)</span> หรือ <span
+class="math inline"><em>O</em>(<em>n</em>log <em>n</em>)</span></p></li>
+<li><p>ด้วยความรู้นี้จะทำให้คิดอัลกอริทึมได้ง่ายขี้นจากการตัดอัลกอริทึมที่ใช้เวลานานออก</p></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><p>input size</p></th>
+<th><p>required time complexity</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 10</span></p></td>
+<td><p><span class="math inline"><em>O</em>(<em>N</em>!)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 20</span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 500</span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(<em>N</em><sup>3</sup>)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em> ≤ 5000</span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(<em>N</em><sup>2</sup>)</span></p></td>
+</tr>
+<tr>
+<td><p><span
+class="math inline"><em>N</em> ≤ 10<sup>6</sup></span></p></td>
+<td><p><span
+class="math inline"><em>O</em>(<em>N</em>log <em>N</em>)</span> or <span
+class="math inline"><em>O</em>(<em>N</em>)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline"><em>N</em></span> is large</p></td>
+<td><p><span class="math inline"><em>O</em>(1)</span> or <span
+class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="ตัวแปร-constant">ตัวแปร constant</h4>
+<ul>
+<li><p>อย่างไรก็ตาม ควรจำว่า time complexity
+นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant
+factors</strong></p></li>
+<li><p>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา <span
+class="math inline"><em>O</em>(<em>n</em>)</span> อาจมีการคำนวณทั้งหมด
+<span class="math inline">$\frac{n}{2}$</span> หรือ <span
+class="math inline">5<em>n</em></span> คำสั่ง</p></li>
+<li><p>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</p></li>
+</ul>
+<h4 id="space-complexity">space complexity</h4>
+<ul>
+<li><p>ใช้ Big O Notation เป็นเครื่องมือเช่นกัน</p></li>
+<li><p>เปลี่ยนจากการนับขนาดเวลา เป็นนับขนาด memory เช่น</p>
+<ul>
+<li><p>ขนาดของ array ที่เราประกาศ</p></li>
+</ul></li>
+</ul>
+
+            <div class="page-nav">
+                <a href="1005_function.html" class="prev">Function</a>
+                <a href="2010_stack-queue.html" class="next">Stack and Queue</a>
+            </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Big-O Notation</h3>
-                <ul>
-                  <li>introduction</li>
-                  <li>time complexity</li>
-                  <li>space complexity</li>
-                </ul>
-                <h4>การเขียนโปรแกรมแข่งขันประกอบด้วย</h4>
-                <ul>
-                  <li>การออกแบบอัลกอริทึม</li>
-                  <li>การ implement สร้างอัลกอริทึม</li>
-                </ul>
-                <h4>การออกแบบอัลกอริทึม</h4>
-                <ul>
-                  <li>ใช้ทักษะ problem solving</li>
-                  <li>และ mathematical thinking</li>
-                  <li>โดยจำเป็นต้องวิเคราะห์ปัญหาและแก้ปัญหาอย่างสร้างสรรค์</li>
-                  <li>อัลกอริทึมที่ใช้แก้ปัญหาจะต้องถูกต้องแล้วมีประสิทธิภาพ</li>
-                  <li>หลักสำคัญของโจทย์ปัญหาส่วนใหญ่จะเป็นการคิดสร้างสรรค์อัลกอริทึมที่มีประสิทธิภาพ</li>
-                  <li>ความรู้ทางทฤษฎีของอัลกอริทึมเป็นสิ่งสำคัญต่อนักเขียนโปรแกรมเชิงแข่งขัน</li>
-                  <li>โดยทั่วไปแล้ว เฉลย (solution) ของปัญหาหนึ่งนั้นจะเป็นการใช้เทคนิคที่แพร่หลายร่วมกับ insight ใหม่ตามโจทย์</li>
-                  <li>เทคนิคในการเขียนโปรแกรมเชิงแข่งขันยังเป็นพื้นฐานในการวิจัยสายอัลกอริทึมอีกด้วย</li>
-                </ul>
-                <h4>การ implement สร้างอัลกอริทึม</h4>
-                <ul>
-                  <li>ใช้ทักษะการเขียนโปรแกรมที่ดี</li>
-                  <li>ในการเขียนโปรแกรมเชิงแข่งขันนั้น เฉลยจะถูกตรวจสอบอัลกอริทึมด้วยชุดทดสอบ</li>
-                  <li>ดังนั้น การที่ไอเดียของอัลกอริทึมถูกต้องเท่านั้นยังไม่เพียงพอ แต่การ implement สร้างอัลกอริทึมจะต้องถูกต้องด้วยเช่นกัน</li>
-                  <li>style ในการเขียนโค้ดในการแข่งขันจะตรงไปตรงมาและกระทัดรัด</li>
-                  <li>โปรแกรมควรถูกเขียนอย่างรวดเร็ว เพราะเวลาจะมีอยู่อย่างจำกัด</li>
-                </ul>
-                <h4>การวิเคราะห์อัลกอรึทึม</h4>
-                <ul>
-                  <li>ปัญหาที่กำหนดให้สามารถแก้ปัญหาด้วยอัลกอริทึมหลายแบบในสภาพเงื่อนไขเดียวกัน</li>
-                  <li>จำเป็นต้องเรียนรู้วิธีการเปรียบเทียบประสิทธิภาพการทำงานของแต่ละอัลกอริทึม</li>
-                </ul>
-                <p>เพื่อพิจารณาเลือกใช้ได้อย่างถูกวิธี</p>
-                <h4>Motivation problem</h4>
-                <ul>
-                  <li>เราจะรู้ได้อย่างไรว่าโค้ดใดนี้มีประสิทธิภาพที่ดีกว่ากัน ระหว่าง</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <ul>
-                  <li>และ</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j <span style="color: #d73948">+=</span> i) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>ประสิทธิภาพของอัลกอริทึม</h4>
-                <ul>
-                  <li>
-                    <p>สามารถแบ่งได้เป็นสองประเภท คือ</p>
-                    <ul>
-                      <li>การใช้เนื้อที่ในหน่วยความจำ หรือความต้องการในการใช้เนื้อที่ของความจำในการเก็บข้อมูล</li>
-                      <li>ประสิทธิภาพของเวลาในการทำงาน หรือระยะเวลาที่ใช้ในการประมวลผลข้อมูล</li>
-                    </ul>
-                  </li>
-                  <li>โดยทั่วไปแล้วประสิทธิภาพทั้งสองประเภทจะพัฒนาไปพร้อมกันได้ยาก</li>
-                </ul>
-                <p>และส่วนมากจะให้จความสำคัญกับการใช้เวลาอย่างมีประสิทธิภาพมากกว่าเนื้อที่</p>
-                <ul>
-                  <li><strong>Big O Notation</strong> หรืออันดับขนาด (order of magnitude) เป็นเครื่องมือหลักในการวิเคราะห์อัลกอริทึม</li>
-                </ul>
-                <h4>Time complexity</h4>
-                <ul>
-                  <li>ประสิทธิภาพของอัลกอริทึมเป็นสิ่งสำคัญในการเขียนโปรแกรมเชิงแข่งขัน</li>
-                  <li>โดยทั่วไปนั้นจะง่ายที่จะออกแบบอัลกอริทึมที่แก้ปัญหาได้ช้า แต่ความท้าทายจะอยู่ที่อยากออกแบบอัลกอริทึมที่รวดเร็ว</li>
-                  <li>หากอัลกอริทึมนั้นช้าเกินไป จะได้รับคะแนนบางส่วนหรรือไม่ได้เลย</li>
-                  <li>การคาดการณ์เวลาที่อัลกอริทึมใช้สำหรับ input ต่าง ๆ</li>
-                  <li>หลักการคือการแสดงประสิทธิภาพในรูปแบบของฟังก์ชันโดยมีพารามิเตอร์เป็นขนาดของ input</li>
-                  <li>ด้วยการคำนวณ time complexity เราสามารถตรวจสอบความเร็วของอัลกอริทึมได้โดยไม่ต้อง implement ขึ้นมาก่อน</li>
-                </ul>
-                <h4>กฏของการคำนวณ</h4>
-                <ul>
-                  <li>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ $O(\cdots)$ โดยจุดสามจุดแสดงถึงฟังก์ชันใด ๆ</li>
-                  <li>โดยทั่วไปแล้ว ตัวแปร $n$ แสดงถึงขนาดของ input</li>
-                  <li>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข $n$ จะเป็นขนาดของอาเรย์นั้น และหาก input เป็น string $n$ จะเป็นความยาวของ string นั้น</li>
-                </ul>
-                <h4>การวนซ้ำ</h4>
-                <ul>
-                  <li>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ input</li>
-                  <li>ยิ่งวนซ้ำหลายชั้น อัลกอริทีมจะยิ่งช้า</li>
-                  <li>หากมีการวนซ้ำ $k$ ชั้น time complexity จะเป็น $O(n^k)$</li>
-                </ul>
-                <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น $O(n)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>และ time complexity ของโค้ดด้านล่างนี้ $O(n^2)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {    <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 1</span><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {  <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 2</span><br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Order of magnitude</h4>
-                <ul>
-                  <li>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ order of magnitude</li>
-                  <li>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น $3n$, $n+5$ และ $\lceil n/2 \rceil$ ครั้ง แต่ time complexity นั้นเท่ากันคือ $O(n)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">3</span><span style="color: #d73948">*</span>n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n<span style="color: #d73948">+</span><span style="color: #b60157">5</span>; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i <span style="color: #d73948">+=</span> <span style="color: #b60157">2</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น $O(n^2)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i<span style="color: #d73948">+</span><span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>   <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Phase</h4>
-                <ul>
-                  <li>ถ้าอัลกอริทึมประกอบไปด้วยหลาย phase ติดต่อกันแล้ว complexity จะเป็น time complexity ที่สูงสุดของ phase หนึ่ง</li>
-                  <li>เนื่องจาก bottleneck จะอยู่ที่ phase ที่ช้าที่สุด</li>
-                  <li>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity $O(n)$, $O(n^2)$ และ $O(n)$</li>
-                  <li>ดังนั้นคอขวดจะเป็น $O(n^2)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n^2)</span><br>  }<br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}</code></pre>
-                <h4>กรณีหลายตัวแปร</h4>
-                <ul>
-                  <li>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</li>
-                  <li>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</li>
-                  <li>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น $O(nm)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> m; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Recursion</h4>
-                <ul>
-                  <li>time complexity ของฟังก์ชัน recursive จะขึ้นอยู่กับจำนวนครั้งที่ฟังก์ชันนั้นถูกเรื่องและ time complexity ของการเรียกฟังก์ชันแต่ละครั้ง</li>
-                  <li>ซึ่งจะนำสองค่านี้มาคูณกัน</li>
-                  <li>ยกตัวอย่างเช่น</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">f</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">f</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
-                <ul>
-                  <li>การเรียกฟังก์ชัน $f(n)$ จะเรียกฟังก์ชันทั้งหมด $n$ ครั้ง และแต่ละครั้งจะใช้ time complexity $O(1)$</li>
-                  <li>ดังนั้น time complexity รวมคือ $O(n) \cdot O(1) = O(n)$</li>
-                  <li>อีกตัวอย่าง เช่น</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">g</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
-                <ul>
-                  <li>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี $n=1$</li>
-                  <li>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก $g$ ด้วยพารามิเตอร์ $n$</li>
-                  <li>ตารางด้านล่างแสดงจำนวนการเรียก function ที่เกิดขึ้น</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>function call</th>
-                      <th>number of calls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$g(n)$</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>$g(n-1)$</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>$g(n-2)$</td>
-                      <td>4</td>
-                    </tr>
-                    <tr>
-                      <td>$\cdots$</td>
-                      <td>$\cdots$</td>
-                    </tr>
-                    <tr>
-                      <td>$g(1)$</td>
-                      <td>$2^{n-1}$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <ul>
-                  <li>จากตารางนี้ time complexity คือ $1+2+4+\cdots+2^{n-1} = 2^n-1 = O(2^n)$</li>
-                </ul>
-                <h4>Complexity classes</h4>
-                <ul>
-                  <li>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</li>
-                  <li>$O(1)$ constant-time algorithm
-                    <ul>
-                      <li>เวลาที่ใช้ในการรันจะเป็น constant ซึ่งไม่สนใจขนาดของ input</li>
-                      <li>ยกตัวอย่างเช่นอัลกอริทึมที่มีสูตรคำนวณคำตอบโดยไม่ต้องทำซ้ำใด ๆ</li>
-                    </ul>
-                  </li>
-                  <li>$O(\log n)$ logarithmic algorithm
-                    <ul>
-                      <li>อัลกอริทึมแบบ <strong>logarithmic</strong> ส่วนใหญ่จะหารครึ่งขนาดของ input ที่จำเป็นต้องพิจารณาในแต่ละขั้นตอน</li>
-                      <li>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก $\log_2 n$ เท่ากับจำนวนครั้งที่หาร $n$ ด้วย 2 จนกว่าจะเป็น 1</li>
-                    </ul>
-                  </li>
-                  <li>$O(\sqrt{n})$ square root algorithm
-                    <ul>
-                      <li>ช้ากว่า $O(\log n)$ แต่เร็วกว่า $O(n)$</li>
-                      <li>เป็นกรณีที่หารขนาด input $n$ ด้วย $\sqrt{n} = n/\sqrt{n}$</li>
-                    </ul>
-                  </li>
-                  <li>$O(n)$ linear algorithm
-                    <ul>
-                      <li>อัลกอริทึมแบบ <strong>linear</strong> จะวนใน input เป็นจำนวนครั้งที่แน่นอน</li>
-                      <li>ส่วนใหญ่แล้วจะเป็น time complexity ที่ค่อนข้างดี เนื่องจากปกติแล้วจะจำเป็นต้องอ่านค่าทุกค่าใน input</li>
-                    </ul>
-                  </li>
-                  <li>$O(n \log n)$
-                    <ul>
-                      <li>ส่วนใหญ่จะเกิดจากการเรียงข้อมูล</li>
-                      <li>หรือ data structure ที่ใช้ $O(\log n)$ ในแต่ละ operation</li>
-                    </ul>
-                  </li>
-                  <li>$O(n^2)$ quadratic algorithm
-                    <ul>
-                      <li>ส่วนใหญ่ใช้ลูปสองชั้น</li>
-                      <li>เช่นการพิจารณาทุกคู่ของ input</li>
-                    </ul>
-                  </li>
-                  <li>$O(n^3)$ cubic algorithm
-                    <ul>
-                      <li>ลูปสามชั้น</li>
-                    </ul>
-                  </li>
-                  <li>$O(2^n)$
-                    <ul>
-                      <li>การพิจารณาทุก subsets ของ input</li>
-                      <li>ตัวอย่างเช่น subsets ของ $\{1,2,3\}$ คือ $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$, $\{1,3\}$, $\{2,3\}$ และ $\{1,2,3\}$.</li>
-                    </ul>
-                  </li>
-                  <li>$O(n!)$
-                    <ul>
-                      <li>การพิจารณาทุกการจัดเรียงของ input</li>
-                      <li>ตัวอย่างเช่นการจัดเรียงของ $\{1,2,3\}$ คือ $(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$, $(3,1,2)$ and $(3,2,1)$.</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>การประเมินประสิทธิภาพ</h4>
-                <ul>
-                  <li>จากการคำนวณ time complexity ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement ได้</li>
-                  <li>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ $1,000,000,000$ (พันล้าน) คำสั่งต่อหนึ่งวินาที</li>
-                  <li>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ $n=10^5$</li>
-                  <li>ถ้า time complexity เป็น $O(n^2)$ อัลกอริทึมนี้จะรันทั้งหมด $(10^5)^2=10^{10}$ คำสั่ง</li>
-                  <li>ซึ่งโดยคร่าวใช้เวลาประมาณสิบวินาที ซึ่งจะช้าเกินไปสำหรับโจทย์ข้อนี้</li>
-                  <li>ในอีกทางหนึ่ง หากว่าเรารู้ขนาด input แล้ว เราสามารถเดา time complexity ของอัลกอริทึมที่ใช้แก้ปัญหาได้เช่นกัน</li>
-                  <li>ตารางต่อไปนี้บอกการประเมินที่พบบ่อยในกรณีที่ให้เวลาในการคำนวณหนึ่งวินาที</li>
-                  <li>ยกตัวอย่างเช่น หากขนาดของ input เป็น $n=10^5$ time complexity ที่ต้องการจากอัลกอริทึมก็คือ $O(n)$ หรือ $O(n \log n)$</li>
-                  <li>ด้วยความรู้นี้จะทำให้คิดอัลกอริทึมได้ง่ายขี้นจากการตัดอัลกอริทึมที่ใช้เวลานานออก</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>input size</th>
-                      <th>required time complexity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$n \leq 10$</td>
-                      <td>$O(n!)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 20$</td>
-                      <td>$O(2^n)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 500$</td>
-                      <td>$O(n^3)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 5000$</td>
-                      <td>$O(n^2)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 10^6$</td>
-                      <td>$O(n \log n)$ or $O(n)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n$ is large</td>
-                      <td>$O(1)$ or $O(\log n)$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <h4>ตัวแปร constant</h4>
-                <ul>
-                  <li>อย่างไรก็ตาม ควรจำว่า time complexity นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant factors</strong></li>
-                  <li>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา $O(n)$ อาจมีการคำนวณทั้งหมด $n/2$ หรือ $5n$ คำสั่ง</li>
-                  <li>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</li>
-                </ul>
-                <h4>space complexity</h4>
-                <ul>
-                  <li>ใช้ Big O Notation เป็นเครื่องมือเช่นกัน</li>
-                  <li>
-                    <p>เปลี่ยนจากการนับขนาดเวลา เป็นนับขนาด memory เช่น</p>
-                    <ul>
-                      <li>ขนาดของ array ที่เราประกาศ</li>
-                    </ul>
-                  </li>
-                </ul>
-            <div class="page-nav">
-                <a href="2004_binary-tree.html" class="prev">Binary Tree</a>
-                <a href="2006_priority-queue.html" class="next">Priority Queue</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Big-O Notation</h3>
-                <ul>
-                  <li>introduction</li>
-                  <li>time complexity</li>
-                  <li>space complexity</li>
-                </ul>
-                <h4>การเขียนโปรแกรมแข่งขันประกอบด้วย</h4>
-                <ul>
-                  <li>การออกแบบอัลกอริทึม</li>
-                  <li>การ implement สร้างอัลกอริทึม</li>
-                </ul>
-                <h4>การออกแบบอัลกอริทึม</h4>
-                <ul>
-                  <li>ใช้ทักษะ problem solving</li>
-                  <li>และ mathematical thinking</li>
-                  <li>โดยจำเป็นต้องวิเคราะห์ปัญหาและแก้ปัญหาอย่างสร้างสรรค์</li>
-                  <li>อัลกอริทึมที่ใช้แก้ปัญหาจะต้องถูกต้องแล้วมีประสิทธิภาพ</li>
-                  <li>หลักสำคัญของโจทย์ปัญหาส่วนใหญ่จะเป็นการคิดสร้างสรรค์อัลกอริทึมที่มีประสิทธิภาพ</li>
-                  <li>ความรู้ทางทฤษฎีของอัลกอริทึมเป็นสิ่งสำคัญต่อนักเขียนโปรแกรมเชิงแข่งขัน</li>
-                  <li>โดยทั่วไปแล้ว เฉลย (solution) ของปัญหาหนึ่งนั้นจะเป็นการใช้เทคนิคที่แพร่หลายร่วมกับ insight ใหม่ตามโจทย์</li>
-                  <li>เทคนิคในการเขียนโปรแกรมเชิงแข่งขันยังเป็นพื้นฐานในการวิจัยสายอัลกอริทึมอีกด้วย</li>
-                </ul>
-                <h4>การ implement สร้างอัลกอริทึม</h4>
-                <ul>
-                  <li>ใช้ทักษะการเขียนโปรแกรมที่ดี</li>
-                  <li>ในการเขียนโปรแกรมเชิงแข่งขันนั้น เฉลยจะถูกตรวจสอบอัลกอริทึมด้วยชุดทดสอบ</li>
-                  <li>ดังนั้น การที่ไอเดียของอัลกอริทึมถูกต้องเท่านั้นยังไม่เพียงพอ แต่การ implement สร้างอัลกอริทึมจะต้องถูกต้องด้วยเช่นกัน</li>
-                  <li>style ในการเขียนโค้ดในการแข่งขันจะตรงไปตรงมาและกระทัดรัด</li>
-                  <li>โปรแกรมควรถูกเขียนอย่างรวดเร็ว เพราะเวลาจะมีอยู่อย่างจำกัด</li>
-                </ul>
-                <h4>การวิเคราะห์อัลกอรึทึม</h4>
-                <ul>
-                  <li>ปัญหาที่กำหนดให้สามารถแก้ปัญหาด้วยอัลกอริทึมหลายแบบในสภาพเงื่อนไขเดียวกัน</li>
-                  <li>จำเป็นต้องเรียนรู้วิธีการเปรียบเทียบประสิทธิภาพการทำงานของแต่ละอัลกอริทึม</li>
-                </ul>
-                <p>เพื่อพิจารณาเลือกใช้ได้อย่างถูกวิธี</p>
-                <h4>Motivation problem</h4>
-                <ul>
-                  <li>เราจะรู้ได้อย่างไรว่าโค้ดใดนี้มีประสิทธิภาพที่ดีกว่ากัน ระหว่าง</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <ul>
-                  <li>และ</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j <span style="color: #d73948">+=</span> i) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>ประสิทธิภาพของอัลกอริทึม</h4>
-                <ul>
-                  <li>
-                    <p>สามารถแบ่งได้เป็นสองประเภท คือ</p>
-                    <ul>
-                      <li>การใช้เนื้อที่ในหน่วยความจำ หรือความต้องการในการใช้เนื้อที่ของความจำในการเก็บข้อมูล</li>
-                      <li>ประสิทธิภาพของเวลาในการทำงาน หรือระยะเวลาที่ใช้ในการประมวลผลข้อมูล</li>
-                    </ul>
-                  </li>
-                  <li>โดยทั่วไปแล้วประสิทธิภาพทั้งสองประเภทจะพัฒนาไปพร้อมกันได้ยาก</li>
-                </ul>
-                <p>และส่วนมากจะให้จความสำคัญกับการใช้เวลาอย่างมีประสิทธิภาพมากกว่าเนื้อที่</p>
-                <ul>
-                  <li><strong>Big O Notation</strong> หรืออันดับขนาด (order of magnitude) เป็นเครื่องมือหลักในการวิเคราะห์อัลกอริทึม</li>
-                </ul>
-                <h4>Time complexity</h4>
-                <ul>
-                  <li>ประสิทธิภาพของอัลกอริทึมเป็นสิ่งสำคัญในการเขียนโปรแกรมเชิงแข่งขัน</li>
-                  <li>โดยทั่วไปนั้นจะง่ายที่จะออกแบบอัลกอริทึมที่แก้ปัญหาได้ช้า แต่ความท้าทายจะอยู่ที่อยากออกแบบอัลกอริทึมที่รวดเร็ว</li>
-                  <li>หากอัลกอริทึมนั้นช้าเกินไป จะได้รับคะแนนบางส่วนหรรือไม่ได้เลย</li>
-                  <li>การคาดการณ์เวลาที่อัลกอริทึมใช้สำหรับ input ต่าง ๆ</li>
-                  <li>หลักการคือการแสดงประสิทธิภาพในรูปแบบของฟังก์ชันโดยมีพารามิเตอร์เป็นขนาดของ input</li>
-                  <li>ด้วยการคำนวณ time complexity เราสามารถตรวจสอบความเร็วของอัลกอริทึมได้โดยไม่ต้อง implement ขึ้นมาก่อน</li>
-                </ul>
-                <h4>กฏของการคำนวณ</h4>
-                <ul>
-                  <li>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ $O(\cdots)$ โดยจุดสามจุดแสดงถึงฟังก์ชันใด ๆ</li>
-                  <li>โดยทั่วไปแล้ว ตัวแปร $n$ แสดงถึงขนาดของ input</li>
-                  <li>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข $n$ จะเป็นขนาดของอาเรย์นั้น และหาก input เป็น string $n$ จะเป็นความยาวของ string นั้น</li>
-                </ul>
-                <h4>การวนซ้ำ</h4>
-                <ul>
-                  <li>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ input</li>
-                  <li>ยิ่งวนซ้ำหลายชั้น อัลกอริทีมจะยิ่งช้า</li>
-                  <li>หากมีการวนซ้ำ $k$ ชั้น time complexity จะเป็น $O(n^k)$</li>
-                </ul>
-                <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น $O(n)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>และ time complexity ของโค้ดด้านล่างนี้ $O(n^2)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {    <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 1</span><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {  <span style="color: #74747c">//</span><span style="color: #74747c"> ชั้นที่ 2</span><br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Order of magnitude</h4>
-                <ul>
-                  <li>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ order of magnitude</li>
-                  <li>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น $3n$, $n+5$ และ $\lceil n/2 \rceil$ ครั้ง แต่ time complexity นั้นเท่ากันคือ $O(n)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">3</span><span style="color: #d73948">*</span>n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n<span style="color: #d73948">+</span><span style="color: #b60157">5</span>; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i <span style="color: #d73948">+=</span> <span style="color: #b60157">2</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>}</code></pre>
-                <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น $O(n^2)$</p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> i<span style="color: #d73948">+</span><span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>   <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Phase</h4>
-                <ul>
-                  <li>ถ้าอัลกอริทึมประกอบไปด้วยหลาย phase ติดต่อกันแล้ว complexity จะเป็น time complexity ที่สูงสุดของ phase หนึ่ง</li>
-                  <li>เนื่องจาก bottleneck จะอยู่ที่ phase ที่ช้าที่สุด</li>
-                  <li>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity $O(n)$, $O(n^2)$ และ $O(n)$</li>
-                  <li>ดังนั้นคอขวดจะเป็น $O(n^2)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n^2)</span><br>  }<br>}<br><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #74747c">//</span><span style="color: #74747c"> code O(n)</span><br>}</code></pre>
-                <h4>กรณีหลายตัวแปร</h4>
-                <ul>
-                  <li>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</li>
-                  <li>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</li>
-                  <li>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น $O(nm)$</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>) {<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> m; j<span style="color: #d73948">++</span>) {<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> code</span><br>  }<br>}</code></pre>
-                <h4>Recursion</h4>
-                <ul>
-                  <li>time complexity ของฟังก์ชัน recursive จะขึ้นอยู่กับจำนวนครั้งที่ฟังก์ชันนั้นถูกเรื่องและ time complexity ของการเรียกฟังก์ชันแต่ละครั้ง</li>
-                  <li>ซึ่งจะนำสองค่านี้มาคูณกัน</li>
-                  <li>ยกตัวอย่างเช่น</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">f</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">f</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
-                <ul>
-                  <li>การเรียกฟังก์ชัน $f(n)$ จะเรียกฟังก์ชันทั้งหมด $n$ ครั้ง และแต่ละครั้งจะใช้ time complexity $O(1)$</li>
-                  <li>ดังนั้น time complexity รวมคือ $O(n) \cdot O(1) = O(n)$</li>
-                  <li>อีกตัวอย่าง เช่น</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #d73948">void</span> <span style="color: #4b69c6">g</span>(<span style="color: #d73948">int</span> n) {<br>  <span style="color: #d73948">if</span> (n <span style="color: #d73948">==</span> <span style="color: #b60157">1</span>) <span style="color: #d73948">return</span>;<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>  <span style="color: #4b69c6">g</span>(n<span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>}</code></pre>
-                <ul>
-                  <li>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี $n=1$</li>
-                  <li>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก $g$ ด้วยพารามิเตอร์ $n$</li>
-                  <li>ตารางด้านล่างแสดงจำนวนการเรียก function ที่เกิดขึ้น</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>function call</th>
-                      <th>number of calls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$g(n)$</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>$g(n-1)$</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>$g(n-2)$</td>
-                      <td>4</td>
-                    </tr>
-                    <tr>
-                      <td>$\cdots$</td>
-                      <td>$\cdots$</td>
-                    </tr>
-                    <tr>
-                      <td>$g(1)$</td>
-                      <td>$2^{n-1}$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <ul>
-                  <li>จากตารางนี้ time complexity คือ $1+2+4+\cdots+2^{n-1} = 2^n-1 = O(2^n)$</li>
-                </ul>
-                <h4>Complexity classes</h4>
-                <ul>
-                  <li>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</li>
-                  <li>$O(1)$ constant-time algorithm
-                    <ul>
-                      <li>เวลาที่ใช้ในการรันจะเป็น constant ซึ่งไม่สนใจขนาดของ input</li>
-                      <li>ยกตัวอย่างเช่นอัลกอริทึมที่มีสูตรคำนวณคำตอบโดยไม่ต้องทำซ้ำใด ๆ</li>
-                    </ul>
-                  </li>
-                  <li>$O(\log n)$ logarithmic algorithm
-                    <ul>
-                      <li>อัลกอริทึมแบบ <strong>logarithmic</strong> ส่วนใหญ่จะหารครึ่งขนาดของ input ที่จำเป็นต้องพิจารณาในแต่ละขั้นตอน</li>
-                      <li>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก $\log_2 n$ เท่ากับจำนวนครั้งที่หาร $n$ ด้วย 2 จนกว่าจะเป็น 1</li>
-                    </ul>
-                  </li>
-                  <li>$O(\sqrt{n})$ square root algorithm
-                    <ul>
-                      <li>ช้ากว่า $O(\log n)$ แต่เร็วกว่า $O(n)$</li>
-                      <li>เป็นกรณีที่หารขนาด input $n$ ด้วย $\sqrt{n} = n/\sqrt{n}$</li>
-                    </ul>
-                  </li>
-                  <li>$O(n)$ linear algorithm
-                    <ul>
-                      <li>อัลกอริทึมแบบ <strong>linear</strong> จะวนใน input เป็นจำนวนครั้งที่แน่นอน</li>
-                      <li>ส่วนใหญ่แล้วจะเป็น time complexity ที่ค่อนข้างดี เนื่องจากปกติแล้วจะจำเป็นต้องอ่านค่าทุกค่าใน input</li>
-                    </ul>
-                  </li>
-                  <li>$O(n \log n)$
-                    <ul>
-                      <li>ส่วนใหญ่จะเกิดจากการเรียงข้อมูล</li>
-                      <li>หรือ data structure ที่ใช้ $O(\log n)$ ในแต่ละ operation</li>
-                    </ul>
-                  </li>
-                  <li>$O(n^2)$ quadratic algorithm
-                    <ul>
-                      <li>ส่วนใหญ่ใช้ลูปสองชั้น</li>
-                      <li>เช่นการพิจารณาทุกคู่ของ input</li>
-                    </ul>
-                  </li>
-                  <li>$O(n^3)$ cubic algorithm
-                    <ul>
-                      <li>ลูปสามชั้น</li>
-                    </ul>
-                  </li>
-                  <li>$O(2^n)$
-                    <ul>
-                      <li>การพิจารณาทุก subsets ของ input</li>
-                      <li>ตัวอย่างเช่น subsets ของ $\{1,2,3\}$ คือ $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$, $\{1,3\}$, $\{2,3\}$ และ $\{1,2,3\}$.</li>
-                    </ul>
-                  </li>
-                  <li>$O(n!)$
-                    <ul>
-                      <li>การพิจารณาทุกการจัดเรียงของ input</li>
-                      <li>ตัวอย่างเช่นการจัดเรียงของ $\{1,2,3\}$ คือ $(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$, $(3,1,2)$ and $(3,2,1)$.</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>การประเมินประสิทธิภาพ</h4>
-                <ul>
-                  <li>จากการคำนวณ time complexity ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement ได้</li>
-                  <li>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ $1,000,000,000$ (พันล้าน) คำสั่งต่อหนึ่งวินาที</li>
-                  <li>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ $n=10^5$</li>
-                  <li>ถ้า time complexity เป็น $O(n^2)$ อัลกอริทึมนี้จะรันทั้งหมด $(10^5)^2=10^{10}$ คำสั่ง</li>
-                  <li>ซึ่งโดยคร่าวใช้เวลาประมาณสิบวินาที ซึ่งจะช้าเกินไปสำหรับโจทย์ข้อนี้</li>
-                  <li>ในอีกทางหนึ่ง หากว่าเรารู้ขนาด input แล้ว เราสามารถเดา time complexity ของอัลกอริทึมที่ใช้แก้ปัญหาได้เช่นกัน</li>
-                  <li>ตารางต่อไปนี้บอกการประเมินที่พบบ่อยในกรณีที่ให้เวลาในการคำนวณหนึ่งวินาที</li>
-                  <li>ยกตัวอย่างเช่น หากขนาดของ input เป็น $n=10^5$ time complexity ที่ต้องการจากอัลกอริทึมก็คือ $O(n)$ หรือ $O(n \log n)$</li>
-                  <li>ด้วยความรู้นี้จะทำให้คิดอัลกอริทึมได้ง่ายขี้นจากการตัดอัลกอริทึมที่ใช้เวลานานออก</li>
-                </ul>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>input size</th>
-                      <th>required time complexity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>$n \leq 10$</td>
-                      <td>$O(n!)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 20$</td>
-                      <td>$O(2^n)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 500$</td>
-                      <td>$O(n^3)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 5000$</td>
-                      <td>$O(n^2)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n \leq 10^6$</td>
-                      <td>$O(n \log n)$ or $O(n)$</td>
-                    </tr>
-                    <tr>
-                      <td>$n$ is large</td>
-                      <td>$O(1)$ or $O(\log n)$</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <h4>ตัวแปร constant</h4>
-                <ul>
-                  <li>อย่างไรก็ตาม ควรจำว่า time complexity นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant factors</strong></li>
-                  <li>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา $O(n)$ อาจมีการคำนวณทั้งหมด $n/2$ หรือ $5n$ คำสั่ง</li>
-                  <li>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</li>
-                </ul>
-                <h4>space complexity</h4>
-                <ul>
-                  <li>ใช้ Big O Notation เป็นเครื่องมือเช่นกัน</li>
-                  <li>
-                    <p>เปลี่ยนจากการนับขนาดเวลา เป็นนับขนาด memory เช่น</p>
-                    <ul>
-                      <li>ขนาดของ array ที่เราประกาศ</li>
-                    </ul>
-                  </li>
-                </ul>
-            <div class="page-nav">
-                <a href="2004_binary-tree.html" class="prev">Binary Tree</a>
-                <a href="2006_priority-queue.html" class="next">Priority Queue</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

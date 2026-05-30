@@ -9,7 +9,10 @@
     - Max-Heap: ใน max heap นั้น key ที่ root จะมีค่าที่มากที่สุด และคุณสมบัตินี้เป็นจริงในทุก ๆ sub-trees
     - Min-Heap: ใน min heap นั้น key ที่ root จะมีค่าที่น้อยที่สุด และคุณสมบัตินี้เป็นจริงในทุก ๆ sub-trees
 
-https://www.geeksforgeeks.org/wp-content/uploads/MinHeapAndMaxHeap.png
+#figure(
+  image("../assets/diagrams/heap.svg", width: 88%),
+  caption: [Min heap and array representation. Original diagram for this guide.],
+)
 
 === คุณสมบัติ
 

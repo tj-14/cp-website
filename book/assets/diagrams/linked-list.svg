@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
+  <title id="title">Singly linked list</title>
+  <desc id="desc">Three linked-list nodes connected by next pointers.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2b5c84"/>
+    </marker>
+  </defs>
+  <rect width="720" height="170" fill="#ffffff"/>
+  <g font-family="Avenir, Arial, sans-serif" font-size="22" fill="#1f2d3a">
+    <g transform="translate(54 50)">
+      <rect width="130" height="70" rx="6" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="75" y1="0" x2="75" y2="70" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="37" y="43" text-anchor="middle">12</text>
+      <text x="103" y="43" text-anchor="middle">next</text>
+    </g>
+    <g transform="translate(292 50)">
+      <rect width="130" height="70" rx="6" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="75" y1="0" x2="75" y2="70" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="37" y="43" text-anchor="middle">99</text>
+      <text x="103" y="43" text-anchor="middle">next</text>
+    </g>
+    <g transform="translate(530 50)">
+      <rect width="130" height="70" rx="6" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="75" y1="0" x2="75" y2="70" stroke="#9fb3c8" stroke-width="2"/>
+      <text x="37" y="43" text-anchor="middle">37</text>
+      <text x="103" y="43" text-anchor="middle">null</text>
+    </g>
+  </g>
+  <path d="M184 85 H282" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+  <path d="M422 85 H520" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+</svg>

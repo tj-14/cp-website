@@ -7,502 +7,601 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html" aria-current="page">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
 
-        <div class="content">
-            <h3>Graph Algorithm</h3>
-                <h4>Search in Graph</h4>
+            <article class="content">
+<h3>Graph Algorithm</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
                 <ul>
-                  <li>
-                    <p>Depth-First Search</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/vance">https://grader.mwit.ac.th/problem/vance</a> dfs from all node</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Breadth-First Search</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/toi17_wall">https://grader.mwit.ac.th/problem/toi17_wall</a> dfs/bfs โจทย์ซับซ้อน</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Backtracking</p>
-                    <ul>
-                      <li>เป็นการเก็บคำตอบย้อนหลัง หลังจากที่เข้าเงื่อนไขบางอย่างแล้ว</li>
-                      <li><a href="https://grader.mwit.ac.th/problem/walking_bot_2">https://grader.mwit.ac.th/problem/walking_bot_2</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Branch and Bound (implementation)</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/snakeword">https://grader.mwit.ac.th/problem/snakeword</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Challenge</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/teleport">https://grader.mwit.ac.th/problem/teleport</a> ad-hoc, implementation</li>
-                    </ul>
-                  </li>
-                  <li>Eulerian</li>
-                  <li>Hamiltonian</li>
+                    <li><a href="#search-in-graph">Search in Graph</a></li>
+                    <li><a href="#colorings">Colorings</a></li>
+                    <li><a href="#connectivity-check">Connectivity check</a></li>
+                    <li><a href="#finding-cycles">Finding cycles</a></li>
+                    <li><a href="#bipartiteness-check">Bipartiteness check</a></li>
+                    <li><a href="#dijkstra-s-algorithm-implementation">Dijkstra’s Algorithm (implementation)</a></li>
+                    <li><a href="#bellman-ford">Bellman-Ford</a></li>
+                    <li><a href="#floyd-warshall-implementation">Floyd-Warshall (implementation)</a></li>
+                    <li><a href="#johnson-exist">Johnson (exist)</a></li>
+                    <li><a href="#a-search">A* Search</a></li>
+                    <li><a href="#kruskal-s-implementation">Kruskal’s (implementation)</a></li>
+                    <li><a href="#prim-s">Prim’s</a></li>
+                    <li><a href="#diameter">Diameter</a></li>
+                    <li><a href="#lowest-common-ancestor-implementation">Lowest common ancestor (implementation)</a></li>
+                    <li><a href="#euler-tour-technique">Euler Tour Technique</a></li>
+                    <li><a href="#challenge">Challenge</a></li>
+                    <li><a href="#kosaraju-s">Kosaraju’s</a></li>
+                    <li><a href="#challenge-2">Challenge</a></li>
+                    <li><a href="#เพิ่มเติม">เพิ่มเติม</a></li>
                 </ul>
-                <h3>Graph Applications</h3>
-                <h4>Colorings</h4>
-                <p>สามารถใช้การ search ต่าง ๆ เช่น dfs ในการระบายสีโหนดได้</p>
-                <p>ปัญหาการระบายสีโหนดให้โหนดที่ติดกันมีสีต่างกันเสมอเป็นปัญหาที่พบเจอได้บ่อยในสาขาคอมพิวเตอร์</p>
-                <h4>Connectivity check</h4>
-                <p>DFS แล้วเช็คว่า visit ครบทุกโหนดหรือไม่</p>
-                <h4>Finding cycles</h4>
-                <p><a href="https://visualgo.net/en/cyclefinding?slide=1">https://visualgo.net/en/cyclefinding?slide=1</a></p>
-                <p>ถ้า component มี</p>
-                <p>โหนด และไม่มี cycle เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด</p>
-                <p>เส้น และเป็นกราฟต้นไม้</p>
-                <h4>Bipartiteness check</h4>
-                <p>กราฟ bipartite เป็นกราฟเมื่อสามารถใช้สีสองสีในการระบายสีโหนดโดยทุกโหนดที่ติดกันต้องมีสีที่แตกต่างกัน</p>
-                <p><a href="https://cp-algorithms.com/graph/bipartite-check.html">https://cp-algorithms.com/graph/bipartite-check.html</a></p>
-                <h3>Weighted Shortest Path</h3>
-                <p><a href="https://visualgo.net/en/sssp?slide=1">https://visualgo.net/en/sssp?slide=1</a></p>
-                <h4>Dijkstra’s Algorithm (implementation)</h4>
-                <p><a href="https://cp-algorithms.com/graph/dijkstra.html">https://cp-algorithms.com/graph/dijkstra.html</a></p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> INF <span style="color: #d73948">=</span> <span style="color: #b60157">1000000000</span>;<br>vector&lt;vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dijkstra</span>(<span style="color: #d73948">int</span> s, vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span> d, vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span> p) {<br>    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> adj.<span style="color: #4b69c6">size</span>();<br>    d.<span style="color: #4b69c6">assign</span>(n, INF);<br>    p.<span style="color: #4b69c6">assign</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>    vector&lt;<span style="color: #d73948">bool</span>> <span style="color: #4b69c6">u</span>(n, <span style="color: #d73948">false</span>);<br><br>    d[s] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>        <span style="color: #d73948">int</span> v <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>;<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> n; j<span style="color: #d73948">++</span>) {<br>            <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>u[j] <span style="color: #d73948">&amp;&amp;</span> (v <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span> <span style="color: #d73948">||</span> d[j] <span style="color: #d73948">&lt;</span> d[v]))<br>                v <span style="color: #d73948">=</span> j;<br>        }<br><br>        <span style="color: #d73948">if</span> (d[v] <span style="color: #d73948">==</span> INF)<br>            <span style="color: #d73948">break</span>;<br><br>        u[v] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> edge <span style="color: #d73948">:</span> adj[v]) {<br>            <span style="color: #d73948">int</span> to <span style="color: #d73948">=</span> edge.first;<br>            <span style="color: #d73948">int</span> len <span style="color: #d73948">=</span> edge.second;<br><br>            <span style="color: #d73948">if</span> (d[v] <span style="color: #d73948">+</span> len <span style="color: #d73948">&lt;</span> d[to]) {<br>                d[to] <span style="color: #d73948">=</span> d[v] <span style="color: #d73948">+</span> len;<br>                p[to] <span style="color: #d73948">=</span> v;<br>            }<br>        }<br>    }<br>}</code></pre>
-                <ul>
-                  <li>
-                    <p><a href="https://grader.mwit.ac.th/problem/turboprogramming">https://grader.mwit.ac.th/problem/turboprogramming</a> dijkstra ตรงๆ</p>
-                    <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit Mok MWIT29</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">ii</span> pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br>vector&lt;ii> adj[<span style="color: #b60157">100100</span>];<br><span style="color: #d73948">int</span> dist[<span style="color: #b60157">100100</span>];<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> N, M, Q;<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>N, <span style="color: #d73948">&amp;</span>M, <span style="color: #d73948">&amp;</span>Q);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>, u, v, w; i <span style="color: #d73948">&lt;=</span> M; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>u, <span style="color: #d73948">&amp;</span>v, <span style="color: #d73948">&amp;</span>w);<br>    adj[u].<span style="color: #4b69c6">push_back</span>(<span style="color: #4b69c6">make_pair</span>(v, w));<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> adj[v].push_back(make_pair(u, w));</span><br>  }<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> N; i<span style="color: #d73948">++</span>)<br>    dist[i] <span style="color: #d73948">=</span> INT_MAX;<br>  priority_queue<span style="color: #d73948">&lt;</span>ii, vector&lt;ii>, greater&lt;ii><span style="color: #d73948">></span> pq;<br>  dist[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  pq.<span style="color: #4b69c6">push</span>(<span style="color: #4b69c6">make_pair</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">1</span>));<br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>pq.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> d <span style="color: #d73948">=</span> pq.<span style="color: #4b69c6">top</span>().first;<br>    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> pq.<span style="color: #4b69c6">top</span>().second;<br>    pq.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> adj[n]) {<br>      <span style="color: #d73948">if</span> (dist[x.first] <span style="color: #d73948">></span> d <span style="color: #d73948">+</span> x.second) {<br>        dist[x.first] <span style="color: #d73948">=</span> d <span style="color: #d73948">+</span> x.second;<br>        pq.<span style="color: #4b69c6">push</span>(<span style="color: #4b69c6">make_pair</span>(d <span style="color: #d73948">+</span> x.second, x.first));<br>      }<br>    }<br>  }<br>  <span style="color: #d73948">while</span> (Q<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> a;<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>a);<br>    <span style="color: #d73948">if</span> (dist[a] <span style="color: #d73948">==</span> INT_MAX)<br>      <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">-1</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>    <span style="color: #d73948">else</span><br>      <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, dist[a]);<br>  }<br>}</code></pre>
-                  </li>
-                  <li><a href="https://grader.mwit.ac.th/problem/town">https://grader.mwit.ac.th/problem/town</a> dijkstra ไม่ตรงมาก</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/followpeatt">https://grader.mwit.ac.th/problem/followpeatt</a> dijkstra แบบมีเงื่อนไข</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi14_logistics">https://grader.mwit.ac.th/problem/toi14_logistics</a> dijkstra ซับซ้อนขึ้น</li>
-                </ul>
-                <h4>Bellman-Ford</h4>
-                <ul>
-                  <li>Negative cycles</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> n, m, s, e;<br>vector&lt;pair&lt;<span style="color: #d73948">int</span>, pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br>vector&lt;<span style="color: #d73948">int</span>> dist;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m <span style="color: #d73948">>></span> s <span style="color: #d73948">>></span> e;<br><br>  adj.<span style="color: #4b69c6">resize</span>(m);<br>  dist.<span style="color: #4b69c6">assign</span>(n, INT_MAX);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    adj[i] <span style="color: #d73948">=</span> {d, {a, b}};<br>  }<br><br>  dist[<span style="color: #b60157">0</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> m; j<span style="color: #d73948">++</span>) {<br>      <span style="color: #d73948">int</span> a <span style="color: #d73948">=</span> adj[i].second.first, b <span style="color: #d73948">=</span> adj[i].second.second, d <span style="color: #d73948">=</span> adj[i].first;<br>      <span style="color: #d73948">if</span> (dist[a] <span style="color: #d73948">!=</span> INT_MAX <span style="color: #d73948">and</span> dist[a] <span style="color: #d73948">+</span> d <span style="color: #d73948">&lt;</span> dist[b])<br>        dist[b] <span style="color: #d73948">=</span> dist[a] <span style="color: #d73948">+</span> d;<br>    }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> dist[e];<br>}</code></pre>
-                <h4>Floyd-Warshall (implementation)</h4>
-                <p><a href="https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html">https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html</a></p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> k <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; k <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>k) {<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>i) {<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>j) {<br>            d[i][j] <span style="color: #d73948">=</span> <span style="color: #4b69c6">min</span>(d[i][j], d[i][k] <span style="color: #d73948">+</span> d[k][j]); <br>        }<br>    }<br>}</code></pre>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi17_1221">https://grader.mwit.ac.th/problem/toi17_1221</a> all-pair</li>
-                </ul>
-                <h4>Johnson (exist)</h4>
-                <h4>A* Search</h4>
-                <p><a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">https://www.redblobgames.com/pathfinding/a-star/introduction.html</a></p>
-                <h3>Minimum Spanning Tree</h3>
-                <p><a href="https://visualgo.net/en/mst?slide=1">https://visualgo.net/en/mst?slide=1</a></p>
-                <h4>Kruskal’s (implementation)</h4>
-                <ul>
-                  <li>Union-find</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">endl</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">MOD</span> <span style="color: #b60157">1e9</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">pii</span> pair&lt;<span style="color: #d73948">int</span>, pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>><br><br><span style="color: #d73948">int</span> n, m;<br>vector&lt;<span style="color: #d73948">int</span>> pa;<br>priority_queue&lt;pii, vector&lt;pii>, greater&lt;pii>> q;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">root</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">if</span> (pa[x] <span style="color: #d73948">==</span> x)<br>    <span style="color: #d73948">return</span> x;<br>  <span style="color: #d73948">else</span><br>    <span style="color: #d73948">return</span> pa[x] <span style="color: #d73948">=</span> <span style="color: #4b69c6">root</span>(pa[x]);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">kruskal</span>() {<br>  <span style="color: #d73948">int</span> ans <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><br>  pa.<span style="color: #4b69c6">resize</span>(n);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>)<br>    pa[i] <span style="color: #d73948">=</span> i;<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>q.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> w <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().first, x <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second.first, y <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second.second;<br>    q.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (<span style="color: #4b69c6">root</span>(x) <span style="color: #d73948">==</span> <span style="color: #4b69c6">root</span>(y))<br>      <span style="color: #d73948">continue</span>;<br>    ans <span style="color: #d73948">+=</span> w;<br>    pa[<span style="color: #4b69c6">root</span>(x)] <span style="color: #d73948">=</span> pa[<span style="color: #4b69c6">root</span>(y)];<br>  }<br><br>  <span style="color: #d73948">return</span> ans;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    q.<span style="color: #4b69c6">push</span>({d, {a, b}});<br>  }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">kruskal</span>();<br>}</code></pre>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/mst">https://grader.mwit.ac.th/problem/mst</a> ตรงสุด ๆ</li>
-                </ul>
-                <h4>Prim’s</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">endl</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">MOD</span> <span style="color: #b60157">1e9</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span><br><br><span style="color: #d73948">int</span> n, m, ans;<br>vector&lt;<span style="color: #d73948">bool</span>> visited;<br>vector&lt;vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br>priority_queue&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>, vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>, greater&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>><br>    q;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  adj.<span style="color: #4b69c6">resize</span>(n);<br>  visited.<span style="color: #4b69c6">resize</span>(n);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    adj[a].<span style="color: #4b69c6">push_back</span>({d, b});<br>    adj[b].<span style="color: #4b69c6">push_back</span>({d, a});<br>  }<br><br>  q.<span style="color: #4b69c6">push</span>({<span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>});<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>q.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> w <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().first, p <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second;<br>    q.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (visited[p])<br>      <span style="color: #d73948">continue</span>;<br>    visited[p] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>    ans <span style="color: #d73948">+=</span> w;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> adj[p].<span style="color: #4b69c6">size</span>(); i<span style="color: #d73948">++</span>)<br>      <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[adj[p][i].second])<br>        q.<span style="color: #4b69c6">push</span>(adj[p][i]);<br>  }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> ans;<br>}</code></pre>
-                <h3>Tree algorithms</h3>
-                <h4>Diameter</h4>
-                <ul>
-                  <li>
-                    <p>Algorithm 1</p>
-                    <ul>
-                      <li>ดึง node มั่ว ๆ มาเป็น root</li>
-                      <li>หา path ยาวสุดของแต่ละลูก แล้วหาเส้นผ่านศูนย์กลาง</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Algorithm 2</p>
-                    <ul>
-                      <li>เลือกโหนดมั่ว ๆ เป็นโหนด a</li>
-                      <li>หาโหนดที่อยู่ไกลที่สุดจากโหนด a เป็นโหนด b</li>
-                      <li>หาโหนดที่อยู่ไกลที่สุดจากโหนด b เป็นโหนด c</li>
-                      <li>จะได้เส้นผ่านศูนย์กลางคือเส้นทางจาก b ไป c</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Lowest common ancestor (implementation)</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> N <span style="color: #d73948">=</span> <span style="color: #b60157">1e5</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br><br><span style="color: #d73948">int</span> n, q;<br><span style="color: #d73948">int</span> dp[<span style="color: #b60157">21</span>][N], lv[N];<br>vector&lt;<span style="color: #d73948">int</span>> adj[N];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> u, <span style="color: #d73948">int</span> p, <span style="color: #d73948">int</span> l) {<br>  dp[<span style="color: #b60157">0</span>][u] <span style="color: #d73948">=</span> p, lv[u] <span style="color: #d73948">=</span> l;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> adj[u])<br>    <span style="color: #4b69c6">dfs</span>(v, u, l <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">lca</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">if</span> (lv[a] <span style="color: #d73948">&lt;</span> lv[b])<br>    <span style="color: #4b69c6">swap</span>(a, b);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">20</span>; i <span style="color: #d73948">>=</span> <span style="color: #b60157">0</span>; i<span style="color: #d73948">--</span>)<br>    <span style="color: #d73948">if</span> (lv[dp[i][a]] <span style="color: #d73948">>=</span> lv[b])<br>      a <span style="color: #d73948">=</span> dp[i][a];<br>  <span style="color: #d73948">if</span> (a <span style="color: #d73948">==</span> b)<br>    <span style="color: #d73948">return</span> a;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">20</span>; i <span style="color: #d73948">>=</span> <span style="color: #b60157">0</span>; i<span style="color: #d73948">--</span>)<br>    <span style="color: #d73948">if</span> (dp[i][a] <span style="color: #d73948">!=</span> dp[i][b])<br>      a <span style="color: #d73948">=</span> dp[i][a], b <span style="color: #d73948">=</span> dp[i][b];<br>  <span style="color: #d73948">return</span> dp[<span style="color: #b60157">0</span>][a];<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    adj[a].<span style="color: #4b69c6">push_back</span>(b);<br>  }<br><br>  <span style="color: #4b69c6">dfs</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>, <span style="color: #b60157">1</span>);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">20</span>; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>)<br>      dp[i][j] <span style="color: #d73948">=</span> dp[i <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>][dp[i <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>][j]];<br><br>  cin <span style="color: #d73948">>></span> q;<br><br>  <span style="color: #d73948">while</span> (q<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">lca</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span>;<br>  }<br>}</code></pre>
-                <h4>Euler Tour Technique</h4>
-                <p><a href="https://usaco.guide/gold/tree-euler?lang=cpp">https://usaco.guide/gold/tree-euler?lang=cpp</a> <a href="https://cses.fi/problemset/task/1137">https://cses.fi/problemset/task/1137</a></p>
-                <h4>Challenge</h4>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi12_weakpoint">https://grader.mwit.ac.th/problem/toi12_weakpoint</a> one-cycle, dp?</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></li>
-                </ul>
-                <h3>Strong connectivity</h3>
-                <p><a href="https://cp-algorithms.com/graph/strongly-connected-components.html">https://cp-algorithms.com/graph/strongly-connected-components.html</a></p>
-                <h4>Kosaraju’s</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> N <span style="color: #d73948">=</span> <span style="color: #b60157">1e5</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br><br><span style="color: #d73948">int</span> n, m;<br>vector&lt;<span style="color: #d73948">int</span>> adj[N], rev[N];<br>stack&lt;<span style="color: #d73948">int</span>> st;<br><span style="color: #d73948">bool</span> visited[N];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> u) {<br>  <span style="color: #d73948">if</span> (visited[u])<br>    <span style="color: #d73948">return</span>;<br>  visited[u] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> adj[u])<br>    <span style="color: #4b69c6">dfs</span>(v);<br>  st.<span style="color: #4b69c6">push</span>(u);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">scc</span>(<span style="color: #d73948">int</span> u) {<br>  <span style="color: #d73948">if</span> (visited[u])<br>    <span style="color: #d73948">return</span>;<br>  visited[u] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> u <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #198810"> </span><span style="color: #198810">'</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> rev[u])<br>    <span style="color: #4b69c6">scc</span>(v);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    adj[a].<span style="color: #4b69c6">push_back</span>(b);<br>    rev[b].<span style="color: #4b69c6">push_back</span>(a);<br>  }<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[i])<br>      <span style="color: #4b69c6">dfs</span>(i);<br><br>  <span style="color: #4b69c6">memset</span>(visited, <span style="color: #b60157">0</span>, <span style="color: #d73948">sizeof</span> visited);<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>st.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> u <span style="color: #d73948">=</span> st.<span style="color: #4b69c6">top</span>();<br>    st.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (visited[u])<br>      <span style="color: #d73948">continue</span>;<br>    <span style="color: #4b69c6">scc</span>(u);<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span>;<br>  }<br>}</code></pre>
-                <h4>Challenge</h4>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/walk_around">https://grader.mwit.ac.th/problem/walk_around</a> cycle, union find, reverse query</li>
-                </ul>
-                <h4>เพิ่มเติม</h4>
-                <ul>
-                  <li>ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11)<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="http://tcpc.me/2019/08/19/state-graph-tutorial.html">http://tcpc.me/2019/08/19/state-graph-tutorial.html</a></li>
-                  </ol>
-                </section>
+            </nav>
+
+<h4 id="search-in-graph">Search in Graph</h4>
+<ul>
+<li><p>Depth-First Search</p>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/vance">https://grader.mwit.ac.th/problem/vance</a>
+dfs from all node</p></li>
+</ul></li>
+<li><p>Breadth-First Search</p>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/toi17_wall">https://grader.mwit.ac.th/problem/toi17_wall</a>
+dfs/bfs โจทย์ซับซ้อน</p></li>
+</ul></li>
+<li><p>Backtracking</p>
+<ul>
+<li><p>เป็นการเก็บคำตอบย้อนหลัง หลังจากที่เข้าเงื่อนไขบางอย่างแล้ว</p></li>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/walking_bot_2">https://grader.mwit.ac.th/problem/walking_bot_2</a></p></li>
+</ul></li>
+<li><p>Branch and Bound (implementation)</p>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/snakeword">https://grader.mwit.ac.th/problem/snakeword</a></p></li>
+</ul></li>
+<li><p>Challenge</p>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/teleport">https://grader.mwit.ac.th/problem/teleport</a>
+ad-hoc, implementation</p></li>
+</ul></li>
+<li><p>Eulerian</p></li>
+<li><p>Hamiltonian</p></li>
+</ul>
+<h3>Graph Applications</h3>
+<h4 id="colorings">Colorings</h4>
+<p>สามารถใช้การ search ต่าง ๆ เช่น dfs ในการระบายสีโหนดได้</p>
+<p>ปัญหาการระบายสีโหนดให้โหนดที่ติดกันมีสีต่างกันเสมอเป็นปัญหาที่พบเจอได้บ่อยในสาขาคอมพิวเตอร์</p>
+<h4 id="connectivity-check">Connectivity check</h4>
+<p>DFS แล้วเช็คว่า visit ครบทุกโหนดหรือไม่</p>
+<h4 id="finding-cycles">Finding cycles</h4>
+<p><a class="resource-card" href="https://visualgo.net/en/cyclefinding?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
+<p>ถ้า component มี <span class="math inline"><em>c</em></span> โหนด
+และไม่มี cycle เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด <span
+class="math inline"><em>c</em> − 1</span> เส้น และเป็นกราฟต้นไม้</p>
+<h4 id="bipartiteness-check">Bipartiteness check</h4>
+<p>กราฟ bipartite
+เป็นกราฟเมื่อสามารถใช้สีสองสีในการระบายสีโหนดโดยทุกโหนดที่ติดกันต้องมีสีที่แตกต่างกัน</p>
+<p><a
+href="https://cp-algorithms.com/graph/bipartite-check.html">https://cp-algorithms.com/graph/bipartite-check.html</a></p>
+<h3>Weighted Shortest Path</h3>
+<p><a class="resource-card" href="https://visualgo.net/en/sssp?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
+<h4 id="dijkstra-s-algorithm-implementation">Dijkstra’s Algorithm (implementation)</h4>
+<p><a
+href="https://cp-algorithms.com/graph/dijkstra.html">https://cp-algorithms.com/graph/dijkstra.html</a></p>
+<pre class="cpp"><code>const int INF = 1000000000;
+vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj;
+
+void dijkstra(int s, vector&lt;int&gt; &amp; d, vector&lt;int&gt; &amp; p) {
+    int n = adj.size();
+    d.assign(n, INF);
+    p.assign(n, -1);
+    vector&lt;bool&gt; u(n, false);
+
+    d[s] = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int v = -1;
+        for (int j = 0; j &lt; n; j++) {
+            if (!u[j] &amp;&amp; (v == -1 || d[j] &lt; d[v]))
+                v = j;
+        }
+
+        if (d[v] == INF)
+            break;
+
+        u[v] = true;
+        for (auto edge : adj[v]) {
+            int to = edge.first;
+            int len = edge.second;
+
+            if (d[v] + len &lt; d[to]) {
+                d[to] = d[v] + len;
+                p[to] = v;
+            }
+        }
+    }
+}</code></pre>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/turboprogramming">https://grader.mwit.ac.th/problem/turboprogramming</a>
+dijkstra ตรงๆ</p>
+<pre class="cpp"><code>// credit Mok MWIT29
+#include &lt;bits/stdc++.h&gt;
+#define ii pair&lt;int, int&gt;
+using namespace std;
+vector&lt;ii&gt; adj[100100];
+int dist[100100];
+int main() {
+  int N, M, Q;
+  scanf(&quot;%d %d %d&quot;, &amp;N, &amp;M, &amp;Q);
+  for (int i = 1, u, v, w; i &lt;= M; i++) {
+    scanf(&quot;%d %d %d&quot;, &amp;u, &amp;v, &amp;w);
+    adj[u].push_back(make_pair(v, w));
+    // adj[v].push_back(make_pair(u, w));
+  }
+  for (int i = 1; i &lt;= N; i++)
+    dist[i] = INT_MAX;
+  priority_queue&lt;ii, vector&lt;ii&gt;, greater&lt;ii&gt;&gt; pq;
+  dist[1] = 0;
+  pq.push(make_pair(0, 1));
+  while (!pq.empty()) {
+    int d = pq.top().first;
+    int n = pq.top().second;
+    pq.pop();
+    for (auto x : adj[n]) {
+      if (dist[x.first] &gt; d + x.second) {
+        dist[x.first] = d + x.second;
+        pq.push(make_pair(d + x.second, x.first));
+      }
+    }
+  }
+  while (Q--) {
+    int a;
+    scanf(&quot;%d&quot;, &amp;a);
+    if (dist[a] == INT_MAX)
+      printf(&quot;-1\n&quot;);
+    else
+      printf(&quot;%d\n&quot;, dist[a]);
+  }
+}</code></pre></li>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/town">https://grader.mwit.ac.th/problem/town</a>
+dijkstra ไม่ตรงมาก</p></li>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/followpeatt">https://grader.mwit.ac.th/problem/followpeatt</a>
+dijkstra แบบมีเงื่อนไข</p></li>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/toi14_logistics">https://grader.mwit.ac.th/problem/toi14_logistics</a>
+dijkstra ซับซ้อนขึ้น</p></li>
+</ul>
+<h4 id="bellman-ford">Bellman-Ford</h4>
+<ul>
+<li><p>Negative cycles</p></li>
+</ul>
+<pre class="cpp"><code>// credit from https://github.com/Autoratch/practice
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n, m, s, e;
+vector&lt;pair&lt;int, pair&lt;int, int&gt;&gt;&gt; adj;
+vector&lt;int&gt; dist;
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; e;
+
+  adj.resize(m);
+  dist.assign(n, INT_MAX);
+
+  for (int i = 0; i &lt; m; i++) {
+    int a, b, d;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; d;
+    adj[i] = {d, {a, b}};
+  }
+
+  dist[0] = 0;
+  for (int i = 0; i &lt; n - 1; i++)
+    for (int j = 0; j &lt; m; j++) {
+      int a = adj[i].second.first, b = adj[i].second.second, d = adj[i].first;
+      if (dist[a] != INT_MAX and dist[a] + d &lt; dist[b])
+        dist[b] = dist[a] + d;
+    }
+
+  cout &lt;&lt; dist[e];
+}</code></pre>
+<h4 id="floyd-warshall-implementation">Floyd-Warshall (implementation)</h4>
+<p><a
+href="https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html">https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html</a></p>
+<pre class="cpp"><code>for (int k = 0; k &lt; n; ++k) {
+    for (int i = 0; i &lt; n; ++i) {
+        for (int j = 0; j &lt; n; ++j) {
+            d[i][j] = min(d[i][j], d[i][k] + d[k][j]); 
+        }
+    }
+}</code></pre>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/toi17_1221">https://grader.mwit.ac.th/problem/toi17_1221</a>
+all-pair</p></li>
+</ul>
+<h4 id="johnson-exist">Johnson (exist)</h4>
+<h4 id="a-search">A* Search</h4>
+<p><a class="resource-card" href="https://www.redblobgames.com/pathfinding/a-star/introduction.html" target="_blank" rel="noopener"><strong>Red Blob Games interactive guide</strong><span>www.redblobgames.com</span></a></p>
+<h3>Minimum Spanning Tree</h3>
+<p><a class="resource-card" href="https://visualgo.net/en/mst?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
+<h4 id="kruskal-s-implementation">Kruskal’s (implementation)</h4>
+<ul>
+<li><p>Union-find</p></li>
+</ul>
+<pre class="cpp"><code>// credit from https://github.com/Autoratch/practice
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define endl &#39;\n&#39;
+#define MOD 1e9 + 7
+#define pii pair&lt;int, pair&lt;int, int&gt;&gt;
+
+int n, m;
+vector&lt;int&gt; pa;
+priority_queue&lt;pii, vector&lt;pii&gt;, greater&lt;pii&gt;&gt; q;
+
+int root(int x) {
+  if (pa[x] == x)
+    return x;
+  else
+    return pa[x] = root(pa[x]);
+}
+
+int kruskal() {
+  int ans = 0;
+
+  pa.resize(n);
+  for (int i = 0; i &lt; n; i++)
+    pa[i] = i;
+
+  while (!q.empty()) {
+    int w = q.top().first, x = q.top().second.first, y = q.top().second.second;
+    q.pop();
+    if (root(x) == root(y))
+      continue;
+    ans += w;
+    pa[root(x)] = pa[root(y)];
+  }
+
+  return ans;
+}
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin &gt;&gt; n &gt;&gt; m;
+
+  for (int i = 0; i &lt; m; i++) {
+    int a, b, d;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; d;
+    q.push({d, {a, b}});
+  }
+
+  cout &lt;&lt; kruskal();
+}</code></pre>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/mst">https://grader.mwit.ac.th/problem/mst</a>
+ตรงสุด ๆ</p></li>
+</ul>
+<h4 id="prim-s">Prim’s</h4>
+<pre class="cpp"><code>// credit from https://github.com/Autoratch/practice
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define endl &#39;\n&#39;
+#define MOD 1e9 + 7
+
+int n, m, ans;
+vector&lt;bool&gt; visited;
+vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj;
+priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt;
+    q;
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin &gt;&gt; n &gt;&gt; m;
+
+  adj.resize(n);
+  visited.resize(n);
+
+  for (int i = 0; i &lt; m; i++) {
+    int a, b, d;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; d;
+    adj[a].push_back({d, b});
+    adj[b].push_back({d, a});
+  }
+
+  q.push({0, 0});
+
+  while (!q.empty()) {
+    int w = q.top().first, p = q.top().second;
+    q.pop();
+    if (visited[p])
+      continue;
+    visited[p] = true;
+    ans += w;
+    for (int i = 0; i &lt; adj[p].size(); i++)
+      if (!visited[adj[p][i].second])
+        q.push(adj[p][i]);
+  }
+
+  cout &lt;&lt; ans;
+}</code></pre>
+<h3>Tree algorithms</h3>
+<h4 id="diameter">Diameter</h4>
+<ul>
+<li><p>Algorithm 1</p>
+<ul>
+<li><p>ดึง node มั่ว ๆ มาเป็น root</p></li>
+<li><p>หา path ยาวสุดของแต่ละลูก แล้วหาเส้นผ่านศูนย์กลาง</p></li>
+</ul></li>
+</ul>
+<ul>
+<li><p>Algorithm 2</p>
+<ul>
+<li><p>เลือกโหนดมั่ว ๆ เป็นโหนด a</p></li>
+<li><p>หาโหนดที่อยู่ไกลที่สุดจากโหนด a เป็นโหนด b</p></li>
+<li><p>หาโหนดที่อยู่ไกลที่สุดจากโหนด b เป็นโหนด c</p></li>
+<li><p>จะได้เส้นผ่านศูนย์กลางคือเส้นทางจาก b ไป c</p></li>
+</ul></li>
+</ul>
+<h4 id="lowest-common-ancestor-implementation">Lowest common ancestor (implementation)</h4>
+<pre class="cpp"><code>// credit from https://github.com/Autoratch/practice
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N = 1e5 + 1;
+
+int n, q;
+int dp[21][N], lv[N];
+vector&lt;int&gt; adj[N];
+
+void dfs(int u, int p, int l) {
+  dp[0][u] = p, lv[u] = l;
+  for (int v : adj[u])
+    dfs(v, u, l + 1);
+}
+
+int lca(int a, int b) {
+  if (lv[a] &lt; lv[b])
+    swap(a, b);
+  for (int i = 20; i &gt;= 0; i--)
+    if (lv[dp[i][a]] &gt;= lv[b])
+      a = dp[i][a];
+  if (a == b)
+    return a;
+  for (int i = 20; i &gt;= 0; i--)
+    if (dp[i][a] != dp[i][b])
+      a = dp[i][a], b = dp[i][b];
+  return dp[0][a];
+}
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin &gt;&gt; n;
+
+  for (int i = 0; i &lt; n - 1; i++) {
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    adj[a].push_back(b);
+  }
+
+  dfs(0, 0, 1);
+
+  for (int i = 1; i &lt;= 20; i++)
+    for (int j = 1; j &lt;= n; j++)
+      dp[i][j] = dp[i - 1][dp[i - 1][j]];
+
+  cin &gt;&gt; q;
+
+  while (q--) {
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    cout &lt;&lt; lca(a, b) &lt;&lt; &#39;\n&#39;;
+  }
+}</code></pre>
+<h4 id="euler-tour-technique">Euler Tour Technique</h4>
+<p><a
+href="https://usaco.guide/gold/tree-euler?lang=cpp">https://usaco.guide/gold/tree-euler?lang=cpp</a>
+<a
+href="https://cses.fi/problemset/task/1137">https://cses.fi/problemset/task/1137</a></p>
+<h4 id="challenge">Challenge</h4>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/toi12_weakpoint">https://grader.mwit.ac.th/problem/toi12_weakpoint</a>
+one-cycle, dp?</p></li>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></p></li>
+</ul>
+<h3>Strong connectivity</h3>
+<p><a
+href="https://cp-algorithms.com/graph/strongly-connected-components.html">https://cp-algorithms.com/graph/strongly-connected-components.html</a></p>
+<h4 id="kosaraju-s">Kosaraju’s</h4>
+<pre class="cpp"><code>// credit from https://github.com/Autoratch/practice
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N = 1e5 + 1;
+
+int n, m;
+vector&lt;int&gt; adj[N], rev[N];
+stack&lt;int&gt; st;
+bool visited[N];
+
+void dfs(int u) {
+  if (visited[u])
+    return;
+  visited[u] = true;
+  for (int v : adj[u])
+    dfs(v);
+  st.push(u);
+}
+
+void scc(int u) {
+  if (visited[u])
+    return;
+  visited[u] = true;
+  cout &lt;&lt; u &lt;&lt; &#39; &#39;;
+  for (int v : rev[u])
+    scc(v);
+}
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin &gt;&gt; n &gt;&gt; m;
+
+  for (int i = 0; i &lt; m; i++) {
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    adj[a].push_back(b);
+    rev[b].push_back(a);
+  }
+
+  for (int i = 1; i &lt;= n; i++)
+    if (!visited[i])
+      dfs(i);
+
+  memset(visited, 0, sizeof visited);
+
+  while (!st.empty()) {
+    int u = st.top();
+    st.pop();
+    if (visited[u])
+      continue;
+    scc(u);
+    cout &lt;&lt; &#39;\n&#39;;
+  }
+}</code></pre>
+<h4 id="challenge-2">Challenge</h4>
+<ul>
+<li><p><a
+href="https://grader.mwit.ac.th/problem/walk_around">https://grader.mwit.ac.th/problem/walk_around</a>
+cycle, union find, reverse query</p></li>
+</ul>
+<h4 id="เพิ่มเติม">เพิ่มเติม</h4>
+<ul>
+<li><p>ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11) <a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p></li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="http://tcpc.me/2019/08/19/state-graph-tutorial.html">http://tcpc.me/2019/08/19/state-graph-tutorial.html</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
             <div class="page-nav">
                 <a href="3005_divide-conquer.html" class="prev">Divide and Conquer</a>
                 <a href="3101_topo-sort.html" class="next">Topological Sort</a>
             </div>
-        </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Graph Algorithm</h3>
-                <h4>Search in Graph</h4>
-                <ul>
-                  <li>
-                    <p>Depth-First Search</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/vance">https://grader.mwit.ac.th/problem/vance</a> dfs from all node</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Breadth-First Search</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/toi17_wall">https://grader.mwit.ac.th/problem/toi17_wall</a> dfs/bfs โจทย์ซับซ้อน</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Backtracking</p>
-                    <ul>
-                      <li>เป็นการเก็บคำตอบย้อนหลัง หลังจากที่เข้าเงื่อนไขบางอย่างแล้ว</li>
-                      <li><a href="https://grader.mwit.ac.th/problem/walking_bot_2">https://grader.mwit.ac.th/problem/walking_bot_2</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Branch and Bound (implementation)</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/snakeword">https://grader.mwit.ac.th/problem/snakeword</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Challenge</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/teleport">https://grader.mwit.ac.th/problem/teleport</a> ad-hoc, implementation</li>
-                    </ul>
-                  </li>
-                  <li>Eulerian</li>
-                  <li>Hamiltonian</li>
-                </ul>
-                <h3>Graph Applications</h3>
-                <h4>Colorings</h4>
-                <p>สามารถใช้การ search ต่าง ๆ เช่น dfs ในการระบายสีโหนดได้</p>
-                <p>ปัญหาการระบายสีโหนดให้โหนดที่ติดกันมีสีต่างกันเสมอเป็นปัญหาที่พบเจอได้บ่อยในสาขาคอมพิวเตอร์</p>
-                <h4>Connectivity check</h4>
-                <p>DFS แล้วเช็คว่า visit ครบทุกโหนดหรือไม่</p>
-                <h4>Finding cycles</h4>
-                <p><a href="https://visualgo.net/en/cyclefinding?slide=1">https://visualgo.net/en/cyclefinding?slide=1</a></p>
-                <p>ถ้า component มี</p>
-                <p>โหนด และไม่มี cycle เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด</p>
-                <p>เส้น และเป็นกราฟต้นไม้</p>
-                <h4>Bipartiteness check</h4>
-                <p>กราฟ bipartite เป็นกราฟเมื่อสามารถใช้สีสองสีในการระบายสีโหนดโดยทุกโหนดที่ติดกันต้องมีสีที่แตกต่างกัน</p>
-                <p><a href="https://cp-algorithms.com/graph/bipartite-check.html">https://cp-algorithms.com/graph/bipartite-check.html</a></p>
-                <h3>Weighted Shortest Path</h3>
-                <p><a href="https://visualgo.net/en/sssp?slide=1">https://visualgo.net/en/sssp?slide=1</a></p>
-                <h4>Dijkstra’s Algorithm (implementation)</h4>
-                <p><a href="https://cp-algorithms.com/graph/dijkstra.html">https://cp-algorithms.com/graph/dijkstra.html</a></p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> INF <span style="color: #d73948">=</span> <span style="color: #b60157">1000000000</span>;<br>vector&lt;vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dijkstra</span>(<span style="color: #d73948">int</span> s, vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span> d, vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span> p) {<br>    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> adj.<span style="color: #4b69c6">size</span>();<br>    d.<span style="color: #4b69c6">assign</span>(n, INF);<br>    p.<span style="color: #4b69c6">assign</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>    vector&lt;<span style="color: #d73948">bool</span>> <span style="color: #4b69c6">u</span>(n, <span style="color: #d73948">false</span>);<br><br>    d[s] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>        <span style="color: #d73948">int</span> v <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>;<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> n; j<span style="color: #d73948">++</span>) {<br>            <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>u[j] <span style="color: #d73948">&amp;&amp;</span> (v <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span> <span style="color: #d73948">||</span> d[j] <span style="color: #d73948">&lt;</span> d[v]))<br>                v <span style="color: #d73948">=</span> j;<br>        }<br><br>        <span style="color: #d73948">if</span> (d[v] <span style="color: #d73948">==</span> INF)<br>            <span style="color: #d73948">break</span>;<br><br>        u[v] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> edge <span style="color: #d73948">:</span> adj[v]) {<br>            <span style="color: #d73948">int</span> to <span style="color: #d73948">=</span> edge.first;<br>            <span style="color: #d73948">int</span> len <span style="color: #d73948">=</span> edge.second;<br><br>            <span style="color: #d73948">if</span> (d[v] <span style="color: #d73948">+</span> len <span style="color: #d73948">&lt;</span> d[to]) {<br>                d[to] <span style="color: #d73948">=</span> d[v] <span style="color: #d73948">+</span> len;<br>                p[to] <span style="color: #d73948">=</span> v;<br>            }<br>        }<br>    }<br>}</code></pre>
-                <ul>
-                  <li>
-                    <p><a href="https://grader.mwit.ac.th/problem/turboprogramming">https://grader.mwit.ac.th/problem/turboprogramming</a> dijkstra ตรงๆ</p>
-                    <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit Mok MWIT29</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">ii</span> pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br>vector&lt;ii> adj[<span style="color: #b60157">100100</span>];<br><span style="color: #d73948">int</span> dist[<span style="color: #b60157">100100</span>];<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> N, M, Q;<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>N, <span style="color: #d73948">&amp;</span>M, <span style="color: #d73948">&amp;</span>Q);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>, u, v, w; i <span style="color: #d73948">&lt;=</span> M; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>u, <span style="color: #d73948">&amp;</span>v, <span style="color: #d73948">&amp;</span>w);<br>    adj[u].<span style="color: #4b69c6">push_back</span>(<span style="color: #4b69c6">make_pair</span>(v, w));<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> adj[v].push_back(make_pair(u, w));</span><br>  }<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> N; i<span style="color: #d73948">++</span>)<br>    dist[i] <span style="color: #d73948">=</span> INT_MAX;<br>  priority_queue<span style="color: #d73948">&lt;</span>ii, vector&lt;ii>, greater&lt;ii><span style="color: #d73948">></span> pq;<br>  dist[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  pq.<span style="color: #4b69c6">push</span>(<span style="color: #4b69c6">make_pair</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">1</span>));<br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>pq.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> d <span style="color: #d73948">=</span> pq.<span style="color: #4b69c6">top</span>().first;<br>    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> pq.<span style="color: #4b69c6">top</span>().second;<br>    pq.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> adj[n]) {<br>      <span style="color: #d73948">if</span> (dist[x.first] <span style="color: #d73948">></span> d <span style="color: #d73948">+</span> x.second) {<br>        dist[x.first] <span style="color: #d73948">=</span> d <span style="color: #d73948">+</span> x.second;<br>        pq.<span style="color: #4b69c6">push</span>(<span style="color: #4b69c6">make_pair</span>(d <span style="color: #d73948">+</span> x.second, x.first));<br>      }<br>    }<br>  }<br>  <span style="color: #d73948">while</span> (Q<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> a;<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>a);<br>    <span style="color: #d73948">if</span> (dist[a] <span style="color: #d73948">==</span> INT_MAX)<br>      <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">-1</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>    <span style="color: #d73948">else</span><br>      <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, dist[a]);<br>  }<br>}</code></pre>
-                  </li>
-                  <li><a href="https://grader.mwit.ac.th/problem/town">https://grader.mwit.ac.th/problem/town</a> dijkstra ไม่ตรงมาก</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/followpeatt">https://grader.mwit.ac.th/problem/followpeatt</a> dijkstra แบบมีเงื่อนไข</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi14_logistics">https://grader.mwit.ac.th/problem/toi14_logistics</a> dijkstra ซับซ้อนขึ้น</li>
-                </ul>
-                <h4>Bellman-Ford</h4>
-                <ul>
-                  <li>Negative cycles</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> n, m, s, e;<br>vector&lt;pair&lt;<span style="color: #d73948">int</span>, pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br>vector&lt;<span style="color: #d73948">int</span>> dist;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m <span style="color: #d73948">>></span> s <span style="color: #d73948">>></span> e;<br><br>  adj.<span style="color: #4b69c6">resize</span>(m);<br>  dist.<span style="color: #4b69c6">assign</span>(n, INT_MAX);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    adj[i] <span style="color: #d73948">=</span> {d, {a, b}};<br>  }<br><br>  dist[<span style="color: #b60157">0</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> m; j<span style="color: #d73948">++</span>) {<br>      <span style="color: #d73948">int</span> a <span style="color: #d73948">=</span> adj[i].second.first, b <span style="color: #d73948">=</span> adj[i].second.second, d <span style="color: #d73948">=</span> adj[i].first;<br>      <span style="color: #d73948">if</span> (dist[a] <span style="color: #d73948">!=</span> INT_MAX <span style="color: #d73948">and</span> dist[a] <span style="color: #d73948">+</span> d <span style="color: #d73948">&lt;</span> dist[b])<br>        dist[b] <span style="color: #d73948">=</span> dist[a] <span style="color: #d73948">+</span> d;<br>    }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> dist[e];<br>}</code></pre>
-                <h4>Floyd-Warshall (implementation)</h4>
-                <p><a href="https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html">https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html</a></p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> k <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; k <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>k) {<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>i) {<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>j) {<br>            d[i][j] <span style="color: #d73948">=</span> <span style="color: #4b69c6">min</span>(d[i][j], d[i][k] <span style="color: #d73948">+</span> d[k][j]); <br>        }<br>    }<br>}</code></pre>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi17_1221">https://grader.mwit.ac.th/problem/toi17_1221</a> all-pair</li>
-                </ul>
-                <h4>Johnson (exist)</h4>
-                <h4>A* Search</h4>
-                <p><a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">https://www.redblobgames.com/pathfinding/a-star/introduction.html</a></p>
-                <h3>Minimum Spanning Tree</h3>
-                <p><a href="https://visualgo.net/en/mst?slide=1">https://visualgo.net/en/mst?slide=1</a></p>
-                <h4>Kruskal’s (implementation)</h4>
-                <ul>
-                  <li>Union-find</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">endl</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">MOD</span> <span style="color: #b60157">1e9</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">pii</span> pair&lt;<span style="color: #d73948">int</span>, pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>><br><br><span style="color: #d73948">int</span> n, m;<br>vector&lt;<span style="color: #d73948">int</span>> pa;<br>priority_queue&lt;pii, vector&lt;pii>, greater&lt;pii>> q;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">root</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">if</span> (pa[x] <span style="color: #d73948">==</span> x)<br>    <span style="color: #d73948">return</span> x;<br>  <span style="color: #d73948">else</span><br>    <span style="color: #d73948">return</span> pa[x] <span style="color: #d73948">=</span> <span style="color: #4b69c6">root</span>(pa[x]);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">kruskal</span>() {<br>  <span style="color: #d73948">int</span> ans <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><br>  pa.<span style="color: #4b69c6">resize</span>(n);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>)<br>    pa[i] <span style="color: #d73948">=</span> i;<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>q.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> w <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().first, x <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second.first, y <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second.second;<br>    q.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (<span style="color: #4b69c6">root</span>(x) <span style="color: #d73948">==</span> <span style="color: #4b69c6">root</span>(y))<br>      <span style="color: #d73948">continue</span>;<br>    ans <span style="color: #d73948">+=</span> w;<br>    pa[<span style="color: #4b69c6">root</span>(x)] <span style="color: #d73948">=</span> pa[<span style="color: #4b69c6">root</span>(y)];<br>  }<br><br>  <span style="color: #d73948">return</span> ans;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    q.<span style="color: #4b69c6">push</span>({d, {a, b}});<br>  }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">kruskal</span>();<br>}</code></pre>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/mst">https://grader.mwit.ac.th/problem/mst</a> ตรงสุด ๆ</li>
-                </ul>
-                <h4>Prim’s</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">endl</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">MOD</span> <span style="color: #b60157">1e9</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span><br><br><span style="color: #d73948">int</span> n, m, ans;<br>vector&lt;<span style="color: #d73948">bool</span>> visited;<br>vector&lt;vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br>priority_queue&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>, vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>, greater&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>><br>    q;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  adj.<span style="color: #4b69c6">resize</span>(n);<br>  visited.<span style="color: #4b69c6">resize</span>(n);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    adj[a].<span style="color: #4b69c6">push_back</span>({d, b});<br>    adj[b].<span style="color: #4b69c6">push_back</span>({d, a});<br>  }<br><br>  q.<span style="color: #4b69c6">push</span>({<span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>});<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>q.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> w <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().first, p <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second;<br>    q.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (visited[p])<br>      <span style="color: #d73948">continue</span>;<br>    visited[p] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>    ans <span style="color: #d73948">+=</span> w;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> adj[p].<span style="color: #4b69c6">size</span>(); i<span style="color: #d73948">++</span>)<br>      <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[adj[p][i].second])<br>        q.<span style="color: #4b69c6">push</span>(adj[p][i]);<br>  }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> ans;<br>}</code></pre>
-                <h3>Tree algorithms</h3>
-                <h4>Diameter</h4>
-                <ul>
-                  <li>
-                    <p>Algorithm 1</p>
-                    <ul>
-                      <li>ดึง node มั่ว ๆ มาเป็น root</li>
-                      <li>หา path ยาวสุดของแต่ละลูก แล้วหาเส้นผ่านศูนย์กลาง</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Algorithm 2</p>
-                    <ul>
-                      <li>เลือกโหนดมั่ว ๆ เป็นโหนด a</li>
-                      <li>หาโหนดที่อยู่ไกลที่สุดจากโหนด a เป็นโหนด b</li>
-                      <li>หาโหนดที่อยู่ไกลที่สุดจากโหนด b เป็นโหนด c</li>
-                      <li>จะได้เส้นผ่านศูนย์กลางคือเส้นทางจาก b ไป c</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Lowest common ancestor (implementation)</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> N <span style="color: #d73948">=</span> <span style="color: #b60157">1e5</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br><br><span style="color: #d73948">int</span> n, q;<br><span style="color: #d73948">int</span> dp[<span style="color: #b60157">21</span>][N], lv[N];<br>vector&lt;<span style="color: #d73948">int</span>> adj[N];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> u, <span style="color: #d73948">int</span> p, <span style="color: #d73948">int</span> l) {<br>  dp[<span style="color: #b60157">0</span>][u] <span style="color: #d73948">=</span> p, lv[u] <span style="color: #d73948">=</span> l;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> adj[u])<br>    <span style="color: #4b69c6">dfs</span>(v, u, l <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">lca</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">if</span> (lv[a] <span style="color: #d73948">&lt;</span> lv[b])<br>    <span style="color: #4b69c6">swap</span>(a, b);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">20</span>; i <span style="color: #d73948">>=</span> <span style="color: #b60157">0</span>; i<span style="color: #d73948">--</span>)<br>    <span style="color: #d73948">if</span> (lv[dp[i][a]] <span style="color: #d73948">>=</span> lv[b])<br>      a <span style="color: #d73948">=</span> dp[i][a];<br>  <span style="color: #d73948">if</span> (a <span style="color: #d73948">==</span> b)<br>    <span style="color: #d73948">return</span> a;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">20</span>; i <span style="color: #d73948">>=</span> <span style="color: #b60157">0</span>; i<span style="color: #d73948">--</span>)<br>    <span style="color: #d73948">if</span> (dp[i][a] <span style="color: #d73948">!=</span> dp[i][b])<br>      a <span style="color: #d73948">=</span> dp[i][a], b <span style="color: #d73948">=</span> dp[i][b];<br>  <span style="color: #d73948">return</span> dp[<span style="color: #b60157">0</span>][a];<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    adj[a].<span style="color: #4b69c6">push_back</span>(b);<br>  }<br><br>  <span style="color: #4b69c6">dfs</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>, <span style="color: #b60157">1</span>);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">20</span>; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>)<br>      dp[i][j] <span style="color: #d73948">=</span> dp[i <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>][dp[i <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>][j]];<br><br>  cin <span style="color: #d73948">>></span> q;<br><br>  <span style="color: #d73948">while</span> (q<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">lca</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span>;<br>  }<br>}</code></pre>
-                <h4>Euler Tour Technique</h4>
-                <p><a href="https://usaco.guide/gold/tree-euler?lang=cpp">https://usaco.guide/gold/tree-euler?lang=cpp</a> <a href="https://cses.fi/problemset/task/1137">https://cses.fi/problemset/task/1137</a></p>
-                <h4>Challenge</h4>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi12_weakpoint">https://grader.mwit.ac.th/problem/toi12_weakpoint</a> one-cycle, dp?</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></li>
-                </ul>
-                <h3>Strong connectivity</h3>
-                <p><a href="https://cp-algorithms.com/graph/strongly-connected-components.html">https://cp-algorithms.com/graph/strongly-connected-components.html</a></p>
-                <h4>Kosaraju’s</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> N <span style="color: #d73948">=</span> <span style="color: #b60157">1e5</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br><br><span style="color: #d73948">int</span> n, m;<br>vector&lt;<span style="color: #d73948">int</span>> adj[N], rev[N];<br>stack&lt;<span style="color: #d73948">int</span>> st;<br><span style="color: #d73948">bool</span> visited[N];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> u) {<br>  <span style="color: #d73948">if</span> (visited[u])<br>    <span style="color: #d73948">return</span>;<br>  visited[u] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> adj[u])<br>    <span style="color: #4b69c6">dfs</span>(v);<br>  st.<span style="color: #4b69c6">push</span>(u);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">scc</span>(<span style="color: #d73948">int</span> u) {<br>  <span style="color: #d73948">if</span> (visited[u])<br>    <span style="color: #d73948">return</span>;<br>  visited[u] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> u <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #198810"> </span><span style="color: #198810">'</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> rev[u])<br>    <span style="color: #4b69c6">scc</span>(v);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    adj[a].<span style="color: #4b69c6">push_back</span>(b);<br>    rev[b].<span style="color: #4b69c6">push_back</span>(a);<br>  }<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[i])<br>      <span style="color: #4b69c6">dfs</span>(i);<br><br>  <span style="color: #4b69c6">memset</span>(visited, <span style="color: #b60157">0</span>, <span style="color: #d73948">sizeof</span> visited);<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>st.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> u <span style="color: #d73948">=</span> st.<span style="color: #4b69c6">top</span>();<br>    st.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (visited[u])<br>      <span style="color: #d73948">continue</span>;<br>    <span style="color: #4b69c6">scc</span>(u);<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span>;<br>  }<br>}</code></pre>
-                <h4>Challenge</h4>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/walk_around">https://grader.mwit.ac.th/problem/walk_around</a> cycle, union find, reverse query</li>
-                </ul>
-                <h4>เพิ่มเติม</h4>
-                <ul>
-                  <li>ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11)<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="http://tcpc.me/2019/08/19/state-graph-tutorial.html">http://tcpc.me/2019/08/19/state-graph-tutorial.html</a></li>
-                  </ol>
-                </section>
-            <div class="page-nav">
-                <a href="3005_divide-conquer.html" class="prev">Divide and Conquer</a>
-                <a href="3101_topo-sort.html" class="next">Topological Sort</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Graph Algorithm</h3>
-                <h4>Search in Graph</h4>
-                <ul>
-                  <li>
-                    <p>Depth-First Search</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/vance">https://grader.mwit.ac.th/problem/vance</a> dfs from all node</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Breadth-First Search</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/toi17_wall">https://grader.mwit.ac.th/problem/toi17_wall</a> dfs/bfs โจทย์ซับซ้อน</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Backtracking</p>
-                    <ul>
-                      <li>เป็นการเก็บคำตอบย้อนหลัง หลังจากที่เข้าเงื่อนไขบางอย่างแล้ว</li>
-                      <li><a href="https://grader.mwit.ac.th/problem/walking_bot_2">https://grader.mwit.ac.th/problem/walking_bot_2</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Branch and Bound (implementation)</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/snakeword">https://grader.mwit.ac.th/problem/snakeword</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Challenge</p>
-                    <ul>
-                      <li><a href="https://grader.mwit.ac.th/problem/teleport">https://grader.mwit.ac.th/problem/teleport</a> ad-hoc, implementation</li>
-                    </ul>
-                  </li>
-                  <li>Eulerian</li>
-                  <li>Hamiltonian</li>
-                </ul>
-                <h3>Graph Applications</h3>
-                <h4>Colorings</h4>
-                <p>สามารถใช้การ search ต่าง ๆ เช่น dfs ในการระบายสีโหนดได้</p>
-                <p>ปัญหาการระบายสีโหนดให้โหนดที่ติดกันมีสีต่างกันเสมอเป็นปัญหาที่พบเจอได้บ่อยในสาขาคอมพิวเตอร์</p>
-                <h4>Connectivity check</h4>
-                <p>DFS แล้วเช็คว่า visit ครบทุกโหนดหรือไม่</p>
-                <h4>Finding cycles</h4>
-                <p><a href="https://visualgo.net/en/cyclefinding?slide=1">https://visualgo.net/en/cyclefinding?slide=1</a></p>
-                <p>ถ้า component มี</p>
-                <p>โหนด และไม่มี cycle เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด</p>
-                <p>เส้น และเป็นกราฟต้นไม้</p>
-                <h4>Bipartiteness check</h4>
-                <p>กราฟ bipartite เป็นกราฟเมื่อสามารถใช้สีสองสีในการระบายสีโหนดโดยทุกโหนดที่ติดกันต้องมีสีที่แตกต่างกัน</p>
-                <p><a href="https://cp-algorithms.com/graph/bipartite-check.html">https://cp-algorithms.com/graph/bipartite-check.html</a></p>
-                <h3>Weighted Shortest Path</h3>
-                <p><a href="https://visualgo.net/en/sssp?slide=1">https://visualgo.net/en/sssp?slide=1</a></p>
-                <h4>Dijkstra’s Algorithm (implementation)</h4>
-                <p><a href="https://cp-algorithms.com/graph/dijkstra.html">https://cp-algorithms.com/graph/dijkstra.html</a></p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> INF <span style="color: #d73948">=</span> <span style="color: #b60157">1000000000</span>;<br>vector&lt;vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dijkstra</span>(<span style="color: #d73948">int</span> s, vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span> d, vector&lt;<span style="color: #d73948">int</span>> <span style="color: #d73948">&amp;</span> p) {<br>    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> adj.<span style="color: #4b69c6">size</span>();<br>    d.<span style="color: #4b69c6">assign</span>(n, INF);<br>    p.<span style="color: #4b69c6">assign</span>(n, <span style="color: #d73948">-</span><span style="color: #b60157">1</span>);<br>    vector&lt;<span style="color: #d73948">bool</span>> <span style="color: #4b69c6">u</span>(n, <span style="color: #d73948">false</span>);<br><br>    d[s] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>) {<br>        <span style="color: #d73948">int</span> v <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>;<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> n; j<span style="color: #d73948">++</span>) {<br>            <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>u[j] <span style="color: #d73948">&amp;&amp;</span> (v <span style="color: #d73948">==</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span> <span style="color: #d73948">||</span> d[j] <span style="color: #d73948">&lt;</span> d[v]))<br>                v <span style="color: #d73948">=</span> j;<br>        }<br><br>        <span style="color: #d73948">if</span> (d[v] <span style="color: #d73948">==</span> INF)<br>            <span style="color: #d73948">break</span>;<br><br>        u[v] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> edge <span style="color: #d73948">:</span> adj[v]) {<br>            <span style="color: #d73948">int</span> to <span style="color: #d73948">=</span> edge.first;<br>            <span style="color: #d73948">int</span> len <span style="color: #d73948">=</span> edge.second;<br><br>            <span style="color: #d73948">if</span> (d[v] <span style="color: #d73948">+</span> len <span style="color: #d73948">&lt;</span> d[to]) {<br>                d[to] <span style="color: #d73948">=</span> d[v] <span style="color: #d73948">+</span> len;<br>                p[to] <span style="color: #d73948">=</span> v;<br>            }<br>        }<br>    }<br>}</code></pre>
-                <ul>
-                  <li>
-                    <p><a href="https://grader.mwit.ac.th/problem/turboprogramming">https://grader.mwit.ac.th/problem/turboprogramming</a> dijkstra ตรงๆ</p>
-                    <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit Mok MWIT29</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">ii</span> pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br>vector&lt;ii> adj[<span style="color: #b60157">100100</span>];<br><span style="color: #d73948">int</span> dist[<span style="color: #b60157">100100</span>];<br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  <span style="color: #d73948">int</span> N, M, Q;<br>  <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>N, <span style="color: #d73948">&amp;</span>M, <span style="color: #d73948">&amp;</span>Q);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>, u, v, w; i <span style="color: #d73948">&lt;=</span> M; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810"> </span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>u, <span style="color: #d73948">&amp;</span>v, <span style="color: #d73948">&amp;</span>w);<br>    adj[u].<span style="color: #4b69c6">push_back</span>(<span style="color: #4b69c6">make_pair</span>(v, w));<br>    <span style="color: #74747c">//</span><span style="color: #74747c"> adj[v].push_back(make_pair(u, w));</span><br>  }<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> N; i<span style="color: #d73948">++</span>)<br>    dist[i] <span style="color: #d73948">=</span> INT_MAX;<br>  priority_queue<span style="color: #d73948">&lt;</span>ii, vector&lt;ii>, greater&lt;ii><span style="color: #d73948">></span> pq;<br>  dist[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  pq.<span style="color: #4b69c6">push</span>(<span style="color: #4b69c6">make_pair</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">1</span>));<br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>pq.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> d <span style="color: #d73948">=</span> pq.<span style="color: #4b69c6">top</span>().first;<br>    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> pq.<span style="color: #4b69c6">top</span>().second;<br>    pq.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">auto</span> x <span style="color: #d73948">:</span> adj[n]) {<br>      <span style="color: #d73948">if</span> (dist[x.first] <span style="color: #d73948">></span> d <span style="color: #d73948">+</span> x.second) {<br>        dist[x.first] <span style="color: #d73948">=</span> d <span style="color: #d73948">+</span> x.second;<br>        pq.<span style="color: #4b69c6">push</span>(<span style="color: #4b69c6">make_pair</span>(d <span style="color: #d73948">+</span> x.second, x.first));<br>      }<br>    }<br>  }<br>  <span style="color: #d73948">while</span> (Q<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> a;<br>    <span style="color: #4b69c6">scanf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #198810">"</span>, <span style="color: #d73948">&amp;</span>a);<br>    <span style="color: #d73948">if</span> (dist[a] <span style="color: #d73948">==</span> INT_MAX)<br>      <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">-1</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>);<br>    <span style="color: #d73948">else</span><br>      <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, dist[a]);<br>  }<br>}</code></pre>
-                  </li>
-                  <li><a href="https://grader.mwit.ac.th/problem/town">https://grader.mwit.ac.th/problem/town</a> dijkstra ไม่ตรงมาก</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/followpeatt">https://grader.mwit.ac.th/problem/followpeatt</a> dijkstra แบบมีเงื่อนไข</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi14_logistics">https://grader.mwit.ac.th/problem/toi14_logistics</a> dijkstra ซับซ้อนขึ้น</li>
-                </ul>
-                <h4>Bellman-Ford</h4>
-                <ul>
-                  <li>Negative cycles</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> n, m, s, e;<br>vector&lt;pair&lt;<span style="color: #d73948">int</span>, pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br>vector&lt;<span style="color: #d73948">int</span>> dist;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m <span style="color: #d73948">>></span> s <span style="color: #d73948">>></span> e;<br><br>  adj.<span style="color: #4b69c6">resize</span>(m);<br>  dist.<span style="color: #4b69c6">assign</span>(n, INT_MAX);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    adj[i] <span style="color: #d73948">=</span> {d, {a, b}};<br>  }<br><br>  dist[<span style="color: #b60157">0</span>] <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> m; j<span style="color: #d73948">++</span>) {<br>      <span style="color: #d73948">int</span> a <span style="color: #d73948">=</span> adj[i].second.first, b <span style="color: #d73948">=</span> adj[i].second.second, d <span style="color: #d73948">=</span> adj[i].first;<br>      <span style="color: #d73948">if</span> (dist[a] <span style="color: #d73948">!=</span> INT_MAX <span style="color: #d73948">and</span> dist[a] <span style="color: #d73948">+</span> d <span style="color: #d73948">&lt;</span> dist[b])<br>        dist[b] <span style="color: #d73948">=</span> dist[a] <span style="color: #d73948">+</span> d;<br>    }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> dist[e];<br>}</code></pre>
-                <h4>Floyd-Warshall (implementation)</h4>
-                <p><a href="https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html">https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html</a></p>
-                <pre><code data-lang="cpp"><span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> k <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; k <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>k) {<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>i) {<br>        <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; j <span style="color: #d73948">&lt;</span> n; <span style="color: #d73948">++</span>j) {<br>            d[i][j] <span style="color: #d73948">=</span> <span style="color: #4b69c6">min</span>(d[i][j], d[i][k] <span style="color: #d73948">+</span> d[k][j]); <br>        }<br>    }<br>}</code></pre>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi17_1221">https://grader.mwit.ac.th/problem/toi17_1221</a> all-pair</li>
-                </ul>
-                <h4>Johnson (exist)</h4>
-                <h4>A* Search</h4>
-                <p><a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">https://www.redblobgames.com/pathfinding/a-star/introduction.html</a></p>
-                <h3>Minimum Spanning Tree</h3>
-                <p><a href="https://visualgo.net/en/mst?slide=1">https://visualgo.net/en/mst?slide=1</a></p>
-                <h4>Kruskal’s (implementation)</h4>
-                <ul>
-                  <li>Union-find</li>
-                </ul>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">endl</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">MOD</span> <span style="color: #b60157">1e9</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">pii</span> pair&lt;<span style="color: #d73948">int</span>, pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>><br><br><span style="color: #d73948">int</span> n, m;<br>vector&lt;<span style="color: #d73948">int</span>> pa;<br>priority_queue&lt;pii, vector&lt;pii>, greater&lt;pii>> q;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">root</span>(<span style="color: #d73948">int</span> x) {<br>  <span style="color: #d73948">if</span> (pa[x] <span style="color: #d73948">==</span> x)<br>    <span style="color: #d73948">return</span> x;<br>  <span style="color: #d73948">else</span><br>    <span style="color: #d73948">return</span> pa[x] <span style="color: #d73948">=</span> <span style="color: #4b69c6">root</span>(pa[x]);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">kruskal</span>() {<br>  <span style="color: #d73948">int</span> ans <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;<br><br>  pa.<span style="color: #4b69c6">resize</span>(n);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n; i<span style="color: #d73948">++</span>)<br>    pa[i] <span style="color: #d73948">=</span> i;<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>q.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> w <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().first, x <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second.first, y <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second.second;<br>    q.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (<span style="color: #4b69c6">root</span>(x) <span style="color: #d73948">==</span> <span style="color: #4b69c6">root</span>(y))<br>      <span style="color: #d73948">continue</span>;<br>    ans <span style="color: #d73948">+=</span> w;<br>    pa[<span style="color: #4b69c6">root</span>(x)] <span style="color: #d73948">=</span> pa[<span style="color: #4b69c6">root</span>(y)];<br>  }<br><br>  <span style="color: #d73948">return</span> ans;<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    q.<span style="color: #4b69c6">push</span>({d, {a, b}});<br>  }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">kruskal</span>();<br>}</code></pre>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/mst">https://grader.mwit.ac.th/problem/mst</a> ตรงสุด ๆ</li>
-                </ul>
-                <h4>Prim’s</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">endl</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span><br><span style="color: #d73948">#define</span> <span style="color: #4b69c6">MOD</span> <span style="color: #b60157">1e9</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span><br><br><span style="color: #d73948">int</span> n, m, ans;<br>vector&lt;<span style="color: #d73948">bool</span>> visited;<br>vector&lt;vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>> adj;<br>priority_queue&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>, vector&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>, greater&lt;pair&lt;<span style="color: #d73948">int</span>, <span style="color: #d73948">int</span>>>><br>    q;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  adj.<span style="color: #4b69c6">resize</span>(n);<br>  visited.<span style="color: #4b69c6">resize</span>(n);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b, d;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b <span style="color: #d73948">>></span> d;<br>    adj[a].<span style="color: #4b69c6">push_back</span>({d, b});<br>    adj[b].<span style="color: #4b69c6">push_back</span>({d, a});<br>  }<br><br>  q.<span style="color: #4b69c6">push</span>({<span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>});<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>q.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> w <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().first, p <span style="color: #d73948">=</span> q.<span style="color: #4b69c6">top</span>().second;<br>    q.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (visited[p])<br>      <span style="color: #d73948">continue</span>;<br>    visited[p] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>    ans <span style="color: #d73948">+=</span> w;<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> adj[p].<span style="color: #4b69c6">size</span>(); i<span style="color: #d73948">++</span>)<br>      <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[adj[p][i].second])<br>        q.<span style="color: #4b69c6">push</span>(adj[p][i]);<br>  }<br><br>  cout <span style="color: #d73948">&lt;&lt;</span> ans;<br>}</code></pre>
-                <h3>Tree algorithms</h3>
-                <h4>Diameter</h4>
-                <ul>
-                  <li>
-                    <p>Algorithm 1</p>
-                    <ul>
-                      <li>ดึง node มั่ว ๆ มาเป็น root</li>
-                      <li>หา path ยาวสุดของแต่ละลูก แล้วหาเส้นผ่านศูนย์กลาง</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <p>Algorithm 2</p>
-                    <ul>
-                      <li>เลือกโหนดมั่ว ๆ เป็นโหนด a</li>
-                      <li>หาโหนดที่อยู่ไกลที่สุดจากโหนด a เป็นโหนด b</li>
-                      <li>หาโหนดที่อยู่ไกลที่สุดจากโหนด b เป็นโหนด c</li>
-                      <li>จะได้เส้นผ่านศูนย์กลางคือเส้นทางจาก b ไป c</li>
-                    </ul>
-                  </li>
-                </ul>
-                <h4>Lowest common ancestor (implementation)</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> N <span style="color: #d73948">=</span> <span style="color: #b60157">1e5</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br><br><span style="color: #d73948">int</span> n, q;<br><span style="color: #d73948">int</span> dp[<span style="color: #b60157">21</span>][N], lv[N];<br>vector&lt;<span style="color: #d73948">int</span>> adj[N];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> u, <span style="color: #d73948">int</span> p, <span style="color: #d73948">int</span> l) {<br>  dp[<span style="color: #b60157">0</span>][u] <span style="color: #d73948">=</span> p, lv[u] <span style="color: #d73948">=</span> l;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> adj[u])<br>    <span style="color: #4b69c6">dfs</span>(v, u, l <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">lca</span>(<span style="color: #d73948">int</span> a, <span style="color: #d73948">int</span> b) {<br>  <span style="color: #d73948">if</span> (lv[a] <span style="color: #d73948">&lt;</span> lv[b])<br>    <span style="color: #4b69c6">swap</span>(a, b);<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">20</span>; i <span style="color: #d73948">>=</span> <span style="color: #b60157">0</span>; i<span style="color: #d73948">--</span>)<br>    <span style="color: #d73948">if</span> (lv[dp[i][a]] <span style="color: #d73948">>=</span> lv[b])<br>      a <span style="color: #d73948">=</span> dp[i][a];<br>  <span style="color: #d73948">if</span> (a <span style="color: #d73948">==</span> b)<br>    <span style="color: #d73948">return</span> a;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">20</span>; i <span style="color: #d73948">>=</span> <span style="color: #b60157">0</span>; i<span style="color: #d73948">--</span>)<br>    <span style="color: #d73948">if</span> (dp[i][a] <span style="color: #d73948">!=</span> dp[i][b])<br>      a <span style="color: #d73948">=</span> dp[i][a], b <span style="color: #d73948">=</span> dp[i][b];<br>  <span style="color: #d73948">return</span> dp[<span style="color: #b60157">0</span>][a];<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    adj[a].<span style="color: #4b69c6">push_back</span>(b);<br>  }<br><br>  <span style="color: #4b69c6">dfs</span>(<span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>, <span style="color: #b60157">1</span>);<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">20</span>; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> j <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; j <span style="color: #d73948">&lt;=</span> n; j<span style="color: #d73948">++</span>)<br>      dp[i][j] <span style="color: #d73948">=</span> dp[i <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>][dp[i <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>][j]];<br><br>  cin <span style="color: #d73948">>></span> q;<br><br>  <span style="color: #d73948">while</span> (q<span style="color: #d73948">--</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #4b69c6">lca</span>(a, b) <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span>;<br>  }<br>}</code></pre>
-                <h4>Euler Tour Technique</h4>
-                <p><a href="https://usaco.guide/gold/tree-euler?lang=cpp">https://usaco.guide/gold/tree-euler?lang=cpp</a> <a href="https://cses.fi/problemset/task/1137">https://cses.fi/problemset/task/1137</a></p>
-                <h4>Challenge</h4>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi12_weakpoint">https://grader.mwit.ac.th/problem/toi12_weakpoint</a> one-cycle, dp?</li>
-                  <li><a href="https://grader.mwit.ac.th/problem/toi14_technology">https://grader.mwit.ac.th/problem/toi14_technology</a></li>
-                </ul>
-                <h3>Strong connectivity</h3>
-                <p><a href="https://cp-algorithms.com/graph/strongly-connected-components.html">https://cp-algorithms.com/graph/strongly-connected-components.html</a></p>
-                <h4>Kosaraju’s</h4>
-                <pre><code data-lang="cpp"><span style="color: #74747c">//</span><span style="color: #74747c"> credit from https://github.com/Autoratch/practice</span><br><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">const</span> <span style="color: #d73948">int</span> N <span style="color: #d73948">=</span> <span style="color: #b60157">1e5</span> <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;<br><br><span style="color: #d73948">int</span> n, m;<br>vector&lt;<span style="color: #d73948">int</span>> adj[N], rev[N];<br>stack&lt;<span style="color: #d73948">int</span>> st;<br><span style="color: #d73948">bool</span> visited[N];<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">dfs</span>(<span style="color: #d73948">int</span> u) {<br>  <span style="color: #d73948">if</span> (visited[u])<br>    <span style="color: #d73948">return</span>;<br>  visited[u] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> adj[u])<br>    <span style="color: #4b69c6">dfs</span>(v);<br>  st.<span style="color: #4b69c6">push</span>(u);<br>}<br><br><span style="color: #d73948">void</span> <span style="color: #4b69c6">scc</span>(<span style="color: #d73948">int</span> u) {<br>  <span style="color: #d73948">if</span> (visited[u])<br>    <span style="color: #d73948">return</span>;<br>  visited[u] <span style="color: #d73948">=</span> <span style="color: #d73948">true</span>;<br>  cout <span style="color: #d73948">&lt;&lt;</span> u <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #198810"> </span><span style="color: #198810">'</span>;<br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> v <span style="color: #d73948">:</span> rev[u])<br>    <span style="color: #4b69c6">scc</span>(v);<br>}<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  ios_base::<span style="color: #4b69c6">sync_with_stdio</span>(<span style="color: #b60157">0</span>);<br>  cin.<span style="color: #4b69c6">tie</span>(<span style="color: #b60157">0</span>);<br><br>  cin <span style="color: #d73948">>></span> n <span style="color: #d73948">>></span> m;<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; i <span style="color: #d73948">&lt;</span> m; i<span style="color: #d73948">++</span>) {<br>    <span style="color: #d73948">int</span> a, b;<br>    cin <span style="color: #d73948">>></span> a <span style="color: #d73948">>></span> b;<br>    adj[a].<span style="color: #4b69c6">push_back</span>(b);<br>    rev[b].<span style="color: #4b69c6">push_back</span>(a);<br>  }<br><br>  <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;=</span> n; i<span style="color: #d73948">++</span>)<br>    <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>visited[i])<br>      <span style="color: #4b69c6">dfs</span>(i);<br><br>  <span style="color: #4b69c6">memset</span>(visited, <span style="color: #b60157">0</span>, <span style="color: #d73948">sizeof</span> visited);<br><br>  <span style="color: #d73948">while</span> (<span style="color: #d73948">!</span>st.<span style="color: #4b69c6">empty</span>()) {<br>    <span style="color: #d73948">int</span> u <span style="color: #d73948">=</span> st.<span style="color: #4b69c6">top</span>();<br>    st.<span style="color: #4b69c6">pop</span>();<br>    <span style="color: #d73948">if</span> (visited[u])<br>      <span style="color: #d73948">continue</span>;<br>    <span style="color: #4b69c6">scc</span>(u);<br>    cout <span style="color: #d73948">&lt;&lt;</span> <span style="color: #198810">'</span><span style="color: #1d6c76">\n</span><span style="color: #198810">'</span>;<br>  }<br>}</code></pre>
-                <h4>Challenge</h4>
-                <ul>
-                  <li><a href="https://grader.mwit.ac.th/problem/walk_around">https://grader.mwit.ac.th/problem/walk_around</a> cycle, union find, reverse query</li>
-                </ul>
-                <h4>เพิ่มเติม</h4>
-                <ul>
-                  <li>ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11)<a id="loc-1" href="#loc-2" role="doc-noteref"><sup>1</sup></a></li>
-                </ul>
-                <section role="doc-endnotes">
-                  <ol style="list-style-type: none">
-                    <li id="loc-2"><a href="#loc-1" role="doc-backlink"><sup>1</sup></a><a href="http://tcpc.me/2019/08/19/state-graph-tutorial.html">http://tcpc.me/2019/08/19/state-graph-tutorial.html</a></li>
-                  </ol>
-                </section>
-            <div class="page-nav">
-                <a href="3005_divide-conquer.html" class="prev">Divide and Conquer</a>
-                <a href="3101_topo-sort.html" class="next">Topological Sort</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

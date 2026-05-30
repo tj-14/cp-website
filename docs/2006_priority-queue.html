@@ -7,172 +7,227 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$', right: '$', display: true},
-                    {left: '
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+
+</head>
 <body>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
     </header>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Priority Queue</h3>
-                <h4>คำอธิบาย</h4>
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
                 <ul>
-                  <li>
-                    <p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
-                    <ul>
-                      <li>ทุก ๆ สมาชิกจะมี priority ของตนเอง</li>
-                      <li>สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority ต่ำกว่า</li>
-                      <li>หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue</li>
-                    </ul>
-                  </li>
-                  <li>ใน priority queue ด้านล่าง สมาชิกที่มีค่า ASCII มากจะมี priority สูง</li>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
                 </ul>
-                <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png</a></p>
-                <h4>Operations</h4>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                  <li><code>insert(item, priority)</code>: เพิ่มสมาชิกพร้อมระบุ priority</li>
-                  <li><code>getHighestPriority()</code>: คืนค่าสมาชิกที่มี priority สูงสุด</li>
-                  <li><code>deleteHighestPriority()</code>: นำออกสมาชิกที่มี priority สูงสุด</li>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1005_function.html">Function</a></li>
                 </ul>
-                <h4>Implementation</h4>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
                 <ul>
-                  <li>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</li>
-                  <li>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</li>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html" aria-current="page">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
                 </ul>
-                <h4>ตัวอย่าง (STL)</h4>
-                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  priority_queue<span style="color: #d73948">&lt;</span><span style="color: #d73948">int</span>, vector&lt;<span style="color: #d73948">int</span>>, greater&lt;<span style="color: #d73948">int</span>><span style="color: #d73948">></span> q;<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">3</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">2</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">15</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">5</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">4</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">45</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2005_big-o-notation.html" class="prev">Big O Notation</a>
-                <a href="2007_set-map.html" class="next">Set and Map</a>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main>
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
-        </div>
+
+            <article class="content">
+<h3>Priority Queue</h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
+                    <li><a href="#operations">Operations</a></li>
+                    <li><a href="#implementation">Implementation</a></li>
+                    <li><a href="#ตัวอย่าง-stl">ตัวอย่าง (STL)</a></li>
+                    <li><a href="#ใช้กับ-pair">ใช้กับ pair</a></li>
+                    <li><a href="#ข้อควรระวัง">ข้อควรระวัง</a></li>
+                </ul>
+            </nav>
+
+<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<ul>
+<li><p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
+<ul>
+<li><p>ทุก ๆ สมาชิกจะมี priority ของตนเอง</p></li>
+<li><p>สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority
+ต่ำกว่า</p></li>
+<li><p>หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue</p></li>
+</ul></li>
+<li><p>ใน priority queue สมาชิกที่มี priority สูงสุดจะถูกนำออกก่อน</p></li>
+</ul>
+<figure>
+<p><img
+src="assets/diagrams/priority-queue.svg"
+style="width:86.0%" /></p>
+<figcaption><p>Priority queue removes the highest-priority item first.
+Original diagram for this guide.</p></figcaption>
+</figure>
+<h4 id="operations">Operations</h4>
+<ul>
+<li><p><code>insert(item, priority)</code>: เพิ่มสมาชิกพร้อมระบุ
+priority</p></li>
+<li><p><code>getHighestPriority()</code>: คืนค่าสมาชิกที่มี priority
+สูงสุด</p></li>
+<li><p><code>deleteHighestPriority()</code>: นำออกสมาชิกที่มี priority
+สูงสุด</p></li>
+</ul>
+<h4 id="implementation">Implementation</h4>
+<ul>
+<li><p>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</p></li>
+<li><p>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</p></li>
+</ul>
+<p>โดยปกติ <code>priority_queue&lt;int&gt;</code> ใน C++ เป็น max-heap
+คือค่ามากที่สุดอยู่ด้านบน ถ้าต้องการ min-heap ให้ใช้
+<code>greater&lt;int&gt;</code></p>
+<table>
+<thead>
+<tr>
+<th><p>operation</p></th>
+<th><p>STL</p></th>
+<th><p>time complexity</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>เพิ่มข้อมูล</p></td>
+<td><p><code>push</code></p></td>
+<td><p><span
+class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+</tr>
+<tr>
+<td><p>ดูค่าบนสุด</p></td>
+<td><p><code>top</code></p></td>
+<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+</tr>
+<tr>
+<td><p>ลบค่าบนสุด</p></td>
+<td><p><code>pop</code></p></td>
+<td><p><span
+class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+</tr>
+<tr>
+<td><p>จำนวนสมาชิก</p></td>
+<td><p><code>size</code></p></td>
+<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="ตัวอย่าง-stl">ตัวอย่าง (STL)</h4>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+int main() {
+  priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; q;
+  q.push(3);
+  q.push(2);
+  q.push(15);
+  q.push(5);
+  q.push(4);
+  q.push(45);
+  printf(&quot;top %d\n&quot;, q.top());
+  q.pop();
+  printf(&quot;top %d\n&quot;, q.top());
+  q.pop();
+  printf(&quot;top %d\n&quot;, q.top());
+  return 0;
+}</code></pre>
+<p>ตัวอย่างด้านบนเป็น min-heap เพราะใช้ <code>greater&lt;int&gt;</code> ดังนั้น
+<code>top()</code> จะคืนค่าที่น้อยที่สุด</p>
+<h4 id="ใช้กับ-pair">ใช้กับ pair</h4>
+<p>ในการเขียน Dijkstra มักเก็บ pair เป็น <code>(distance, vertex)</code>
+และใช้ min-heap</p>
+<pre class="cpp"><code>priority_queue&lt;
+  pair&lt;int, int&gt;,
+  vector&lt;pair&lt;int, int&gt;&gt;,
+  greater&lt;pair&lt;int, int&gt;&gt;
+&gt; pq;
+
+pq.push({0, start});</code></pre>
+<p>เมื่อใช้ pair การเปรียบเทียบจะดูสมาชิกตัวแรกก่อน ถ้าเท่ากันจึงดูสมาชิกตัวที่สอง</p>
+<h4 id="ข้อควรระวัง">ข้อควรระวัง</h4>
+<ul>
+<li><p><code>priority_queue</code> ไม่มี operation ลบค่าที่อยู่กลาง
+heap</p></li>
+<li><p>ถ้าข้อมูลที่อยู่ใน queue เก่าแล้ว ให้ใช้วิธี lazy deletion เช่น pop
+ทิ้งเมื่อพบว่าไม่ตรงกับ distance ปัจจุบัน</p></li>
+<li><p>ถ้าต้องการเรียงข้อมูลทั้งหมด ใช้ <code>sort</code> ง่ายกว่า</p></li>
+<li><p>ถ้าต้องการดึงค่าน้อยสุดและลบค่าใดก็ได้ อาจใช้ <code>set</code> หรือ
+<code>multiset</code> แทน</p></li>
+</ul>
+
+            <div class="page-nav">
+                <a href="2008_heap.html" class="prev">Heap</a>
+                <a href="2003_binary-search-tree.html" class="next">Binary Search Tree</a>
+            </div>
+            </article>
+        </main>
     </div>
 
     <footer>
         <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, right: '
-<body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Priority Queue</h3>
-                <h4>คำอธิบาย</h4>
-                <ul>
-                  <li>
-                    <p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
-                    <ul>
-                      <li>ทุก ๆ สมาชิกจะมี priority ของตนเอง</li>
-                      <li>สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority ต่ำกว่า</li>
-                      <li>หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue</li>
-                    </ul>
-                  </li>
-                  <li>ใน priority queue ด้านล่าง สมาชิกที่มีค่า ASCII มากจะมี priority สูง</li>
-                </ul>
-                <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png</a></p>
-                <h4>Operations</h4>
-                <ul>
-                  <li><code>insert(item, priority)</code>: เพิ่มสมาชิกพร้อมระบุ priority</li>
-                  <li><code>getHighestPriority()</code>: คืนค่าสมาชิกที่มี priority สูงสุด</li>
-                  <li><code>deleteHighestPriority()</code>: นำออกสมาชิกที่มี priority สูงสุด</li>
-                </ul>
-                <h4>Implementation</h4>
-                <ul>
-                  <li>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</li>
-                  <li>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</li>
-                </ul>
-                <h4>ตัวอย่าง (STL)</h4>
-                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  priority_queue<span style="color: #d73948">&lt;</span><span style="color: #d73948">int</span>, vector&lt;<span style="color: #d73948">int</span>>, greater&lt;<span style="color: #d73948">int</span>><span style="color: #d73948">></span> q;<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">3</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">2</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">15</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">5</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">4</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">45</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2005_big-o-notation.html" class="prev">Big O Notation</a>
-                <a href="2007_set-map.html" class="next">Set and Map</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
-</body>
-</html>, display: false}
-                ],
-                throwOnError: false
-            });"></script>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    </head>
-<body hx-boost="true">
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
-        </div>
-
-        <div class="content">
-            <h3>Priority Queue</h3>
-                <h4>คำอธิบาย</h4>
-                <ul>
-                  <li>
-                    <p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
-                    <ul>
-                      <li>ทุก ๆ สมาชิกจะมี priority ของตนเอง</li>
-                      <li>สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority ต่ำกว่า</li>
-                      <li>หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue</li>
-                    </ul>
-                  </li>
-                  <li>ใน priority queue ด้านล่าง สมาชิกที่มีค่า ASCII มากจะมี priority สูง</li>
-                </ul>
-                <p><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png">https://media.geeksforgeeks.org/wp-content/cdn-uploads/Priority-Queue-min-1024x512.png</a></p>
-                <h4>Operations</h4>
-                <ul>
-                  <li><code>insert(item, priority)</code>: เพิ่มสมาชิกพร้อมระบุ priority</li>
-                  <li><code>getHighestPriority()</code>: คืนค่าสมาชิกที่มี priority สูงสุด</li>
-                  <li><code>deleteHighestPriority()</code>: นำออกสมาชิกที่มี priority สูงสุด</li>
-                </ul>
-                <h4>Implementation</h4>
-                <ul>
-                  <li>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</li>
-                  <li>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</li>
-                </ul>
-                <h4>ตัวอย่าง (STL)</h4>
-                <pre><code data-lang="cpp"><span style="color: #d73948">#include</span> <span style="color: #198810">&lt;</span><span style="color: #198810">bits/stdc++.h</span><span style="color: #198810">></span><br><br><span style="color: #d73948">using</span> <span style="color: #d73948">namespace</span> std;<br><br><span style="color: #d73948">int</span> <span style="color: #4b69c6">main</span>() {<br>  priority_queue<span style="color: #d73948">&lt;</span><span style="color: #d73948">int</span>, vector&lt;<span style="color: #d73948">int</span>>, greater&lt;<span style="color: #d73948">int</span>><span style="color: #d73948">></span> q;<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">3</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">2</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">15</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">5</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">4</span>);<br>  q.<span style="color: #4b69c6">push</span>(<span style="color: #b60157">45</span>);<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  q.<span style="color: #4b69c6">pop</span>();<br>  <span style="color: #4b69c6">printf</span>(<span style="color: #198810">"</span><span style="color: #198810">top </span><span style="color: #b60157">%d</span><span style="color: #1d6c76">\n</span><span style="color: #198810">"</span>, q.<span style="color: #4b69c6">top</span>());<br>  <span style="color: #d73948">return</span> <span style="color: #b60157">0</span>;<br>}</code></pre>
-            <div class="page-nav">
-                <a href="2005_big-o-notation.html" class="prev">Big O Notation</a>
-                <a href="2007_set-map.html" class="next">Set and Map</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>💡 แรงบันดาลใจจาก <a href="https://cp-algorithms.com/index.html" target="_blank" rel="noopener">cp-algorithms.com</a></p>
-        <p>🎯 สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 </body>
 </html>

@@ -7,7 +7,10 @@
 - linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน
 - ข้อมูลใน linked list ถูกเชื่อมต่อกันด้วย pointers ดังรูปด้านล่าง
 
-https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg
+#figure(
+  image("../assets/diagrams/linked-list.svg", width: 86%),
+  caption: [Singly linked list. Original diagram for this guide.],
+)
 
 - จากรูปจะมีข้อมูลสามชุด ซึ่งเราเรียกว่า *node*
     - ใน node แรกจะเก็บเลข 12 และ pointer ที่ชี้ node ถัดไป
@@ -133,19 +136,22 @@ int main() {
     - นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะแทรก (12) ชี้ไปที่ newNode (37)
     - นำ pointer ของ newNode ไปชี้ที่ pointer ของโหนดตำแหน่งก่อนหน้าเคยชี้ (99)
 
-https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png
+Visual reference: adding a node in a linked list, Wikimedia Commons #footnote[https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png]
 
 - delete การลบข้อมูลใน linked list โดย
     - นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะลบ (12) ชี้ข้ามไปที่ node ในตำแหน่งถัดไป (37)
 
-https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png
+Visual reference: deleting a node in a linked list, Wikimedia Commons #footnote[https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png]
 
 === Doubly Linked List
 
 - เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย
 - node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า *prev* และโหนดถัดไป *next*
 
-https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png
+#figure(
+  image("../assets/diagrams/linked-list.svg", width: 86%),
+  caption: [Pointer-based linked-list structure. Original diagram for this guide.],
+)
 
 ```cpp
 // linked.c

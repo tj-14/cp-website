@@ -8,9 +8,10 @@
 - hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure
 - hash function
 
-// <img src="https://upload.wikiedia.org/wikipedia/commons/thumb/7/7d/Hash_table_3_1_1_0_1_0_0_SP.svg/1280px-Hash_table_3_1_1_0_1_0_0_SP.svg.png" width="500px"/>
-
-(figure from [https://en.wikipedia.org/wiki/Hash_table](https:%%//%%en.wikipedia.org/wiki/Hash_table))
+#figure(
+  image("../assets/diagrams/hash-table.svg", width: 88%),
+  caption: [Hash table with chaining. Original diagram for this guide.],
+)
 
 - หัวใจหลักของการทำ hashing คือการกระจาย entries (key/value pairs) ไปไว้ในช่องต่างๆใน array ที่เรากำหนด
 - เมื่อเรามี key แล้วกระบวนการนี้ควรจะคิด index ที่ key นี้ควรจะอาศัยอยู่
@@ -104,17 +105,13 @@ Hash value of ALLEY is 52
 
 ==== Separate Chaining
 
-https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png
-
-(figure from https://en.wikipedia.org/wiki/Hash_table) 
+Visual reference: separate chaining illustration from Wikipedia #footnote[https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png]
 
 - ทำให้แต่ละช่องเป็น linked list
 
 === Open addressing
 
-https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png
-
-(figure from https://en.wikipedia.org/wiki/Hash_table)
+Visual reference: open addressing illustration from Wikipedia #footnote[https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png]
 
 - ขยับไปช่องถัดไป
 

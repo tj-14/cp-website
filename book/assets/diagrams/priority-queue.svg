@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240" role="img" aria-labelledby="title desc">
+  <title id="title">Priority queue</title>
+  <desc id="desc">The highest-priority item is removed first.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2b5c84"/>
+    </marker>
+  </defs>
+  <rect width="720" height="240" fill="#ffffff"/>
+  <g font-family="Avenir, Arial, sans-serif" fill="#1f2d3a">
+    <text x="90" y="48" font-size="24">priority queue</text>
+    <g transform="translate(90 85)" font-size="19">
+      <rect width="420" height="58" rx="6" fill="#f7f9fb" stroke="#9fb3c8" stroke-width="2"/>
+      <line x1="105" y1="0" x2="105" y2="58" stroke="#9fb3c8"/>
+      <line x1="210" y1="0" x2="210" y2="58" stroke="#9fb3c8"/>
+      <line x1="315" y1="0" x2="315" y2="58" stroke="#9fb3c8"/>
+      <text x="52" y="24" text-anchor="middle">A</text><text x="52" y="45" text-anchor="middle" fill="#526477">p=2</text>
+      <text x="157" y="24" text-anchor="middle">B</text><text x="157" y="45" text-anchor="middle" fill="#526477">p=8</text>
+      <text x="262" y="24" text-anchor="middle">C</text><text x="262" y="45" text-anchor="middle" fill="#526477">p=4</text>
+      <text x="367" y="24" text-anchor="middle">D</text><text x="367" y="45" text-anchor="middle" fill="#526477">p=1</text>
+    </g>
+    <path d="M540 114 H650" stroke="#2b5c84" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <text x="595" y="100" font-size="17" text-anchor="middle" fill="#526477">pop top</text>
+    <text x="650" y="122" font-size="24" text-anchor="middle">B</text>
+    <text x="90" y="178" font-size="18" fill="#526477">items are removed by priority, not insertion order</text>
+  </g>
+</svg>

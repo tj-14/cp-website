@@ -27,14 +27,63 @@ A guide website for Thai high school students interested in Computer Olympiad co
 
 ## 🚀 การใช้งาน (Usage)
 
+### วิธีแก้ไขเนื้อหาและเว็บไซต์ (Editing Workflow)
+
+- แก้เนื้อหาบทเรียนที่ `book/content/*.typ`
+- แก้ diagram/image ที่ `book/assets/diagrams/`
+- แก้หน้าตาเว็บไซต์ที่ `docs/style.css`
+- แก้โครงสร้าง HTML/navigation ที่ `scripts/build_docs.py`
+- ไม่ควรแก้ `docs/*.html` โดยตรง เพราะ `make site` จะสร้างไฟล์เหล่านี้ใหม่และเขียนทับ
+
+หลังแก้ไข ให้รัน:
+
+```bash
+make site
+make validate
+```
+
+ถ้าต้องการตรวจทั้งเว็บไซต์และ PDF:
+
+```bash
+make check
+```
+
+### สร้างเว็บไซต์ใหม่จากไฟล์ Typst (Build)
+
+```bash
+make site
+make validate
+```
+
+`book/content/*.typ` เป็น source of truth สำหรับทั้งหนังสือและเว็บไซต์ ส่วน `docs/` เป็นไฟล์ static ที่สร้างไว้สำหรับ GitHub Pages
+
+ตรวจว่า PDF ยัง build ได้:
+
+```bash
+make pdf
+```
+
+หมายเหตุ: การ build เว็บไซต์ใช้ `pandoc` สำหรับแปลงไฟล์ `.typ` เป็น HTML
+
 ### ดูเว็บไซต์ในเครื่อง (Local Development)
 
 ```bash
-cd docs
-python3 -m http.server 8080
+make serve
 ```
 
 จากนั้นเปิดเว็บเบราว์เซอร์ที่ `http://localhost:8080`
+
+### Deploy ด้วย GitHub Pages
+
+ตั้งค่า repository ที่ GitHub:
+
+1. ไปที่ `Settings` → `Pages`
+2. เลือก `Deploy from a branch`
+3. เลือก branch หลักของโปรเจค
+4. เลือก folder เป็น `/docs`
+5. กด save
+
+เว็บไซต์ไม่ต้องใช้ backend server เพราะ `docs/` เป็น static HTML/CSS/JS ทั้งหมด
 
 ### โครงสร้างโปรเจค (Project Structure)
 
@@ -47,6 +96,7 @@ cp-website/
 │   ├── index.html    # หน้าแรก
 │   ├── style.css     # สไตล์ทั่วทั้งเว็บ
 │   └── *.html        # หน้าเนื้อหาต่างๆ
+├── scripts/           # เครื่องมือ build/normalize/validate เว็บไซต์
 ├── GEMINI.md         # ข้อกำหนดและคำแนะนำ
 └── README.md         # ไฟล์นี้
 ```
@@ -87,4 +137,3 @@ cp-website/
 ---
 
 พัฒนาด้วย ❤️ สำหรับนักเรียนไทยที่รักการเขียนโปรแกรม
-
