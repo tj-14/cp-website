@@ -20,19 +20,29 @@ A guide website for Thai high school students interested in Computer Olympiad co
 
 ## 🛠️ เทคโนโลยี (Tech Stack)
 
-- **HTML5**: โครงสร้างเนื้อหา
-- **CSS3**: การจัดรูปแบบที่เรียบง่าย
-- **No JavaScript frameworks**: เพื่อความเรียบง่ายและบำรุงรักษาง่าย
+- **HTML5**: โครงสร้างเนื้อหา (สร้างจาก Typst ด้วย pandoc)
+- **CSS3**: การจัดรูปแบบที่เรียบง่าย รองรับ dark mode
+- **Vanilla JavaScript เล็กน้อย**: ค้นหาหัวข้อ ปุ่มคัดลอกโค้ด (ไม่ใช้ framework)
+- **KaTeX**: แสดงสมการคณิตศาสตร์ (โหลดเฉพาะหน้าที่มีสมการ)
+- **Typst**: สร้างหนังสือเวอร์ชัน PDF
 - **GitHub Pages**: สำหรับการ deploy
+
+### สิ่งที่ต้องติดตั้ง (Prerequisites)
+
+- `pandoc` (แปลง `.typ` เป็น HTML)
+- `typst` (สร้าง PDF)
+- `python3` (สำหรับ build/validate scripts)
+
+macOS: `brew install pandoc typst`
 
 ## 🚀 การใช้งาน (Usage)
 
 ### วิธีแก้ไขเนื้อหาและเว็บไซต์ (Editing Workflow)
 
 - แก้เนื้อหาบทเรียนที่ `book/content/*.typ`
-- แก้ diagram/image ที่ `book/assets/diagrams/`
+- แก้ diagram/image ที่ `book/assets/`
 - แก้หน้าตาเว็บไซต์ที่ `docs/style.css`
-- แก้โครงสร้าง HTML/navigation ที่ `scripts/build_docs.py`
+- แก้โครงสร้าง HTML/navigation/meta tags ที่ `scripts/build_docs.py`
 - ไม่ควรแก้ `docs/*.html` โดยตรง เพราะ `make site` จะสร้างไฟล์เหล่านี้ใหม่และเขียนทับ
 
 หลังแก้ไข ให้รัน:
@@ -48,14 +58,9 @@ make validate
 make check
 ```
 
-### สร้างเว็บไซต์ใหม่จากไฟล์ Typst (Build)
-
-```bash
-make site
-make validate
-```
-
 `book/content/*.typ` เป็น source of truth สำหรับทั้งหนังสือและเว็บไซต์ ส่วน `docs/` เป็นไฟล์ static ที่สร้างไว้สำหรับ GitHub Pages
+
+build จะสร้าง `index.html`, `404.html`, `robots.txt`, `sitemap.xml` และโหลด KaTeX เฉพาะหน้าที่มีสมการ พร้อมแนบ SRI integrity hashes
 
 ตรวจว่า PDF ยัง build ได้:
 
@@ -85,20 +90,28 @@ make serve
 
 เว็บไซต์ไม่ต้องใช้ backend server เพราะ `docs/` เป็น static HTML/CSS/JS ทั้งหมด
 
+### CI
+
+`.github/workflows/ci.yml` จะรัน `make check` (build เว็บไซต์ + PDF + validate) ทุก PR และตรวจว่า `docs/` ที่ commit ไว้เป็นเวอร์ชันล่าสุด (drift check) โดย pin เวอร์ชัน pandoc และ typst ให้ตรงกับเครื่อง
+
 ### โครงสร้างโปรเจค (Project Structure)
 
 ```
 cp-website/
-├── book/              # ซอร์สโค้ด Typst (ต้นฉบับ)
-│   ├── content/      # ไฟล์เนื้อหา .typ
-│   └── comp_book.typ # ไฟล์หลัก
-├── docs/              # เว็บไซต์ HTML (GitHub Pages)
-│   ├── index.html    # หน้าแรก
-│   ├── style.css     # สไตล์ทั่วทั้งเว็บ
-│   └── *.html        # หน้าเนื้อหาต่างๆ
-├── scripts/           # เครื่องมือ build/normalize/validate เว็บไซต์
-├── GEMINI.md         # ข้อกำหนดและคำแนะนำ
-└── README.md         # ไฟล์นี้
+├── book/                 # ซอร์สโค้ด Typst (ต้นฉบับ)
+│   ├── content/         # ไฟล์เนื้อหา .typ
+│   ├── assets/          # รูปภาพ + favicon
+│   └── comp_book.typ    # ไฟล์หลัก (PDF build ได้จาก make pdf)
+├── docs/                 # เว็บไซต์ HTML (GitHub Pages, สร้างโดย make site)
+│   ├── index.html       # หน้าแรก
+│   ├── style.css        # สไตล์ทั้งเว็บ
+│   └── *.html           # หน้าเนื้อหาต่างๆ
+├── scripts/              # เครื่องมือ build/validate เว็บไซต์
+│   ├── build_docs.py    # สร้างทุกหน้า HTML จาก .typ
+│   └── validate_site.py # ตรวจ link/anchor/image ที่พัง
+├── .github/workflows/    # CI (build + validate)
+├── AGENTS.md             # ข้อกำหนดและคำแนะนำ
+└── README.md             # ไฟล์นี้
 ```
 
 ## 📖 แหล่งข้อมูลที่แนะนำ (Recommended Resources)

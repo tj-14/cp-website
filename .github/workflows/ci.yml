@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  PANDOC_VERSION: 3.10.2
+  TYPST_VERSION: 0.15.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install pandoc
+        run: |
+          set -euo pipefail
+          curl -sSfL "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-linux-amd64.tar.gz" -o /tmp/pandoc.tar.gz
+          sudo tar -xzf /tmp/pandoc.tar.gz -C /opt
+          echo "/opt/pandoc-${PANDOC_VERSION}/bin" >> "$GITHUB_PATH"
+
+      - name: Install typst
+        run: |
+          set -euo pipefail
+          curl -sSfL "https://github.com/typst/typst/releases/download/v${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" -o /tmp/typst.tar.xz
+          sudo tar -xJf /tmp/typst.tar.xz -C /opt
+          echo "/opt/typst-x86_64-unknown-linux-musl" >> "$GITHUB_PATH"
+
+      - name: Build site, PDF, and validate
+        run: make check
+
+      - name: Check committed docs are up to date
+        run: |
+          set -euo pipefail
+          git diff --exit-code docs/
