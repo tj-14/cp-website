@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Hash Table | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2011_hash-table.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2011_hash-table.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Hash Table | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Hash Table</h3>
+<h3 id="hash-table">Hash Table<a class="heading-anchor" href="#hash-table" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -102,10 +111,10 @@
                     <li><a href="#collision">Collision</a></li>
                     <li><a href="#open-addressing">Open addressing</a></li>
                     <li><a href="#เปรียบเทียบ">เปรียบเทียบ</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="idea">Idea</h4>
+<h4 id="idea">Idea<a class="heading-anchor" href="#idea" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data
 structure</p></li>
@@ -135,7 +144,7 @@ index = hash % array_size // mod ค่า hash ด้วย array_size เพ�
 แล้วค่อยจำกัดขอบเขตภายหลังด้วยการ modulo (%) ให้ index อยู่ในช่วง <span
 class="math inline">[0,  array_size − 1]</span></p></li>
 </ul>
-<h4 id="polynomial-hashing">Polynomial hashing</h4>
+<h4 id="polynomial-hashing">Polynomial hashing<a class="heading-anchor" href="#polynomial-hashing" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ตัวอย่าง hash function หนึ่งคือ polynomial hashing
 ซึ่งมีลักษณะดังนี้</p></li>
@@ -149,7 +158,7 @@ class="math inline"><em>s</em>[0], <em>s</em>[1], ⋯, <em>s</em>[<em>n</e
 <li><p>และ <strong>A</strong>, <strong>B</strong>
 เป็นค่าคงที่ที่เรากำหนด</p></li>
 </ul>
-<h5>ตัวอย่าง</h5>
+<h5 id="ตัวอย่าง">ตัวอย่าง<a class="heading-anchor" href="#ตัวอย่าง" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p>คำว่า ALLEY จะมีค่าดังตาราง</p></li>
 </ul>
@@ -182,31 +191,32 @@ class="math inline">(65 × 3<sup>4</sup> + 76 × 3<sup>3</sup> +�
 <ul>
 <li><p>เราก็สามารถกำหนดได้ว่าคำว่า ALLEY ควรจะอยู่ช่องที่ 52</p></li>
 </ul>
-<h4 id="ตัวอย่างโปรแกรม">ตัวอย่างโปรแกรม</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-const int A = 3;
-const int B = 97;
-
-string hash_table[B];
-
-int hash_function(string s) {
-  int sm = 0;
-  for (auto x : s) {
-    sm *= A;
-    sm += int(x);
-    sm %= B;
-  }
-  return sm;
-}
-
-int main() {
-  string s = &quot;ALLEY&quot;;
-  printf(&quot;Hash value of %s is %d\n&quot;, s.c_str(), hash_function(s));
-  hash_table[hash_function(s)] = s;
-}</code></pre>
+<h4 id="ตัวอย่างโปรแกรม">ตัวอย่างโปรแกรม<a class="heading-anchor" href="#ตัวอย่างโปรแกรม" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> A <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> B <span class="op">=</span> <span class="dv">97</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>string hash_table<span class="op">[</span>B<span class="op">];</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> hash_function<span class="op">(</span>string s<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> sm <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> x <span class="op">:</span> s<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">*=</span> A<span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">+=</span> <span class="dt">int</span><span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">%=</span> B<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> sm<span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  string s <span class="op">=</span> <span class="st">&quot;ALLEY&quot;</span><span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;Hash value of </span><span class="sc">%s</span><span class="st"> is </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> s<span class="op">.</span>c_str<span class="op">(),</span> hash_function<span class="op">(</span>s<span class="op">));</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  hash_table<span class="op">[</span>hash_function<span class="op">(</span>s<span class="op">)]</span> <span class="op">=</span> s<span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ได้ output แบบนี้</p>
 <pre><code>Hash value of ALLEY is 52</code></pre>
 <p>💡 ข้อสังเกต</p>
@@ -218,7 +228,7 @@ int main() {
 <li><p>ตัวอย่างของ nondeterministic function คือการ random ค่าขึ้นมา
 ทำให้ไม่มีการการันตีว่ารันสองครั้งแล้วจะได้ค่าเดิม</p></li>
 </ul>
-<h4 id="collision">Collision</h4>
+<h4 id="collision">Collision<a class="heading-anchor" href="#collision" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เนื่องจากเวลาทำ hashing จะไม่สามารถการันตีได้ว่าค่า hash
 ของสองคำที่แตกต่างกันจะแตกต่างกันเสมอ</p></li>
@@ -226,25 +236,39 @@ int main() {
 152 จะเกิดปัญหาว่าไม่สามารถเก็บทั้งสองค่าในช่องเดียวกันได้</p></li>
 <li><p>มีวิธีการแก้ปัญหาหลายแบบ ข้อดีข้อเสียแตกต่างกัน</p></li>
 </ul>
-<h5>Separate Chaining</h5>
+<h5 id="separate-chaining">Separate Chaining<a class="heading-anchor" href="#separate-chaining" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>Visual reference: separate chaining illustration from Wikipedia <a
 href="#fn1" class="footnote-ref" id="fnref1"
 role="doc-noteref"><sup>1</sup></a></p>
 <ul>
 <li><p>ทำให้แต่ละช่องเป็น linked list</p></li>
 </ul>
-<h4 id="open-addressing">Open addressing</h4>
+<h4 id="open-addressing">Open addressing<a class="heading-anchor" href="#open-addressing" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Visual reference: open addressing illustration from Wikipedia <a
 href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a></p>
 <ul>
 <li><p>ขยับไปช่องถัดไป</p></li>
 </ul>
-<h4 id="เปรียบเทียบ">เปรียบเทียบ</h4>
+<h4 id="เปรียบเทียบ">เปรียบเทียบ<a class="heading-anchor" href="#เปรียบเทียบ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>พิจารณาถึงตอนที่เราต้องการตรวจสอบว่ามีข้อมูลดังกล่าวอยู่ในตารางหรือไม่</p></li>
 <li><p>พิจารณากรณีที่มีการลบข้อมูลเกิดขึ้น</p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1640">Sum of Two
+Values</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1661">Subarray Sums
+II</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1141">Playlist</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -267,8 +291,24 @@ href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

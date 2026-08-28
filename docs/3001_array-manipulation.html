@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="โจทย์กลุ่ม array manipulation คือโจทย์ที่มีข้อมูลเรียงเป็นลำดับ แล้วต้องตอบคำถามหรือแก้ไขค่าในช่วงของ array ให้เร็วกว่าไล่ดูทุกช่องทุกครั้ง">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Array Manipulation | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="โจทย์กลุ่ม array manipulation คือโจทย์ที่มีข้อมูลเรียงเป็นลำดับ แล้วต้องตอบคำถามหรือแก้ไขค่าในช่วงของ array ให้เร็วกว่าไล่ดูทุกช่องทุกครั้ง">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/3001_array-manipulation.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/3001_array-manipulation.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Array Manipulation | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Array Manipulation</h3>
+<h3 id="array-manipulation">Array Manipulation<a class="heading-anchor" href="#array-manipulation" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -104,10 +113,10 @@
                     <li><a href="#segment-tree">Segment Tree</a></li>
                     <li><a href="#เลือกใช้อะไรดี">เลือกใช้อะไรดี</a></li>
                     <li><a href="#แหล่งฝึก">แหล่งฝึก</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>โจทย์กลุ่ม array manipulation คือโจทย์ที่มีข้อมูลเรียงเป็นลำดับ
 แล้วต้องตอบคำถามหรือแก้ไขค่าในช่วงของ array ให้เร็วกว่าไล่ดูทุกช่องทุกครั้ง</p>
 <p>ตัวอย่างคำถามที่พบบ่อย</p>
@@ -119,49 +128,53 @@ class="math inline">[<em>l</em>, <em>r</em>]</span></p></li>
 <li><p>หาค่าน้อยสุดหรือมากสุดในช่วง</p></li>
 <li><p>นับจำนวนค่าที่ตรงเงื่อนไขบางอย่าง</p></li>
 </ul>
-<h4 id="motivation-problem">Motivation problem</h4>
+<h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ถ้ามี array ขนาด <span class="math inline"><em>n</em></span> และมีคำถาม
 <span class="math inline"><em>q</em></span> ครั้ง
 แต่ละครั้งถามผลรวมตั้งแต่ตำแหน่ง <span class="math inline"><em>l</em></span> ถึง
 <span class="math inline"><em>r</em></span> วิธีตรงไปตรงมาคือวนตั้งแต่ <span
 class="math inline"><em>l</em></span> ถึง <span
 class="math inline"><em>r</em></span></p>
-<pre class="cpp"><code>long long sum = 0;
-for (int i = l; i &lt;= r; i++) {
-  sum += a[i];
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> l<span class="op">;</span> i <span class="op">&lt;=</span> r<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  sum <span class="op">+=</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ถ้าแต่ละ query ใช้เวลา <span
 class="math inline"><em>O</em>(<em>n</em>)</span> เวลารวมจะเป็น <span
 class="math inline"><em>O</em>(<em>n</em><em>q</em>)</span> ซึ่งช้าเกินไปเมื่อ
 <span class="math inline"><em>n</em>, <em>q</em></span> มีค่าประมาณ <span
 class="math inline">10<sup>5</sup></span></p>
-<h4 id="prefix-sum">Prefix sum</h4>
+<h4 id="prefix-sum">Prefix sum<a class="heading-anchor" href="#prefix-sum" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ถ้า array ไม่มีการแก้ไขค่า เราสามารถ preprocess ด้วย prefix sum ได้</p>
-<pre class="cpp"><code>pref[0] = 0;
-for (int i = 1; i &lt;= n; i++) {
-  pref[i] = pref[i - 1] + a[i];
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pref<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  pref<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> pref<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ผลรวมช่วง <span class="math inline">[<em>l</em>, <em>r</em>]</span>
 คือ</p>
 <p><code>pref[r] - pref[l-1]</code></p>
 <p>เวลา preprocess คือ <span
 class="math inline"><em>O</em>(<em>n</em>)</span> และตอบแต่ละ query ได้ใน
 <span class="math inline"><em>O</em>(1)</span></p>
-<h4 id="difference-array">Difference array</h4>
+<h4 id="difference-array">Difference array<a class="heading-anchor" href="#difference-array" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ถ้าโจทย์ให้เพิ่มค่า <span class="math inline"><em>x</em></span>
 ทุกตำแหน่งในช่วง <span class="math inline">[<em>l</em>, <em>r</em>]</span>
 หลายครั้ง แล้วค่อยถามค่า array สุดท้าย ใช้ difference array ได้</p>
-<pre class="cpp"><code>diff[l] += x;
-diff[r + 1] -= x;</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diff<span class="op">[</span>l<span class="op">]</span> <span class="op">+=</span> x<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>diff<span class="op">[</span>r <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-=</span> x<span class="op">;</span></span></code></pre>
 <p>หลังจากทำทุก update แล้ว คำนวณค่าจริงด้วย prefix sum ของ
 <code>diff</code></p>
-<pre class="cpp"><code>long long cur = 0;
-for (int i = 1; i &lt;= n; i++) {
-  cur += diff[i];
-  a[i] += cur;
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> cur <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  cur <span class="op">+=</span> diff<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  a<span class="op">[</span>i<span class="op">]</span> <span class="op">+=</span> cur<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>เทคนิคนี้เหมาะกับโจทย์ offline ที่รู้ update ทั้งหมดก่อนตอบคำถาม</p>
-<h4 id="fenwick-tree">Fenwick Tree</h4>
+<h4 id="fenwick-tree">Fenwick Tree<a class="heading-anchor" href="#fenwick-tree" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Fenwick Tree หรือ Binary Indexed Tree ใช้ตอบ range sum และ point update
 ได้เร็ว</p>
 <ul>
@@ -172,29 +185,30 @@ class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
 <li><p>ใช้หน่วยความจำ <span
 class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
 </ul>
-<pre class="cpp"><code>vector&lt;long long&gt; bit(n + 1);
-
-void add(int idx, long long val) {
-  for (; idx &lt;= n; idx += idx &amp; -idx) {
-    bit[idx] += val;
-  }
-}
-
-long long sum(int idx) {
-  long long res = 0;
-  for (; idx &gt; 0; idx -= idx &amp; -idx) {
-    res += bit[idx];
-  }
-  return res;
-}
-
-long long range_sum(int l, int r) {
-  return sum(r) - sum(l - 1);
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> bit<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> idx<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> val<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> idx <span class="op">&lt;=</span> n<span class="op">;</span> idx <span class="op">+=</span> idx <span class="op">&amp;</span> <span class="op">-</span>idx<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    bit<span class="op">[</span>idx<span class="op">]</span> <span class="op">+=</span> val<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum<span class="op">(</span><span class="dt">int</span> idx<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> idx <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> idx <span class="op">-=</span> idx <span class="op">&amp;</span> <span class="op">-</span>idx<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    res <span class="op">+=</span> bit<span class="op">[</span>idx<span class="op">];</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> range_sum<span class="op">(</span><span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> sum<span class="op">(</span>r<span class="op">)</span> <span class="op">-</span> sum<span class="op">(</span>l <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ใช้กับโจทย์ Dynamic Range Sum Queries <a href="#fn1"
 class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 ได้โดยตรง</p>
-<h4 id="segment-tree">Segment Tree</h4>
+<h4 id="segment-tree">Segment Tree<a class="heading-anchor" href="#segment-tree" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Segment Tree เหมาะเมื่อ operation ซับซ้อนกว่า sum เช่น min, max, gcd หรือมี
 range update</p>
 <ul>
@@ -207,19 +221,20 @@ class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
 <li><p>ใช้หน่วยความจำประมาณ <span
 class="math inline"><em>O</em>(4<em>n</em>)</span></p></li>
 </ul>
-<pre class="cpp"><code>vector&lt;long long&gt; seg(4 * n);
-
-void build(int node, int l, int r) {
-  if (l == r) {
-    seg[node] = a[l];
-    return;
-  }
-  int mid = (l + r) / 2;
-  build(node * 2, l, mid);
-  build(node * 2 + 1, mid + 1, r);
-  seg[node] = seg[node * 2] + seg[node * 2 + 1];
-}</code></pre>
-<h4 id="เลือกใช้อะไรดี">เลือกใช้อะไรดี</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> seg<span class="op">(</span><span class="dv">4</span> <span class="op">*</span> n<span class="op">);</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> build<span class="op">(</span><span class="dt">int</span> node<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">==</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>l<span class="op">];</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  build<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">,</span> l<span class="op">,</span> mid<span class="op">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  build<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">]</span> <span class="op">+</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="เลือกใช้อะไรดี">เลือกใช้อะไรดี<a class="heading-anchor" href="#เลือกใช้อะไรดี" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
 <tr>
@@ -262,7 +277,7 @@ class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
 </tr>
 </tbody>
 </table>
-<h4 id="แหล่งฝึก">แหล่งฝึก</h4>
+<h4 id="แหล่งฝึก">แหล่งฝึก<a class="heading-anchor" href="#แหล่งฝึก" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>Fenwick Tree <a href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a></p></li>
@@ -273,6 +288,20 @@ id="fnref4" role="doc-noteref"><sup>4</sup></a></p></li>
 <li><p>Visualgo Segment Tree <a href="#fn5" class="footnote-ref"
 id="fnref5" role="doc-noteref"><sup>5</sup></a></p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1660">Subarray Sums
+I</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1643">Maximum Subarray
+Sum</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2216">Collecting
+Numbers</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -304,8 +333,24 @@ href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

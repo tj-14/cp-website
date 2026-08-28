@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ประกอบด้วยขั้นตอนหลักสามขั้นตอน">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Divide and Conquer | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="ประกอบด้วยขั้นตอนหลักสามขั้นตอน">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/3005_divide-conquer.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/3005_divide-conquer.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Divide and Conquer | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Divide &amp; Conquer</h3>
+<h3 id="divide-conquer">Divide &amp; Conquer<a class="heading-anchor" href="#divide-conquer" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -104,10 +113,10 @@
                     <li><a href="#จำนวน-fibonacci">จำนวน Fibonacci</a></li>
                     <li><a href="#merge-sort">Merge Sort</a></li>
                     <li><a href="#square-root-decomposition">Square Root Decomposition</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="หลักการ">หลักการ</h4>
+<h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ประกอบด้วยขั้นตอนหลักสามขั้นตอน</p>
 <ul>
@@ -124,7 +133,7 @@ class="math inline"><em>O</em>(<em>N</em><sup>?</sup>log <em>N</em>)</span>
 โดย <span class="math inline">log <em>N</em></span></p></li>
 </ul>
 <p>มาจากการแบ่งปัญหาเป็นครึ่ง ๆ ไปเรื่อย ๆ</p>
-<h5>General Pseudocode</h5>
+<h5 id="general-pseudocode">General Pseudocode<a class="heading-anchor" href="#general-pseudocode" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre><code>DAC(p):
     if is_base_case(p):
         solve(p)
@@ -132,44 +141,45 @@ class="math inline"><em>O</em>(<em>N</em><sup>?</sup>log <em>N</em>)</span>
         divide p into p_1, p_2, ..., p_k
         apply DAC(p_1), DAC(p_2), ..., DAC(p_k)
         combine(DAC(p_1), DAC(p_2), ..., DAC(p_k))</code></pre>
-<h4 id="binary-search">Binary Search</h4>
+<h4 id="binary-search">Binary Search<a class="heading-anchor" href="#binary-search" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>การหาจำนวน (หรือคำตอบที่ต้องการ) ในอาเรย์ที่มีการเรียงแล้ว
 โดยตัวอัลกอริธึมจะตรวจสอบกับตัวเลขตรงกลาง
 ก่อนที่จะแบ่งอาร์เรย์ออกเป็นสองฝั่งเพื่อหาตัวเลขนั้นอีกครั้ง
 หากตัวเลขที่กำลังหาอยู่มากกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งขวา
 แต่ถ้าหากตัวเลขที่กำลังหาอยู่น้อยกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งซ้าย</p>
-<h5>Pattern</h5>
-<pre class="cpp"><code>int lo = 0, hi = N;
-while (lo &lt;= hi) {
-  int mi = (lo + hi) / 2; // ระวัง overflow ตอน lo+hi
-  if (A[mi] &gt; target) {
-    hi = mi - 1;
-  } else {
-    lo = mi + 1;
-  }
-}</code></pre>
-<h5>STL</h5>
+<h5 id="pattern">Pattern<a class="heading-anchor" href="#pattern" aria-hidden="true" tabindex="-1">#</a></h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> N<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;=</span> hi<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mi <span class="op">=</span> <span class="op">(</span>lo <span class="op">+</span> hi<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// ระวัง overflow ตอน lo+hi</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>A<span class="op">[</span>mi<span class="op">]</span> <span class="op">&gt;</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    hi <span class="op">=</span> mi <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    lo <span class="op">=</span> mi <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="stl">STL<a class="heading-anchor" href="#stl" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p>upper_bound</p></li>
 <li><p>lower_bound</p></li>
 </ul>
-<h5>Binary Search คำตอบ</h5>
+<h5 id="binary-search-คำตอบ">Binary Search คำตอบ<a class="heading-anchor" href="#binary-search-คำตอบ" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p>ปัญหาบางอย่างสามารถสมมุติคำตอบแล้ว check ได้เร็ว</p></li>
 <li><p>หากคำตอบมี pattern เช่น ถ้าค่าน้อยสามารถทำได้แล้วค่าที่มากกว่าจะทำได้ด้วยเสมอ
 ก็จะสามารถ binary search ได้</p></li>
 </ul>
-<h4 id="more-on-binary-search">More on Binary Search</h4>
+<h4 id="more-on-binary-search">More on Binary Search<a class="heading-anchor" href="#more-on-binary-search" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>สอน Binary Search ฉบับสมบูรณ์โคตรๆ (aquablitz11) <a href="#fn1"
 class="footnote-ref" id="fnref1"
 role="doc-noteref"><sup>1</sup></a></p></li>
 <li><p><a class="resource-card" href="https://csacademy.com/lesson/binary_search/" target="_blank" rel="noopener"><strong>CS Academy interactive lesson</strong><span>csacademy.com</span></a></p></li>
 </ul>
-<h4 id="closest-pair">Closest Pair</h4>
+<h4 id="closest-pair">Closest Pair<a class="heading-anchor" href="#closest-pair" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a
 href="https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/">https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/</a></p>
-<h4 id="ปัญหาเลขยกกำลัง">ปัญหาเลขยกกำลัง</h4>
+<h4 id="ปัญหาเลขยกกำลัง">ปัญหาเลขยกกำลัง<a class="heading-anchor" href="#ปัญหาเลขยกกำลัง" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>พิจารณาวิธีหาค่าของ <span
 class="math inline"><em>A</em><sup><em>N</em></sup></span>
 หากทำการคูณเลขตรงๆ จะเป็น <span
@@ -194,7 +204,7 @@ class="math inline"><em>A</em><sup><em>N</em></sup> = <em>A</em> เมื�
 <em>N</em> = 0</span></p></li>
 </ul></li>
 </ul>
-<h4 id="จำนวน-fibonacci">จำนวน Fibonacci</h4>
+<h4 id="จำนวน-fibonacci">จำนวน Fibonacci<a class="heading-anchor" href="#จำนวน-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>จำนวนฟิโบนัชชี (เขียนแทนว่า <span
 class="math inline"><em>F</em><sub><em>n</em></sub></span>)
 คือลำดับจำนวนที่ถูกนิยามจากผลบวกของจำนวนฟิโบนัชชีสองตัวก่อนหน้า
@@ -209,57 +219,70 @@ class="math inline">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 8
 <p>เพราะฉะนั้นแล้ว base case ก็คือ <span
 class="math inline">0 ≤ <em>i</em> ≤ 1</span> และ recursive case ก็คือ
 <span class="math inline"><em>i</em> ≥ 2</span></p>
-<h4 id="merge-sort">Merge Sort</h4>
-<pre class="cpp"><code>void merge(int array[], int const left, int const mid, int const right) {
-  auto const subArrayOne = mid - left + 1;
-  auto const subArrayTwo = right - mid;
-
-  // Create temp arrays
-  auto *leftArray = new int[subArrayOne], *rightArray = new int[subArrayTwo];
-
-  // Copy data to temp arrays leftArray[] and rightArray[]
-  for (auto i = 0; i &lt; subArrayOne; i++)
-    leftArray[i] = array[left + i];
-  for (auto j = 0; j &lt; subArrayTwo; j++)
-    rightArray[j] = array[mid + 1 + j];
-
-  auto indexOfSubArrayOne = 0,   // Initial index of first sub-array
-      indexOfSubArrayTwo = 0;    // Initial index of second sub-array
-  int indexOfMergedArray = left; // Initial index of merged array
-
-  // Merge the temp arrays back into array[left..right]
-  while (indexOfSubArrayOne &lt; subArrayOne &amp;&amp; indexOfSubArrayTwo &lt; subArrayTwo) {
-    if (leftArray[indexOfSubArrayOne] &lt;= rightArray[indexOfSubArrayTwo]) {
-      array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-      indexOfSubArrayOne++;
-    } else {
-      array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-      indexOfSubArrayTwo++;
-    }
-    indexOfMergedArray++;
-  }
-  // Copy the remaining elements of
-  // left[], if there are any
-  while (indexOfSubArrayOne &lt; subArrayOne) {
-    array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-    indexOfSubArrayOne++;
-    indexOfMergedArray++;
-  }
-  // Copy the remaining elements of
-  // right[], if there are any
-  while (indexOfSubArrayTwo &lt; subArrayTwo) {
-    array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-    indexOfSubArrayTwo++;
-    indexOfMergedArray++;
-  }
-}</code></pre>
-<h4 id="square-root-decomposition">Square Root Decomposition</h4>
+<h4 id="merge-sort">Merge Sort<a class="heading-anchor" href="#merge-sort" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> merge<span class="op">(</span><span class="dt">int</span> array<span class="op">[],</span> <span class="dt">int</span> <span class="at">const</span> left<span class="op">,</span> <span class="dt">int</span> <span class="at">const</span> mid<span class="op">,</span> <span class="dt">int</span> <span class="at">const</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="at">const</span> subArrayOne <span class="op">=</span> mid <span class="op">-</span> left <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="at">const</span> subArrayTwo <span class="op">=</span> right <span class="op">-</span> mid<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Create temp arrays</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="op">*</span>leftArray <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>subArrayOne<span class="op">],</span> <span class="op">*</span>rightArray <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>subArrayTwo<span class="op">];</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Copy data to temp arrays leftArray[] and rightArray[]</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> subArrayOne<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    leftArray<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> array<span class="op">[</span>left <span class="op">+</span> i<span class="op">];</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> subArrayTwo<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    rightArray<span class="op">[</span>j<span class="op">]</span> <span class="op">=</span> array<span class="op">[</span>mid <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> j<span class="op">];</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> indexOfSubArrayOne <span class="op">=</span> <span class="dv">0</span><span class="op">,</span>   <span class="co">// Initial index of first sub-array</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      indexOfSubArrayTwo <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>    <span class="co">// Initial index of second sub-array</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> indexOfMergedArray <span class="op">=</span> left<span class="op">;</span> <span class="co">// Initial index of merged array</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Merge the temp arrays back into array[left..right]</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>indexOfSubArrayOne <span class="op">&lt;</span> subArrayOne <span class="op">&amp;&amp;</span> indexOfSubArrayTwo <span class="op">&lt;</span> subArrayTwo<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>leftArray<span class="op">[</span>indexOfSubArrayOne<span class="op">]</span> <span class="op">&lt;=</span> rightArray<span class="op">[</span>indexOfSubArrayTwo<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> leftArray<span class="op">[</span>indexOfSubArrayOne<span class="op">];</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>      indexOfSubArrayOne<span class="op">++;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> rightArray<span class="op">[</span>indexOfSubArrayTwo<span class="op">];</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      indexOfSubArrayTwo<span class="op">++;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    indexOfMergedArray<span class="op">++;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Copy the remaining elements of</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">// left[], if there are any</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>indexOfSubArrayOne <span class="op">&lt;</span> subArrayOne<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> leftArray<span class="op">[</span>indexOfSubArrayOne<span class="op">];</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    indexOfSubArrayOne<span class="op">++;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    indexOfMergedArray<span class="op">++;</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Copy the remaining elements of</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="co">// right[], if there are any</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>indexOfSubArrayTwo <span class="op">&lt;</span> subArrayTwo<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> rightArray<span class="op">[</span>indexOfSubArrayTwo<span class="op">];</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    indexOfSubArrayTwo<span class="op">++;</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    indexOfMergedArray<span class="op">++;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="square-root-decomposition">Square Root Decomposition<a class="heading-anchor" href="#square-root-decomposition" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p><a
 href="https://usaco.guide/plat/sqrt?lang=cpp">https://usaco.guide/plat/sqrt?lang=cpp</a></p></li>
 <li><p><a
 href="https://cp-algorithms.com/data_structures/sqrt_decomposition.html">https://cp-algorithms.com/data_structures/sqrt_decomposition.html</a></p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1085">Array
+Division</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1097">Removal
+Game</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -279,8 +302,24 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

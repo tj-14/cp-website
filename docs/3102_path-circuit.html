@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eulerian path และ Hamiltonian path เป็นโจทย์ที่ดูคล้ายกันมาก แต่เงื่อนไขต่างกันและความยากต่างกันมาก">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Path and Circuit | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="Eulerian path และ Hamiltonian path เป็นโจทย์ที่ดูคล้ายกันมาก แต่เงื่อนไขต่างกันและความยากต่างกันมาก">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/3102_path-circuit.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/3102_path-circuit.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Path and Circuit | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Paths and circuits</h3>
+<h3 id="paths-and-circuits">Paths and circuits<a class="heading-anchor" href="#paths-and-circuits" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -100,21 +109,21 @@
                     <li><a href="#hamiltonian">Hamiltonian</a></li>
                     <li><a href="#เปรียบเทียบ">เปรียบเทียบ</a></li>
                     <li><a href="#ตัวอย่างโจทย์">ตัวอย่างโจทย์</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="eulerian">Eulerian</h4>
+<h4 id="eulerian">Eulerian<a class="heading-anchor" href="#eulerian" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Eulerian path และ Hamiltonian path เป็นโจทย์ที่ดูคล้ายกันมาก
 แต่เงื่อนไขต่างกันและความยากต่างกันมาก</p>
 <ul>
 <li><p>Eulerian สนใจการเดินผ่านทุก edge</p></li>
 <li><p>Hamiltonian สนใจการเดินผ่านทุก vertex</p></li>
 </ul>
-<h5>Path</h5>
+<h5 id="path">Path<a class="heading-anchor" href="#path" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เป็น path ที่ท่องไปในเส้นเชื่อมทุกเส้นเพียงหนึ่งครั้งเท่านั้น</p>
-<h5>Circuit</h5>
+<h5 id="circuit">Circuit<a class="heading-anchor" href="#circuit" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เป็น Eulerian path ที่เริ่มและจบที่โหนดเดียวกัน</p>
-<h5>Existence</h5>
+<h5 id="existence">Existence<a class="heading-anchor" href="#existence" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เงื่อนไขที่จะมี Eulerian path สำหรับ</p>
 <ul>
 <li><p>กราฟไม่มีทิศทาง</p>
@@ -130,32 +139,33 @@
 และโหนดที่เหลือมีดีกรีเข้่าเท่ากับดีกรีออก</p></li>
 </ul></li>
 </ul>
-<h5>Hierholzer’s algorithm</h5>
+<h5 id="hierholzer-s-algorithm">Hierholzer’s algorithm<a class="heading-anchor" href="#hierholzer-s-algorithm" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>Hierholzer’s algorithm ใช้หา Eulerian circuit/path
 เมื่อรู้แล้วว่าเงื่อนไขมีคำตอบ</p>
 <p>แนวคิดคือเดินตาม edge ที่ยังไม่ใช้ไปเรื่อย ๆ ถ้าติดทางตันให้ย้อนกลับและใส่ vertex
 ลงคำตอบตอนย้อนกลับ</p>
-<pre class="cpp"><code>vector&lt;vector&lt;int&gt;&gt; adj;
-vector&lt;int&gt; path;
-
-void dfs(int u) {
-  while (!adj[u].empty()) {
-    int v = adj[u].back();
-    adj[u].pop_back();
-    dfs(v);
-  }
-  path.push_back(u);
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> path<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs<span class="op">(</span><span class="dt">int</span> u<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>adj<span class="op">[</span>u<span class="op">].</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> v <span class="op">=</span> adj<span class="op">[</span>u<span class="op">].</span>back<span class="op">();</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    adj<span class="op">[</span>u<span class="op">].</span>pop_back<span class="op">();</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dfs<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  path<span class="op">.</span>push_back<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>สำหรับกราฟไม่มีทิศทาง ต้องลบ edge ทั้งสองด้าน และควรมี id ของ edge เพื่อไม่ใช้
 edge เดิมซ้ำ</p>
 <p>เวลาทำงานคือ <span
 class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าลบ edge
 ได้มีประสิทธิภาพ</p>
-<h4 id="hamiltonian">Hamiltonian</h4>
+<h4 id="hamiltonian">Hamiltonian<a class="heading-anchor" href="#hamiltonian" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>เป็น path ที่ท่องไปในทุกโหนดเพียงหนึ่งครั้งเท่านั้น</p>
-<h5>Existence</h5>
+<h5 id="existence-2">Existence<a class="heading-anchor" href="#existence-2" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>ไม่มี efficient method เนื่องจากยังเป็นปัญหาประเภท NP-hard</p>
-<h4 id="เปรียบเทียบ">เปรียบเทียบ</h4>
+<h4 id="เปรียบเทียบ">เปรียบเทียบ<a class="heading-anchor" href="#เปรียบเทียบ" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
 <tr>
@@ -186,7 +196,7 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าล�
 </tr>
 </tbody>
 </table>
-<h4 id="ตัวอย่างโจทย์">ตัวอย่างโจทย์</h4>
+<h4 id="ตัวอย่างโจทย์">ตัวอย่างโจทย์<a class="heading-anchor" href="#ตัวอย่างโจทย์" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ถ้าโจทย์พูดถึงการใช้ถนนทุกเส้นหนึ่งครั้ง ให้นึกถึง Eulerian</p></li>
 <li><p>ถ้าโจทย์พูดถึงการเยี่ยมเมืองทุกเมืองหนึ่งครั้ง ให้นึกถึง Hamiltonian</p></li>
@@ -194,6 +204,20 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าล�
 class="math inline"><em>n</em> ≤ 20</span> Hamiltonian อาจใช้ DP bitmask
 ได้</p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1671">Shortest Routes
+I</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1672">Shortest Routes
+II</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1691">Mail
+Delivery</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="3101_topo-sort.html" class="prev">Topological Sort</a>
@@ -204,8 +228,24 @@ class="math inline"><em>n</em> ≤ 20</span> Hamiltonian อาจใช้ 
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

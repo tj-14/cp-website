@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Linked List | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2001_linked-list.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2001_linked-list.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Linked List | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +91,7 @@
             </div>
 
             <article class="content">
-<h3>Linked List</h3>
+<h3 id="linked-list">Linked List<a class="heading-anchor" href="#linked-list" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -101,10 +100,10 @@
                     <li><a href="#ตัวอย่างการ-implement-singly-linked-list">ตัวอย่างการ implement singly linked list</a></li>
                     <li><a href="#operations">Operations</a></li>
                     <li><a href="#doubly-linked-list">Doubly Linked List</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>linked list เป็นโครงสร้างข้อมูลเชิงเส้น
 โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน</p></li>
@@ -125,117 +124,118 @@ guide.</p></figcaption>
 <li><p>node ที่สามเก็บเลข 37 และ pointer ซึ่งยังไม่ได้ชี้ node อื่น</p></li>
 </ul></li>
 </ul>
-<h4 id="singly-linked-list">Singly Linked List</h4>
+<h4 id="singly-linked-list">Singly Linked List<a class="heading-anchor" href="#singly-linked-list" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เป็น linked list ประเภทที่ง่ายที่สุด</p></li>
 <li><p>โดยหนึ่ง node จะเก็บข้อมูล และ pointer เพื่อชี้ตำแหน่งของ node
 ถัดไป</p></li>
 </ul>
-<h4 id="ตัวอย่างการ-implement-singly-linked-list">ตัวอย่างการ implement singly linked list</h4>
+<h4 id="ตัวอย่างการ-implement-singly-linked-list">ตัวอย่างการ implement singly linked list<a class="heading-anchor" href="#ตัวอย่างการ-implement-singly-linked-list" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>โดยสร้าง struct Node เพื่อเก็บข้อมูล</p></li>
 </ul>
-<pre class="cpp"><code>// A simple CPP program to introduce
-// a linked list
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-// A linked list node
-struct Node {
-  int data;
-  struct Node *next;
-};
-
-int main() {
-  // Program to create a simple linked
-  // list with 3 nodes
-  Node *head = NULL;
-  Node *second = NULL;
-  Node *third = NULL;
-
-  // allocate 3 nodes in the heap
-  head = new Node();
-  second = new Node();
-  third = new Node();
-
-  /* Three blocks have been allocated dynamically.
-     We have pointers to these three blocks as head,
-     second and third
-     head         second         third
-     |             |             |
-     |             |             |
-     +----+----+   +----+----+   +----+----+
-     | #  |  # |   | #  | #  |   | #  | #  |
-     +----+----+   +----+----+   +----+----+
-
-  # represents any random value.
-  Data is random because we haven’t assigned
-  anything yet */
-
-  head-&gt;data = 1;      // assign data in first node
-  head-&gt;next = second; // Link first node with
-  // the second node
-
-  /* data has been assigned to the data part of first
-     block (block pointed by the head). And next
-     pointer of the first block points to second.
-     So they both are linked.
-
-     head         second         third
-     |             |             |
-     |             |             |
-     +---+---+     +----+----+   +-----+----+
-     | 1 | o-----&gt; | #  | #  |   | #   | #  |
-     +---+---+     +----+----+   +-----+----+
-   */
-
-  // assign data to second node
-  second-&gt;data = 2;
-
-  // Link second node with the third node
-  second-&gt;next = third;
-
-  /* data has been assigned to the data part of the second
-     block (block pointed by second). And next
-     pointer of the second block points to the third
-     block. So all three blocks are linked.
-
-     head         second         third
-     |             |             |
-     |             |             |
-     +---+---+     +---+---+     +----+----+
-     | 1 | o-----&gt; | 2 | o-----&gt; | #  | #  |
-     +---+---+     +---+---+     +----+----+     */
-
-  third-&gt;data = 3; // assign data to third node
-  third-&gt;next = NULL;
-
-  /* data has been assigned to the data part of the third
-     block (block pointed by third). And next pointer
-     of the third block is made NULL to indicate
-     that the linked list is terminated here.
-
-     We have the linked list ready.
-
-     head
-     |
-     |
-     +---+---+     +---+---+     +----+------+
-     | 1 | o-----&gt; | 2 | o-----&gt; | 3  | NULL |
-     +---+---+     +---+---+     +----+------+
-
-     Note that only the head is sufficient to represent
-     the whole list. We can traverse the complete
-     list by following the next pointers. */
-
-  while (head != NULL) {
-    printf(&quot;%d &quot;, head-&gt;data);
-    head = head-&gt;next;
-  }
-
-  // This code is contributed by rathbhupendra
-}</code></pre>
-<h4 id="operations">Operations</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A simple CPP program to introduce</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// a linked list</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">// A linked list node</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> data<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>next<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Program to create a simple linked</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// list with 3 nodes</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  Node <span class="op">*</span>head <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  Node <span class="op">*</span>second <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  Node <span class="op">*</span>third <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">// allocate 3 nodes in the heap</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  head <span class="op">=</span> <span class="kw">new</span> Node<span class="op">();</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  second <span class="op">=</span> <span class="kw">new</span> Node<span class="op">();</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  third <span class="op">=</span> <span class="kw">new</span> Node<span class="op">();</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Three blocks have been allocated dynamically.</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">     We have pointers to these three blocks as head,</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">     second and third</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">     head         second         third</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">     |             |             |</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">     |             |             |</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">     +----+----+   +----+----+   +----+----+</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">     | #  |  # |   | #  | #  |   | #  | #  |</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">     +----+----+   +----+----+   +----+----+</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">  # represents any random value.</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">  Data is random because we haven’t assigned</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">  anything yet */</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  head<span class="op">-&gt;</span>data <span class="op">=</span> <span class="dv">1</span><span class="op">;</span>      <span class="co">// assign data in first node</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  head<span class="op">-&gt;</span>next <span class="op">=</span> second<span class="op">;</span> <span class="co">// Link first node with</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">// the second node</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* data has been assigned to the data part of first</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">     block (block pointed by the head). And next</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">     pointer of the first block points to second.</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">     So they both are linked.</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co">     head         second         third</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">     |             |             |</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">     |             |             |</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">     +---+---+     +----+----+   +-----+----+</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">     | 1 | o-----&gt; | #  | #  |   | #   | #  |</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">     +---+---+     +----+----+   +-----+----+</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">   */</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="co">// assign data to second node</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  second<span class="op">-&gt;</span>data <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Link second node with the third node</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  second<span class="op">-&gt;</span>next <span class="op">=</span> third<span class="op">;</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* data has been assigned to the data part of the second</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co">     block (block pointed by second). And next</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">     pointer of the second block points to the third</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co">     block. So all three blocks are linked.</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="co">     head         second         third</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="co">     |             |             |</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="co">     |             |             |</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="co">     +---+---+     +---+---+     +----+----+</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="co">     | 1 | o-----&gt; | 2 | o-----&gt; | #  | #  |</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="co">     +---+---+     +---+---+     +----+----+     */</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>  third<span class="op">-&gt;</span>data <span class="op">=</span> <span class="dv">3</span><span class="op">;</span> <span class="co">// assign data to third node</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>  third<span class="op">-&gt;</span>next <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* data has been assigned to the data part of the third</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="co">     block (block pointed by third). And next pointer</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="co">     of the third block is made NULL to indicate</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="co">     that the linked list is terminated here.</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">     We have the linked list ready.</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">     head</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="co">     |</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="co">     |</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="co">     +---+---+     +---+---+     +----+------+</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="co">     | 1 | o-----&gt; | 2 | o-----&gt; | 3  | NULL |</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="co">     +---+---+     +---+---+     +----+------+</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="co">     Note that only the head is sufficient to represent</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="co">     the whole list. We can traverse the complete</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="co">     list by following the next pointers. */</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>head <span class="op">!=</span> NULL<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> head<span class="op">-&gt;</span>data<span class="op">);</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>    head <span class="op">=</span> head<span class="op">-&gt;</span>next<span class="op">;</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  <span class="co">// This code is contributed by rathbhupendra</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="operations">Operations<a class="heading-anchor" href="#operations" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>insert การเพิ่มข้อมูลใน linked list โดย</p>
 <ul>
@@ -259,7 +259,7 @@ role="doc-noteref"><sup>1</sup></a></p>
 <p>Visual reference: deleting a node in a linked list, Wikimedia Commons
 <a href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a></p>
-<h4 id="doubly-linked-list">Doubly Linked List</h4>
+<h4 id="doubly-linked-list">Doubly Linked List<a class="heading-anchor" href="#doubly-linked-list" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย</p></li>
 <li><p>node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า
@@ -272,47 +272,60 @@ style="width:86.0%" /></p>
 <figcaption><p>Pointer-based linked-list structure. Original diagram for
 this guide.</p></figcaption>
 </figure>
-<pre class="cpp"><code>// linked.c
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-// what a node look like internally
-struct Node {
-  int idx;
-  struct Node *r_next;
-  struct Node *r_prev;
-};
-
-int main() {
-  // define 3 nodes
-  struct Node n0, n1, n2;
-
-  // initialize the nodes
-  n0.idx = 0;       // the first node has an index of 0
-  n0.r_next = &amp;n1;  // with a reference to the second node
-  n0.r_prev = NULL; // and a reference to NULL b/c there&#39;s no previous node
-
-  n1.idx = 1;
-  n1.r_next = &amp;n2;
-  n1.r_prev = &amp;n0;
-
-  n2.idx = 2;
-  n2.r_next = NULL;
-  n2.r_prev = &amp;n1;
-
-  // create a new reference to n0 called r_first_element
-  struct Node *r_first_element = &amp;n0;
-  printf(&quot;The first node lives @ %p\n&quot;, r_first_element);
-  printf(&quot;The first node has idx: %d\n&quot;, r_first_element-&gt;idx);
-
-  // print n1 info
-  printf(&quot;The second node lives @ %p\n&quot;, r_first_element-&gt;r_next);
-  printf(&quot;The second node has idx: %d\n&quot;, r_first_element-&gt;r_next-&gt;idx);
-
-  // print n2 info
-  printf(&quot;The third node lives @ %p\n&quot;, r_first_element-&gt;r_next-&gt;r_next);
-  printf(&quot;The third node has idx: %d\n&quot;, r_first_element-&gt;r_next-&gt;r_next-&gt;idx);
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// linked.c</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">// what a node look like internally</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> idx<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>r_next<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>r_prev<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// define 3 nodes</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node n0<span class="op">,</span> n1<span class="op">,</span> n2<span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// initialize the nodes</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  n0<span class="op">.</span>idx <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">// the first node has an index of 0</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  n0<span class="op">.</span>r_next <span class="op">=</span> <span class="op">&amp;</span>n1<span class="op">;</span>  <span class="co">// with a reference to the second node</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  n0<span class="op">.</span>r_prev <span class="op">=</span> NULL<span class="op">;</span> <span class="co">// and a reference to NULL b/c there&#39;s no previous node</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  n1<span class="op">.</span>idx <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  n1<span class="op">.</span>r_next <span class="op">=</span> <span class="op">&amp;</span>n2<span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  n1<span class="op">.</span>r_prev <span class="op">=</span> <span class="op">&amp;</span>n0<span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  n2<span class="op">.</span>idx <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  n2<span class="op">.</span>r_next <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  n2<span class="op">.</span>r_prev <span class="op">=</span> <span class="op">&amp;</span>n1<span class="op">;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">// create a new reference to n0 called r_first_element</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>r_first_element <span class="op">=</span> <span class="op">&amp;</span>n0<span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;The first node lives @ </span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> r_first_element<span class="op">);</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;The first node has idx: </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> r_first_element<span class="op">-&gt;</span>idx<span class="op">);</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">// print n1 info</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;The second node lives @ </span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> r_first_element<span class="op">-&gt;</span>r_next<span class="op">);</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;The second node has idx: </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> r_first_element<span class="op">-&gt;</span>r_next<span class="op">-&gt;</span>idx<span class="op">);</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="co">// print n2 info</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;The third node lives @ </span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> r_first_element<span class="op">-&gt;</span>r_next<span class="op">-&gt;</span>r_next<span class="op">);</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;The third node has idx: </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> r_first_element<span class="op">-&gt;</span>r_next<span class="op">-&gt;</span>r_next<span class="op">-&gt;</span>idx<span class="op">);</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/2162">Josephus Problem
+I</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2163">Josephus Problem
+II</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -335,8 +348,24 @@ href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

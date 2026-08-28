@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Dynamic Programming Advanced | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/4000_dp.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/4000_dp.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Dynamic Programming Advanced | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -93,7 +102,7 @@
 
             <article class="content">
 <h1>Anon’s Guide to DP</h1>
-<h3>Improving from Divide &amp; Conquer - Memoization</h3>
+<h3 id="improving-from-divide-conquer-memoization">Improving from Divide &amp; Conquer - Memoization<a class="heading-anchor" href="#improving-from-divide-conquer-memoization" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide
 Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง</p>
 <p>สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ <span
@@ -108,33 +117,34 @@ class="math inline"><em>n</em></span> จะเห็นว่ามีการ
 class="math inline">Fib(<em>i</em>)</span> ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง
 โดยให้เก็บค่าของ <span class="math inline">Fib(<em>i</em>)</span>
 และเรียกค่าจากที่เก็บมาได้ โค้ดจะมีลักษณะดังนี้:</p>
-<pre class="cpp"><code>vector&lt;int&gt; v(n, -1);
-int fib(int i) {
-    if(v[i] &gt; -1) return v[i];
-    if(i == 0 || i == 1) {
-        v[i] = i;
-        return v[i];
-    }
-    v[i] = fib(i-1) + fib(i-2);
-    return v[i];
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v<span class="op">(</span>n<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fib<span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>v<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">return</span> v<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>i <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> i <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        v<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> v<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    v<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> fib<span class="op">(</span>i<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">+</span> fib<span class="op">(</span>i<span class="op">-</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>การใช้เทคนิคนี้เรียกว่า memoization โดยมาจากการเก็บค่าไว้ใน memo
 หรือโน้ตเตือนความจำนั่นเอง</p>
-<h3>Definition of Dynamic Programming</h3>
+<h3 id="definition-of-dynamic-programming">Definition of Dynamic Programming<a class="heading-anchor" href="#definition-of-dynamic-programming" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>Dynamic Programming (หรือ DP) ก็คือการทำ Divide &amp; Conquer โดยนำเอา
 memoization มาช่วยบูสต์ให้สามารถคำนวณผลเฉลยโดยพิจารณาจาก state ก่อนหน้าหรือ
 state ที่เล็กกว่า ทำให้ปัญหานั้นสามารถแก้ได้ภายในเวลา Polynomial Time</p>
 <p>DP นั้นเหมาะกับการแก้ปัญหา Optimization หรือการหาค่าที่ดีที่สุด เช่น ราคาถูกที่สุด
 ยาวที่สุด ได้กำไรมากที่สุด ใช้เวลาน้อยที่สุด โดยปัญหาที่ใช้ DP แก้ได้จะต้องมีองค์ประกอบ 2
 อย่างด้วยกัน</p>
-<h3>Optimal Substructure</h3>
+<h3 id="optimal-substructure">Optimal Substructure<a class="heading-anchor" href="#optimal-substructure" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>ปัญหาที่จะใช้ DP นั้นจะมี Optimal Substructure หรือโครงสร้างย่อยที่ดีที่สุด
 ก็ต่อเมื่อคำตอบที่ดีที่สุดของปัญหาใด ๆ สามารถหาได้จากการนำคำตอบที่ดีที่สุดของปัญหาย่อย ๆ
 มาผ่านขั้นตอนการคำนวณที่วางไว้</p>
-<h3>Overlapping Subproblem</h3>
+<h3 id="overlapping-subproblem">Overlapping Subproblem<a class="heading-anchor" href="#overlapping-subproblem" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>ปัญหาที่จะใช้ DP นั้นจะมี Overlapping Subproblem หรือปัญหาย่อยที่ซ้อนเหลื่อมกัน
 ก็ต่อเมื่อปัญหานั้นสามารถแบ่งเป็นปัญหาย่อย ๆ ที่ถูกใช้ซ้ำหลาย ๆ ครั้ง</p>
-<h3>Framework for Recursive Algorithm - SRTBOT</h3>
+<h3 id="framework-for-recursive-algorithm-srtbot">Framework for Recursive Algorithm - SRTBOT<a class="heading-anchor" href="#framework-for-recursive-algorithm-srtbot" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>• SUBPROBLEM definition: การนิยามปัญหาย่อย • RELATE subproblems to
 solutions recursively: หาความสัมพันธ์แบบเวียนเกิดในการหาคำตอบของปัญหาย่อย •
 TOPOLOGICAL order on subproblem to guarantee acyclicness:
@@ -142,22 +152,38 @@ TOPOLOGICAL order on subproblem to guarantee acyclicness:
 relation: กำหนดขั้นฐานของความสัมพันธ์เวียนเกิด • ORIGINAL problem: solve via
 subproblems: กำหนดปัญหาเดิมที่สามารถหาคำตอบได้ผ่านปัญหาย่อย • TIME analysis:
 วิเคราะห์เวลาที่ต้องใช้ (ส่วนใหญ่ผ่าน Master Theorem)</p>
-<h3>Top-Down &amp; Bottom-up Approach to Dynamic Programming</h3>
+<h3 id="top-down-bottom-up-approach-to-dynamic-programming">Top-Down &amp; Bottom-up Approach to Dynamic Programming<a class="heading-anchor" href="#top-down-bottom-up-approach-to-dynamic-programming" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>เมื่อนำ DP มาเขียนโค้ด จะเห็นว่าเราสามารถพิจารณาขั้นตอนการแก้ปัญหาได้ 2 แบบ คือ
 Top-Down (บนลงล่าง) และ Bottom-up (ล่างขึ้นบน)
 โดยด้านบนมักจะเป็นปัญหาที่ใหญ่กว่าด้านล่าง</p>
-<h3>Top-Down</h3>
+<h3 id="top-down">Top-Down<a class="heading-anchor" href="#top-down" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>vector<span id="int"></span>v(n, -1); int fib(int i) { if(v[i] &gt;
 -1) return v[i]; if(i == 0 || i == 1) { v[i] = i; return v[i]; } v[i] =
 fib(i-1) + fib(i-2); return v[i]; }</p>
 <p>วิธีคิดแบบ Top-Down นั้นจะพิจารณาหาคำตอบของ Original Case โดยแบ่งไปหาให้ค่อย ๆ
 เล็กลงจนถึง Base Case แล้วนำมาแก้ปัญหา</p>
-<h3>Bottom-up</h3>
+<h3 id="bottom-up">Bottom-up<a class="heading-anchor" href="#bottom-up" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>vector<span id="int"></span>v(n, -1); int fib(int i) { for(int j = 0;
 j &lt; i; j++) { if(j == 0 || j == 1) { v[j] = j; } else v[j] = fib(j-1)
 + fib(j-2); } return v[i]; }</p>
 <p>วิธีคิดแบบ Bottom-up จะเริ่มวนลูปจาก Base Case ไปยัง Original Case โดยค่อย ๆ
 สร้างคำตอบของปัญหาให้ใหญ่ขึ้นเรื่อย ๆ จนสามารถแก้ปัญหาเดิมได้ในที่สุด</p>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1158">Book
+Shop</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1140">Projects</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1746">Array
+Description</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1639">Edit
+Distance</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="3102_path-circuit.html" class="prev">Path and Circuit</a>
@@ -168,8 +194,24 @@ j &lt; i; j++) { if(j == 0 || j == 1) { v[j] = j; } else v[j] = fib(j-1)
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="คู่มือการเขียนโปรแกรมเชิงแข่งขันสำหรับนักเรียนไทย สรุปอัลกอริทึมและโครงสร้างข้อมูลตั้งแต่พื้นฐานจนถึงระดับสูง พร้อมโจทย์ฝึกฝนจาก CSES และ programming.in.th">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Big O Notation | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="คู่มือการเขียนโปรแกรมเชิงแข่งขันสำหรับนักเรียนไทย สรุปอัลกอริทึมและโครงสร้างข้อมูลตั้งแต่พื้นฐานจนถึงระดับสูง พร้อมโจทย์ฝึกฝนจาก CSES และ programming.in.th">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2005_big-o-notation.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2005_big-o-notation.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Big O Notation | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Big-O Notation</h3>
+<h3 id="big-o-notation">Big-O Notation<a class="heading-anchor" href="#big-o-notation" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -113,20 +122,20 @@
                     <li><a href="#การประเมินประสิทธิภาพ">การประเมินประสิทธิภาพ</a></li>
                     <li><a href="#ตัวแปร-constant">ตัวแปร constant</a></li>
                     <li><a href="#space-complexity">space complexity</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
 <ul>
 <li><p>introduction</p></li>
 <li><p>time complexity</p></li>
 <li><p>space complexity</p></li>
 </ul>
-<h4 id="การเขียนโปรแกรมแข่งขันประกอบด้วย">การเขียนโปรแกรมแข่งขันประกอบด้วย</h4>
+<h4 id="การเขียนโปรแกรมแข่งขันประกอบด้วย">การเขียนโปรแกรมแข่งขันประกอบด้วย<a class="heading-anchor" href="#การเขียนโปรแกรมแข่งขันประกอบด้วย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>การออกแบบอัลกอริทึม</p></li>
 <li><p>การ implement สร้างอัลกอริทึม</p></li>
 </ul>
-<h4 id="การออกแบบอัลกอริทึม">การออกแบบอัลกอริทึม</h4>
+<h4 id="การออกแบบอัลกอริทึม">การออกแบบอัลกอริทึม<a class="heading-anchor" href="#การออกแบบอัลกอริทึม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ใช้ทักษะ problem solving</p></li>
 <li><p>และ mathematical thinking</p></li>
@@ -138,7 +147,7 @@
 ของปัญหาหนึ่งนั้นจะเป็นการใช้เทคนิคที่แพร่หลายร่วมกับ insight ใหม่ตามโจทย์</p></li>
 <li><p>เทคนิคในการเขียนโปรแกรมเชิงแข่งขันยังเป็นพื้นฐานในการวิจัยสายอัลกอริทึมอีกด้วย</p></li>
 </ul>
-<h4 id="การ-implement-สร้างอัลกอริทึม">การ implement สร้างอัลกอริทึม</h4>
+<h4 id="การ-implement-สร้างอัลกอริทึม">การ implement สร้างอัลกอริทึม<a class="heading-anchor" href="#การ-implement-สร้างอัลกอริทึม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ใช้ทักษะการเขียนโปรแกรมที่ดี</p></li>
 <li><p>ในการเขียนโปรแกรมเชิงแข่งขันนั้น
@@ -148,30 +157,32 @@
 <li><p>style ในการเขียนโค้ดในการแข่งขันจะตรงไปตรงมาและกระทัดรัด</p></li>
 <li><p>โปรแกรมควรถูกเขียนอย่างรวดเร็ว เพราะเวลาจะมีอยู่อย่างจำกัด</p></li>
 </ul>
-<h4 id="การวิเคราะห์อัลกอรึทึม">การวิเคราะห์อัลกอรึทึม</h4>
+<h4 id="การวิเคราะห์อัลกอรึทึม">การวิเคราะห์อัลกอรึทึม<a class="heading-anchor" href="#การวิเคราะห์อัลกอรึทึม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ปัญหาที่กำหนดให้สามารถแก้ปัญหาด้วยอัลกอริทึมหลายแบบในสภาพเงื่อนไขเดียวกัน</p></li>
 <li><p>จำเป็นต้องเรียนรู้วิธีการเปรียบเทียบประสิทธิภาพการทำงานของแต่ละอัลกอริทึม</p></li>
 </ul>
 <p>เพื่อพิจารณาเลือกใช้ได้อย่างถูกวิธี</p>
-<h4 id="motivation-problem">Motivation problem</h4>
+<h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เราจะรู้ได้อย่างไรว่าโค้ดใดนี้มีประสิทธิภาพที่ดีกว่ากัน ระหว่าง</p></li>
 </ul>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
-  for (int j = i + 1; j &lt;= n; j++) {
-    // code
-  }
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// code</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <ul>
 <li><p>และ</p></li>
 </ul>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
-  for (int j = 1; j &lt;= n; j += i) {
-    // code
-  }
-}</code></pre>
-<h4 id="ประสิทธิภาพของอัลกอริทึม">ประสิทธิภาพของอัลกอริทึม</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j <span class="op">+=</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// code</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="ประสิทธิภาพของอัลกอริทึม">ประสิทธิภาพของอัลกอริทึม<a class="heading-anchor" href="#ประสิทธิภาพของอัลกอริทึม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>สามารถแบ่งได้เป็นสองประเภท คือ</p>
 <ul>
@@ -187,7 +198,7 @@
 <li><p><strong>Big O Notation</strong> หรืออันดับขนาด (order of magnitude)
 เป็นเครื่องมือหลักในการวิเคราะห์อัลกอริทึม</p></li>
 </ul>
-<h4 id="time-complexity">Time complexity</h4>
+<h4 id="time-complexity">Time complexity<a class="heading-anchor" href="#time-complexity" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ประสิทธิภาพของอัลกอริทึมเป็นสิ่งสำคัญในการเขียนโปรแกรมเชิงแข่งขัน</p></li>
 <li><p>โดยทั่วไปนั้นจะง่ายที่จะออกแบบอัลกอริทึมที่แก้ปัญหาได้ช้า
@@ -199,7 +210,7 @@ input</p></li>
 <li><p>ด้วยการคำนวณ time complexity
 เราสามารถตรวจสอบความเร็วของอัลกอริทึมได้โดยไม่ต้อง implement ขึ้นมาก่อน</p></li>
 </ul>
-<h4 id="กฏของการคำนวณ">กฏของการคำนวณ</h4>
+<h4 id="กฏของการคำนวณ">กฏของการคำนวณ<a class="heading-anchor" href="#กฏของการคำนวณ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ <span
 class="math inline"><em>O</em>(⋯)</span> โดยจุดสามจุดแสดงถึงฟังก์ชันใด
@@ -211,7 +222,7 @@ class="math inline"><em>n</em></span> จะเป็นขนาดของอ
 เป็น string <span class="math inline"><em>n</em></span> จะเป็นความยาวของ
 string นั้น</p></li>
 </ul>
-<h4 id="การวนซ้ำ">การวนซ้ำ</h4>
+<h4 id="การวนซ้ำ">การวนซ้ำ<a class="heading-anchor" href="#การวนซ้ำ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ
 input</p></li>
@@ -222,17 +233,19 @@ class="math inline"><em>O</em>(<em>n</em><sup><em>k</em></sup>)</span></p></li>
 </ul>
 <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น <span
 class="math inline"><em>O</em>(<em>n</em>)</span></p>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
-  // code
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>และ time complexity ของโค้ดด้านล่างนี้ <span
 class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {    // ชั้นที่ 1
-  for (int j = 1; j &lt;= n; j++) {  // ชั้นที่ 2
-    // code
-  }
-}</code></pre>
-<h4 id="order-of-magnitude">Order of magnitude</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span>    <span class="co">// ชั้นที่ 1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span>  <span class="co">// ชั้นที่ 2</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// code</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="order-of-magnitude">Order of magnitude<a class="heading-anchor" href="#order-of-magnitude" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ
 order of magnitude</p></li>
@@ -243,23 +256,27 @@ class="math inline">$l\frac{n}{2}r$</span> ครั้ง แต่ time comple
 นั้นเท่ากันคือ <span
 class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
 </ul>
-<pre class="cpp"><code>for (int i = 1; i &lt;= 3*n; i++) {
-  // code
-}</code></pre>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n+5; i++) {
-  // code
-}</code></pre>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i += 2) {
-  // code
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">3</span><span class="op">*</span>n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">+</span><span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i <span class="op">+=</span> <span class="dv">2</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น <span
 class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
-  for (int j = i+1; j &lt;= n; j++) {
-   // code
-  }
-}</code></pre>
-<h4 id="phase">Phase</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">// code</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="phase">Phase<a class="heading-anchor" href="#phase" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ถ้าอัลกอริทึมประกอบไปด้วยหลาย phase ติดต่อกันแล้ว complexity จะเป็น time
 complexity ที่สูงสุดของ phase หนึ่ง</p></li>
@@ -271,30 +288,32 @@ class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
 <li><p>ดังนั้นคอขวดจะเป็น <span
 class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p></li>
 </ul>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
-  // code O(n)
-}
-for (int i = 1; i &lt;= n; i++) {
-  for (int j = 1; j &lt;= n; j++) {
-    // code O(n^2)
-  }
-}
-for (int i = 1; i &lt;= n; i++) {
-  // code O(n)
-}</code></pre>
-<h4 id="กรณีหลายตัวแปร">กรณีหลายตัวแปร</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code O(n)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// code O(n^2)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code O(n)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="กรณีหลายตัวแปร">กรณีหลายตัวแปร<a class="heading-anchor" href="#กรณีหลายตัวแปร" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</p></li>
 <li><p>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</p></li>
 <li><p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น <span
 class="math inline"><em>O</em>(<em>n</em><em>m</em>)</span></p></li>
 </ul>
-<pre class="cpp"><code>for (int i = 1; i &lt;= n; i++) {
-  for (int j = 1; j &lt;= m; j++) {
-    // code
-  }
-}</code></pre>
-<h4 id="recursion">Recursion</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> m<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// code</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="recursion">Recursion<a class="heading-anchor" href="#recursion" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>time complexity ของฟังก์ชัน recursive
 จะขึ้นอยู่กับจำนวนครั้งที่ฟังก์ชันนั้นถูกเรื่องและ time complexity
@@ -302,10 +321,11 @@ class="math inline"><em>O</em>(<em>n</em><em>m</em>)</span></p></li>
 <li><p>ซึ่งจะนำสองค่านี้มาคูณกัน</p></li>
 <li><p>ยกตัวอย่างเช่น</p></li>
 </ul>
-<pre class="cpp"><code>void f(int n) {
-  if (n == 1) return;
-  f(n-1);
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  f<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <ul>
 <li><p>การเรียกฟังก์ชัน <span
 class="math inline"><em>f</em>(<em>n</em>)</span> จะเรียกฟังก์ชันทั้งหมด <span
@@ -315,11 +335,12 @@ class="math inline"><em>n</em></span> ครั้ง และแต่ละ�
 class="math inline"><em>O</em>(<em>n</em>) ⋅ <em>O</em>(1) = <em>O</em>(<em>n</em>)</span></p></li>
 <li><p>อีกตัวอย่าง เช่น</p></li>
 </ul>
-<pre class="cpp"><code>void g(int n) {
-  if (n == 1) return;
-  g(n-1);
-  g(n-1);
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> g<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  g<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  g<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <ul>
 <li><p>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี <span
 class="math inline"><em>n</em> = 1</span></p></li>
@@ -365,7 +386,7 @@ class="math inline">2<sup><em>n</em> − 1</sup></span></p></td>
 <li><p>จากตารางนี้ time complexity คือ <span
 class="math inline">1 + 2 + 4 + ⋯ + 2<sup><em>n</em> − 1</sup> = 2<sup><em>n</em></sup> − 1 = <em>O</em>(2<sup><em>n</em></sup>)</span></p></li>
 </ul>
-<h4 id="complexity-classes">Complexity classes</h4>
+<h4 id="complexity-classes">Complexity classes<a class="heading-anchor" href="#complexity-classes" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</p></li>
 <li><p><span class="math inline"><em>O</em>(1)</span> constant-time
@@ -449,7 +470,7 @@ class="math inline">(2, 3, 1)</span>, <span
 class="math inline">(3, 1, 2)</span> and <span
 class="math inline">(3, 2, 1)</span>.</p></li>
 </ul>
-<h4 id="การประเมินประสิทธิภาพ">การประเมินประสิทธิภาพ</h4>
+<h4 id="การประเมินประสิทธิภาพ">การประเมินประสิทธิภาพ<a class="heading-anchor" href="#การประเมินประสิทธิภาพ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>จากการคำนวณ time complexity
 ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement
@@ -516,7 +537,7 @@ class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
 </tr>
 </tbody>
 </table>
-<h4 id="ตัวแปร-constant">ตัวแปร constant</h4>
+<h4 id="ตัวแปร-constant">ตัวแปร constant<a class="heading-anchor" href="#ตัวแปร-constant" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>อย่างไรก็ตาม ควรจำว่า time complexity
 นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant
@@ -527,7 +548,7 @@ class="math inline"><em>O</em>(<em>n</em>)</span> อาจมีการคำ
 class="math inline">5<em>n</em></span> คำสั่ง</p></li>
 <li><p>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</p></li>
 </ul>
-<h4 id="space-complexity">space complexity</h4>
+<h4 id="space-complexity">space complexity<a class="heading-anchor" href="#space-complexity" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ใช้ Big O Notation เป็นเครื่องมือเช่นกัน</p></li>
 <li><p>เปลี่ยนจากการนับขนาดเวลา เป็นนับขนาด memory เช่น</p>
@@ -535,6 +556,20 @@ class="math inline">5<em>n</em></span> คำสั่ง</p></li>
 <li><p>ขนาดของ array ที่เราประกาศ</p></li>
 </ul></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1090">Ferris
+Wheel</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1084">Apartments</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2216">Collecting
+Numbers</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="1005_function.html" class="prev">Function</a>
@@ -545,8 +580,24 @@ class="math inline">5<em>n</em></span> คำสั่ง</p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="set และ map ใน STL นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ…">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Set and Map | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="set และ map ใน STL นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ…">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2007_set-map.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2007_set-map.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Set and Map | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Set &amp; Map</h3>
+<h3 id="set-map">Set &amp; Map<a class="heading-anchor" href="#set-map" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -100,15 +109,15 @@
                     <li><a href="#ข้อแตกต่าง">ข้อแตกต่าง</a></li>
                     <li><a href="#set-example">Set example</a></li>
                     <li><a href="#map-example">Map example</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><code>set</code> และ <code>map</code> ใน STL
 นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST
 ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ delete เพียง <span
 class="math inline"><em>O</em>(log <em>n</em>)</span></p>
-<h4 id="ข้อแตกต่าง">ข้อแตกต่าง</h4>
+<h4 id="ข้อแตกต่าง">ข้อแตกต่าง<a class="heading-anchor" href="#ข้อแตกต่าง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p><code>set</code> ใช้เก็บ keys แต่ <code>map</code> ใช้เก็บคู่
 key-value</p></li>
@@ -117,59 +126,61 @@ key-value</p></li>
 <li><p>แต่ถ้าหากเราต้องการเก็บความถี่ของแต่ละสมาชิกด้วย เราควรใช้ map เพื่อเก็บ key
 ตามสมาชิกโดย value เป็นความถี่</p></li>
 </ul>
-<h4 id="set-example">Set example</h4>
-<pre class="cpp"><code>// CPP program to demonstrate working of set
-#include &lt;bits/stdc++.h&gt; 
-using namespace std; 
-
-int main() { 
-  set&lt;int&gt; s1; 
-  // self-balancing binary search tree
-  // binary search tree ที่มีความสูงไม่เกิน O(log n) เสมอ
-  s1.insert(2); // log(n)
-  s1.insert(10);
-  s1.insert(5); 
-  s1.insert(3); 
-  s1.insert(6); 
-
-  cout &lt;&lt; &quot;Elements in set:\n&quot;; 
-  for (auto it : s1) 
-    cout &lt;&lt; it &lt;&lt; &quot; &quot;; // Sorted 
-
-  return 0; 
-}</code></pre>
+<h4 id="set-example">Set example<a class="heading-anchor" href="#set-example" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CPP program to demonstrate working of set</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span><span class="pp"> </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> s1<span class="op">;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// self-balancing binary search tree</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// binary search tree ที่มีความสูงไม่เกิน O(log n) เสมอ</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">2</span><span class="op">);</span> <span class="co">// log(n)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">5</span><span class="op">);</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">3</span><span class="op">);</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">6</span><span class="op">);</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Elements in set:</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">:</span> s1<span class="op">)</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> it <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span> <span class="co">// Sorted </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>output</p>
 <pre><code>Elements in set:
 2 3 5 6</code></pre>
-<h4 id="map-example">Map example</h4>
-<pre class="cpp"><code>// CPP program to demonstrate working of map
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-int main() {
-  map&lt;int, int&gt; m;
-  // คล้ายๆ dictionary ในภาษา python
-  // โครงสร้างเดียวกับ set ก็คือ self-balancing binary search tree
-
-  m[1] = 2; // Insertion by indexing
-
-  // Insertion of pair by make_pair
-  m.insert(make_pair(8, 5));
-
-  cout &lt;&lt; &quot;Elements in m:\n&quot;;
-  for (auto it : m)
-    cout &lt;&lt; &quot;[ &quot; &lt;&lt; it.first &lt;&lt; &quot;, &quot; &lt;&lt; it.second &lt;&lt; &quot;]\n&quot;; // Sorted
-
-  map&lt;string, int&gt; m2;
-  m2[&quot;tt&quot;] = 5; // log(n)
-  m2[&quot;aw&quot;] = 2399;
-
-  cout &lt;&lt; &quot;Elements in m2:\n&quot;;
-  for (auto it : m2)
-    cout &lt;&lt; &quot;[ &quot; &lt;&lt; it.first &lt;&lt; &quot;, &quot; &lt;&lt; it.second &lt;&lt; &quot;]\n&quot;; // Sorted
-
-  return 0;
-}</code></pre>
+<h4 id="map-example">Map example<a class="heading-anchor" href="#map-example" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CPP program to demonstrate working of map</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  map<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> m<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// คล้ายๆ dictionary ในภาษา python</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// โครงสร้างเดียวกับ set ก็คือ self-balancing binary search tree</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  m<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// Insertion by indexing</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Insertion of pair by make_pair</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  m<span class="op">.</span>insert<span class="op">(</span>make_pair<span class="op">(</span><span class="dv">8</span><span class="op">,</span> <span class="dv">5</span><span class="op">));</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Elements in m:</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">:</span> m<span class="op">)</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;[ &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>first <span class="op">&lt;&lt;</span> <span class="st">&quot;, &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>second <span class="op">&lt;&lt;</span> <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// Sorted</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  map<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> m2<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  m2<span class="op">[</span><span class="st">&quot;tt&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> <span class="co">// log(n)</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  m2<span class="op">[</span><span class="st">&quot;aw&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="dv">2399</span><span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Elements in m2:</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">:</span> m2<span class="op">)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;[ &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>first <span class="op">&lt;&lt;</span> <span class="st">&quot;, &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>second <span class="op">&lt;&lt;</span> <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// Sorted</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>output</p>
 <pre><code>Elements in m:
 [ 1, 2]
@@ -177,6 +188,22 @@ int main() {
 Elements in m2:
 [ aw, 2399]
 [ tt, 5]</code></pre>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1621">Distinct
+Numbers</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1141">Playlist</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1619">Restaurant
+Customers</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2183">Missing Coin
+Sum</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="2003_binary-search-tree.html" class="prev">Binary Search Tree</a>
@@ -187,8 +214,24 @@ Elements in m2:
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

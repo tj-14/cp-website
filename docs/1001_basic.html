@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="การเขียนโปรแกรมเชิงแข่งขัน | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/1001_basic.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/1001_basic.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>การเขียนโปรแกรมเชิงแข่งขัน | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,28 +101,28 @@
             </div>
 
             <article class="content">
-<h3>การเขียนโปรแกรมเชิงแข่งขัน</h3>
+<h3 id="การเขียนโปรแกรมเชิงแข่งขัน">การเขียนโปรแกรมเชิงแข่งขัน<a class="heading-anchor" href="#การเขียนโปรแกรมเชิงแข่งขัน" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#หลักการ">หลักการ</a></li>
                     <li><a href="#การบริหารเวลา">การบริหารเวลา</a></li>
                     <li><a href="#time-complexity">Time Complexity</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="หลักการ">หลักการ</h4>
+<h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ</p>
-<h5>การออกแบบวิธีการคิด</h5>
+<h5 id="การออกแบบวิธีการคิด">การออกแบบวิธีการคิด<a class="heading-anchor" href="#การออกแบบวิธีการคิด" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>ส่วนนี้จะเน้นเรื่องทักษะการแก้ปัญหาและพื้นฐานการคิด บางทีต้องมีความคิดสร้างสรรค์
 ประกอบกับทฤษฎีต่างๆ
 โดยทั่วไปแล้ววิธีการแก้ปัญหาจะประกอบด้วยเทคนิคที่รู้กันทั่วไปร่วมกับความเป็นเอกลักษณ์ของปัญหานั้นๆ</p>
-<h5>การเขียนโปรแกรมตามวิธี</h5>
+<h5 id="การเขียนโปรแกรมตามวิธี">การเขียนโปรแกรมตามวิธี<a class="heading-anchor" href="#การเขียนโปรแกรมตามวิธี" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>ส่วนนี้จะเน้นว่าเราสามารถถ่ายทอดวิธีการคิดของเราสู่โปรแกรมคอมพิวเตอร์ได้อย่างถูกต้อง
 ปกติแล้วแค่วิธีคิดถูกต้องนั้นไม่เพียงพอในการแข่งขันเขียนโปรแกรมให้ได้ดี
 ข้อแตกต่างสำคัญกับการเขียนโปรแกรมทั่วไปคือโปรแกรมในการแข่งขันจะสั้น
 (มากที่สุดหลักไม่กี่ร้อยบรรทัด) และไม่จำเป็นต้องดูแลโปรแกรมหลังจากแข่งเสร็จ</p>
-<h4 id="การบริหารเวลา">การบริหารเวลา</h4>
+<h4 id="การบริหารเวลา">การบริหารเวลา<a class="heading-anchor" href="#การบริหารเวลา" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>เป็นสิ่งสำคัญที่สุดในการแข่งขัน</p>
 <ul>
 <li><p>ให้คำนึงให้ได้ว่าเราจะใช้เวลาเท่าไรในการทำโจทย์ลักษณะนี้ แล้วจะได้คะแนนเท่าไร
@@ -121,7 +130,7 @@
 <li><p>พยายามสร้างกฏที่เหมาะสมกับตัวเอง เช่น ถ้าบัคเกินสามสิบนาทีแบบไม่มีความคืบหน้า
 ให้เปลี่ยนไปอ่านข้ออื่นอย่างน้อยห้านาที</p></li>
 </ul>
-<h4 id="time-complexity">Time Complexity</h4>
+<h4 id="time-complexity">Time Complexity<a class="heading-anchor" href="#time-complexity" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ก่อนจะเริ่มลงมือเขียนโปรแกรม
 เราควรจะรู้ให้ได้ว่าสิ่งที่เราเขียนจะได้กี่คะแนนสำหรับปัญหานั้น</p></li>
@@ -212,6 +221,22 @@ class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
 </tr>
 </tbody>
 </table>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1068">Weird
+Algorithm</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1083">Missing
+Number</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1069">Repetitions</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1094">Increasing
+Array</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="0000_competitive-programming-starter.html" class="prev">โครงสร้างเนื้อหาการสอน</a>
@@ -222,8 +247,24 @@ class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

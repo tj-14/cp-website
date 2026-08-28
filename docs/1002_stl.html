@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="เป็น dynamic array (array ที่สามารถเพิ่มลดขนาดได้)">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Standard Template Library | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="เป็น dynamic array (array ที่สามารถเพิ่มลดขนาดได้)">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/1002_stl.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/1002_stl.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Standard Template Library | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +91,7 @@
             </div>
 
             <article class="content">
-<h3>STL library ที่ใช้บ่อย</h3>
+<h3 id="stl-library-ที่ใช้บ่อย">STL library ที่ใช้บ่อย<a class="heading-anchor" href="#stl-library-ที่ใช้บ่อย" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -100,107 +99,128 @@
                     <li><a href="#sort">Sort</a></li>
                     <li><a href="#vector">Vector</a></li>
                     <li><a href="#pair">Pair</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="max-min">Max/Min</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-int main() {
-  cout &lt;&lt; max(2, 4); // 4
-  cout &lt;&lt; min(2, 4); // 2
-  return 0;
-}</code></pre>
-<h4 id="sort">Sort</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-int main() {
-  int a[] = {3, 1, 2};
-  cout &lt;&lt; a[0] &lt;&lt; &quot; &quot; &lt;&lt; a[1] &lt;&lt; &quot; &quot; &lt;&lt; a[2] &lt;&lt; &quot;\n&quot;; // 3 1 2
-  sort(a, a+3);
-  cout &lt;&lt; a[0] &lt;&lt; &quot; &quot; &lt;&lt; a[1] &lt;&lt; &quot; &quot; &lt;&lt; a[2] &lt;&lt; &quot;\n&quot;; // 1 2 3
-  return 0;
-}</code></pre>
-<h4 id="vector">Vector</h4>
+<h4 id="max-min">Max/Min<a class="heading-anchor" href="#max-min" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> max<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span> <span class="co">// 4</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> min<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span> <span class="co">// 2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="sort">Sort<a class="heading-anchor" href="#sort" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> a<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">};</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> a<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span> <span class="op">&lt;&lt;</span> a<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span> <span class="op">&lt;&lt;</span> a<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// 3 1 2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  sort<span class="op">(</span>a<span class="op">,</span> a<span class="op">+</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> a<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span> <span class="op">&lt;&lt;</span> a<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span> <span class="op">&lt;&lt;</span> a<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// 1 2 3</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="vector">Vector<a class="heading-anchor" href="#vector" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เป็น dynamic array (array ที่สามารถเพิ่มลดขนาดได้)</p></li>
 <li><p><code>vector</code> มีการใช้งานโดยใช้
 <code>vector&lt;T&gt; varName;</code> เช่น
 <code>vector&lt;int&gt; A;</code></p></li>
 </ul>
-<h5>Access</h5>
+<h5 id="access">Access<a class="heading-anchor" href="#access" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p><code>A[i]</code> ได้เหมือน array</p></li>
 <li><p><code>A.front()</code> และ <code>A.back()</code></p></li>
 </ul>
-<h5>Functions</h5>
+<h5 id="functions">Functions<a class="heading-anchor" href="#functions" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p><code>A.size()</code> เช็คขนาดของ vector</p></li>
 <li><p><code>A.empty()</code> เช็คว่า vector ว่างหรือไม่</p></li>
 <li><p><code>A.push_back(10)</code> ไว้เพิ่มสมาชิกต่อท้าย</p></li>
 <li><p><code>A.pop_back()</code> ไว้ลบสมาชิกตัวสุดท้าย</p></li>
 </ul>
-<h5>Loop</h5>
-<pre class="cpp"><code>for (int i = 0; i &lt; A.size(); i++)
-  cout &lt;&lt; A[i] &lt;&lt; endl;</code></pre>
-<h5>Example</h5>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-void printVec(vector&lt;int&gt; v) {
-  for (int i = 0; i &lt; v.size(); i++) {
-    cout &lt;&lt; v[i] &lt;&lt; &quot; &quot;;
-  }
-  cout &lt;&lt; &quot;\n&quot;;
-}
-
-int main() {
-  vector&lt;int&gt; A;
-  A.push_back(2);
-  A.push_back(5);
-  printVec(A); // OUTPUT: 2 5 \n
-
-  A.push_back(9);
-  printVec(A); // OUTPUT: 2 5 9 \n
-
-  cout &lt;&lt; A.front() &lt;&lt; &quot;\n&quot;; // OUTPUT: 2\n
-  cout &lt;&lt; A.back() &lt;&lt; &quot;\n&quot;;  // OUTPUT: 9\n
-  cout &lt;&lt; A.size() &lt;&lt; &quot;\n&quot;;  // OUTPUT: 3\n
-
-  A.pop_back();
-  A.pop_back();
-  printVec(A); // OUTPUT: 2 \n
-}</code></pre>
-<h4 id="pair">Pair</h4>
+<h5 id="loop">Loop<a class="heading-anchor" href="#loop" aria-hidden="true" tabindex="-1">#</a></h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> A<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span></code></pre>
+<h5 id="example">Example<a class="heading-anchor" href="#example" aria-hidden="true" tabindex="-1">#</a></h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printVec<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> v<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> v<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> A<span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>push_back<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>push_back<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  printVec<span class="op">(</span>A<span class="op">);</span> <span class="co">// OUTPUT: 2 5 \n</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>push_back<span class="op">(</span><span class="dv">9</span><span class="op">);</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  printVec<span class="op">(</span>A<span class="op">);</span> <span class="co">// OUTPUT: 2 5 9 \n</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>front<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// OUTPUT: 2\n</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>back<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span>  <span class="co">// OUTPUT: 9\n</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span>  <span class="co">// OUTPUT: 3\n</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  printVec<span class="op">(</span>A<span class="op">);</span> <span class="co">// OUTPUT: 2 \n</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="pair">Pair<a class="heading-anchor" href="#pair" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เป็น struct สำเร็จรูปที่มีสมาชิกสองตัว</p></li>
 <li><p><code>pair&lt;T1, T2&gt; varName;</code> เช่น
 <code>pair&lt;int, double&gt; A;</code></p></li>
 </ul>
-<h5>Access</h5>
+<h5 id="access-2">Access<a class="heading-anchor" href="#access-2" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p><code>A.first</code> และ <code>A.second</code></p></li>
 </ul>
-<h5>Example</h5>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-int main() {
-  pair&lt;int, double&gt; A;
-  A.first = 4;
-  A.second = 7.5;
-  cout &lt;&lt; A.first &lt;&lt; &quot;\n&quot;;  // OUTPUT: 4
-  cout &lt;&lt; A.second &lt;&lt; &quot;\n&quot;; // OUTPUT: 7.5
-  A = pair&lt;int, double&gt;(6, 2.3);
-  cout &lt;&lt; A.first &lt;&lt; &quot;\n&quot;;  // OUTPUT: 6
-  cout &lt;&lt; A.second &lt;&lt; &quot;\n&quot;; // OUTPUT: 2.3
-}</code></pre>
+<h5 id="example-2">Example<a class="heading-anchor" href="#example-2" aria-hidden="true" tabindex="-1">#</a></h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">double</span><span class="op">&gt;</span> A<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>first <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  A<span class="op">.</span>second <span class="op">=</span> <span class="fl">7.5</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>first <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span>  <span class="co">// OUTPUT: 4</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>second <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// OUTPUT: 7.5</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  A <span class="op">=</span> pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">double</span><span class="op">&gt;(</span><span class="dv">6</span><span class="op">,</span> <span class="fl">2.3</span><span class="op">);</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>first <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span>  <span class="co">// OUTPUT: 6</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> A<span class="op">.</span>second <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// OUTPUT: 2.3</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1621">Distinct
+Numbers</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1091">Concert
+Tickets</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2162">Josephus Problem
+I</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1069">Repetitions</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="1001_basic.html" class="prev">การเขียนโปรแกรมเชิงแข่งขัน</a>
@@ -211,8 +231,24 @@ int main() {
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

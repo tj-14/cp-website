@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Priority Queue | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2006_priority-queue.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2006_priority-queue.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Priority Queue | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Priority Queue</h3>
+<h3 id="priority-queue">Priority Queue<a class="heading-anchor" href="#priority-queue" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -102,10 +111,10 @@
                     <li><a href="#ตัวอย่าง-stl">ตัวอย่าง (STL)</a></li>
                     <li><a href="#ใช้กับ-pair">ใช้กับ pair</a></li>
                     <li><a href="#ข้อควรระวัง">ข้อควรระวัง</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
 <ul>
@@ -123,7 +132,7 @@ style="width:86.0%" /></p>
 <figcaption><p>Priority queue removes the highest-priority item first.
 Original diagram for this guide.</p></figcaption>
 </figure>
-<h4 id="operations">Operations</h4>
+<h4 id="operations">Operations<a class="heading-anchor" href="#operations" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p><code>insert(item, priority)</code>: เพิ่มสมาชิกพร้อมระบุ
 priority</p></li>
@@ -132,7 +141,7 @@ priority</p></li>
 <li><p><code>deleteHighestPriority()</code>: นำออกสมาชิกที่มี priority
 สูงสุด</p></li>
 </ul>
-<h4 id="implementation">Implementation</h4>
+<h4 id="implementation">Implementation<a class="heading-anchor" href="#implementation" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</p></li>
 <li><p>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</p></li>
@@ -173,40 +182,42 @@ class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
 </tr>
 </tbody>
 </table>
-<h4 id="ตัวอย่าง-stl">ตัวอย่าง (STL)</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-int main() {
-  priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; q;
-  q.push(3);
-  q.push(2);
-  q.push(15);
-  q.push(5);
-  q.push(4);
-  q.push(45);
-  printf(&quot;top %d\n&quot;, q.top());
-  q.pop();
-  printf(&quot;top %d\n&quot;, q.top());
-  q.pop();
-  printf(&quot;top %d\n&quot;, q.top());
-  return 0;
-}</code></pre>
+<h4 id="ตัวอย่าง-stl">ตัวอย่าง (STL)<a class="heading-anchor" href="#ตัวอย่าง-stl" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  priority_queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;,</span> greater<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> q<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span><span class="dv">15</span><span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span><span class="dv">45</span><span class="op">);</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;top </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> q<span class="op">.</span>top<span class="op">());</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;top </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> q<span class="op">.</span>top<span class="op">());</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;top </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> q<span class="op">.</span>top<span class="op">());</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ตัวอย่างด้านบนเป็น min-heap เพราะใช้ <code>greater&lt;int&gt;</code> ดังนั้น
 <code>top()</code> จะคืนค่าที่น้อยที่สุด</p>
-<h4 id="ใช้กับ-pair">ใช้กับ pair</h4>
+<h4 id="ใช้กับ-pair">ใช้กับ pair<a class="heading-anchor" href="#ใช้กับ-pair" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ในการเขียน Dijkstra มักเก็บ pair เป็น <code>(distance, vertex)</code>
 และใช้ min-heap</p>
-<pre class="cpp"><code>priority_queue&lt;
-  pair&lt;int, int&gt;,
-  vector&lt;pair&lt;int, int&gt;&gt;,
-  greater&lt;pair&lt;int, int&gt;&gt;
-&gt; pq;
-
-pq.push({0, start});</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>priority_queue<span class="op">&lt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  greater<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pq<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pq<span class="op">.</span>push<span class="op">({</span><span class="dv">0</span><span class="op">,</span> start<span class="op">});</span></span></code></pre>
 <p>เมื่อใช้ pair การเปรียบเทียบจะดูสมาชิกตัวแรกก่อน ถ้าเท่ากันจึงดูสมาชิกตัวที่สอง</p>
-<h4 id="ข้อควรระวัง">ข้อควรระวัง</h4>
+<h4 id="ข้อควรระวัง">ข้อควรระวัง<a class="heading-anchor" href="#ข้อควรระวัง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p><code>priority_queue</code> ไม่มี operation ลบค่าที่อยู่กลาง
 heap</p></li>
@@ -216,6 +227,18 @@ heap</p></li>
 <li><p>ถ้าต้องการดึงค่าน้อยสุดและลบค่าใดก็ได้ อาจใช้ <code>set</code> หรือ
 <code>multiset</code> แทน</p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1091">Concert
+Tickets</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1163">Traffic
+Lights</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="2008_heap.html" class="prev">Heap</a>
@@ -226,8 +249,24 @@ heap</p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

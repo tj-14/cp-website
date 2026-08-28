@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า top">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Stack and Queue | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า top">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2010_stack-queue.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2010_stack-queue.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Stack and Queue | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +91,7 @@
             </div>
 
             <article class="content">
-<h3>Stack &amp; Queue</h3>
+<h3 id="stack-queue">Stack &amp; Queue<a class="heading-anchor" href="#stack-queue" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -102,10 +101,10 @@
                     <li><a href="#stack-vs-queue">Stack vs Queue</a></li>
                     <li><a href="#deque-double-ended-queue">Deque (double-ended queue)</a></li>
                     <li><a href="#ตัวอย่าง-deque">ตัวอย่าง deque</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="stack">Stack</h4>
+<h4 id="stack">Stack<a class="heading-anchor" href="#stack" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า
 <strong>top</strong></p></li>
@@ -123,30 +122,31 @@ style="width:88.0%" /></p>
 <figcaption><p>Stack and queue behavior. Original diagram for this
 guide.</p></figcaption>
 </figure>
-<h4 id="ตัวอย่างการใช้-vector-เพื่อ-implement-stack">ตัวอย่างการใช้ vector เพื่อ implement stack</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-void printvec(vector&lt;int&gt; &amp;a) {
-  for (auto x : a)
-    printf(&quot;%d &quot;, x);
-  printf(&quot;\n&quot;);
-}
-
-int main() {
-  // stack
-  vector&lt;int&gt; a;
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(4);
-  printvec(a); // 1 2 3 4
-  a.pop_back();
-  a.pop_back();
-  printvec(a); // 1 2
-}</code></pre>
-<h4 id="queue">Queue</h4>
+<h4 id="ตัวอย่างการใช้-vector-เพื่อ-implement-stack">ตัวอย่างการใช้ vector เพื่อ implement stack<a class="heading-anchor" href="#ตัวอย่างการใช้-vector-เพื่อ-implement-stack" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printvec<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> x <span class="op">:</span> a<span class="op">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// stack</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> a<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  printvec<span class="op">(</span>a<span class="op">);</span> <span class="co">// 1 2 3 4</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  printvec<span class="op">(</span>a<span class="op">);</span> <span class="co">// 1 2</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="queue">Queue<a class="heading-anchor" href="#queue" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>queue (แถวคอย) เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลจะเข้าได้ทางหนึ่งที่เรียกว่า
 <strong>rear</strong> และจะถูกนำออกได้ในอีกทางที่เรียกว่า
@@ -164,7 +164,7 @@ int main() {
 </ul></li>
 </ul>
 <p>ดูภาพรวม queue ในรูปเดียวกับ stack ด้านบน</p>
-<h4 id="stack-vs-queue">Stack vs Queue</h4>
+<h4 id="stack-vs-queue">Stack vs Queue<a class="heading-anchor" href="#stack-vs-queue" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
 <tr>
@@ -195,7 +195,7 @@ int main() {
 </tr>
 </tbody>
 </table>
-<h4 id="deque-double-ended-queue">Deque (double-ended queue)</h4>
+<h4 id="deque-double-ended-queue">Deque (double-ended queue)<a class="heading-anchor" href="#deque-double-ended-queue" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ใน STL จะมีโครงสร้างข้อมูลชื่อ deque
 โดยจะเป็นโครงสร้างข้อมูลเชิงเส้นที่สามารถเพิ่มลบข้อมูลได้ทั้งสองทิศทางด้วยคำสั่ง</p>
@@ -206,31 +206,46 @@ int main() {
 <li><p>pop_back</p></li>
 </ul></li>
 </ul>
-<h4 id="ตัวอย่าง-deque">ตัวอย่าง deque</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-void printq(deque&lt;int&gt; &amp;a) {
-  for (auto x : a)
-    printf(&quot;%d &quot;, x);
-  printf(&quot;\n&quot;);
-}
-
-int main() {
-  // double-ended queue
-  deque&lt;int&gt; b;
-  b.push_back(1);
-  b.push_back(2);
-  b.push_back(3);
-  b.push_back(4);
-  printq(b); // 1 2 3 4
-  b.pop_front();
-  b.pop_front();
-  printq(b); // 3 4
-  b.pop_back();
-  printq(b); // 3
-}</code></pre>
+<h4 id="ตัวอย่าง-deque">ตัวอย่าง deque<a class="heading-anchor" href="#ตัวอย่าง-deque" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printq<span class="op">(</span>deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> x <span class="op">:</span> a<span class="op">)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// double-ended queue</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> b<span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  printq<span class="op">(</span>b<span class="op">);</span> <span class="co">// 1 2 3 4</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>pop_front<span class="op">();</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>pop_front<span class="op">();</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  printq<span class="op">(</span>b<span class="op">);</span> <span class="co">// 3 4</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  printq<span class="op">(</span>b<span class="op">);</span> <span class="co">// 3</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a
+href="https://cses.fi/problemset/task/1073">Towers</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2162">Josephus Problem
+I</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2163">Josephus Problem
+II</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="2005_big-o-notation.html" class="prev">Big O Notation</a>
@@ -241,8 +256,24 @@ int main() {
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

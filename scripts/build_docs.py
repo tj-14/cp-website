@@ -2,11 +2,13 @@
 """Build the GitHub Pages site from book/content/*.typ.
 
 The Typst content files are the source of truth. This script generates every
-HTML page in docs/, including index.html, so the website and book stay aligned.
+HTML page in docs/, including index.html, 404.html, robots.txt and
+sitemap.xml, so the website and book stay aligned.
 """
 
 from __future__ import annotations
 
+import datetime
 import html
 import re
 import shutil
@@ -20,6 +22,20 @@ BOOK = ROOT / "book" / "content"
 DOCS = ROOT / "docs"
 BOOK_ASSETS = ROOT / "book" / "assets"
 DOCS_ASSETS = DOCS / "assets"
+
+SITE_URL = "https://tj-14.github.io/cp-website"
+SITE_TITLE = "คู่มือโอลิมปิกคอมพิวเตอร์"
+SITE_TAGLINE = "Computer Olympiad Guide for Thai High School Students"
+DEFAULT_DESCRIPTION = "คู่มือการเขียนโปรแกรมเชิงแข่งขันสำหรับนักเรียนไทย สรุปอัลกอริทึมและโครงสร้างข้อมูลตั้งแต่พื้นฐานจนถึงระดับสูง พร้อมโจทย์ฝึกฝนจาก CSES และ programming.in.th"
+
+KATEX_VERSION = "0.16.47"
+KATEX_INTEGRITY = {
+    "css": "sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA",
+    "js": "sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp",
+    "auto": "sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz",
+}
+
+YEAR = datetime.date.today().year
 
 SECTIONS = [
     (
@@ -88,17 +104,58 @@ SECTIONS = [
 ]
 
 ORDER = [item for _, _, items in SECTIONS for item in items]
+SECTION_OF = {slug: section_title for section_title, _, items in SECTIONS for slug, _ in items}
 
-KATEX_HEAD = """    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
+KATEX_HEAD = f"""    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.css" integrity="{KATEX_INTEGRITY['css']}" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.js" integrity="{KATEX_INTEGRITY['js']}" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/contrib/auto-render.min.js" integrity="{KATEX_INTEGRITY['auto']}" crossorigin="anonymous"
+        onload="renderMathInElement(document.body, {{
             delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
+                {{left: '$$', right: '$$', display: true}},
+                {{left: '$', right: '$', display: false}}
             ],
             throwOnError: false
-        });"></script>"""
+        }});"></script>"""
+
+COPY_BUTTON_SCRIPT = """    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>"""
+
+SEARCH_SCRIPT = """    <script>
+        const searchInput = document.getElementById('topic-search');
+        const results = document.getElementById('search-results');
+        const items = Array.from(results.querySelectorAll('li:not(.search-empty)'));
+        const emptyItem = results.querySelector('.search-empty');
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim().toLowerCase();
+            results.hidden = query.length === 0;
+            let visible = 0;
+            items.forEach((item) => {
+                const show = item.dataset.title.includes(query);
+                item.hidden = !show;
+                if (show) visible += 1;
+            });
+            if (emptyItem) emptyItem.hidden = visible !== 0;
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === '/' && event.target !== searchInput && !event.metaKey && !event.ctrlKey && !event.altKey) {
+                event.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>"""
 
 
 def shift_headings(fragment: str) -> str:
@@ -157,7 +214,7 @@ def enhance_resource_paragraphs(fragment: str) -> str:
 
 def render_content(path: Path) -> str:
     result = subprocess.run(
-        ["pandoc", "--no-highlight", "-f", "typst", "-t", "html", str(path)],
+        ["pandoc", "-f", "typst", "-t", "html", str(path)],
         cwd=ROOT,
         check=True,
         text=True,
@@ -167,10 +224,109 @@ def render_content(path: Path) -> str:
     fragment = fragment.replace("../assets/", "assets/")
     fragment = fragment.replace("book/assets/", "assets/")
     fragment = re.sub(r'src="[^"]*/book/(?:content/)?assets/', 'src="assets/', fragment)
-    fragment = re.sub(r'<div class="sourceCode"[^>]*>\s*<pre[^>]*>', "<pre>", fragment)
+    fragment = re.sub(r'<div class="sourceCode"[^>]*>\s*(<pre[^>]*>)', r"\1", fragment)
     fragment = re.sub(r"</pre>\s*</div>", "</pre>", fragment)
     fragment = enhance_resource_paragraphs(fragment)
     return fragment
+
+
+def slugify(text: str) -> str:
+    text = re.sub(r"<[^>]+>", "", text)
+    text = html.unescape(text).strip().lower()
+    text = re.sub(r"[^\wก-๙]+", "-", text, flags=re.UNICODE)
+    return text.strip("-") or "section"
+
+
+def add_heading_anchors(fragment: str) -> tuple[str, list[tuple[str, str]]]:
+    used: dict[str, int] = {}
+    sections: list[tuple[str, str]] = []
+
+    def repl(match: re.Match[str]) -> str:
+        tag, attrs, inner = match.group(1), match.group(2), match.group(3)
+        label = re.sub(r"<[^>]+>", "", html.unescape(inner)).strip()
+        id_match = re.search(r'id="([^"]+)"', attrs)
+        if id_match:
+            section_id = id_match.group(1)
+        else:
+            base = slugify(inner)
+            count = used.get(base, 0)
+            used[base] = count + 1
+            section_id = base if count == 0 else f"{base}-{count + 1}"
+            attrs = f'{attrs} id="{section_id}"'
+        anchor = f'<a class="heading-anchor" href="#{section_id}" aria-hidden="true" tabindex="-1">#</a>'
+        if tag == "h4":
+            sections.append((section_id, label))
+        return f"<{tag}{attrs}>{inner}{anchor}</{tag}>"
+
+    return re.sub(r"<(h[2-5])([^>]*)>(.*?)</\1>", repl, fragment, flags=re.S), sections
+
+
+def insert_lesson_toc(fragment: str, sections: list[tuple[str, str]]) -> str:
+    if len(sections) < 3:
+        return fragment
+    match = re.search(r"<h3[^>]*>.*?</h3>", fragment, re.S)
+    if not match:
+        return fragment
+    links = "\n".join(
+        f'                    <li><a href="#{section_id}">{html.escape(label)}</a></li>'
+        for section_id, label in sections
+    )
+    toc = f"""
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+{links}
+                </ul>
+            </nav>"""
+    return fragment[: match.end()] + toc + fragment[match.end() :]
+
+
+def page_description(fragment: str) -> str:
+    match = re.search(r"<p>(.*?)</p>", fragment, re.S)
+    text = ""
+    if match:
+        text = re.sub(r"<[^>]+>", "", match.group(1))
+        text = html.unescape(text)
+        text = re.sub(r"\\\((.*?)\\\)", r"\1", text)
+        text = re.sub(r"\s+", " ", text).strip()
+    if len(text) < 20:
+        text = DEFAULT_DESCRIPTION
+    if len(text) > 157:
+        text = text[:157].rsplit(" ", 1)[0] + "…"
+    return text
+
+
+def page_head(title: str, description: str, canonical: str | None = None, with_math: bool = False) -> str:
+    canonical_html = f'    <link rel="canonical" href="{html.escape(canonical, quote=True)}">\n' if canonical else ""
+    og_url = f'    <meta property="og:url" content="{html.escape(canonical or SITE_URL, quote=True)}">\n' if canonical else ""
+    katex = KATEX_HEAD + "\n" if with_math else ""
+    return f"""    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{html.escape(description, quote=True)}">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{SITE_TITLE}">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="{html.escape(title, quote=True)}">
+    <meta property="og:description" content="{html.escape(description, quote=True)}">
+{og_url}{canonical_html}    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>{html.escape(title)}</title>
+    <link rel="stylesheet" href="style.css">
+{katex}"""
+
+
+def header_html() -> str:
+    return f"""    <header>
+        <h1><a href="index.html">{SITE_TITLE}</a></h1>
+        <p>{SITE_TAGLINE}</p>
+    </header>"""
+
+
+def footer_html() -> str:
+    return f"""    <footer>
+        <p>&copy; 2023-{YEAR} Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>"""
 
 
 def copy_assets() -> None:
@@ -216,21 +372,26 @@ def site_nav(current_slug: str) -> str:
         </aside>"""
 
 
-def wrap_page(slug: str, title: str, content: str, nav: str) -> str:
+def wrap_page(
+    slug: str,
+    title: str,
+    content: str,
+    nav: str,
+    description: str,
+    with_math: bool,
+) -> str:
+    head = page_head(
+        f"{title} | {SITE_TITLE}",
+        description,
+        canonical=f"{SITE_URL}/{slug}.html",
+        with_math=with_math,
+    )
     return f"""<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(title)} | คู่มือโอลิมปิกคอมพิวเตอร์</title>
-    <link rel="stylesheet" href="style.css">
-{KATEX_HEAD}
-</head>
+{head}</head>
 <body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
+{header_html()}
 
     <div class="container page-layout">
 {site_nav(slug)}
@@ -246,26 +407,20 @@ def wrap_page(slug: str, title: str, content: str, nav: str) -> str:
         </main>
     </div>
 
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
-        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
+{footer_html()}
+
+{COPY_BUTTON_SCRIPT}
 </body>
 </html>
 """
 
 
-def build_index() -> str:
+def build_index(entries: list[tuple[str, str, str]]) -> str:
     cards = []
-    search_items = []
     for section_title, section_desc, items in SECTIONS:
         links = []
         for slug, title in items:
             links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a></li>')
-            search_text = html.escape(f"{title} {section_title}".lower())
-            search_items.append(
-                f'                    <li data-title="{search_text}"><a href="{slug}.html"><strong>{html.escape(title)}</strong><span>{html.escape(section_title)}</span></a></li>'
-            )
         cards.append(
             f"""            <section class="course-section">
                 <h3>{html.escape(section_title)}</h3>
@@ -275,20 +430,26 @@ def build_index() -> str:
                 </ol>
             </section>"""
         )
+    search_items = []
+    for slug, title, heading_text in entries:
+        section_title = SECTION_OF.get(slug, "")
+        data_title = f"{title} {section_title} {heading_text}".lower()
+        search_items.append(
+            f'                    <li data-title="{html.escape(data_title, quote=True)}">'
+            f'<a href="{slug}.html"><strong>{html.escape(title)}</strong><span>{html.escape(section_title)}</span></a></li>'
+        )
 
+    head = page_head(
+        f"{SITE_TITLE} | Computer Olympiad Guide",
+        DEFAULT_DESCRIPTION,
+        canonical=f"{SITE_URL}/index.html",
+    )
     return f"""<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คู่มือโอลิมปิกคอมพิวเตอร์ | Computer Olympiad Guide</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+{head}</head>
 <body>
-    <header>
-        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
-        <p>Computer Olympiad Guide for Thai High School Students</p>
-    </header>
+{header_html()}
 
     <main class="container home">
         <section class="home-intro">
@@ -296,10 +457,11 @@ def build_index() -> str:
             <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที เว็บไซต์นี้สร้างจาก source เดียวกับหนังสือใน <code>book/content</code></p>
             <label class="search-box">
                 <span>ค้นหาหัวข้อ</span>
-                <input id="topic-search" type="search" placeholder="เช่น DP, graph, recursion, queue" autocomplete="off">
+                <input id="topic-search" type="search" placeholder="เช่น DP, graph, recursion, queue (กด / เพื่อค้นหา)" autocomplete="off">
             </label>
             <ul id="search-results" class="search-results" hidden>
 {chr(10).join(search_items)}
+                    <li class="search-empty" hidden>ไม่พบหัวข้อที่ค้นหา</li>
             </ul>
         </section>
 
@@ -308,37 +470,79 @@ def build_index() -> str:
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
-        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
-    </footer>
+{footer_html()}
 
-    <script>
-        const searchInput = document.getElementById('topic-search');
-        const results = document.getElementById('search-results');
-        const items = Array.from(results.querySelectorAll('li'));
-        searchInput.addEventListener('input', () => {{
-            const query = searchInput.value.trim().toLowerCase();
-            results.hidden = query.length === 0;
-            items.forEach((item) => {{
-                item.hidden = query.length > 0 && !item.dataset.title.includes(query);
-            }});
-        }});
-    </script>
+{SEARCH_SCRIPT}
 </body>
 </html>
 """
 
 
+def build_404() -> str:
+    head = page_head(
+        f"ไม่พบหน้า | {SITE_TITLE}",
+        "หน้าที่ค้นหาไม่พบ กลับสู่หน้าหลักของคู่มือโอลิมปิกคอมพิวเตอร์",
+    )
+    return f"""<!DOCTYPE html>
+<html lang="th">
+<head>
+{head}</head>
+<body>
+{header_html()}
+
+    <main class="container">
+        <section class="not-found">
+            <h2>ไม่พบหน้าที่ค้นหา (404)</h2>
+            <p>หน้าที่คุณพยายามเปิดอาจถูกย้ายหรือลบไปแล้ว</p>
+            <p><a href="index.html">← กลับสู่หน้าหลัก</a></p>
+        </section>
+    </main>
+
+{footer_html()}
+</body>
+</html>
+"""
+
+
+def write_extras() -> None:
+    (DOCS / "404.html").write_text(build_404(), encoding="utf-8")
+    (DOCS / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n",
+        encoding="utf-8",
+    )
+    today = datetime.date.today().isoformat()
+    pages = ["index.html"]
+    pages += [f"{slug}.html" for slug, _ in ORDER if (BOOK / f"{slug}.typ").exists()]
+    urls = "\n".join(
+        f"  <url><loc>{SITE_URL}/{page}</loc><lastmod>{today}</lastmod></url>"
+        for page in pages
+    )
+    (DOCS / "sitemap.xml").write_text(
+        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n',
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     copy_assets()
-    (DOCS / "index.html").write_text(build_index(), encoding="utf-8")
+    entries: list[tuple[str, str, str]] = []
     for index, (slug, title) in enumerate(ORDER):
         source = BOOK / f"{slug}.typ"
         if not source.exists():
             continue
-        content = render_content(source)
-        (DOCS / f"{slug}.html").write_text(wrap_page(slug, title, content, page_nav(index)), encoding="utf-8")
+        fragment = render_content(source)
+        fragment, sections = add_heading_anchors(fragment)
+        fragment = insert_lesson_toc(fragment, sections)
+        with_math = 'class="math' in fragment
+        description = page_description(fragment)
+        page_html = wrap_page(slug, title, fragment, page_nav(index), description, with_math)
+        (DOCS / f"{slug}.html").write_text(page_html, encoding="utf-8")
+        heading_text = " ".join(label for _, label in sections)
+        entries.append((slug, title, heading_text))
+
+    (DOCS / "index.html").write_text(build_index(entries), encoding="utf-8")
+    write_extras()
+    print(f"Built {len(entries)} lesson pages plus index, 404, robots.txt, sitemap.xml.")
 
 
 if __name__ == "__main__":

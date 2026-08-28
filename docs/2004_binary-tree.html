@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="tree เป็นโครงสร้างข้อมูลแบบมีชนชั้น ซึ่งแตกต่างจาก array, linked list, stack และ queue ที่เป็นโครงสร้างเชิงเส้น">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Binary Tree | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="tree เป็นโครงสร้างข้อมูลแบบมีชนชั้น ซึ่งแตกต่างจาก array, linked list, stack และ queue ที่เป็นโครงสร้างเชิงเส้น">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2004_binary-tree.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2004_binary-tree.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Binary Tree | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
 </head>
 <body>
     <header>
@@ -92,20 +91,20 @@
             </div>
 
             <article class="content">
-<h3>Binary Tree</h3>
+<h3 id="binary-tree">Binary Tree<a class="heading-anchor" href="#binary-tree" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
                     <li><a href="#คำศัพท์">คำศัพท์</a></li>
                     <li><a href="#เมื่อไรถึงใช้-tree">เมื่อไรถึงใช้ tree?</a></li>
-                    <li><a href="#binary-tree">Binary Tree</a></li>
+                    <li><a href="#binary-tree-2">Binary Tree</a></li>
                     <li><a href="#ตัวอย่าง">ตัวอย่าง</a></li>
                     <li><a href="#ใช้-array-ในการสร้าง-binary-tree">ใช้ array ในการสร้าง binary tree</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>tree เป็นโครงสร้างข้อมูลแบบมีชนชั้น ซึ่งแตกต่างจาก array, linked list,
 stack และ queue ที่เป็นโครงสร้างเชิงเส้น</p></li>
@@ -120,7 +119,7 @@ style="width:82.0%" /></p>
 <figcaption><p>Binary tree. Original diagram for this
 guide.</p></figcaption>
 </figure>
-<h4 id="คำศัพท์">คำศัพท์</h4>
+<h4 id="คำศัพท์">คำศัพท์<a class="heading-anchor" href="#คำศัพท์" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>node ด้านบนสุดจะถูกเรียกว่า <strong>root</strong></p></li>
 <li><p>ลูกด้านล่างที่อยู่ติดกับ node โดยตรงจะเรียกว่า
@@ -130,14 +129,15 @@ guide.</p></figcaption>
 <code>f</code> เป็น parent ของ <code>a</code></p></li>
 <li><p>และ node ที่ไม่มีลูกเลยจะเรียกว่า <strong>leaves</strong></p></li>
 </ul>
-<pre class="cpp"><code>      tree
-      ----
-       j    &lt;-- root
-     /   \
-   f      k
- /   \      \
-a     h      z    &lt;-- leaves</code></pre>
-<h4 id="เมื่อไรถึงใช้-tree">เมื่อไรถึงใช้ tree?</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>      tree</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="op">----</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       j    <span class="op">&lt;--</span> root</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>     <span class="op">/</span>   \</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   f      k</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="op">/</span>   \      \</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>a     h      z    <span class="op">&lt;--</span> leaves</span></code></pre>
+<h4 id="เมื่อไรถึงใช้-tree">เมื่อไรถึงใช้ tree?<a class="heading-anchor" href="#เมื่อไรถึงใช้-tree" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>หากต้องการเก็บข้อมูลที่มีลำดับขั้น เช่น ระบบไฟล์ในคอมพิวเตอร์</p></li>
 </ul>
@@ -157,11 +157,11 @@ a     h      z    &lt;-- leaves</code></pre>
 <li><p>tree สามารถเพิ่มลบข้อมูลได้สะดวกกว่าในบางกรณี</p></li>
 <li><p>tree สามารถ implement ในรูปแบบคล้ายกับ linked list ได้</p></li>
 </ul>
-<h4 id="binary-tree">Binary Tree</h4>
+<h4 id="binary-tree-2">Binary Tree<a class="heading-anchor" href="#binary-tree-2" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>คือ tree ที่แต่ละ node มีลูกไม่เกินสองลูก คือ left และ right</p></li>
 </ul>
-<h4 id="ตัวอย่าง">ตัวอย่าง</h4>
+<h4 id="ตัวอย่าง">ตัวอย่าง<a class="heading-anchor" href="#ตัวอย่าง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>Binary Tree node มีส่วนประกอบต่อไปนี้</p>
 <ul>
@@ -170,60 +170,61 @@ a     h      z    &lt;-- leaves</code></pre>
 <li><p>Pointer to right child</p></li>
 </ul></li>
 </ul>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-struct Node {
-  int data;
-  struct Node *left;
-  struct Node *right;
-
-  // val is the key or the value that
-  // has to be added to the data part
-  Node(int val) {
-    data = val;
-
-    // Left and right child for node
-    // will be initialized to null
-    left = NULL;
-    right = NULL;
-  }
-};
-
-int main() {
-  /*create root*/
-  struct Node *root = new Node(1);
-  /* following is the tree after above statement
-
-     1
-     / \
-     NULL NULL
-   */
-
-  root-&gt;left = new Node(2);
-  root-&gt;right = new Node(3);
-  /* 2 and 3 become left and right children of 1
-     1
-     / \\
-     2     3
-     / \\    /  \\
-     NULL NULL NULL NULL
-   */
-
-  root-&gt;left-&gt;left = new Node(4);
-  /* 4 becomes left child of 2
-        1
-     /     \\
-     2        3
-     / \\     / \\
-     4 NULL NULL NULL
-     / \\
-     NULL NULL
-   */
-
-  return 0;
-}</code></pre>
-<h4 id="ใช้-array-ในการสร้าง-binary-tree">ใช้ array ในการสร้าง binary tree</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> data<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>left<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>right<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// val is the key or the value that</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// has to be added to the data part</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  Node<span class="op">(</span><span class="dt">int</span> val<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> val<span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Left and right child for node</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// will be initialized to null</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    left <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    right <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">/*create root*/</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Node <span class="op">*</span>root <span class="op">=</span> <span class="kw">new</span> Node<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* following is the tree after above statement</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">     1</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">     / \</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">     NULL NULL</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">   */</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  root<span class="op">-&gt;</span>left <span class="op">=</span> <span class="kw">new</span> Node<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  root<span class="op">-&gt;</span>right <span class="op">=</span> <span class="kw">new</span> Node<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* 2 and 3 become left and right children of 1</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">     1</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">     / \\</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">     2     3</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">     / \\    /  \\</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">     NULL NULL NULL NULL</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">   */</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  root<span class="op">-&gt;</span>left<span class="op">-&gt;</span>left <span class="op">=</span> <span class="kw">new</span> Node<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* 4 becomes left child of 2</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">        1</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co">     /     \\</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">     2        3</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">     / \\     / \\</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">     4 NULL NULL NULL</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">     / \\</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co">     NULL NULL</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">   */</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="ใช้-array-ในการสร้าง-binary-tree">ใช้ array ในการสร้าง binary tree<a class="heading-anchor" href="#ใช้-array-ในการสร้าง-binary-tree" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ขนาดเรารู้ขนาดของ binary tree แล้วเราสามารถใช้ array ได้</p></li>
 <li><p>Consider node <code>A[i]</code> has</p>
@@ -232,6 +233,20 @@ int main() {
 <li><p><code>A[i*2+1]</code> as right child</p></li>
 </ul></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a
+href="https://cses.fi/problemset/task/1674">Subordinates</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1131">Tree
+Diameter</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1132">Tree Distances
+I</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="2002_dynamic-array.html" class="prev">Dynamic Array</a>
@@ -242,8 +257,24 @@ int main() {
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search คือการลองสำรวจสถานะหรือคำตอบที่เป็นไปได้ทั้งหมดภายใต้เงื่อนไขของโจทย์ เทคนิคนี้เป็นพื้นฐานของ brute force, backtracking, graph traversal และ…">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Search | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="Search คือการลองสำรวจสถานะหรือคำตอบที่เป็นไปได้ทั้งหมดภายใต้เงื่อนไขของโจทย์ เทคนิคนี้เป็นพื้นฐานของ brute force, backtracking, graph traversal และ…">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/3002_search.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/3002_search.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Search | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Search</h3>
+<h3 id="search">Search<a class="heading-anchor" href="#search" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -104,53 +113,55 @@
                     <li><a href="#meet-in-the-middle">Meet in the middle</a></li>
                     <li><a href="#การเลือกเทคนิค">การเลือกเทคนิค</a></li>
                     <li><a href="#ข้อควรระวัง">ข้อควรระวัง</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="หลักการ">หลักการ</h4>
+<h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Search คือการลองสำรวจสถานะหรือคำตอบที่เป็นไปได้ทั้งหมดภายใต้เงื่อนไขของโจทย์
 เทคนิคนี้เป็นพื้นฐานของ brute force, backtracking, graph traversal และ
 optimization หลายแบบ</p>
 <p>ข้อดีคือคิดตรงไปตรงมาและใช้ตรวจคำตอบของวิธีที่ซับซ้อนได้ ข้อเสียคือ state space
 มักโตเร็วมาก จึงต้องวิเคราะห์จำนวนสถานะก่อนเขียนจริง</p>
-<h4 id="motivation-problem">Motivation problem</h4>
+<h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>สมมติมีตัวเลข <span class="math inline"><em>n</em></span> ตัว
 และต้องเลือกบางตัวให้ผลรวมเท่ากับ <span class="math inline"><em>x</em></span>
 วิธี brute force คือพิจารณาทุก subset</p>
-<pre class="cpp"><code>for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
-  int sum = 0;
-  for (int i = 0; i &lt; n; i++) {
-    if (mask &amp; (1 &lt;&lt; i)) sum += a[i];
-  }
-  if (sum == x) {
-    cout &lt;&lt; &quot;found&quot;;
-  }
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> mask <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> mask <span class="op">&lt;</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> n<span class="op">);</span> mask<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mask <span class="op">&amp;</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> i<span class="op">))</span> sum <span class="op">+=</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>sum <span class="op">==</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;found&quot;</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>จำนวน subset คือ <span
 class="math inline">2<sup><em>n</em></sup></span> ดังนั้นวิธีนี้เหมาะกับ <span
 class="math inline"><em>n</em> ≤ 20</span></p>
-<h4 id="generating-permutations">Generating Permutations</h4>
+<h4 id="generating-permutations">Generating Permutations<a class="heading-anchor" href="#generating-permutations" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>เขียน recursive function เพื่อ generate ทุก permutation ที่เป็นไปได้</p>
-<pre class="cpp"><code>vector&lt;int&gt; p;
-vector&lt;bool&gt; used(n);
-
-void gen() {
-  if ((int)p.size() == n) {
-    // process permutation
-    return;
-  }
-  for (int i = 0; i &lt; n; i++) {
-    if (used[i]) continue;
-    used[i] = true;
-    p.push_back(i);
-    gen();
-    p.pop_back();
-    used[i] = false;
-  }
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> p<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> used<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gen<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">((</span><span class="dt">int</span><span class="op">)</span>p<span class="op">.</span>size<span class="op">()</span> <span class="op">==</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// process permutation</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>used<span class="op">[</span>i<span class="op">])</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    p<span class="op">.</span>push_back<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    gen<span class="op">();</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    p<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>จำนวน permutation คือ <span class="math inline"><em>n</em>!</span>
 จึงใช้ได้เฉพาะ <span class="math inline"><em>n</em></span> เล็กมาก</p>
-<h4 id="graph-traversal">Graph Traversal</h4>
+<h4 id="graph-traversal">Graph Traversal<a class="heading-anchor" href="#graph-traversal" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a class="resource-card" href="https://visualgo.net/en/dfsbfs?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
 <ul>
 <li><p>BFS ใช้ queue และสำรวจตามระยะทางจากจุดเริ่มต้น เหมาะกับ shortest path
@@ -165,22 +176,23 @@ void gen() {
 <li><p>Topological Sort</p></li>
 </ul>
 <p>ตัวอย่าง BFS</p>
-<pre class="cpp"><code>queue&lt;int&gt; q;
-vector&lt;int&gt; dist(n, -1);
-
-dist[start] = 0;
-q.push(start);
-
-while (!q.empty()) {
-  int u = q.front();
-  q.pop();
-  for (int v : adj[u]) {
-    if (dist[v] != -1) continue;
-    dist[v] = dist[u] + 1;
-    q.push(v);
-  }
-}</code></pre>
-<h4 id="binary-search-tree">Binary Search Tree</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dist<span class="op">(</span>n<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dist<span class="op">[</span>start<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>q<span class="op">.</span>push<span class="op">(</span>start<span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> adj<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>dist<span class="op">[</span>v<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    dist<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> dist<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="binary-search-tree">Binary Search Tree<a class="heading-anchor" href="#binary-search-tree" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a class="resource-card" href="https://visualgo.net/en/bst?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
 <ul>
 <li><p>create</p></li>
@@ -188,7 +200,7 @@ while (!q.empty()) {
 <li><p>insert(v)</p></li>
 <li><p>remove(v)</p></li>
 </ul>
-<h4 id="meet-in-the-middle">Meet in the middle</h4>
+<h4 id="meet-in-the-middle">Meet in the middle<a class="heading-anchor" href="#meet-in-the-middle" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เป็นเทคนิคที่ถ้า search จากต้นทางแล้ว space ใหญ่เกินไป ให้ search
 จากปลายทางแล้วมาเจอกันตรงกลาง</p></li>
@@ -204,7 +216,7 @@ class="math inline">2<sup>40</sup></span> ซึ่งมากเกินไ�
 <li><p>generate คำตอบย่อยของแต่ละส่วน</p></li>
 <li><p>sort หรือใช้ hash เพื่อหาคู่ที่รวมกันเป็นคำตอบ</p></li>
 </ul>
-<h4 id="การเลือกเทคนิค">การเลือกเทคนิค</h4>
+<h4 id="การเลือกเทคนิค">การเลือกเทคนิค<a class="heading-anchor" href="#การเลือกเทคนิค" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
 <tr>
@@ -247,7 +259,7 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></td>
 </tr>
 </tbody>
 </table>
-<h4 id="ข้อควรระวัง">ข้อควรระวัง</h4>
+<h4 id="ข้อควรระวัง">ข้อควรระวัง<a class="heading-anchor" href="#ข้อควรระวัง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ต้องกำหนด state ให้ชัดว่าอะไรคือข้อมูลที่จำเป็นต่อการตัดสินใจต่อไป</p></li>
 <li><p>อย่าลืม mark visited ใน graph search ไม่เช่นนั้นอาจวนไม่จบ</p></li>
@@ -255,6 +267,20 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></td>
 <li><p>วิเคราะห์จำนวนสถานะก่อนเสมอ เพราะ search
 ที่ถูกต้องแต่ช้าเกินไปจะไม่ผ่านเวลา</p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a
+href="https://cses.fi/problemset/task/1084">Apartments</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1620">Factory
+Machines</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2422">Multiplication
+Table</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="3001_array-manipulation.html" class="prev">Array Manipulation</a>
@@ -265,8 +291,24 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></td>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

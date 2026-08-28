@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge u → v มี u มาก่อน v ในลำดับคำตอบ">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Topological Sort | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge u → v มี u มาก่อน v ในลำดับคำตอบ">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/3101_topo-sort.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/3101_topo-sort.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Topological Sort | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Topological sorting (implementation)</h3>
+<h3 id="topological-sorting-implementation">Topological sorting (implementation)<a class="heading-anchor" href="#topological-sorting-implementation" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -101,9 +110,9 @@
                     <li><a href="#kahn-s-algorithm">Kahn’s algorithm</a></li>
                     <li><a href="#ข้อควรระวัง">ข้อควรระวัง</a></li>
                     <li><a href="#แบบฝึกหัด">แบบฝึกหัด</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
 <p>Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge
 <span class="math inline"><em>u</em> → <em>v</em></span> มี <span
 class="math inline"><em>u</em></span> มาก่อน <span
@@ -112,65 +121,67 @@ class="math inline"><em>v</em></span> ในลำดับคำตอบ</p>
 คือกราฟมีทิศทางที่ไม่มี cycle</p>
 <p><a
 href="https://cp-algorithms.com/graph/topological-sort.html">https://cp-algorithms.com/graph/topological-sort.html</a></p>
-<h4 id="motivation-problem">Motivation problem</h4>
+<h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ถ้ามีวิชาหลายวิชาและบางวิชาต้องเรียนก่อนอีกวิชา เช่น <code>A -&gt; B</code>
 หมายถึงต้องเรียน A ก่อน B เราต้องการลำดับการเรียนที่ไม่ผิด prerequisite</p>
 <p>โจทย์ dependency เช่น build system, ตารางงาน, course planning และ task
 scheduling มักแปลงเป็น topological sort ได้</p>
-<h4 id="dfs-approach">DFS approach</h4>
+<h4 id="dfs-approach">DFS approach<a class="heading-anchor" href="#dfs-approach" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>แนวคิดคือ DFS ลงไปให้สุดก่อน แล้วค่อยนำ vertex ใส่คำตอบตอนกำลังย้อนกลับ ถ้า
 reverse คำตอบหลังจบ DFS จะได้ลำดับ topological order</p>
-<pre class="cpp"><code>int n; // number of vertices
-vector&lt;vector&lt;int&gt;&gt; adj; // adjacency list of graph
-vector&lt;bool&gt; visited;
-vector&lt;int&gt; ans;
-
-void dfs(int v) {
-    visited[v] = true;
-    for (int u : adj[v]) {
-        if (!visited[u])
-            dfs(u);
-    }
-    ans.push_back(v);
-}
-
-void topological_sort() {
-    visited.assign(n, false);
-    ans.clear();
-    for (int i = 0; i &lt; n; ++i) {
-        if (!visited[i])
-            dfs(i);
-    }
-    reverse(ans.begin(), ans.end());
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n<span class="op">;</span> <span class="co">// number of vertices</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">;</span> <span class="co">// adjacency list of graph</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> visited<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> ans<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs<span class="op">(</span><span class="dt">int</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    visited<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">:</span> adj<span class="op">[</span>v<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>visited<span class="op">[</span>u<span class="op">])</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            dfs<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ans<span class="op">.</span>push_back<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> topological_sort<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    visited<span class="op">.</span>assign<span class="op">(</span>n<span class="op">,</span> <span class="kw">false</span><span class="op">);</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    ans<span class="op">.</span>clear<span class="op">();</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>visited<span class="op">[</span>i<span class="op">])</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            dfs<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    reverse<span class="op">(</span>ans<span class="op">.</span>begin<span class="op">(),</span> ans<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>เวลาทำงานคือ <span
 class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> เพราะแต่ละ
 vertex และ edge ถูกพิจารณาจำนวนคงที่</p>
-<h4 id="kahn-s-algorithm">Kahn’s algorithm</h4>
+<h4 id="kahn-s-algorithm">Kahn’s algorithm<a class="heading-anchor" href="#kahn-s-algorithm" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>อีกวิธีคือใช้ indegree และ queue โดยเริ่มจาก vertex ที่ไม่มี edge เข้ามา</p>
-<pre class="cpp"><code>vector&lt;int&gt; indeg(n);
-for (int u = 0; u &lt; n; u++) {
-  for (int v : adj[u]) indeg[v]++;
-}
-
-queue&lt;int&gt; q;
-for (int i = 0; i &lt; n; i++) {
-  if (indeg[i] == 0) q.push(i);
-}
-
-vector&lt;int&gt; order;
-while (!q.empty()) {
-  int u = q.front();
-  q.pop();
-  order.push_back(u);
-  for (int v : adj[u]) {
-    indeg[v]--;
-    if (indeg[v] == 0) q.push(v);
-  }
-}</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> indeg<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> n<span class="op">;</span> u<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> adj<span class="op">[</span>u<span class="op">])</span> indeg<span class="op">[</span>v<span class="op">]++;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>indeg<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> q<span class="op">.</span>push<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> order<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  order<span class="op">.</span>push_back<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> adj<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    indeg<span class="op">[</span>v<span class="op">]--;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>indeg<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ถ้าหลังจบแล้ว <code>order.size() &lt; n</code> แปลว่ากราฟมี cycle จึงไม่มี
 topological order</p>
-<h4 id="ข้อควรระวัง">ข้อควรระวัง</h4>
+<h4 id="ข้อควรระวัง">ข้อควรระวัง<a class="heading-anchor" href="#ข้อควรระวัง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>topological order อาจมีได้หลายคำตอบ</p></li>
 <li><p>ใช้ได้เฉพาะ directed graph</p></li>
@@ -178,11 +189,25 @@ topological order</p>
 <li><p>ถ้าโจทย์ต้องการลำดับเล็กสุด lexicographically ให้ใช้ priority queue แทน
 queue ใน Kahn’s algorithm</p></li>
 </ul>
-<h4 id="แบบฝึกหัด">แบบฝึกหัด</h4>
+<h4 id="แบบฝึกหัด">แบบฝึกหัด<a class="heading-anchor" href="#แบบฝึกหัด" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>TOI14 Technology <a href="#fn1" class="footnote-ref" id="fnref1"
 role="doc-noteref"><sup>1</sup></a></p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1679">Course
+Schedule</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1757">Course Schedule
+II</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1681">Game
+Routes</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -202,8 +227,24 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

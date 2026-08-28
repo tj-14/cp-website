@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="dynamic array เป็น array ที่สามารถยืดหดขนาดได้">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Dynamic Array | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="dynamic array เป็น array ที่สามารถยืดหดขนาดได้">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2002_dynamic-array.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2002_dynamic-array.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Dynamic Array | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +91,7 @@
             </div>
 
             <article class="content">
-<h3>Dynamic Array</h3>
+<h3 id="dynamic-array">Dynamic Array<a class="heading-anchor" href="#dynamic-array" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -101,22 +100,22 @@
                     <li><a href="#การเพิ่มข้อมูล">การเพิ่มข้อมูล</a></li>
                     <li><a href="#delete-element">Delete Element</a></li>
                     <li><a href="#ตัวอย่าง-implementation-แบบไม่ใช้-vector">ตัวอย่าง implementation แบบไม่ใช้ vector</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>dynamic array เป็น array ที่สามารถยืดหดขนาดได้</p></li>
 <li><p>ใน STL จะมี <strong>vector</strong> เป็น dynamic array
 ให้ใช้</p></li>
 </ul>
-<h4 id="แนวทาง">แนวทาง</h4>
+<h4 id="แนวทาง">แนวทาง<a class="heading-anchor" href="#แนวทาง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เมื่อต้องการเพิ่มข้อมูลลงในอาเรย์ แต่อาเรย์นั้นเต็มแล้ว ให้สร้างฟังก์ชันโดย</p></li>
 <li><p>ฟังก์ชันนั้นสร้างอาเรย์ขนาดสองเท่าจากเดิม
 และคัดลอกข้อมูลจากอาเรย์เดิมมาใส่</p></li>
 </ul>
-<h4 id="การเพิ่มข้อมูล">การเพิ่มข้อมูล</h4>
+<h4 id="การเพิ่มข้อมูล">การเพิ่มข้อมูล<a class="heading-anchor" href="#การเพิ่มข้อมูล" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>หากมีการขยายขนาดอาเรย์และคัดลอกข้อมูลจะทำให้ใช้เวลา O(n)</p></li>
 <li><p>แต่กรณีนี้เกิดขึ้นเมื่ออาเรย์เต็มเท่านั้น</p></li>
@@ -130,7 +129,7 @@ style="width:88.0%" /></p>
 <figcaption><p>Dynamic array resize. Original diagram for this
 guide.</p></figcaption>
 </figure>
-<h4 id="delete-element">Delete Element</h4>
+<h4 id="delete-element">Delete Element<a class="heading-anchor" href="#delete-element" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>การลบข้อมูลสามารถทำได้ตามปกติเหมือนอาเรย์ทั่วไป</p></li>
 <li><p>ในทางทฤษฎี สามารถลดขนาดอาเรย์ลงได้ แต่ไม่จำเป็นใน competitive
@@ -143,62 +142,77 @@ style="width:88.0%" /></p>
 <figcaption><p>Deleting an array element by shifting later elements
 left. Original diagram for this guide.</p></figcaption>
 </figure>
-<h4 id="ตัวอย่าง-implementation-แบบไม่ใช้-vector">ตัวอย่าง implementation แบบไม่ใช้ vector</h4>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-int cnt = 0;
-int sz = 1;
-int *A = new int[sz];
-
-void add(int x) {
-  if (cnt == sz) {
-    sz *= 2;
-    int *tmp = new int[sz];
-    for (int i = 0; i &lt; cnt; i++) {
-      tmp[i] = A[i];
-    }
-    free(A);
-    A = tmp;
-  }
-  A[cnt++] = x;
-}
-
-void remove() { cnt--; }
-
-void removeAt(int j) {
-  for (int i = j; i &lt; cnt; i++) {
-    A[i] = A[i + 1];
-  }
-  cnt--;
-}
-
-void print() {
-  printf(&quot;sz = %d, cnt = %d\\n&quot;, sz, cnt);
-  for (int i = 0; i &lt; cnt; i++) {
-    printf(&quot;%d &quot;, A[i]);
-  }
-  printf(&quot;\\n&quot;);
-}
-
-int main() {
-  add(1);
-  print();
-  add(2);
-  print();
-  add(3);
-  print();
-  add(4);
-  add(5);
-  print();
-  add(6);
-  print();
-  remove();
-  print();
-  removeAt(3);
-  print();
-}</code></pre>
+<h4 id="ตัวอย่าง-implementation-แบบไม่ใช้-vector">ตัวอย่าง implementation แบบไม่ใช้ vector<a class="heading-anchor" href="#ตัวอย่าง-implementation-แบบไม่ใช้-vector" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> cnt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sz <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span>A <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>sz<span class="op">];</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>cnt <span class="op">==</span> sz<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    sz <span class="op">*=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>tmp <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>sz<span class="op">];</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      tmp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> A<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    free<span class="op">(</span>A<span class="op">);</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> tmp<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  A<span class="op">[</span>cnt<span class="op">++]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> remove<span class="op">()</span> <span class="op">{</span> cnt<span class="op">--;</span> <span class="op">}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> removeAt<span class="op">(</span><span class="dt">int</span> j<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> j<span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    A<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> A<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  cnt<span class="op">--;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> print<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;sz = </span><span class="sc">%d</span><span class="st">, cnt = </span><span class="sc">%d\\</span><span class="st">n&quot;</span><span class="op">,</span> sz<span class="op">,</span> cnt<span class="op">);</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> A<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span><span class="op">);</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">6</span><span class="op">);</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  remove<span class="op">();</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  removeAt<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/2216">Collecting
+Numbers</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2217">Collecting Numbers
+II</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1640">Sum of Two
+Values</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
                 <a href="2001_linked-list.html" class="prev">Linked List</a>
@@ -209,8 +223,24 @@ int main() {
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

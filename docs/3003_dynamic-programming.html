@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Dynamic Programming | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/3003_dynamic-programming.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/3003_dynamic-programming.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Dynamic Programming | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Dynamic Programming</h3>
+<h3 id="dynamic-programming">Dynamic Programming<a class="heading-anchor" href="#dynamic-programming" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -101,10 +110,10 @@
                     <li><a href="#longest-increasing-subsequence">Longest Increasing Subsequence</a></li>
                     <li><a href="#review">Review</a></li>
                     <li><a href="#เพิ่มเติม">เพิ่มเติม</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="หลักการ">หลักการ</h4>
+<h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ
 greedy</p></li>
@@ -121,7 +130,7 @@ greedy</p></li>
 <ul>
 <li><p>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</p></li>
 </ul>
-<h4 id="ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</h4>
+<h4 id="ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)<a class="heading-anchor" href="#ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า <span
 class="math inline"><em>n</em></span> โดยใช้เหรียญที่มีมูลค่า <span
 class="math inline">{<em>c</em><sub>1</sub>, <em>c</em><sub>2</sub>, ⋯, <em>c</em><sub><em>k</em></sub>}</span>
@@ -190,11 +199,11 @@ class="math inline"><em>n</em></span></p>
 class="math inline"><em>d</em><sub><em>i</em></sub> = <em>m</em> ∈ {(<em>d</em><sub>{<em>i</em> − 1}</sub> + 1, <em>d</em><sub>{<em>i</em> − 3}</sub> + 1, <em>d</em><sub>{<em>i</em> − 4}</sub> + 1)}</span></p>
 <p>ซึ่งเป็น recursive case โดย base case คือ <span
 class="math inline"><em>d</em><sub>0</sub> = 0</span></p>
-<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence</h4>
+<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence<a class="heading-anchor" href="#longest-increasing-subsequence" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a
 href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
-<h4 id="review">Review</h4>
-<h5>คืออะไร?</h5>
+<h4 id="review">Review<a class="heading-anchor" href="#review" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="คืออะไร">คืออะไร?<a class="heading-anchor" href="#คืออะไร" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p>คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่</p></li>
 <li><p>recursion ที่เรียก overlapping sub-problem</p></li>
@@ -204,7 +213,7 @@ href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">h
 <li><p>แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ</p></li>
 <li><p>หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก</p></li>
 </ul>
-<h5>มีอะไรบ้าง?</h5>
+<h5 id="มีอะไรบ้าง">มีอะไรบ้าง?<a class="heading-anchor" href="#มีอะไรบ้าง" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p>quicksum <code>dp[i] = dp[i-1] + a[i]</code></p></li>
 <li><p>knapsack <code>dp[i] = max(dp[i-wi] + ci)</code></p></li>
@@ -244,7 +253,7 @@ class="math inline">2<sup><em>n</em></sup> * <em>n</em></span>,
 <ul>
 <li><p>tribonacci</p></li>
 </ul>
-<h5>example</h5>
+<h5 id="example">example<a class="heading-anchor" href="#example" aria-hidden="true" tabindex="-1">#</a></h5>
 <h6>fibonacci</h6>
 <p><span
 class="math inline"><em>f</em>(<em>n</em>) = <em>f</em>(<em>n</em> − 1) + <em>f</em>(<em>n</em> − 2)</span></p>
@@ -290,7 +299,7 @@ dp[2] = 2
 dp[3] = 3
 dp[4] = 6
 dp[5] =</code></pre>
-<h4 id="เพิ่มเติม">เพิ่มเติม</h4>
+<h4 id="เพิ่มเติม">เพิ่มเติม<a class="heading-anchor" href="#เพิ่มเติม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>An Introduction to Dynamic Programming (aquablitz11) <a
 href="#fn1" class="footnote-ref" id="fnref1"
@@ -299,6 +308,22 @@ role="doc-noteref"><sup>1</sup></a></p></li>
 class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a></p></li>
 </ul>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1633">Dice
+Combinations</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1634">Minimizing
+Coins</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1635">Coin Combinations
+I</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1637">Removing
+Digits</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -321,8 +346,24 @@ href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

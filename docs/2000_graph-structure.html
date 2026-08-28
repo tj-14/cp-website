@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ edge">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Graph Structure | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ edge">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/2000_graph-structure.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/2000_graph-structure.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Graph Structure | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
         onload="renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -15,7 +25,6 @@
             ],
             throwOnError: false
         });"></script>
-
 </head>
 <body>
     <header>
@@ -92,7 +101,7 @@
             </div>
 
             <article class="content">
-<h3>Graph Structure</h3>
+<h3 id="graph-structure">Graph Structure<a class="heading-anchor" href="#graph-structure" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
@@ -102,10 +111,10 @@
                     <li><a href="#terminology">Terminology</a></li>
                     <li><a href="#representation">Representation</a></li>
                     <li><a href="#traversal">Traversal</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-
-<h4 id="คำอธิบาย">คำอธิบาย</h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>กราฟเป็นโครงสร้างข้อมูลไม่เชิงเส้น ประกอบด้วย node (vertex) และ
 edge</p></li>
@@ -113,7 +122,7 @@ edge</p></li>
 <p>&gt; A Graph consists of a finite set of vertices (or nodes) and set
 of Edges which connect a pair of nodes</p></li>
 </ul>
-<h4 id="example">Example</h4>
+<h4 id="example">Example<a class="heading-anchor" href="#example" aria-hidden="true" tabindex="-1">#</a></h4>
 <figure>
 <p><img
 src="assets/diagrams/undirected-graph.svg"
@@ -133,7 +142,7 @@ class="math inline"><em>E</em> = {01, 12, 23, 34, 04, 14, 13}</s
 <li><p>เช่น ใน Facebook บุคคลเป็น node ที่เก็บข้อมูลไอดี ชื่อ เพศ ต่าง ๆ
 และเชื่อมกันด้วยเส้นเชื่อมประเภทต่าง ๆ เช่น การเป็นเพื่อน</p></li>
 </ul>
-<h4 id="type">Type</h4>
+<h4 id="type">Type<a class="heading-anchor" href="#type" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Interactive reference: Introduction to Graphs by CS Academy <a
 href="#fn1" class="footnote-ref" id="fnref1"
 role="doc-noteref"><sup>1</sup></a></p>
@@ -145,7 +154,7 @@ role="doc-noteref"><sup>1</sup></a></p>
 <li><p>Unweighted graph คือกราฟที่ edge ทุกเส้นนับเท่ากัน</p></li>
 <li><p>Simple graph คือไม่มี self-loop และไม่มี edge ซ้ำระหว่างคู่เดิม</p></li>
 </ul>
-<h4 id="terminology">Terminology</h4>
+<h4 id="terminology">Terminology<a class="heading-anchor" href="#terminology" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>vertex หรือ node: จุดในกราฟ</p></li>
 <li><p>edge: เส้นเชื่อมระหว่าง vertex</p></li>
@@ -159,7 +168,7 @@ role="doc-noteref"><sup>1</sup></a></p>
 <li><p>indegree: จำนวน edge ที่ชี้เข้ามา</p></li>
 <li><p>outdegree: จำนวน edge ที่ชี้ออกไป</p></li>
 </ul>
-<h4 id="representation">Representation</h4>
+<h4 id="representation">Representation<a class="heading-anchor" href="#representation" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Interactive reference: Graph Representation by CS Academy <a
 href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a></p>
@@ -167,7 +176,7 @@ role="doc-noteref"><sup>2</sup></a></p>
 <li><p>adjacency matrix</p></li>
 <li><p>adjacency list</p></li>
 </ul>
-<h5>Adjacency matrix</h5>
+<h5 id="adjacency-matrix">Adjacency matrix<a class="heading-anchor" href="#adjacency-matrix" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>ใช้ตาราง <span class="math inline"><em>n</em> × <em>n</em></span>
 เก็บว่า edge ระหว่างคู่ vertex มีหรือไม่</p>
 <ul>
@@ -179,10 +188,11 @@ class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p></li>
 <li><p>เหมาะกับกราฟหนาแน่นหรือ <span class="math inline"><em>n</em></span>
 เล็ก</p></li>
 </ul>
-<pre class="cpp"><code>vector&lt;vector&lt;int&gt;&gt; adj(n, vector&lt;int&gt;(n, 0));
-adj[u][v] = 1;
-adj[v][u] = 1; // ถ้าเป็น undirected graph</code></pre>
-<h5>Adjacency list</h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">(</span>n<span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>n<span class="op">,</span> <span class="dv">0</span><span class="op">));</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>u<span class="op">][</span>v<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>v<span class="op">][</span>u<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// ถ้าเป็น undirected graph</span></span></code></pre>
+<h5 id="adjacency-list">Adjacency list<a class="heading-anchor" href="#adjacency-list" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เก็บรายชื่อเพื่อนบ้านของแต่ละ vertex</p>
 <ul>
 <li><p>ใช้หน่วยความจำ <span
@@ -190,13 +200,15 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></li>
 <li><p>เหมาะกับกราฟส่วนใหญ่ในการแข่งขัน</p></li>
 <li><p>เดิน edge ทั้งหมดได้เร็ว</p></li>
 </ul>
-<pre class="cpp"><code>vector&lt;vector&lt;int&gt;&gt; adj(n);
-adj[u].push_back(v);
-adj[v].push_back(u); // ถ้าเป็น undirected graph</code></pre>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>v<span class="op">].</span>push_back<span class="op">(</span>u<span class="op">);</span> <span class="co">// ถ้าเป็น undirected graph</span></span></code></pre>
 <p>ถ้าเป็น weighted graph ให้เก็บ pair</p>
-<pre class="cpp"><code>vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj(n);
-adj[u].push_back({v, w});</code></pre>
-<h4 id="traversal">Traversal</h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;&gt;</span> adj<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">({</span>v<span class="op">,</span> w<span class="op">});</span></span></code></pre>
+<h4 id="traversal">Traversal<a class="heading-anchor" href="#traversal" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a
 href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
 <ul>
@@ -207,6 +219,20 @@ sort</p></li>
 </ul>
 <p>เวลาทำงานของ traversal บน adjacency list คือ <span
 class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
+โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1192">Counting
+Rooms</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1193">Labyrinth</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1666">Building
+Roads</a></p></li>
+</ul>
+<p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
+Set</a> และ <a
+href="https://programming.in.th/">programming.in.th</a></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -229,8 +255,24 @@ href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
     </div>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | <a href="index.html">หน้าหลัก</a></p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
 </body>
 </html>

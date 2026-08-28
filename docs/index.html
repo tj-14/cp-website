@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="คู่มือการเขียนโปรแกรมเชิงแข่งขันสำหรับนักเรียนไทย สรุปอัลกอริทึมและโครงสร้างข้อมูลตั้งแต่พื้นฐานจนถึงระดับสูง พร้อมโจทย์ฝึกฝนจาก CSES และ programming.in.th">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="คู่มือโอลิมปิกคอมพิวเตอร์ | Computer Olympiad Guide">
+    <meta property="og:description" content="คู่มือการเขียนโปรแกรมเชิงแข่งขันสำหรับนักเรียนไทย สรุปอัลกอริทึมและโครงสร้างข้อมูลตั้งแต่พื้นฐานจนถึงระดับสูง พร้อมโจทย์ฝึกฝนจาก CSES และ programming.in.th">
+    <meta property="og:url" content="https://tj-14.github.io/cp-website/index.html">
+    <link rel="canonical" href="https://tj-14.github.io/cp-website/index.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>คู่มือโอลิมปิกคอมพิวเตอร์ | Computer Olympiad Guide</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,38 +28,39 @@
             <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที เว็บไซต์นี้สร้างจาก source เดียวกับหนังสือใน <code>book/content</code></p>
             <label class="search-box">
                 <span>ค้นหาหัวข้อ</span>
-                <input id="topic-search" type="search" placeholder="เช่น DP, graph, recursion, queue" autocomplete="off">
+                <input id="topic-search" type="search" placeholder="เช่น DP, graph, recursion, queue (กด / เพื่อค้นหา)" autocomplete="off">
             </label>
             <ul id="search-results" class="search-results" hidden>
-                    <li data-title="โครงสร้างเนื้อหาการสอน เริ่มต้น"><a href="0000_competitive-programming-starter.html"><strong>โครงสร้างเนื้อหาการสอน</strong><span>เริ่มต้น</span></a></li>
-                    <li data-title="การเขียนโปรแกรมเชิงแข่งขัน ค่าย 1: programming basics"><a href="1001_basic.html"><strong>การเขียนโปรแกรมเชิงแข่งขัน</strong><span>ค่าย 1: Programming Basics</span></a></li>
-                    <li data-title="standard template library ค่าย 1: programming basics"><a href="1002_stl.html"><strong>Standard Template Library</strong><span>ค่าย 1: Programming Basics</span></a></li>
-                    <li data-title="c++ syntax ค่าย 1: programming basics"><a href="1003_syntax.html"><strong>C++ Syntax</strong><span>ค่าย 1: Programming Basics</span></a></li>
-                    <li data-title="recursion ค่าย 1: programming basics"><a href="1004_recursion.html"><strong>Recursion</strong><span>ค่าย 1: Programming Basics</span></a></li>
-                    <li data-title="function ค่าย 1: programming basics"><a href="1005_function.html"><strong>Function</strong><span>ค่าย 1: Programming Basics</span></a></li>
-                    <li data-title="big o notation ค่าย 2: data structures"><a href="2005_big-o-notation.html"><strong>Big O Notation</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="stack and queue ค่าย 2: data structures"><a href="2010_stack-queue.html"><strong>Stack and Queue</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="linked list ค่าย 2: data structures"><a href="2001_linked-list.html"><strong>Linked List</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="dynamic array ค่าย 2: data structures"><a href="2002_dynamic-array.html"><strong>Dynamic Array</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="binary tree ค่าย 2: data structures"><a href="2004_binary-tree.html"><strong>Binary Tree</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="heap ค่าย 2: data structures"><a href="2008_heap.html"><strong>Heap</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="priority queue ค่าย 2: data structures"><a href="2006_priority-queue.html"><strong>Priority Queue</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="binary search tree ค่าย 2: data structures"><a href="2003_binary-search-tree.html"><strong>Binary Search Tree</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="set and map ค่าย 2: data structures"><a href="2007_set-map.html"><strong>Set and Map</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="graph structure ค่าย 2: data structures"><a href="2000_graph-structure.html"><strong>Graph Structure</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="hash table ค่าย 2: data structures"><a href="2011_hash-table.html"><strong>Hash Table</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="review ค่าย 2: data structures"><a href="2009_review.html"><strong>Review</strong><span>ค่าย 2: Data Structures</span></a></li>
-                    <li data-title="greedy algorithm ต่อยอด: algorithms"><a href="3000_greedy-algorithm.html"><strong>Greedy Algorithm</strong><span>ต่อยอด: Algorithms</span></a></li>
-                    <li data-title="array manipulation ต่อยอด: algorithms"><a href="3001_array-manipulation.html"><strong>Array Manipulation</strong><span>ต่อยอด: Algorithms</span></a></li>
-                    <li data-title="search ต่อยอด: algorithms"><a href="3002_search.html"><strong>Search</strong><span>ต่อยอด: Algorithms</span></a></li>
-                    <li data-title="dynamic programming ต่อยอด: algorithms"><a href="3003_dynamic-programming.html"><strong>Dynamic Programming</strong><span>ต่อยอด: Algorithms</span></a></li>
-                    <li data-title="ad-hoc problems ต่อยอด: algorithms"><a href="3004_adhoc.html"><strong>Ad-hoc Problems</strong><span>ต่อยอด: Algorithms</span></a></li>
-                    <li data-title="divide and conquer ต่อยอด: algorithms"><a href="3005_divide-conquer.html"><strong>Divide and Conquer</strong><span>ต่อยอด: Algorithms</span></a></li>
-                    <li data-title="graph algorithm graph algorithms"><a href="3100_graph-algorithm.html"><strong>Graph Algorithm</strong><span>Graph Algorithms</span></a></li>
-                    <li data-title="topological sort graph algorithms"><a href="3101_topo-sort.html"><strong>Topological Sort</strong><span>Graph Algorithms</span></a></li>
-                    <li data-title="path and circuit graph algorithms"><a href="3102_path-circuit.html"><strong>Path and Circuit</strong><span>Graph Algorithms</span></a></li>
-                    <li data-title="dynamic programming advanced เพิ่มเติม"><a href="4000_dp.html"><strong>Dynamic Programming Advanced</strong><span>เพิ่มเติม</span></a></li>
-                    <li data-title="resources เพิ่มเติม"><a href="9000_resources.html"><strong>Resources</strong><span>เพิ่มเติม</span></a></li>
+                    <li data-title="โครงสร้างเนื้อหาการสอน เริ่มต้น "><a href="0000_competitive-programming-starter.html"><strong>โครงสร้างเนื้อหาการสอน</strong><span>เริ่มต้น</span></a></li>
+                    <li data-title="การเขียนโปรแกรมเชิงแข่งขัน ค่าย 1: programming basics หลักการ การบริหารเวลา time complexity โจทย์ฝึกฝน (practice problems)"><a href="1001_basic.html"><strong>การเขียนโปรแกรมเชิงแข่งขัน</strong><span>ค่าย 1: Programming Basics</span></a></li>
+                    <li data-title="standard template library ค่าย 1: programming basics max/min sort vector pair โจทย์ฝึกฝน (practice problems)"><a href="1002_stl.html"><strong>Standard Template Library</strong><span>ค่าย 1: Programming Basics</span></a></li>
+                    <li data-title="c++ syntax ค่าย 1: programming basics โปรแกรมที่ใช้เขียน โค้ดเริ่มต้น comments variables data types input/output control structures arrays strings functions array หลายมิติ โจทย์ฝึกฝน (practice problems)"><a href="1003_syntax.html"><strong>C++ Syntax</strong><span>ค่าย 1: Programming Basics</span></a></li>
+                    <li data-title="recursion ค่าย 1: programming basics แนวคิด การเขียนโปรแกรม วิเคราะห์ประสิทธิภาพ โจทย์ตัวอย่าง - factorial โจทย์ตัวอย่าง - fibonacci โจทย์ตัวอย่าง - permutation ปัญหาที่พบบ่อย โจทย์แนะนำ โจทย์ฝึกฝน (practice problems)"><a href="1004_recursion.html"><strong>Recursion</strong><span>ค่าย 1: Programming Basics</span></a></li>
+                    <li data-title="function ค่าย 1: programming basics แนวคิด การเขียนโปรแกรม โจทย์ตัวอย่าง - ค่าถัดไปของฟังก์ชันเวียนเกิด โจทย์ตัวอย่าง - ระยะห่างระหว่างสองจุด โจทย์ตัวอย่าง - ระยะห่าง manhattan ปัญหาที่พบบ่อย โจทย์ฝึกฝน (practice problems)"><a href="1005_function.html"><strong>Function</strong><span>ค่าย 1: Programming Basics</span></a></li>
+                    <li data-title="big o notation ค่าย 2: data structures การเขียนโปรแกรมแข่งขันประกอบด้วย การออกแบบอัลกอริทึม การ implement สร้างอัลกอริทึม การวิเคราะห์อัลกอรึทึม motivation problem ประสิทธิภาพของอัลกอริทึม time complexity กฏของการคำนวณ การวนซ้ำ order of magnitude phase กรณีหลายตัวแปร recursion complexity classes การประเมินประสิทธิภาพ ตัวแปร constant space complexity โจทย์ฝึกฝน (practice problems)"><a href="2005_big-o-notation.html"><strong>Big O Notation</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="stack and queue ค่าย 2: data structures stack ตัวอย่างการใช้ vector เพื่อ implement stack queue stack vs queue deque (double-ended queue) ตัวอย่าง deque โจทย์ฝึกฝน (practice problems)"><a href="2010_stack-queue.html"><strong>Stack and Queue</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="linked list ค่าย 2: data structures คำอธิบาย singly linked list ตัวอย่างการ implement singly linked list operations doubly linked list โจทย์ฝึกฝน (practice problems)"><a href="2001_linked-list.html"><strong>Linked List</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="dynamic array ค่าย 2: data structures คำอธิบาย แนวทาง การเพิ่มข้อมูล delete element ตัวอย่าง implementation แบบไม่ใช้ vector โจทย์ฝึกฝน (practice problems)"><a href="2002_dynamic-array.html"><strong>Dynamic Array</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="binary tree ค่าย 2: data structures คำอธิบาย คำศัพท์ เมื่อไรถึงใช้ tree? binary tree ตัวอย่าง ใช้ array ในการสร้าง binary tree โจทย์ฝึกฝน (practice problems)"><a href="2004_binary-tree.html"><strong>Binary Tree</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="heap ค่าย 2: data structures คำอธิบาย คุณสมบัติ operations (min heap) ตัวอย่างการ implement โจทย์ฝึกฝน (practice problems)"><a href="2008_heap.html"><strong>Heap</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="priority queue ค่าย 2: data structures คำอธิบาย operations implementation ตัวอย่าง (stl) ใช้กับ pair ข้อควรระวัง โจทย์ฝึกฝน (practice problems)"><a href="2006_priority-queue.html"><strong>Priority Queue</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="binary search tree ค่าย 2: data structures description operations example โจทย์ฝึกฝน (practice problems)"><a href="2003_binary-search-tree.html"><strong>Binary Search Tree</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="set and map ค่าย 2: data structures คำอธิบาย ข้อแตกต่าง set example map example โจทย์ฝึกฝน (practice problems)"><a href="2007_set-map.html"><strong>Set and Map</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="graph structure ค่าย 2: data structures คำอธิบาย example type terminology representation traversal โจทย์ฝึกฝน (practice problems)"><a href="2000_graph-structure.html"><strong>Graph Structure</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="hash table ค่าย 2: data structures idea polynomial hashing ตัวอย่างโปรแกรม collision open addressing เปรียบเทียบ โจทย์ฝึกฝน (practice problems)"><a href="2011_hash-table.html"><strong>Hash Table</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="review ค่าย 2: data structures stack and queue linked list dynamic array binary tree heap priority queue binary search tree set, map graph hash table โจทย์ฝึกฝน (practice problems)"><a href="2009_review.html"><strong>Review</strong><span>ค่าย 2: Data Structures</span></a></li>
+                    <li data-title="greedy algorithm ต่อยอด: algorithms หลักการ ปัญหาการทอนเหรียญ วิธีพิสูจน์ที่พบบ่อย ปัญหาการจัดตารางเวลา โจทย์ที่มักใช้ greedy checklist โจทย์ฝึกฝน (practice problems)"><a href="3000_greedy-algorithm.html"><strong>Greedy Algorithm</strong><span>ต่อยอด: Algorithms</span></a></li>
+                    <li data-title="array manipulation ต่อยอด: algorithms คำอธิบาย motivation problem prefix sum difference array fenwick tree segment tree เลือกใช้อะไรดี แหล่งฝึก โจทย์ฝึกฝน (practice problems)"><a href="3001_array-manipulation.html"><strong>Array Manipulation</strong><span>ต่อยอด: Algorithms</span></a></li>
+                    <li data-title="search ต่อยอด: algorithms หลักการ motivation problem generating permutations graph traversal binary search tree meet in the middle การเลือกเทคนิค ข้อควรระวัง โจทย์ฝึกฝน (practice problems)"><a href="3002_search.html"><strong>Search</strong><span>ต่อยอด: Algorithms</span></a></li>
+                    <li data-title="dynamic programming ต่อยอด: algorithms หลักการ ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ greedy) longest increasing subsequence review เพิ่มเติม โจทย์ฝึกฝน (practice problems)"><a href="3003_dynamic-programming.html"><strong>Dynamic Programming</strong><span>ต่อยอด: Algorithms</span></a></li>
+                    <li data-title="ad-hoc problems ต่อยอด: algorithms หลักการ วิธีคิด simulation counting and frequency string checklist ก่อนส่ง โจทย์ฝึกฝน (practice problems)"><a href="3004_adhoc.html"><strong>Ad-hoc Problems</strong><span>ต่อยอด: Algorithms</span></a></li>
+                    <li data-title="divide and conquer ต่อยอด: algorithms หลักการ binary search more on binary search closest pair ปัญหาเลขยกกำลัง จำนวน fibonacci merge sort square root decomposition โจทย์ฝึกฝน (practice problems)"><a href="3005_divide-conquer.html"><strong>Divide and Conquer</strong><span>ต่อยอด: Algorithms</span></a></li>
+                    <li data-title="graph algorithm graph algorithms search in graph colorings connectivity check finding cycles bipartiteness check dijkstra’s algorithm (implementation) bellman-ford floyd-warshall (implementation) johnson (exist) a* search kruskal’s (implementation) prim’s diameter lowest common ancestor (implementation) euler tour technique challenge kosaraju’s challenge เพิ่มเติม โจทย์ฝึกฝน (practice problems)"><a href="3100_graph-algorithm.html"><strong>Graph Algorithm</strong><span>Graph Algorithms</span></a></li>
+                    <li data-title="topological sort graph algorithms motivation problem dfs approach kahn’s algorithm ข้อควรระวัง แบบฝึกหัด โจทย์ฝึกฝน (practice problems)"><a href="3101_topo-sort.html"><strong>Topological Sort</strong><span>Graph Algorithms</span></a></li>
+                    <li data-title="path and circuit graph algorithms eulerian hamiltonian เปรียบเทียบ ตัวอย่างโจทย์ โจทย์ฝึกฝน (practice problems)"><a href="3102_path-circuit.html"><strong>Path and Circuit</strong><span>Graph Algorithms</span></a></li>
+                    <li data-title="dynamic programming advanced เพิ่มเติม โจทย์ฝึกฝน (practice problems)"><a href="4000_dp.html"><strong>Dynamic Programming Advanced</strong><span>เพิ่มเติม</span></a></li>
+                    <li data-title="resources เพิ่มเติม สำหรับก่อน สอวน. ค่าย 1 สำหรับ สอวน. ค่าย 1 สำหรับ สอวน. ค่าย 2 สำหรับขั้นต่อไป วิธีใช้เวลาอ่านเฉลย checklist การฝึก"><a href="9000_resources.html"><strong>Resources</strong><span>เพิ่มเติม</span></a></li>
+                    <li class="search-empty" hidden>ไม่พบหัวข้อที่ค้นหา</li>
             </ul>
         </section>
 
@@ -123,20 +134,31 @@
     </main>
 
     <footer>
-        <p>&copy; 2023-2024 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
         <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
     </footer>
 
     <script>
         const searchInput = document.getElementById('topic-search');
         const results = document.getElementById('search-results');
-        const items = Array.from(results.querySelectorAll('li'));
+        const items = Array.from(results.querySelectorAll('li:not(.search-empty)'));
+        const emptyItem = results.querySelector('.search-empty');
         searchInput.addEventListener('input', () => {
             const query = searchInput.value.trim().toLowerCase();
             results.hidden = query.length === 0;
+            let visible = 0;
             items.forEach((item) => {
-                item.hidden = query.length > 0 && !item.dataset.title.includes(query);
+                const show = item.dataset.title.includes(query);
+                item.hidden = !show;
+                if (show) visible += 1;
             });
+            if (emptyItem) emptyItem.hidden = visible !== 0;
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === '/' && event.target !== searchInput && !event.metaKey && !event.ctrlKey && !event.altKey) {
+                event.preventDefault();
+                searchInput.focus();
+            }
         });
     </script>
 </body>
