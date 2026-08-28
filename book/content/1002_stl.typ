@@ -116,3 +116,14 @@ int main() {
   cout << A.second << "\n"; // OUTPUT: 2.3
 }
 ```
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1621")[Distinct Numbers]
+- #link("https://cses.fi/problemset/task/1091")[Concert Tickets]
+- #link("https://cses.fi/problemset/task/2162")[Josephus Problem I]
+- #link("https://cses.fi/problemset/task/1069")[Repetitions]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

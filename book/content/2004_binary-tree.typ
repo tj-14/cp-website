@@ -125,3 +125,13 @@ int main() {
 - Consider node `A[i]` has
     - `A[i*2]` as left child
     - `A[i*2+1]` as right child
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1674")[Subordinates]
+- #link("https://cses.fi/problemset/task/1131")[Tree Diameter]
+- #link("https://cses.fi/problemset/task/1132")[Tree Distances I]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

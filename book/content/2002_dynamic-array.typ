@@ -93,3 +93,13 @@ int main() {
   print();
 }
 ```
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/2216")[Collecting Numbers]
+- #link("https://cses.fi/problemset/task/2217")[Collecting Numbers II]
+- #link("https://cses.fi/problemset/task/1640")[Sum of Two Values]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

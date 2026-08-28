@@ -148,3 +148,14 @@ dp[5] =
 
 - An Introduction to Dynamic Programming (aquablitz11) #footnote[http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html]
 - Dynamic Programming by Aj. Nattee #footnote[https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf]
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1633")[Dice Combinations]
+- #link("https://cses.fi/problemset/task/1634")[Minimizing Coins]
+- #link("https://cses.fi/problemset/task/1635")[Coin Combinations I]
+- #link("https://cses.fi/problemset/task/1637")[Removing Digits]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

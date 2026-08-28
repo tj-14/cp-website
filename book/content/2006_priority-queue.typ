@@ -86,3 +86,12 @@ pq.push({0, start});
 - ถ้าข้อมูลที่อยู่ใน queue เก่าแล้ว ให้ใช้วิธี lazy deletion เช่น pop ทิ้งเมื่อพบว่าไม่ตรงกับ distance ปัจจุบัน
 - ถ้าต้องการเรียงข้อมูลทั้งหมด ใช้ `sort` ง่ายกว่า
 - ถ้าต้องการดึงค่าน้อยสุดและลบค่าใดก็ได้ อาจใช้ `set` หรือ `multiset` แทน
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1091")[Concert Tickets]
+- #link("https://cses.fi/problemset/task/1163")[Traffic Lights]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

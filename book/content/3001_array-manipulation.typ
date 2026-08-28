@@ -138,3 +138,13 @@ void build(int node, int l, int r) {
 - Segment Tree #footnote[https://csacademy.com/lesson/segment_trees/]
 - Visualgo Fenwick Tree #footnote[https://visualgo.net/en/fenwicktree?slide=1]
 - Visualgo Segment Tree #footnote[https://visualgo.net/en/segmenttree?slide=1]
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1660")[Subarray Sums I]
+- #link("https://cses.fi/problemset/task/1643")[Maximum Subarray Sum]
+- #link("https://cses.fi/problemset/task/2216")[Collecting Numbers]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

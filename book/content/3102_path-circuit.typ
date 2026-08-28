@@ -76,3 +76,13 @@ void dfs(int u) {
 - ถ้าโจทย์พูดถึงการใช้ถนนทุกเส้นหนึ่งครั้ง ให้นึกถึง Eulerian
 - ถ้าโจทย์พูดถึงการเยี่ยมเมืองทุกเมืองหนึ่งครั้ง ให้นึกถึง Hamiltonian
 - ถ้ากราฟมีขนาดเล็กมาก เช่น $n <= 20$ Hamiltonian อาจใช้ DP bitmask ได้
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1671")[Shortest Routes I]
+- #link("https://cses.fi/problemset/task/1672")[Shortest Routes II]
+- #link("https://cses.fi/problemset/task/1691")[Mail Delivery]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

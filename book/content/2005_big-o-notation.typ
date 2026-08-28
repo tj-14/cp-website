@@ -290,3 +290,13 @@ O(2^n)$
 - ใช้ Big O Notation เป็นเครื่องมือเช่นกัน
 - เปลี่ยนจากการนับขนาดเวลา เป็นนับขนาด memory เช่น
     - ขนาดของ array ที่เราประกาศ
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1090")[Ferris Wheel]
+- #link("https://cses.fi/problemset/task/1084")[Apartments]
+- #link("https://cses.fi/problemset/task/2216")[Collecting Numbers]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

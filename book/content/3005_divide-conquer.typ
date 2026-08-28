@@ -153,3 +153,12 @@ void merge(int array[], int const left, int const mid, int const right) {
 
 - https://usaco.guide/plat/sqrt?lang=cpp
 - https://cp-algorithms.com/data_structures/sqrt_decomposition.html
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1085")[Array Division]
+- #link("https://cses.fi/problemset/task/1097")[Removal Game]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

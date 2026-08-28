@@ -70,3 +70,14 @@
     [X], [Error],
     [T], [Timeout],
 )
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1068")[Weird Algorithm]
+- #link("https://cses.fi/problemset/task/1083")[Missing Number]
+- #link("https://cses.fi/problemset/task/1069")[Repetitions]
+- #link("https://cses.fi/problemset/task/1094")[Increasing Array]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

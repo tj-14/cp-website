@@ -119,3 +119,13 @@ Visual reference: open addressing illustration from Wikipedia #footnote[https://
 
 - พิจารณาถึงตอนที่เราต้องการตรวจสอบว่ามีข้อมูลดังกล่าวอยู่ในตารางหรือไม่
 - พิจารณากรณีที่มีการลบข้อมูลเกิดขึ้น
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1640")[Sum of Two Values]
+- #link("https://cses.fi/problemset/task/1661")[Subarray Sums II]
+- #link("https://cses.fi/problemset/task/1141")[Playlist]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

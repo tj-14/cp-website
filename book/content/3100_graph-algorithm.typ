@@ -473,3 +473,13 @@ int main() {
 === เพิ่มเติม
 
 - ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11) #footnote[http://tcpc.me/2019/08/19/state-graph-tutorial.html]
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1192")[Counting Rooms]
+- #link("https://cses.fi/problemset/task/1667")[Message Route]
+- #link("https://cses.fi/problemset/task/1668")[Building Teams]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

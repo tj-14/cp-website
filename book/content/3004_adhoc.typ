@@ -82,3 +82,13 @@ for (int l = 0, r = s.size() - 1; l < r; l++, r--) {
 - ตรวจกรณีแรกและกรณีสุดท้ายของ loop
 - ตรวจ input ที่มีช่องว่าง ถ้าต้องอ่านทั้งบรรทัดควรใช้ `getline`
 - ลอง test ด้วยตัวอย่างที่คิดเอง ไม่ใช่เฉพาะ sample
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1755")[Palindrome Reorder]
+- #link("https://cses.fi/problemset/task/2205")[Gray Code]
+- #link("https://cses.fi/problemset/task/1092")[Two Sets]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

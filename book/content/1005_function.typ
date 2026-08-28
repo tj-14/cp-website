@@ -249,3 +249,13 @@ in main: 0 1
 in swap: 1 0
 in main: 1 0
 ```
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1070")[Permutations]
+- #link("https://cses.fi/problemset/task/1072")[Two Knights]
+- #link("https://cses.fi/problemset/task/2431")[Digit Queries]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

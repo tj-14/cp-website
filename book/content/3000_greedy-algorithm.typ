@@ -94,3 +94,13 @@ for (auto [end, start] : job) {
 - เขียน greedy choice ให้ชัดเจน เช่น "เลือกงานที่จบเร็วสุด"
 - หา counterexample ถ้ามี เพื่อไม่ใช้ greedy ผิดโจทย์
 - ถ้าต้องพิสูจน์ ให้ลอง exchange argument ก่อน
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1629")[Movie Festival]
+- #link("https://cses.fi/problemset/task/1090")[Ferris Wheel]
+- #link("https://cses.fi/problemset/task/1630")[Tasks and Deadlines]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

@@ -86,3 +86,14 @@ Elements in m2:
 [ aw, 2399]
 [ tt, 5]
 ```
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1621")[Distinct Numbers]
+- #link("https://cses.fi/problemset/task/1141")[Playlist]
+- #link("https://cses.fi/problemset/task/1619")[Restaurant Customers]
+- #link("https://cses.fi/problemset/task/2183")[Missing Coin Sum]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

@@ -58,3 +58,14 @@ https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg
 
 - data structure ที่ใช้บีบข้อมูลให้เล็กลงโดยอาจจะเสียความละเอียดไป
 - เช่น บีบ string ให้เหลือแค่ int ผ่าน hash function แต่ก็มีโอกาสชนกันเป็นปัญหา collision
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1192")[Counting Rooms]
+- #link("https://cses.fi/problemset/task/1091")[Concert Tickets]
+- #link("https://cses.fi/problemset/task/1640")[Sum of Two Values]
+- #link("https://cses.fi/problemset/task/1074")[Stick Lengths]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

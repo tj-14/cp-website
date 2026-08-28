@@ -83,3 +83,14 @@ int fib(int i) {
 }
 
 วิธีคิดแบบ Bottom-up จะเริ่มวนลูปจาก Base Case ไปยัง Original Case โดยค่อย ๆ สร้างคำตอบของปัญหาให้ใหญ่ขึ้นเรื่อย ๆ จนสามารถแก้ปัญหาเดิมได้ในที่สุด
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1158")[Book Shop]
+- #link("https://cses.fi/problemset/task/1140")[Projects]
+- #link("https://cses.fi/problemset/task/1746")[Array Description]
+- #link("https://cses.fi/problemset/task/1639")[Edit Distance]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

@@ -94,3 +94,13 @@ https://usaco.guide/CPH.pdf#page=119
 - BFS เหมาะกับ shortest path ใน unweighted graph
 
 เวลาทำงานของ traversal บน adjacency list คือ $O(V+E)$
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1192")[Counting Rooms]
+- #link("https://cses.fi/problemset/task/1193")[Labyrinth]
+- #link("https://cses.fi/problemset/task/1666")[Building Roads]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

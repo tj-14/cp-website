@@ -123,3 +123,13 @@ https://visualgo.net/en/bst?slide=1
 - อย่าลืม mark visited ใน graph search ไม่เช่นนั้นอาจวนไม่จบ
 - ถ้าใช้ recursion ลึกมาก อาจ stack overflow ได้
 - วิเคราะห์จำนวนสถานะก่อนเสมอ เพราะ search ที่ถูกต้องแต่ช้าเกินไปจะไม่ผ่านเวลา
+
+=== โจทย์ฝึกฝน (Practice Problems)
+
+ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
+
+- #link("https://cses.fi/problemset/task/1084")[Apartments]
+- #link("https://cses.fi/problemset/task/1620")[Factory Machines]
+- #link("https://cses.fi/problemset/task/2422")[Multiplication Table]
+
+โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]
