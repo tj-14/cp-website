@@ -1,4 +1,4 @@
-.PHONY: all site pdf validate check serve clean
+.PHONY: all site pdf validate test check serve clean
 
 PORT ?= 8080
 PDF := book/comp_book.pdf
@@ -16,7 +16,10 @@ pdf:
 validate:
 	python3 scripts/validate_site.py
 
-check: all
+test:
+	node --test tests/*.test.mjs
+
+check: all test
 
 serve: site validate
 	python3 -m http.server $(PORT) --directory docs

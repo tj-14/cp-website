@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
     <header>
         <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
         <p>Computer Olympiad Guide for Thai High School Students</p>
@@ -85,7 +86,7 @@
                 </ul>
             </section>
         </aside>
-        <main>
+        <main id="main-content" tabindex="-1">
             <div class="breadcrumb">
                 <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
@@ -237,12 +238,15 @@ href="https://programming.in.th/">programming.in.th</a></p>
 
     <script>
         document.querySelectorAll('.content pre').forEach((pre) => {
+            if (!navigator.clipboard) return;
+            const code = pre.querySelector('code');
+            const text = (code || pre).textContent;
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'copy-btn';
             button.textContent = 'คัดลอก';
             button.addEventListener('click', () => {
-                navigator.clipboard.writeText(pre.innerText).then(() => {
+                navigator.clipboard.writeText(text).then(() => {
                     button.textContent = 'คัดลอกแล้ว';
                     setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
                 }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });

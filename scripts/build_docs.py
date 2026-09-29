@@ -119,12 +119,15 @@ KATEX_HEAD = f"""    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/k
 
 COPY_BUTTON_SCRIPT = """    <script>
         document.querySelectorAll('.content pre').forEach((pre) => {
+            if (!navigator.clipboard) return;
+            const code = pre.querySelector('code');
+            const text = (code || pre).textContent;
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'copy-btn';
             button.textContent = 'คัดลอก';
             button.addEventListener('click', () => {
-                navigator.clipboard.writeText(pre.innerText).then(() => {
+                navigator.clipboard.writeText(text).then(() => {
                     button.textContent = 'คัดลอกแล้ว';
                     setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
                 }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
@@ -316,7 +319,8 @@ def page_head(title: str, description: str, canonical: str | None = None, with_m
 
 
 def header_html() -> str:
-    return f"""    <header>
+    return f"""    <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
+    <header>
         <h1><a href="index.html">{SITE_TITLE}</a></h1>
         <p>{SITE_TAGLINE}</p>
     </header>"""
@@ -395,7 +399,7 @@ def wrap_page(
 
     <div class="container page-layout">
 {site_nav(slug)}
-        <main>
+        <main id="main-content" tabindex="-1">
             <div class="breadcrumb">
                 <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
             </div>
@@ -451,7 +455,7 @@ def build_index(entries: list[tuple[str, str, str]]) -> str:
 <body>
 {header_html()}
 
-    <main class="container home">
+    <main id="main-content" class="container home" tabindex="-1">
         <section class="home-intro">
             <h2>เส้นทางเรียน Competitive Programming สำหรับนักเรียนไทย</h2>
             <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที เว็บไซต์นี้สร้างจาก source เดียวกับหนังสือใน <code>book/content</code></p>
@@ -490,7 +494,7 @@ def build_404() -> str:
 <body>
 {header_html()}
 
-    <main class="container">
+    <main id="main-content" class="container" tabindex="-1">
         <section class="not-found">
             <h2>ไม่พบหน้าที่ค้นหา (404)</h2>
             <p>หน้าที่คุณพยายามเปิดอาจถูกย้ายหรือลบไปแล้ว</p>

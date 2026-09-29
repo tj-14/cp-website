@@ -32,6 +32,7 @@ A guide website for Thai high school students interested in Computer Olympiad co
 - `pandoc` (แปลง `.typ` เป็น HTML)
 - `typst` (สร้าง PDF)
 - `python3` (สำหรับ build/validate scripts)
+- Node.js 24 LTS (สำหรับ regression tests ผ่าน `make test`)
 
 macOS: `brew install pandoc typst`
 
