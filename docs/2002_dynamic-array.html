@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="dynamic array เป็น array ที่สามารถยืดหดขนาดได้">
+    <meta name="description" content="Array ธรรมดาต้องกำหนดขนาดตอนประกาศ Dynamic array คือ array ที่ขยายขนาดได้เองเมื่อใส่ข้อมูลเพิ่ม ใน C++ คือ vector นั่นเอง">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Dynamic Array | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="dynamic array เป็น array ที่สามารถยืดหดขนาดได้">
+    <meta property="og:description" content="Array ธรรมดาต้องกำหนดขนาดตอนประกาศ Dynamic array คือ array ที่ขยายขนาดได้เองเมื่อใส่ข้อมูลเพิ่ม ใน C++ คือ vector นั่นเอง">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2002_dynamic-array.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2002_dynamic-array.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Dynamic Array | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -97,31 +110,28 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
-                    <li><a href="#แนวทาง">แนวทาง</a></li>
-                    <li><a href="#การเพิ่มข้อมูล">การเพิ่มข้อมูล</a></li>
-                    <li><a href="#delete-element">Delete Element</a></li>
-                    <li><a href="#ตัวอย่าง-implementation-แบบไม่ใช้-vector">ตัวอย่าง implementation แบบไม่ใช้ vector</a></li>
+                    <li><a href="#การเพิ่มข้อมูล-push_back">การเพิ่มข้อมูล (push_back)</a></li>
+                    <li><a href="#การลบข้อมูล">การลบข้อมูล</a></li>
+                    <li><a href="#เขียน-dynamic-array-เอง">เขียน dynamic array เอง</a></li>
+                    <li><a href="#vector-ใน-stl">vector ใน STL</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Array ธรรมดาต้องกำหนดขนาดตอนประกาศ <strong>Dynamic array</strong> คือ
+array ที่ขยายขนาดได้เองเมื่อใส่ข้อมูลเพิ่ม ใน C++ คือ <code>vector</code> นั่นเอง</p>
+<p>ภายในจะเก็บค่าสองค่า</p>
 <ul>
-<li><p>dynamic array เป็น array ที่สามารถยืดหดขนาดได้</p></li>
-<li><p>ใน STL จะมี <strong>vector</strong> เป็น dynamic array
-ให้ใช้</p></li>
+<li><p><strong>size</strong>: จำนวนข้อมูลที่ใส่อยู่จริง</p></li>
+<li><p><strong>capacity</strong>: จำนวนช่องที่จองไว้แล้ว (<span
+class="math inline">\geq</span> size)</p></li>
 </ul>
-<h4 id="แนวทาง">แนวทาง<a class="heading-anchor" href="#แนวทาง" aria-hidden="true" tabindex="-1">#</a></h4>
+<h4 id="การเพิ่มข้อมูล-push_back">การเพิ่มข้อมูล (push_back)<a class="heading-anchor" href="#การเพิ่มข้อมูล-push_back" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>เมื่อต้องการเพิ่มข้อมูลลงในอาเรย์ แต่อาเรย์นั้นเต็มแล้ว ให้สร้างฟังก์ชันโดย</p></li>
-<li><p>ฟังก์ชันนั้นสร้างอาเรย์ขนาดสองเท่าจากเดิม
-และคัดลอกข้อมูลจากอาเรย์เดิมมาใส่</p></li>
-</ul>
-<h4 id="การเพิ่มข้อมูล">การเพิ่มข้อมูล<a class="heading-anchor" href="#การเพิ่มข้อมูล" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>หากมีการขยายขนาดอาเรย์และคัดลอกข้อมูลจะทำให้ใช้เวลา O(n)</p></li>
-<li><p>แต่กรณีนี้เกิดขึ้นเมื่ออาเรย์เต็มเท่านั้น</p></li>
-<li><p>ดังนั้นในกรณีส่วนมากยังใช้เวลาเป็น O(1) อยู่ดี</p></li>
-<li><p>ด้วย amortized analysis สามารถถัวเฉลี่ยการเพิ่มข้อมูลเป็น O(1) ได้</p></li>
+<li><p>ถ้ายังมีช่องว่าง (size &lt; capacity) ใส่ข้อมูลท้ายสุดได้ทันทีใน <span
+class="math inline">O(1)</span></p></li>
+<li><p>ถ้าเต็มแล้ว ต้อง <strong>จองพื้นที่ใหม่ที่ใหญ่ขึ้น</strong> คัดลอกข้อมูลเดิมทั้งหมดไป
+แล้วคืนพื้นที่เก่า ครั้งนั้นใช้ <span class="math inline">O(n)</span></p></li>
 </ul>
 <figure>
 <p><img
@@ -130,11 +140,29 @@ style="width:88.0%" /></p>
 <figcaption><p>Dynamic array resize. Original diagram for this
 guide.</p></figcaption>
 </figure>
-<h4 id="delete-element">Delete Element<a class="heading-anchor" href="#delete-element" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="ทำไมต้องขยายเป็นสองเท่า">ทำไมต้องขยายเป็นสองเท่า<a class="heading-anchor" href="#ทำไมต้องขยายเป็นสองเท่า" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้าขยายทีละ 1 ช่อง ทุกการ push จะต้องคัดลอกทั้ง array รวม <span
+class="math inline">1 + 2 + \cdots + (n - 1) = \frac{n(n - 1)}{2}</span>
+ครั้ง เป็น <span class="math inline">O\left( n^{2} \right)</span>
+แต่ถ้าขยายเป็น <strong>สองเท่า</strong> การคัดลอกจะเกิดเฉพาะตอน size เป็น <span
+class="math inline">1,2,4,8,\cdots</span> รวม <span
+class="math inline">1 + 2 + 4 + \cdots &lt; 2n</span> ครั้ง</p>
+<p>ดังนั้นการ push <span class="math inline">n</span> ครั้งใช้เวลารวม <span
+class="math inline">O(n)</span> หรือ <strong>เฉลี่ย <span
+class="math inline">O(1)</span> ต่อครั้ง</strong> เรียกว่า <strong>amortized
+<span class="math inline">O(1)</span></strong> แม้บางครั้งจะช้า แต่นาน ๆ
+ครั้งเท่านั้น</p>
+<p>ลองกด push แล้วสังเกตจำนวนการคัดลอกเฉลี่ยต่อครั้ง จากนั้นเปลี่ยนเป็น “เพิ่มทีละ 1
+ช่อง” แล้ว push 100 ตัวเพื่อเทียบ</p>
+<div class="widget" data-widget="dynamic-array"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<h4 id="การลบข้อมูล">การลบข้อมูล<a class="heading-anchor" href="#การลบข้อมูล" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>การลบข้อมูลสามารถทำได้ตามปกติเหมือนอาเรย์ทั่วไป</p></li>
-<li><p>ในทางทฤษฎี สามารถลดขนาดอาเรย์ลงได้ แต่ไม่จำเป็นใน competitive
-programming</p></li>
+<li><p>ลบตัวท้าย (<code>pop_back</code>) เป็น <span
+class="math inline">O(1)</span> แค่ลด size</p></li>
+<li><p>ลบตรงกลางต้องเลื่อนทุกตัวที่อยู่หลังมาแทนที่ เป็น <span
+class="math inline">O(n)</span></p></li>
+<li><p>ในทางทฤษฎีลด capacity เมื่อข้อมูลเหลือน้อยได้
+แต่ในการแข่งขันไม่จำเป็น</p></li>
 </ul>
 <figure>
 <p><img
@@ -143,63 +171,79 @@ style="width:88.0%" /></p>
 <figcaption><p>Deleting an array element by shifting later elements
 left. Original diagram for this guide.</p></figcaption>
 </figure>
-<h4 id="ตัวอย่าง-implementation-แบบไม่ใช้-vector">ตัวอย่าง implementation แบบไม่ใช้ vector<a class="heading-anchor" href="#ตัวอย่าง-implementation-แบบไม่ใช้-vector" aria-hidden="true" tabindex="-1">#</a></h4>
+<h4 id="เขียน-dynamic-array-เอง">เขียน dynamic array เอง<a class="heading-anchor" href="#เขียน-dynamic-array-เอง" aria-hidden="true" tabindex="-1">#</a></h4>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> cnt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sz <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span>A <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>sz<span class="op">];</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>cnt <span class="op">==</span> sz<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    sz <span class="op">*=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>tmp <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>sz<span class="op">];</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      tmp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> A<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    free<span class="op">(</span>A<span class="op">);</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> tmp<span class="op">;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  A<span class="op">[</span>cnt<span class="op">++]</span> <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> remove<span class="op">()</span> <span class="op">{</span> cnt<span class="op">--;</span> <span class="op">}</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> removeAt<span class="op">(</span><span class="dt">int</span> j<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> j<span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    A<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> A<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  cnt<span class="op">--;</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> print<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;sz = </span><span class="sc">%d</span><span class="st">, cnt = </span><span class="sc">%d\\</span><span class="st">n&quot;</span><span class="op">,</span> sz<span class="op">,</span> cnt<span class="op">);</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> A<span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span><span class="op">);</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  add<span class="op">(</span><span class="dv">6</span><span class="op">);</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  remove<span class="op">();</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  removeAt<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> cnt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>            <span class="co">// size</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> cap <span class="op">=</span> <span class="dv">1</span><span class="op">;</span>            <span class="co">// capacity</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span><span class="op">*</span> A <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>cap<span class="op">];</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>cnt <span class="op">==</span> cap<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    cap <span class="op">*=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span><span class="op">*</span> bigger <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>cap<span class="op">];</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> bigger<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> A<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span><span class="op">[]</span> A<span class="op">;</span>          <span class="co">// คืนพื้นที่ที่จองด้วย new[] ต้องใช้ delete[]</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> bigger<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  A<span class="op">[</span>cnt<span class="op">++]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> removeLast<span class="op">()</span> <span class="op">{</span> cnt<span class="op">--;</span> <span class="op">}</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> removeAt<span class="op">(</span><span class="dt">int</span> j<span class="op">)</span> <span class="op">{</span>   <span class="co">// เลื่อนตัวหลัง j มาทางซ้าย: O(n)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> j<span class="op">;</span> i <span class="op">+</span> <span class="dv">1</span> <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> A<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> A<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  cnt<span class="op">--;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> print<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;cap = </span><span class="sc">%d</span><span class="st">, cnt = </span><span class="sc">%d</span><span class="st">:&quot;</span><span class="op">,</span> cap<span class="op">,</span> cnt<span class="op">);</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> cnt<span class="op">;</span> i<span class="op">++)</span> printf<span class="op">(</span><span class="st">&quot; </span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> A<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> x<span class="op">++)</span> add<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span>        <span class="co">// cap = 8, cnt = 5: 1 2 3 4 5</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  removeLast<span class="op">();</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  removeAt<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  print<span class="op">();</span>        <span class="co">// cap = 8, cnt = 3: 1 3 4</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="vector-ใน-stl">vector ใน STL<a class="heading-anchor" href="#vector-ใน-stl" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ในการแข่งขันใช้ <code>vector</code> ได้เลย มีพฤติกรรมเดียวกันทุกอย่าง</p>
+<table>
+<thead>
+<tr>
+<th><p>คำสั่ง</p></th>
+<th><p>เวลา</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><code>v.push_back(x)</code>, <code>v.pop_back()</code></p></td>
+<td><p>amortized <span class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p><code>v[i]</code></p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p><code>v.insert(v.begin() + i, x)</code>,
+<code>v.erase(v.begin() + i)</code></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p><code>v.size()</code>, <code>v.capacity()</code></p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p><code>v.reserve(n)</code></p></td>
+<td><p>จอง capacity ล่วงหน้า ไม่ต้องขยายระหว่างทาง</p></td>
+</tr>
+</tbody>
+</table>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
@@ -215,6 +259,7 @@ Values</a></p></li>
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/dynamic-array.js"></script>
             <div class="page-nav">
                 <a href="2001_linked-list.html" class="prev">Linked List</a>
                 <a href="2004_binary-tree.html" class="next">Binary Tree</a>

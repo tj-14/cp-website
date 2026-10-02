@@ -969,6 +969,43 @@ footer a:hover {
     border-width: 3px;
 }
 
+.da-cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin: 0.75rem 0;
+}
+
+.da-cell {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.da-cell.is-full {
+    border-style: solid;
+    background-color: var(--surface-hover);
+}
+
+.da-cell.is-new {
+    border-style: solid;
+    border-color: var(--nav-accent);
+    border-width: 2.5px;
+    background-color: var(--surface-hover);
+}
+
+.da-more {
+    align-self: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);

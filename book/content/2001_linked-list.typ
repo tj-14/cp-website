@@ -1,207 +1,142 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
 
 == Linked List
 
 === คำอธิบาย
 
-- linked list เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลนั้นไม่จำเป็นต้องอาศัยอยู่ในหน่วยความจำที่ตำแหน่งติดกัน
-- ข้อมูลใน linked list ถูกเชื่อมต่อกันด้วย pointers ดังรูปด้านล่าง
+Linked list คือโครงสร้างข้อมูลเชิงเส้นที่ข้อมูลแต่ละชุด (*node*) *ไม่จำเป็นต้องอยู่ติดกันในหน่วยความจำ* แต่ละ node เก็บข้อมูลและ *pointer* ชี้ไปยัง node ถัดไป
 
 #figure(
   image("../assets/diagrams/linked-list.svg", width: 86%),
   caption: [Singly linked list. Original diagram for this guide.],
 )
 
-- จากรูปจะมีข้อมูลสามชุด ซึ่งเราเรียกว่า *node*
-    - ใน node แรกจะเก็บเลข 12 และ pointer ที่ชี้ node ถัดไป
-    - node ที่สองเก็บเลข 99 และ pointer ที่ชี้ node ถัดไป
-    - node ที่สามเก็บเลข 37 และ pointer ซึ่งยังไม่ได้ชี้ node อื่น
+จากรูป node แรกเก็บ 12 และชี้ไปที่ node ที่เก็บ 99 ซึ่งชี้ต่อไปที่ 37 และ node สุดท้ายชี้ไปที่ `nullptr` (ไม่มี node ถัดไป)
+เราจำแค่ตำแหน่งของ node แรก (*head*) ก็เดินไปถึงทุก node ได้
 
-=== Singly Linked List
+=== Array กับ Linked list
 
-- เป็น linked list ประเภทที่ง่ายที่สุด
-- โดยหนึ่ง node จะเก็บข้อมูล และ pointer เพื่อชี้ตำแหน่งของ node ถัดไป
-
-=== ตัวอย่างการ implement singly linked list
-
-- โดยสร้าง struct Node เพื่อเก็บข้อมูล
-
-```cpp
-// A simple CPP program to introduce
-// a linked list
-#include <bits/stdc++.h>
-using namespace std;
-
-// A linked list node
-struct Node {
-  int data;
-  struct Node *next;
-};
-
-int main() {
-  // Program to create a simple linked
-  // list with 3 nodes
-  Node *head = NULL;
-  Node *second = NULL;
-  Node *third = NULL;
-
-  // allocate 3 nodes in the heap
-  head = new Node();
-  second = new Node();
-  third = new Node();
-
-  /* Three blocks have been allocated dynamically.
-     We have pointers to these three blocks as head,
-     second and third
-     head         second         third
-     |             |             |
-     |             |             |
-     +----+----+   +----+----+   +----+----+
-     | #  |  # |   | #  | #  |   | #  | #  |
-     +----+----+   +----+----+   +----+----+
-
-  # represents any random value.
-  Data is random because we haven’t assigned
-  anything yet */
-
-  head->data = 1;      // assign data in first node
-  head->next = second; // Link first node with
-  // the second node
-
-  /* data has been assigned to the data part of first
-     block (block pointed by the head). And next
-     pointer of the first block points to second.
-     So they both are linked.
-
-     head         second         third
-     |             |             |
-     |             |             |
-     +---+---+     +----+----+   +-----+----+
-     | 1 | o-----> | #  | #  |   | #   | #  |
-     +---+---+     +----+----+   +-----+----+
-   */
-
-  // assign data to second node
-  second->data = 2;
-
-  // Link second node with the third node
-  second->next = third;
-
-  /* data has been assigned to the data part of the second
-     block (block pointed by second). And next
-     pointer of the second block points to the third
-     block. So all three blocks are linked.
-
-     head         second         third
-     |             |             |
-     |             |             |
-     +---+---+     +---+---+     +----+----+
-     | 1 | o-----> | 2 | o-----> | #  | #  |
-     +---+---+     +---+---+     +----+----+     */
-
-  third->data = 3; // assign data to third node
-  third->next = NULL;
-
-  /* data has been assigned to the data part of the third
-     block (block pointed by third). And next pointer
-     of the third block is made NULL to indicate
-     that the linked list is terminated here.
-
-     We have the linked list ready.
-
-     head
-     |
-     |
-     +---+---+     +---+---+     +----+------+
-     | 1 | o-----> | 2 | o-----> | 3  | NULL |
-     +---+---+     +---+---+     +----+------+
-
-     Note that only the head is sufficient to represent
-     the whole list. We can traverse the complete
-     list by following the next pointers. */
-
-  while (head != NULL) {
-    printf("%d ", head->data);
-    head = head->next;
-  }
-
-  // This code is contributed by rathbhupendra
-}
-```
-
-=== Operations
-
-- insert การเพิ่มข้อมูลใน linked list โดย
-    - สร้าง node ใหม่ชื่อว่า newNode (37)
-    - นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะแทรก (12) ชี้ไปที่ newNode (37)
-    - นำ pointer ของ newNode ไปชี้ที่ pointer ของโหนดตำแหน่งก่อนหน้าเคยชี้ (99)
-
-Visual reference: adding a node in a linked list, Wikimedia Commons #footnote[https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CPT-LinkedLists-addingnode.svg/474px-CPT-LinkedLists-addingnode.svg.png]
-
-- delete การลบข้อมูลใน linked list โดย
-    - นำ pointer ของโหนดตำแหน่งก่อนหน้าที่ต้องการจะลบ (12) ชี้ข้ามไปที่ node ในตำแหน่งถัดไป (37)
-
-Visual reference: deleting a node in a linked list, Wikimedia Commons #footnote[https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/CPT-LinkedLists-deletingnode.svg/380px-CPT-LinkedLists-deletingnode.svg.png]
-
-=== Doubly Linked List
-
-- เป็น linked list ที่มีความซับซ้อนเพิ่มขึ้นนิดหนึ่งโดย
-- node จะเก็บ pointers สองตำแหน่งสำหรับโหนดก่อนหน้า *prev* และโหนดถัดไป *next*
-
-#figure(
-  image("../assets/diagrams/linked-list.svg", width: 86%),
-  caption: [Pointer-based linked-list structure. Original diagram for this guide.],
+#table(
+  columns: 3,
+  header([Operation], [Array / vector], [Linked list]),
+  [เข้าถึงตัวที่ $i$], [$O(1)$], [$O(n)$ ต้องเดินจาก head],
+  [แทรก/ลบ ตรงกลาง (เมื่อรู้ตำแหน่งแล้ว)], [$O(n)$ ต้องเลื่อนตัวอื่น], [$O(1)$ แก้ pointer],
+  [แทรก/ลบ ท้าย], [$O(1)$ เฉลี่ย], [$O(1)$ ถ้าเก็บ tail],
+  [หน่วยความจำ], [ต่อเนื่อง, cache ดี], [กระจาย, ใช้ pointer เพิ่ม],
 )
 
-```cpp
-// linked.c
-#include <bits/stdc++.h>
-using namespace std;
+Linked list จึงเหมาะกับโจทย์ที่ต้อง *แทรกหรือลบกลางลำดับบ่อย ๆ* โดยรู้ตำแหน่งอยู่แล้ว
 
-// what a node look like internally
+=== Singly linked list ด้วย pointer
+
+```cpp
 struct Node {
-  int idx;
-  struct Node *r_next;
-  struct Node *r_prev;
+  int data;
+  Node* next;
 };
 
 int main() {
-  // define 3 nodes
-  struct Node n0, n1, n2;
+  Node* third = new Node{37, nullptr};
+  Node* second = new Node{99, third};
+  Node* head = new Node{12, second};
 
-  // initialize the nodes
-  n0.idx = 0;       // the first node has an index of 0
-  n0.r_next = &n1;  // with a reference to the second node
-  n0.r_prev = NULL; // and a reference to NULL b/c there's no previous node
-
-  n1.idx = 1;
-  n1.r_next = &n2;
-  n1.r_prev = &n0;
-
-  n2.idx = 2;
-  n2.r_next = NULL;
-  n2.r_prev = &n1;
-
-  // create a new reference to n0 called r_first_element
-  struct Node *r_first_element = &n0;
-  printf("The first node lives @ %p\n", r_first_element);
-  printf("The first node has idx: %d\n", r_first_element->idx);
-
-  // print n1 info
-  printf("The second node lives @ %p\n", r_first_element->r_next);
-  printf("The second node has idx: %d\n", r_first_element->r_next->idx);
-
-  // print n2 info
-  printf("The third node lives @ %p\n", r_first_element->r_next->r_next);
-  printf("The third node has idx: %d\n", r_first_element->r_next->r_next->idx);
+  for (Node* cur = head; cur != nullptr; cur = cur->next) {
+    cout << cur->data << ' ';  // 12 99 37
+  }
 }
 ```
+
+==== แทรก (insert)
+
+แทรก node ใหม่ *หลัง* node `p`: ให้ node ใหม่ชี้ไปที่ตัวที่ `p` เคยชี้ แล้วให้ `p` ชี้มาที่ node ใหม่ (ลำดับสำคัญ ถ้าสลับกันจะทำส่วนท้ายหาย)
+
+```cpp
+void insertAfter(Node* p, int x) {
+  Node* node = new Node{x, nullptr};
+  node->next = p->next;  // 1. node ใหม่ชี้ไปที่ตัวถัดจาก p
+  p->next = node;        // 2. p ชี้มาที่ node ใหม่
+}
+```
+
+==== ลบ (delete)
+
+ลบ node ที่อยู่ *หลัง* `p`: ให้ `p` ชี้ข้ามไปยังตัวถัดไปของตัวที่ถูกลบ
+
+```cpp
+void eraseAfter(Node* p) {
+  Node* gone = p->next;
+  if (gone == nullptr) return;
+  p->next = gone->next;
+  delete gone;
+}
+```
+
+ทั้งสองแบบใช้เวลา $O(1)$ เพราะแก้ pointer แค่ไม่กี่ตัว
+
+=== Doubly linked list
+
+แต่ละ node เก็บ pointer สองตัว คือ `prev` ชี้ไปตัวก่อนหน้า และ `next` ชี้ไปตัวถัดไป
+ทำให้เดินได้ทั้งสองทิศ และลบ node ใดก็ได้ใน $O(1)$ เมื่อมี pointer ไปที่ node นั้น (ไม่ต้องรู้ตัวก่อนหน้า)
+
+```cpp
+struct DNode {
+  int data;
+  DNode* prev;
+  DNode* next;
+};
+
+void erase(DNode* x) {  // สมมติว่า x ไม่ใช่ตัวแรกหรือตัวสุดท้าย
+  x->prev->next = x->next;
+  x->next->prev = x->prev;
+  delete x;
+}
+```
+
+=== Linked list ด้วย array (นิยมในการแข่งขัน)
+
+ในการแข่งขันมักเก็บ linked list ด้วย array ของ index แทน pointer เขียนง่ายกว่า ไม่ต้อง `new`/`delete` และเร็วกว่า
+ให้ `nxt[i]` และ `prv[i]` เป็นตำแหน่งถัดไปและก่อนหน้าของคนที่ $i$
+
+ตัวอย่าง: คน $n$ คนยืนเป็นวงกลม หมายเลข $1..n$ เริ่มที่คนที่ 1 แล้วข้ามไปหนึ่งคนและนำคนถัดไปออกซ้ำไปเรื่อย ๆ (Josephus problem)
+
+```cpp
+int n = 7;
+vector<int> nxt(n + 1), prv(n + 1);
+for (int i = 1; i <= n; i++) {
+  nxt[i] = i % n + 1;           // คนถัดไป (วนกลับไปที่ 1)
+  prv[i] = (i + n - 2) % n + 1; // คนก่อนหน้า
+}
+
+int cur = 1;
+for (int left = n; left > 0; left--) {
+  int out = nxt[cur];           // ข้าม cur แล้วนำคนถัดไปออก (เหลือคนเดียว nxt[cur] = cur)
+  cout << out << ' ';           // 2 4 6 1 5 3 7
+  nxt[prv[out]] = nxt[out];     // ลบ out ออกจากวง ใน O(1)
+  prv[nxt[out]] = prv[out];
+  cur = nxt[out];
+}
+```
+
+ทั้งหมดใช้เวลา $O(n)$ ถ้าใช้ `vector::erase` จะเป็น $O(n^2)$
+
+STL มี `list<int>` เป็น doubly linked list สำเร็จรูป แต่ในการแข่งขันใช้ไม่บ่อยนัก เพราะ array หรือโครงสร้างข้อมูลอื่นมักเหมาะกว่า
+
+=== ลองคิด
+
++ ถ้าในฟังก์ชัน `insertAfter` สลับขั้นที่ 1 กับ 2 (ตั้ง `p->next = node` ก่อน) จะเกิดอะไรขึ้น
++ ทำไมการหาตัวที่ $i$ ใน linked list จึงช้ากว่า array
+
+==== เฉลย
+
++ ขั้นที่ 1 จะตั้ง `node->next = p->next` ซึ่งตอนนั้นคือ `node` เอง จึงเกิดวงวนชี้ตัวเอง และส่วนท้ายของ list ที่เคยต่อจาก `p` หายไป
++ node ไม่อยู่ติดกันในหน่วยความจำ จึงคำนวณตำแหน่งตรง ๆ ไม่ได้ ต้องเดินตาม pointer ทีละตัว $i$ ครั้ง
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/2162")[Josephus Problem I]
-- #link("https://cses.fi/problemset/task/2163")[Josephus Problem II]
+- #link("https://cses.fi/problemset/task/2162")[Josephus Problem I] (array linked list)
+- #link("https://cses.fi/problemset/task/2163")[Josephus Problem II] (ต้องใช้โครงสร้างที่เร็วกว่า)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]
