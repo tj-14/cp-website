@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="เนื้อหาจะไล่ระดับจากที่ใช้สอนใน สอวน. ค่าย 1, ค่าย 2, ผู้แทนศูนย์ และ สสวท. โดยแต่ละช่วงมีเป้าหมายหลักดังนี้">
+    <meta name="description" content="เนื้อหาไล่ระดับตามที่ใช้สอนในค่าย สอวน. ค่าย 1, ค่าย 2, ผู้แทนศูนย์ และ สสวท. โดยแต่ละช่วงมีเป้าหมายดังนี้">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="โครงสร้างเนื้อหาการสอน | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="เนื้อหาจะไล่ระดับจากที่ใช้สอนใน สอวน. ค่าย 1, ค่าย 2, ผู้แทนศูนย์ และ สสวท. โดยแต่ละช่วงมีเป้าหมายหลักดังนี้">
+    <meta property="og:description" content="เนื้อหาไล่ระดับตามที่ใช้สอนในค่าย สอวน. ค่าย 1, ค่าย 2, ผู้แทนศูนย์ และ สสวท. โดยแต่ละช่วงมีเป้าหมายดังนี้">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/0000_competitive-programming-starter.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/0000_competitive-programming-starter.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -35,16 +35,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -93,38 +93,58 @@
 
             <article class="content">
 <h3 id="โครงสร้างเนื้อหาการสอน">โครงสร้างเนื้อหาการสอน<a class="heading-anchor" href="#โครงสร้างเนื้อหาการสอน" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>เนื้อหาจะไล่ระดับจากที่ใช้สอนใน สอวน. ค่าย 1, ค่าย 2, ผู้แทนศูนย์ และ สสวท.
-โดยแต่ละช่วงมีเป้าหมายหลักดังนี้</p>
-<h3 id="ค่าย-1-พื้นฐานการเขียนโปรแกรม">ค่าย 1: พื้นฐานการเขียนโปรแกรม<a class="heading-anchor" href="#ค่าย-1-พื้นฐานการเขียนโปรแกรม" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>ปูพื้นฐานการเขียนภาษา C/C++ เน้นให้สามารถคอมไพล์โค้ดได้
-ถ่ายทอดแนวคิดออกมาเป็นโปรแกรมที่ทำงานได้จริง</p>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#ค่าย-1-พื้นฐานการเขียนโปรแกรม">ค่าย 1: พื้นฐานการเขียนโปรแกรม</a></li>
+                    <li><a href="#ค่าย-2-โครงสร้างข้อมูลและการวิเคราะห์">ค่าย 2: โครงสร้างข้อมูลและการวิเคราะห์</a></li>
+                    <li><a href="#ระดับสูงขึ้น-อัลกอริทึม">ระดับสูงขึ้น: อัลกอริทึม</a></li>
+                    <li><a href="#วิธีใช้คู่มือนี้">วิธีใช้คู่มือนี้</a></li>
+                </ul>
+            </nav>
+<p>เนื้อหาไล่ระดับตามที่ใช้สอนในค่าย สอวน. ค่าย 1, ค่าย 2, ผู้แทนศูนย์ และ สสวท.
+โดยแต่ละช่วงมีเป้าหมายดังนี้</p>
+<h4 id="ค่าย-1-พื้นฐานการเขียนโปรแกรม">ค่าย 1: พื้นฐานการเขียนโปรแกรม<a class="heading-anchor" href="#ค่าย-1-พื้นฐานการเขียนโปรแกรม" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ปูพื้นฐานภาษา C++ ให้ compile
+ได้และถ่ายทอดความคิดออกมาเป็นโปรแกรมที่ทำงานได้จริง</p>
 <ul>
-<li><p>โครงสร้างพื้นฐานของโปรแกรม</p>
-<ul>
-<li><p>การใช้ template และ syntax ที่สำคัญ</p></li>
-<li><p>ฟังก์ชันพื้นฐานที่ใช้บ่อย</p></li>
-</ul></li>
-<li><p>แนวคิดสำคัญ</p>
-<ul>
-<li><p>การใช้ if-else</p></li>
-<li><p>การใช้ loop (for, while)</p></li>
-<li><p>ฟังก์ชัน (function) และการส่งค่า</p></li>
-<li><p>การใช้ recursion</p></li>
-</ul></li>
+<li><p>โครงสร้างโปรแกรม ตัวแปร input/output, if-else และ loop</p></li>
+<li><p>array, string และ STL พื้นฐาน เช่น <code>vector</code>,
+<code>sort</code></p></li>
+<li><p>function และการส่งค่า</p></li>
+<li><p>recursion และ complete search</p></li>
 </ul>
-<h3 id="ค่าย-2-การเขียนโปรแกรมเชิงแข่งขัน">ค่าย 2: การเขียนโปรแกรมเชิงแข่งขัน<a class="heading-anchor" href="#ค่าย-2-การเขียนโปรแกรมเชิงแข่งขัน" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>ก้าวสู่การเขียนโปรแกรมเชิงแข่งขัน มุ่งเน้นการเพิ่มประสิทธิภาพของโค้ด
-วิเคราะห์อัลกอริทึม</p>
+<h4 id="ค่าย-2-โครงสร้างข้อมูลและการวิเคราะห์">ค่าย 2: โครงสร้างข้อมูลและการวิเคราะห์<a class="heading-anchor" href="#ค่าย-2-โครงสร้างข้อมูลและการวิเคราะห์" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ก้าวสู่การเขียนโปรแกรมเชิงแข่งขัน
+เน้นการวิเคราะห์ความเร็วของอัลกอริทึมและเลือกโครงสร้างข้อมูลให้เหมาะกับโจทย์</p>
 <ul>
-<li><p>เทคนิคการเขียนโค้ดให้มีประสิทธิภาพ</p></li>
-<li><p>โครงสร้างข้อมูล (Data Structure)</p></li>
-<li><p>อัลกอริทึม (Algorithm)</p></li>
+<li><p>time complexity และ Big O notation</p></li>
+<li><p>stack, queue, linked list, dynamic array</p></li>
+<li><p>tree, heap, priority queue, binary search tree, set, map, hash
+table</p></li>
+<li><p>การแทนกราฟ</p></li>
 </ul>
-<h3 id="ระดับสูงขึ้น-เจาะลึกเนื้อหาที่ซับซ้อนขึ้น-ตามลำดับของค่าย">ระดับสูงขึ้น: เจาะลึกเนื้อหาที่ซับซ้อนขึ้น ตามลำดับของค่าย<a class="heading-anchor" href="#ระดับสูงขึ้น-เจาะลึกเนื้อหาที่ซับซ้อนขึ้น-ตามลำดับของค่าย" aria-hidden="true" tabindex="-1">#</a></h3>
+<h4 id="ระดับสูงขึ้น-อัลกอริทึม">ระดับสูงขึ้น: อัลกอริทึม<a class="heading-anchor" href="#ระดับสูงขึ้น-อัลกอริทึม" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>เทคนิคที่ใช้ในการแข่งขันระดับผู้แทนศูนย์และ สสวท.</p>
+<ul>
+<li><p>greedy, prefix sum และ data structure สำหรับช่วงข้อมูล</p></li>
+<li><p>search, divide and conquer และ binary search</p></li>
+<li><p>dynamic programming</p></li>
+<li><p>graph algorithms: BFS/DFS, shortest path, MST, topological sort
+และอื่น ๆ</p></li>
+</ul>
+<h4 id="วิธีใช้คู่มือนี้">วิธีใช้คู่มือนี้<a class="heading-anchor" href="#วิธีใช้คู่มือนี้" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p>อ่านตามลำดับบท เพราะบทหลังใช้ความรู้จากบทก่อนหน้า</p></li>
+<li><p>หลายบทมี <strong>แบบฝึกโต้ตอบ</strong> (interactive) บนเว็บไซต์
+ให้ลองทายคำตอบก่อนกดดูเฉลย จะจำได้ดีกว่าการอ่านอย่างเดียว</p></li>
+<li><p>ทุกบทจบด้วยโจทย์ฝึกฝนจาก CSES และ programming.in.th
+ความเข้าใจจริงมาจากการลงมือทำโจทย์</p></li>
+</ul>
 
             <div class="page-nav">
                 
-                <a href="1001_basic.html" class="next">การเขียนโปรแกรมเชิงแข่งขัน</a>
+                <a href="1003_syntax.html" class="next">C++ Syntax</a>
             </div>
             </article>
         </main>

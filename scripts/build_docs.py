@@ -44,19 +44,19 @@ SECTIONS = [
     ),
     (
         "ค่าย 1: Programming Basics",
-        "C++ syntax, functions, recursion, and STL basics",
+        "C++ syntax, STL basics, functions, and recursion",
         [
-            ("1001_basic", "การเขียนโปรแกรมเชิงแข่งขัน"),
-            ("1002_stl", "Standard Template Library"),
             ("1003_syntax", "C++ Syntax"),
-            ("1004_recursion", "Recursion"),
+            ("1002_stl", "Standard Template Library"),
             ("1005_function", "Function"),
+            ("1004_recursion", "Recursion"),
         ],
     ),
     (
         "ค่าย 2: Data Structures",
         "Core structures and complexity analysis",
         [
+            ("1001_basic", "การเขียนโปรแกรมเชิงแข่งขัน"),
             ("2005_big-o-notation", "Big O Notation"),
             ("2010_stack-queue", "Stack and Queue"),
             ("2001_linked-list", "Linked List"),

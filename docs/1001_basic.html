@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ">
+    <meta name="description" content="การเขียนโปรแกรมเชิงแข่งขัน (competitive programming) ประกอบด้วยสองทักษะที่ต้องฝึกคู่กัน">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="การเขียนโปรแกรมเชิงแข่งขัน | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ">
+    <meta property="og:description" content="การเขียนโปรแกรมเชิงแข่งขัน (competitive programming) ประกอบด้วยสองทักษะที่ต้องฝึกคู่กัน">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/1001_basic.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/1001_basic.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -48,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html" aria-current="page">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html" aria-current="page">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -110,114 +110,145 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#หลักการ">หลักการ</a></li>
+                    <li><a href="#ขั้นตอนการทำโจทย์หนึ่งข้อ">ขั้นตอนการทำโจทย์หนึ่งข้อ</a></li>
+                    <li><a href="#การประเมินเวลา">การประเมินเวลา</a></li>
+                    <li><a href="#ผลตรวจจาก-grader">ผลตรวจจาก grader</a></li>
                     <li><a href="#การบริหารเวลา">การบริหารเวลา</a></li>
-                    <li><a href="#time-complexity">Time Complexity</a></li>
+                    <li><a href="#เมื่อหา-bug-ไม่เจอ">เมื่อหา bug ไม่เจอ</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>การเขียนโปรแกรมเชิงแข่งขันแบ่งออกเป็นสองหัวข้อหลักๆ คือ</p>
-<h5 id="การออกแบบวิธีการคิด">การออกแบบวิธีการคิด<a class="heading-anchor" href="#การออกแบบวิธีการคิด" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ส่วนนี้จะเน้นเรื่องทักษะการแก้ปัญหาและพื้นฐานการคิด บางทีต้องมีความคิดสร้างสรรค์
-ประกอบกับทฤษฎีต่างๆ
-โดยทั่วไปแล้ววิธีการแก้ปัญหาจะประกอบด้วยเทคนิคที่รู้กันทั่วไปร่วมกับความเป็นเอกลักษณ์ของปัญหานั้นๆ</p>
-<h5 id="การเขียนโปรแกรมตามวิธี">การเขียนโปรแกรมตามวิธี<a class="heading-anchor" href="#การเขียนโปรแกรมตามวิธี" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ส่วนนี้จะเน้นว่าเราสามารถถ่ายทอดวิธีการคิดของเราสู่โปรแกรมคอมพิวเตอร์ได้อย่างถูกต้อง
-ปกติแล้วแค่วิธีคิดถูกต้องนั้นไม่เพียงพอในการแข่งขันเขียนโปรแกรมให้ได้ดี
-ข้อแตกต่างสำคัญกับการเขียนโปรแกรมทั่วไปคือโปรแกรมในการแข่งขันจะสั้น
-(มากที่สุดหลักไม่กี่ร้อยบรรทัด) และไม่จำเป็นต้องดูแลโปรแกรมหลังจากแข่งเสร็จ</p>
-<h4 id="การบริหารเวลา">การบริหารเวลา<a class="heading-anchor" href="#การบริหารเวลา" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>เป็นสิ่งสำคัญที่สุดในการแข่งขัน</p>
+<p>การเขียนโปรแกรมเชิงแข่งขัน (competitive programming)
+ประกอบด้วยสองทักษะที่ต้องฝึกคู่กัน</p>
+<h5 id="ออกแบบวิธีคิด-algorithm-design">ออกแบบวิธีคิด (algorithm design)<a class="heading-anchor" href="#ออกแบบวิธีคิด-algorithm-design" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>อ่านโจทย์ให้เข้าใจ แล้วหาวิธีแก้ที่ <strong>ถูกต้อง</strong> และ
+<strong>เร็วพอ</strong> ตามขนาดข้อมูล วิธีแก้ส่วนใหญ่คือการนำเทคนิคที่รู้จักกันดี (เช่น
+sorting, BFS, DP) มาผสมกับข้อสังเกตเฉพาะของโจทย์นั้น ยิ่งรู้จัก pattern
+มากก็ยิ่งเห็นทางได้เร็ว</p>
+<h5 id="เขียนโปรแกรมตามวิธีคิด-implementation">เขียนโปรแกรมตามวิธีคิด (implementation)<a class="heading-anchor" href="#เขียนโปรแกรมตามวิธีคิด-implementation" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>วิธีคิดที่ถูกยังไม่พอ ต้องแปลงเป็นโค้ดที่ถูกต้องภายในเวลาจำกัด โปรแกรมในการแข่งขันมักสั้น
+(ไม่กี่สิบถึงไม่กี่ร้อยบรรทัด) และไม่ต้องดูแลต่อหลังแข่ง
+จึงเน้นความเร็วและความถูกต้องมากกว่าความสวยงาม</p>
+<h4 id="ขั้นตอนการทำโจทย์หนึ่งข้อ">ขั้นตอนการทำโจทย์หนึ่งข้อ<a class="heading-anchor" href="#ขั้นตอนการทำโจทย์หนึ่งข้อ" aria-hidden="true" tabindex="-1">#</a></h4>
+<ol>
+<li><p><strong>อ่านโจทย์และ constraint</strong> ให้ครบ ขนาดของ <span
+class="math inline">n</span> บอกใบ้ว่าต้องใช้วิธีเร็วแค่ไหน</p></li>
+<li><p><strong>ลองตัวอย่างด้วยมือ</strong> และคิดตัวอย่างเพิ่มเอง โดยเฉพาะกรณีขอบ
+(edge case) เช่น <span class="math inline">n = 1</span>
+หรือค่าซ้ำกันทั้งหมด</p></li>
+<li><p><strong>คิดวิธีและประเมิน time complexity</strong> ก่อนเขียน
+ถ้าช้าเกินไปให้คิดใหม่ตั้งแต่ตอนนี้</p></li>
+<li><p><strong>เขียนโค้ด</strong> ทีละส่วนและทดสอบกับตัวอย่าง</p></li>
+<li><p><strong>ส่งและอ่านผลตรวจ</strong>
+ถ้าไม่ผ่านให้หาว่าผิดเพราะอะไรจากสัญลักษณ์ผลตรวจ</p></li>
+</ol>
+<h4 id="การประเมินเวลา">การประเมินเวลา<a class="heading-anchor" href="#การประเมินเวลา" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>grader ทั่วไปรัน C++ ได้ประมาณ <span class="math inline">10^{8}</span>
+คำสั่งง่าย ๆ ต่อวินาที (เครื่องเร็วอาจได้มากกว่านั้นหลายเท่า แต่ควรใช้ <span
+class="math inline">10^{8}</span> เป็นตัวเลขที่ปลอดภัย) นำ time complexity
+มาแทนค่า <span class="math inline">n</span> สูงสุด แล้วเทียบกับเวลาที่โจทย์ให้</p>
 <ul>
-<li><p>ให้คำนึงให้ได้ว่าเราจะใช้เวลาเท่าไรในการทำโจทย์ลักษณะนี้ แล้วจะได้คะแนนเท่าไร
-แล้วลำดับความสำคัญในการเลือกโจทย์ให้ได้</p></li>
-<li><p>พยายามสร้างกฏที่เหมาะสมกับตัวเอง เช่น ถ้าบัคเกินสามสิบนาทีแบบไม่มีความคืบหน้า
-ให้เปลี่ยนไปอ่านข้ออื่นอย่างน้อยห้านาที</p></li>
+<li><p><span class="math inline">n = 10^{5}</span> และวิธี <span
+class="math inline">O\left( n^{2} \right)</span>: <span
+class="math inline">10^{10}</span> คำสั่ง ใช้เวลาประมาณ 100 วินาที
+ช้าเกินไป</p></li>
+<li><p><span class="math inline">n = 10^{5}</span> และวิธี <span
+class="math inline">O\left( n\log n \right)</span>: ประมาณ <span
+class="math inline">1.7 \times 10^{6}</span> คำสั่ง เร็วมาก</p></li>
+<li><p>จำไว้ว่า <span class="math inline">2^{10} \approx 10^{3}</span> และ
+<span class="math inline">2^{20} \approx 10^{6}</span></p></li>
 </ul>
-<h4 id="time-complexity">Time Complexity<a class="heading-anchor" href="#time-complexity" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>ก่อนจะเริ่มลงมือเขียนโปรแกรม
-เราควรจะรู้ให้ได้ว่าสิ่งที่เราเขียนจะได้กี่คะแนนสำหรับปัญหานั้น</p></li>
-<li><p>Big O Notation
-เป็นสิ่งสำคัญที่ควรจะคาดคะเนให้ได้ว่าเราจะได้คะแนนเท่าไร</p></li>
-<li><p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ <span
-class="math inline">1,000,000,000</span> (พันล้าน) คำสั่งต่อหนึ่งวินาที
-ซึ่งหมายความว่า</p>
-<ul>
-<li><p><span class="math inline">N = 1,000</span> สามารถคิดวิธี <span
-class="math inline">O\left( N^{3} \right)</span> ได้แบบฉิวเฉียด <span
-class="math inline">O\left( N^{2}\log N \right)</span>
-ได้อย่างปลอดภัย</p></li>
-<li><p><span class="math inline">N = 1,000,000</span> ควรจะ <span
-class="math inline">O\left( N\log N \right)</span></p></li>
-<li><p><span class="math inline">N = 20</span> อาจจะเป็น <span
-class="math inline">O\left( 2^{N} \right)</span></p></li>
-</ul></li>
-<li><p>จำว่า <span class="math inline">2^{20}</span> มีค่าประมาณ <span
-class="math inline">1,000,000</span> (หนึ่งล้าน)</p></li>
-</ul>
+<p>ตารางนี้ช่วยเดาวิธีที่ต้องใช้จากขนาด input เมื่อจำกัดเวลา 1 วินาที</p>
 <table>
 <thead>
 <tr>
-<th><p>ขนาด N</p></th>
-<th><p>เวลาที่ควรใช้</p></th>
+<th><p>ขนาด <span class="math inline">n</span></p></th>
+<th><p>complexity ที่ควรใช้</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><p><span class="math inline">N \leq 10</span></p></td>
-<td><p><span class="math inline">O(N!)</span></p></td>
+<td><p><span class="math inline">n \leq 10</span></p></td>
+<td><p><span class="math inline">O(n!)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline">N \leq 20</span></p></td>
-<td><p><span class="math inline">O\left( 2^{N} \right)</span></p></td>
+<td><p><span class="math inline">n \leq 20</span></p></td>
+<td><p><span class="math inline">O\left( 2^{n} \right)</span> หรือ <span
+class="math inline">O\left( 2^{n}n \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline">N \leq 500</span></p></td>
-<td><p><span class="math inline">O\left( N^{3} \right)</span></p></td>
+<td><p><span class="math inline">n \leq 500</span></p></td>
+<td><p><span class="math inline">O\left( n^{3} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline">N \leq 5000</span></p></td>
-<td><p><span class="math inline">O\left( N^{2} \right)</span></p></td>
+<td><p><span class="math inline">n \leq 5000</span></p></td>
+<td><p><span class="math inline">O\left( n^{2} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline">N \leq 10^{6}</span></p></td>
-<td><p><span class="math inline">O\left( N\log N \right)</span> or <span
-class="math inline">O(N)</span></p></td>
+<td><p><span class="math inline">n \leq 10^{6}</span></p></td>
+<td><p><span class="math inline">O\left( n\log n \right)</span> หรือ
+<span class="math inline">O(n)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline">N</span> is large</p></td>
-<td><p><span class="math inline">O(1)</span> or <span
-class="math inline">O\left( \log N \right)</span></p></td>
+<td><p><span class="math inline">n</span> ใหญ่กว่านั้น</p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span> หรือ <span
+class="math inline">O(1)</span> (มักเป็นสูตรคณิตศาสตร์)</p></td>
 </tr>
 </tbody>
 </table>
+<p>รายละเอียดการวิเคราะห์อยู่ในบท Big O Notation</p>
+<h4 id="ผลตรวจจาก-grader">ผลตรวจจาก grader<a class="heading-anchor" href="#ผลตรวจจาก-grader" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>grader ไทยหลายแห่ง เช่น programming.in.th แสดงผลแต่ละ test case
+เป็นสัญลักษณ์</p>
 <table>
 <thead>
 <tr>
 <th><p>สัญลักษณ์</p></th>
 <th><p>ความหมาย</p></th>
+<th><p>สาเหตุที่พบบ่อย</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><p>P</p></td>
-<td><p>ถูกต้อง</p></td>
+<td><p>ผ่าน (Pass)</p></td>
+<td><p>-</p></td>
 </tr>
 <tr>
 <td><p>-</p></td>
-<td><p>Incorrect Output</p></td>
+<td><p>คำตอบผิด (Wrong Answer)</p></td>
+<td><p>วิธีคิดผิด, ลืม edge case, overflow, รูปแบบ output ผิด</p></td>
 </tr>
 <tr>
 <td><p>X</p></td>
-<td><p>Error</p></td>
+<td><p>โปรแกรมพัง (Runtime Error)</p></td>
+<td><p>เข้าถึง array นอกขอบเขต, หารด้วย 0, recursion ลึกเกิน</p></td>
 </tr>
 <tr>
 <td><p>T</p></td>
-<td><p>Timeout</p></td>
+<td><p>เกินเวลา (Time Limit Exceeded)</p></td>
+<td><p>complexity สูงเกินไป, วนไม่รู้จบ, I/O ช้า</p></td>
 </tr>
 </tbody>
 </table>
+<h4 id="การบริหารเวลา">การบริหารเวลา<a class="heading-anchor" href="#การบริหารเวลา" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p>อ่านทุกข้อก่อน แล้วประเมินว่าข้อไหนใช้เวลาเท่าไรและได้คะแนนเท่าไร
+จากนั้นเรียงลำดับว่าจะทำข้อไหนก่อน</p></li>
+<li><p><strong>คะแนนบางส่วน</strong> (subtask) สำคัญมาก ถ้ายังคิดวิธีเต็มไม่ออก
+ให้เขียน brute force เก็บคะแนน subtask เล็กไว้ก่อน</p></li>
+<li><p>ตั้งกฎให้ตัวเอง เช่น ถ้า debug เกิน 30 นาทีโดยไม่คืบหน้า ให้ไปอ่านข้ออื่นอย่างน้อย
+5 นาทีแล้วค่อยกลับมา</p></li>
+</ul>
+<h4 id="เมื่อหา-bug-ไม่เจอ">เมื่อหา bug ไม่เจอ<a class="heading-anchor" href="#เมื่อหา-bug-ไม่เจอ" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p>พิมพ์ค่าตัวแปรระหว่างทาง (debug print) ไปที่ <code>cerr</code> แทน
+<code>cout</code> เพื่อไม่ปนกับคำตอบ</p></li>
+<li><p>คิด test case เล็ก ๆ ที่คำนวณคำตอบด้วยมือได้</p></li>
+<li><p><strong>Stress test</strong>: เขียน brute force ที่ช้าแต่แน่ใจว่าถูก
+แล้วสุ่ม input เล็ก ๆ มาเทียบคำตอบกับวิธีจริงจนกว่าจะเจอ input ที่ต่างกัน</p></li>
+</ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
@@ -236,8 +267,8 @@ Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
-                <a href="0000_competitive-programming-starter.html" class="prev">โครงสร้างเนื้อหาการสอน</a>
-                <a href="1002_stl.html" class="next">Standard Template Library</a>
+                <a href="1004_recursion.html" class="prev">Recursion</a>
+                <a href="2005_big-o-notation.html" class="next">Big O Notation</a>
             </div>
             </article>
         </main>

@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tj-14.github.io/cp-website/index.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://tj-14.github.io/cp-website/0000_competitive-programming-starter.html</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://tj-14.github.io/cp-website/1001_basic.html</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://tj-14.github.io/cp-website/1002_stl.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://tj-14.github.io/cp-website/1003_syntax.html</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://tj-14.github.io/cp-website/1004_recursion.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://tj-14.github.io/cp-website/1002_stl.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://tj-14.github.io/cp-website/1005_function.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://tj-14.github.io/cp-website/1004_recursion.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://tj-14.github.io/cp-website/1001_basic.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://tj-14.github.io/cp-website/2005_big-o-notation.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://tj-14.github.io/cp-website/2010_stack-queue.html</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://tj-14.github.io/cp-website/2001_linked-list.html</loc><lastmod>2026-10-02</lastmod></url>
