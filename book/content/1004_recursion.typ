@@ -1,165 +1,139 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
+#import "widgets.typ": widget
 
 == Recursion
 
 === แนวคิด
 
-- Recursion คือกระบวนการเรียกตัวเอง
-- ตามปกติแล้วแบ่งกรณีเป็น
-  - base case
-  - recursion case
-  โดยที่จะย่อยปัญหาให้เล็กลงจนกระทั่งแก้ได้ด้วย base case
+Recursion คือการแก้ปัญหาโดยให้ฟังก์ชัน *เรียกตัวเอง* กับปัญหาที่เล็กลง ทุก recursive function ต้องมีสองส่วน
 
-=== การเขียนโปรแกรม
-
-จะเขียนกระบวนการนั้นด้วยฟังก์ชัน และการเรียกตัวเองจะเป็นการเรียกฟังก์ชันที่เขียนขึ้นมาภายในฟังก์ชันนั้น
-
-ตัวอย่างการเขียน recursive function ในภาษา C++ โดยยังไม่คำนึงถึงการนำไปใช้แก้โจทย์ปัญหา
+- *Base case*: ปัญหาที่เล็กพอจะตอบได้ทันทีโดยไม่ต้องเรียกตัวเองอีก
+- *Recursive case*: ย่อยปัญหาให้เล็กลง เรียกตัวเองแก้ปัญหาที่เล็กกว่า แล้วนำคำตอบมารวมกัน
 
 ```cpp
-void recursive_function() {
-    if (base condition)
-        return; // base case
-    else
-        recursive_function(); // recursion case
+int solve(int n) {
+  if (n <= 1) {           // base case
+    return ...;
+  }
+  return ... solve(n - 1) ...;  // recursive case: n ต้องเล็กลงทุกครั้ง
 }
 ```
 
-=== วิเคราะห์ประสิทธิภาพ
+เคล็ดลับในการคิดคือ *เชื่อใจ recursive call* (leap of faith): ให้สมมติว่า `solve(n - 1)` ตอบถูกแล้ว แล้วถามตัวเองแค่ว่า "ถ้ารู้คำตอบของปัญหาที่เล็กกว่า จะได้คำตอบของ $n$ อย่างไร" ไม่ต้องไล่ทุกชั้นในหัว
 
-จะใช้วิธีการนับจำนวนครั้งที่จะมีการเรียกฟังก์ชันเกิดขึ้นตามพารามิเตอร์ของฟังก์ชันนั้น
+=== Call stack
 
-=== โจทย์ตัวอย่าง - Factorial
+ทุกครั้งที่เรียกฟังก์ชัน โปรแกรมจะจองพื้นที่ใน *call stack* สำหรับตัวแปรและตำแหน่งที่ต้องกลับไป
+เมื่อฟังก์ชันคืนค่า (return) พื้นที่นั้นจะถูกคืน และโปรแกรมกลับไปทำงานต่อที่ผู้เรียก
 
-==== เนื้อหาโจทย์
+=== ตัวอย่าง: Factorial
 
-จงหาค่าของ $n!$ โดย $n! = n times (n-1) times (n-2) times dots.c times 1$
-
-==== แนวคิด
-
-โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้ แต่นำมาเป็นตัวอย่างเริ่มต้นในการใช้โครงสร้างของ recursion ในการแก้ปัญหา
-
-โดยมองค่าของ $n!$ เป็น recursive function ดังนี้
-
-$ f(n) = cases(
-1 "if" n <= 1,
-n times f(n-1) "else",
-)
-$
-
-==== รหัสเทียม
+$ n! = cases(
+  1 & "if" n <= 1,
+  n times (n-1)! & "otherwise",
+) $
 
 ```cpp
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int factorial(int n) {
-  if (n <= 1) { // base case
-    return 1;
-  } else {
-    return n * factorial(n - 1);
-  }
+  if (n <= 1) return 1;            // base case
+  return n * factorial(n - 1);     // recursive case
 }
 
 int main() {
-  cout << factorial(4);
-  return 0;
+  cout << factorial(4);  // 24
 }
 ```
 
-จะได้ output
+ลำดับการทำงานของ `factorial(4)` จะลงไปจนถึง base case ก่อน แล้วค่อยคูณกลับขึ้นมา
 
 ```
-24
+factorial(4) = 4 * factorial(3)
+             = 4 * (3 * factorial(2))
+             = 4 * (3 * (2 * factorial(1)))
+             = 4 * (3 * (2 * 1))
+             = 24
 ```
 
-=== โจทย์ตัวอย่าง - Fibonacci
+ระหว่างนั้น call stack ลึกสุด 4 ชั้น: `factorial(4) → factorial(3) → factorial(2) → factorial(1)`
 
-==== เนื้อหาโจทย์
-
-จงหาค่าของเลขฟิโบนัชชีลำดับที่ $n$ โดยที่ เลขฟิโบนัชชีลำดับที่ $n$ จะมีค่าเท่ากับผลบวกของเลขฟิโบนัชชีลำดับที่ $n-1$ และ $n-2$
-
-==== แนวคิด
-
-โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้เช่นกัน แต่นำมาเป็นอีกตัวอย่างหนึ่งในการใช้โครงสร้างของ recursion ในการแก้ปัญหา
-
-โดยมองค่าของเลขฟิโบนัชชีลำดับที่ $n$ เป็น recursive function ดังนี้
+=== ตัวอย่าง: Fibonacci
 
 $ f(n) = cases(
-n "if" n <= 1,
-f(n-1) + f(n-2) "else",
-)
-$
+  n & "if" n <= 1,
+  f(n-1) + f(n-2) & "otherwise",
+) $
 
-==== รหัสเทียม
+ลำดับคือ $0, 1, 1, 2, 3, 5, 8, 13, dots.c$
 
 ```cpp
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int fibo(int n) {
-  if (n <= 1) { // base case
-    return n;
-  } else {
-    return fibo(n - 1) + fibo(n - 2);
-  }
+int fib(int n) {
+  if (n <= 1) return n;              // base case
+  return fib(n - 1) + fib(n - 2);    // recursive case เรียกตัวเองสองครั้ง
 }
 
 int main() {
-  cout << fibo(4);
-  return 0;
+  cout << fib(4);  // 3
 }
 ```
 
-จะได้ output
+ฟังก์ชันนี้เรียกตัวเอง *สองครั้ง* การเรียกจึงแตกกิ่งเป็นต้นไม้ (call tree) และมีการคำนวณ `fib` ของค่าเดิมซ้ำหลายรอบ
 
-```
-3
-```
+ลองกด "ถัดไป" เพื่อดูการเรียกทีละครั้ง กล่องสีแดงคือการคำนวณซ้ำ จากนั้นเปิด "ใช้ memoization" แล้วสังเกตว่าต้นไม้เล็กลงแค่ไหน และลองเปลี่ยนเป็น `factorial` เพื่อเทียบกับฟังก์ชันที่เรียกตัวเองครั้งเดียว
 
-=== โจทย์ตัวอย่าง - Permutation
+#widget("recursion-tree")
 
-==== เนื้อหาโจทย์
+=== วิเคราะห์ประสิทธิภาพ
 
-จงหาลำดับที่มีสมาชิก $n$ ตัว โดยที่แต่ละสมาชิกมีค่าน้อยกว่า $r$ ทั้งหมดที่เป็นไปได้ (จำเป็นต้องใช้ array)
+เวลาที่ใช้ $approx$ (จำนวนครั้งที่เรียกฟังก์ชัน) $times$ (งานที่ทำในแต่ละครั้งไม่นับการเรียกย่อย)
 
-==== แนวคิด
+#table(
+  columns: 4,
+  header([ฟังก์ชัน], [จำนวนการเรียก], [Time], [ความลึกของ stack]),
+  [`factorial(n)`], [$n$], [$O(n)$], [$n$],
+  [`fib(n)`], [โตประมาณ $1.6^n$], [$O(2^n)$], [$n$],
+  [`fib(n)` + memoization], [$2n - 1$], [$O(n)$], [$n$],
+  [`gen(0)` สร้างลำดับยาว $n$ ค่า $0..r-1$], [$approx r^n$], [$O(n r^n)$], [$n$],
+)
 
-เป็นการค้นทุกวิธีที่เป็นไปได้ (complete search) ซึ่งจะนำ recursive function เข้ามาใช้ โดยเริ่มต้นด้วยการสร้างลำดับที่ยังไม่มีสมาชิกใด ๆ และค่อย ๆ เติมสมาชิกเข้าไปในลำดับนั้น
+`fib(40)` แบบไม่จำคำตอบเรียกฟังก์ชันกว่า 300 ล้านครั้ง การจำคำตอบที่เคยคำนวณ (memoization) คือจุดเริ่มต้นของ Dynamic Programming
 
-base case จะเป็นเงื่อนไขเมื่อลำดับมีสมาชิกครบ $n$
+=== Complete search ด้วย recursion
 
-recursive case จะเป็นการเติมสมาชิกลำดับถัดไปด้วยทุกค่าที่เป็นไปได้
+Recursion เหมาะกับการลองทุกความเป็นไปได้ (complete search) โดยตัดสินใจทีละตำแหน่ง
 
-==== รหัสเทียม
+*โจทย์*: พิมพ์ลำดับยาว $n$ ทั้งหมดที่แต่ละตัวมีค่า $0$ ถึง $r - 1$
+
+- *State*: `d` = จำนวนตำแหน่งที่เติมแล้ว
+- *Base case*: `d == n` แปลว่าได้ลำดับครบ ให้พิมพ์ออกมา
+- *Recursive case*: ลองใส่ทุกค่าที่ตำแหน่ง `d` แล้วเรียก `gen(d + 1)`
 
 ```cpp
 #include <bits/stdc++.h>
-
 using namespace std;
 
+int n = 3, r = 3;
 int a[10];
 
-void perm(int d, int r, int n) {
-  if (d == n) { // base case
-    for (int i = 0; i < n; i++) {
-      cout << a[i] << " ";
-    }
-    cout << "\n";
+void gen(int d) {
+  if (d == n) {  // base case: ได้ลำดับครบ n ตัว
+    for (int i = 0; i < n; i++) cout << a[i] << ' ';
+    cout << '\n';
     return;
   }
-  for (int i = 0; i < r; i++) {
-    a[d] = i;
-    perm(d + 1, r, n); // recursive case
+  for (int v = 0; v < r; v++) {
+    a[d] = v;    // เลือก
+    gen(d + 1);  // ตัดสินใจตำแหน่งถัดไป
   }
 }
 
-int main() { perm(0, 3, 3); }
+int main() { gen(0); }
 ```
 
-จะได้ output
+ผลลัพธ์มี $3^3 = 27$ บรรทัด
 
 ```
 0 0 0
@@ -168,47 +142,72 @@ int main() { perm(0, 3, 3); }
 2 2 2
 ```
 
-=== ปัญหาที่พบบ่อย
+==== Backtracking: เลือก แล้วยกเลิก
 
-==== Overflow
-
-กรณีไม่มี base case หรือ base case ไม่ครอบคลุม จะทำให้เกิดการ overflow ได้
+ถ้ามีเงื่อนไข เช่น ห้ามใช้ค่าซ้ำ ให้เก็บสถานะว่าใช้อะไรไปแล้ว และ *คืนสถานะ* หลังเรียกเสร็จ เพื่อให้ทางเลือกถัดไปเริ่มจากสถานะเดิม
 
 ```cpp
-#include <bits/stdc++.h>
+bool used[10];
 
-using namespace std;
-
-int factorial(int n) { return n * factorial(n - 1); }
-
-int main() {
-  cout << factorial(4);
-  return 0;
+void perm(int d) {
+  if (d == n) { /* พิมพ์ a[0..n-1] */ return; }
+  for (int v = 0; v < n; v++) {
+    if (used[v]) continue;
+    used[v] = true;   // เลือก
+    a[d] = v;
+    perm(d + 1);
+    used[v] = false;  // ยกเลิก (backtrack)
+  }
 }
 ```
 
-จะเกิด error เช่น:
+จำนวน permutation คือ $n!$ จึงใช้ได้กับ $n$ ไม่เกินประมาณ 10 (ดูเพิ่มในบท Search)
+
+=== ข้อผิดพลาดที่พบบ่อย
+
+==== ไม่มี base case หรือปัญหาไม่เล็กลง
+
+ฟังก์ชันจะเรียกตัวเองไม่รู้จบจน call stack เต็ม (stack overflow)
+
+```cpp
+int factorial(int n) { return n * factorial(n - 1); }  // ไม่มี base case
+```
+
+จะเกิด error เช่น
 
 ```
 "./a.out" terminated by signal SIGSEGV (Address boundary error)
 ```
 
+==== ลืมคืนสถานะใน backtracking
+
+ถ้าลืม `used[v] = false` ทางเลือกถัดไปจะเห็นสถานะผิด และคำตอบหายไปบางส่วน
+
+==== Recursion ลึกเกินไป
+
+แม้จะถูกต้อง แต่ถ้าความลึกถึงหลักแสนหรือล้านชั้น (เช่น DFS บน path ยาว) อาจ stack overflow ได้ ขึ้นกับขนาด stack ของ grader ถ้าเสี่ยงให้เปลี่ยนเป็น loop หรือใช้ stack เอง
+
+=== ลองคิด
+
++ `fib(5)` แบบไม่ใช้ memoization เรียกฟังก์ชันทั้งหมดกี่ครั้ง (ตรวจคำตอบกับ widget ด้านบนได้)
++ ถ้าเปลี่ยน base case ของ `factorial` เป็น `if (n == 1) return 1;` จะเกิดอะไรขึ้นเมื่อเรียก `factorial(0)`
++ เขียน recursive function กลับข้อความ (reverse string) โดยไม่ใช้ loop
+
+==== เฉลย
+
++ 15 ครั้ง และเป็นการคำนวณซ้ำ 9 ครั้ง
++ ไม่มีวันถึง base case เพราะ $n$ ลดเป็น $-1, -2, dots.c$ ไปเรื่อย ๆ จน stack overflow
++ ตัวอย่าง: ถ้า `s` ว่าง คืน `""` ไม่เช่นนั้นคืน `rev(s.substr(1)) + s[0]`
+
 === โจทย์แนะนำ
-- หาลำดับ permutation โดยมีเงื่อนไขที่แตกต่างกัน
-  - จำนวน 5 หลัก และแต่ละหลักมีค่าไม่เกิน 6
+
+- ลำดับยาว 5 ที่แต่ละหลักมีค่าไม่เกิน 6 โดยเพิ่มเงื่อนไขทีละข้อ
   - ตัวเลขก่อนหน้าต้องน้อยกว่าหรือเท่ากับตัวถัดไป
   - ตัวเลขห้ามซ้ำ
-- กลับข้อความ (reverse string) ห้ามใช้ loop, array หรือ string
-  - กลับทั้งข้อความ เช่น: “iamastring” เป็น “gnirtsamai”
-  - กลับเฉพาะภายในคำที่คั่นด้วยเว้นวรรค เช่น: “i am a string” เป็น “i ma a gnirts”
-- Programming.in.th
-  - 0019 Perket
-  - 0039 Food
-- cses.fi
-  - 2205 Gray Code
-  - 2165 Tower of Hanoi
-  - 1622 Creating Strings
-  - 1623 Apple Division
+- กลับข้อความ (reverse string) โดยไม่ใช้ loop
+  - กลับทั้งข้อความ เช่น `iamastring` เป็น `gnirtsamai`
+  - กลับเฉพาะภายในคำที่คั่นด้วยเว้นวรรค เช่น `i am a string` เป็น `i ma a gnirts`
+- programming.in.th: 0019 Perket, 0039 Food
 
 === โจทย์ฝึกฝน (Practice Problems)
 
@@ -217,5 +216,6 @@ int main() {
 - #link("https://cses.fi/problemset/task/2165")[Tower of Hanoi]
 - #link("https://cses.fi/problemset/task/1622")[Creating Strings]
 - #link("https://cses.fi/problemset/task/1623")[Apple Division]
+- #link("https://cses.fi/problemset/task/2205")[Gray Code]
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]
