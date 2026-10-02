@@ -1133,6 +1133,31 @@ footer a:hover {
     color: var(--muted);
 }
 
+.qz-q {
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.qz-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.widget .qz-option.is-right {
+    border-color: var(--memo-border);
+    background-color: var(--memo-surface);
+    color: var(--text);
+    opacity: 1;
+}
+
+.widget .qz-option.is-wrong {
+    border-color: var(--repeat-border);
+    background-color: var(--repeat-surface);
+    color: var(--text);
+    opacity: 1;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);

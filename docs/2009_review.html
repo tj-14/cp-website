@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="stack: first in last out">
+    <meta name="description" content="บทนี้สรุปโครงสร้างข้อมูลทั้งหมดของค่าย 2 ในที่เดียว หัวใจของการเลือกใช้คือถามว่า โจทย์ต้องทำ operation อะไรบ่อยที่สุด แล้วเลือกโครงสร้างที่ทำ operation…">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Review | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="stack: first in last out">
+    <meta property="og:description" content="บทนี้สรุปโครงสร้างข้อมูลทั้งหมดของค่าย 2 ในที่เดียว หัวใจของการเลือกใช้คือถามว่า โจทย์ต้องทำ operation อะไรบ่อยที่สุด แล้วเลือกโครงสร้างที่ทำ operation…">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2009_review.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2009_review.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Review | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -92,85 +105,126 @@
             </div>
 
             <article class="content">
-<h3 id="review">review<a class="heading-anchor" href="#review" aria-hidden="true" tabindex="-1">#</a></h3>
+<h3 id="ทบทวนโครงสร้างข้อมูล">ทบทวนโครงสร้างข้อมูล<a class="heading-anchor" href="#ทบทวนโครงสร้างข้อมูล" aria-hidden="true" tabindex="-1">#</a></h3>
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
-                    <li><a href="#stack-and-queue">stack and queue</a></li>
-                    <li><a href="#linked-list">linked list</a></li>
-                    <li><a href="#dynamic-array">dynamic array</a></li>
-                    <li><a href="#binary-tree">binary tree</a></li>
-                    <li><a href="#heap">heap</a></li>
-                    <li><a href="#priority-queue">priority queue</a></li>
-                    <li><a href="#binary-search-tree">binary search tree</a></li>
-                    <li><a href="#set-map">set, map</a></li>
-                    <li><a href="#graph">graph</a></li>
-                    <li><a href="#hash-table">hash table</a></li>
+                    <li><a href="#สรุปความเร็ว">สรุปความเร็ว</a></li>
+                    <li><a href="#เลือกใช้อะไรดี">เลือกใช้อะไรดี</a></li>
+                    <li><a href="#แบบทดสอบ">แบบทดสอบ</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-<h4 id="stack-and-queue">stack and queue<a class="heading-anchor" href="#stack-and-queue" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>บทนี้สรุปโครงสร้างข้อมูลทั้งหมดของค่าย 2 ในที่เดียว หัวใจของการเลือกใช้คือถามว่า
+<strong>โจทย์ต้องทำ operation อะไรบ่อยที่สุด</strong> แล้วเลือกโครงสร้างที่ทำ
+operation นั้นได้เร็ว</p>
+<h4 id="สรุปความเร็ว">สรุปความเร็ว<a class="heading-anchor" href="#สรุปความเร็ว" aria-hidden="true" tabindex="-1">#</a></h4>
+<table>
+<thead>
+<tr>
+<th><p>โครงสร้าง</p></th>
+<th><p>STL</p></th>
+<th><p>เพิ่ม</p></th>
+<th><p>ลบ</p></th>
+<th><p>ค้นหา / ดูค่า</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>Dynamic array</p></td>
+<td><p><code>vector</code></p></td>
+<td><p>ท้าย <span class="math inline">O(1)</span>*</p></td>
+<td><p>ท้าย <span class="math inline">O(1)</span>, กลาง <span
+class="math inline">O(n)</span></p></td>
+<td><p>ตัวที่ <span class="math inline">i</span>: <span
+class="math inline">O(1)</span>, หาค่า: <span
+class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p>Linked list</p></td>
+<td><p><code>list</code></p></td>
+<td><p><span class="math inline">O(1)</span> เมื่อรู้ตำแหน่ง</p></td>
+<td><p><span class="math inline">O(1)</span> เมื่อรู้ตำแหน่ง</p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p>Stack</p></td>
+<td><p><code>stack</code></p></td>
+<td><p>บนสุด <span class="math inline">O(1)</span></p></td>
+<td><p>บนสุด <span class="math inline">O(1)</span></p></td>
+<td><p>บนสุด <span class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p>Queue</p></td>
+<td><p><code>queue</code></p></td>
+<td><p>ท้าย <span class="math inline">O(1)</span></p></td>
+<td><p>หน้า <span class="math inline">O(1)</span></p></td>
+<td><p>หน้า/ท้าย <span class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p>Deque</p></td>
+<td><p><code>deque</code></p></td>
+<td><p>หัว/ท้าย <span class="math inline">O(1)</span></p></td>
+<td><p>หัว/ท้าย <span class="math inline">O(1)</span></p></td>
+<td><p>ตัวที่ <span class="math inline">i</span>: <span
+class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p>Heap</p></td>
+<td><p><code>priority_queue</code></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p>ค่าสูงสุด <span class="math inline">O\left( \log n
+\right)</span></p></td>
+<td><p>ค่าสูงสุด <span class="math inline">O(1)</span></p></td>
+</tr>
+<tr>
+<td><p>Balanced BST</p></td>
+<td><p><code>set</code>, <code>map</code></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span>, มี
+<code>lower_bound</code></p></td>
+</tr>
+<tr>
+<td><p>Hash table</p></td>
+<td><p><code>unordered_set</code>, <code>unordered_map</code></p></td>
+<td><p>เฉลี่ย <span class="math inline">O(1)</span></p></td>
+<td><p>เฉลี่ย <span class="math inline">O(1)</span></p></td>
+<td><p>เฉลี่ย <span class="math inline">O(1)</span>, ไม่เรียงลำดับ</p></td>
+</tr>
+</tbody>
+</table>
+<p>* amortized: เฉลี่ยต่อครั้ง ดูบท Dynamic Array</p>
+<h4 id="เลือกใช้อะไรดี">เลือกใช้อะไรดี<a class="heading-anchor" href="#เลือกใช้อะไรดี" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>stack: first in last out</p>
-<ul>
-<li><p>นึกถึงกองจาน</p></li>
-</ul></li>
+<li><p>ต้องการ <strong>ลำดับการเข้า-ออก</strong>: ล่าสุดออกก่อนใช้ stack,
+มาก่อนออกก่อนใช้ queue, ทั้งสองด้านใช้ deque</p></li>
+<li><p>ต้องการ <strong>ค่ามากสุดหรือน้อยสุด</strong> ซ้ำ ๆ ขณะที่ข้อมูลเปลี่ยน:
+priority queue</p></li>
+<li><p>ต้องการ <strong>ค่าที่ใกล้ <span class="math inline">x</span>
+ที่สุด</strong> หรือข้อมูลเรียงลำดับตลอดเวลา: set หรือ map</p></li>
+<li><p>ต้องการแค่ <strong>มีหรือไม่มี</strong> หรือนับความถี่โดยไม่สนลำดับ:
+unordered_set หรือ unordered_map (หรือ array ถ้าค่าอยู่ในช่วงเล็ก)</p></li>
+<li><p>ข้อมูลไม่เปลี่ยนและต้อง <strong>ตอบคำถามช่วง</strong>: prefix sum (บท
+Array Manipulation)</p></li>
+<li><p>ข้อมูลเป็น <strong>ความสัมพันธ์</strong> ระหว่างสิ่งของ: กราฟ หรือ
+tree</p></li>
 </ul>
-<ul>
-<li><p>queue: first in first out</p>
-<ul>
-<li><p>คิวทั่วไป</p></li>
-</ul></li>
-</ul>
-<h4 id="linked-list">linked list<a class="heading-anchor" href="#linked-list" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>เป็น concept ที่เป็นโครงสร้างแนวเดียวกับ array แต่ข้อดีข้อเสียต่างกัน</p>
-<figure class="external-figure"><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png" target="_blank" rel="noopener"><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png" alt="GeeksforGeeks visual reference" loading="lazy"></a><figcaption>GeeksforGeeks visual reference. Source: <a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gq/2013/03/Linkedlist.png" target="_blank" rel="noopener">media.geeksforgeeks.org</a></figcaption></figure></li>
-</ul>
-<h4 id="dynamic-array">dynamic array<a class="heading-anchor" href="#dynamic-array" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>ใช้ vector ของ stl</p></li>
-</ul>
-<h4 id="binary-tree">binary tree<a class="heading-anchor" href="#binary-tree" aria-hidden="true" tabindex="-1">#</a></h4>
-<figure class="external-figure"><a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" alt="Wikimedia Commons visual reference" loading="lazy"></a><figcaption>Wikimedia Commons visual reference. Source: <a href="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" target="_blank" rel="noopener">upload.wikimedia.org</a></figcaption></figure>
-<h4 id="heap">heap<a class="heading-anchor" href="#heap" aria-hidden="true" tabindex="-1">#</a></h4>
-<figure class="external-figure"><a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png" target="_blank" rel="noopener"><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png" alt="External reference: s3-us-west-2.amazonaws.com" loading="lazy"></a><figcaption>External reference: s3-us-west-2.amazonaws.com. Source: <a href="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/defa0be5-c84c-4d41-8ad7-ff8d1b906ead/Untitled.png" target="_blank" rel="noopener">s3-us-west-2.amazonaws.com</a></figcaption></figure>
-<h4 id="priority-queue">priority queue<a class="heading-anchor" href="#priority-queue" aria-hidden="true" tabindex="-1">#</a></h4>
-<figure class="external-figure"><a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png" target="_blank" rel="noopener"><img src="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png" alt="Programiz visual reference" loading="lazy"></a><figcaption>Programiz visual reference. Source: <a href="https://cdn.programiz.com/sites/tutorial2program/files/Introduction.png" target="_blank" rel="noopener">cdn.programiz.com</a></figcaption></figure>
-<h4 id="binary-search-tree">binary search tree<a class="heading-anchor" href="#binary-search-tree" aria-hidden="true" tabindex="-1">#</a></h4>
-<figure class="external-figure"><a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" alt="Wikimedia Commons visual reference" loading="lazy"></a><figcaption>Wikimedia Commons visual reference. Source: <a href="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" target="_blank" rel="noopener">upload.wikimedia.org</a></figcaption></figure>
-<h4 id="set-map">set, map<a class="heading-anchor" href="#set-map" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>เหมือน set ทางคณิตศาสตร์</p></li>
-<li><p>map</p>
-<ul>
-<li><p>เหมือน dictionary ใน Python</p></li>
-<li><p>เสมือน array ที่ index เป็นอะไรก็ได้</p></li>
-</ul></li>
-</ul>
-<h4 id="graph">graph<a class="heading-anchor" href="#graph" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>มี cycle</p>
-<ul>
-<li><p>tree เป็น graph ที่ไม่มี cycle</p></li>
-</ul></li>
-</ul>
-<h4 id="hash-table">hash table<a class="heading-anchor" href="#hash-table" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>data structure ที่ใช้บีบข้อมูลให้เล็กลงโดยอาจจะเสียความละเอียดไป</p></li>
-<li><p>เช่น บีบ string ให้เหลือแค่ int ผ่าน hash function แต่ก็มีโอกาสชนกันเป็นปัญหา
-collision</p></li>
-</ul>
+<h4 id="แบบทดสอบ">แบบทดสอบ<a class="heading-anchor" href="#แบบทดสอบ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลองเลือกโครงสร้างข้อมูลที่เหมาะกับแต่ละสถานการณ์ แต่ละข้อมีคำอธิบายหลังตอบ</p>
+<div class="widget" data-widget="ds-quiz"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
-โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<p>โจทย์ชุดนี้ต้องเลือกโครงสร้างข้อมูลเอง ลองคิดก่อนว่าต้องใช้ operation
+อะไรบ่อยที่สุด</p>
 <ul>
-<li><p><a href="https://cses.fi/problemset/task/1192">Counting
-Rooms</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1091">Concert
-Tickets</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1640">Sum of Two
 Values</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1091">Concert
+Tickets</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1164">Room
+Allocation</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1192">Counting
+Rooms</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1074">Stick
 Lengths</a></p></li>
 </ul>
@@ -178,6 +232,7 @@ Lengths</a></p></li>
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/ds-quiz.js"></script>
             <div class="page-nav">
                 <a href="2011_hash-table.html" class="prev">Hash Table</a>
                 <a href="3000_greedy-algorithm.html" class="next">Greedy Algorithm</a>
