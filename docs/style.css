@@ -1158,6 +1158,50 @@ footer a:hover {
     opacity: 1;
 }
 
+.iv-timeline svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 12px;
+}
+
+.iv-job rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.iv-job text {
+    fill: var(--text);
+}
+
+.iv-time,
+.iv-tick {
+    text-anchor: middle;
+}
+
+.iv-tick {
+    fill: var(--muted);
+    font-size: 11px;
+}
+
+.iv-job.is-chosen rect {
+    fill: var(--memo-surface);
+    stroke: var(--memo-border);
+}
+
+.iv-job.is-rejected rect {
+    fill: var(--repeat-surface);
+    stroke: var(--repeat-border);
+    stroke-dasharray: 4 3;
+}
+
+.iv-job.is-current rect {
+    stroke-width: 3.5;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
