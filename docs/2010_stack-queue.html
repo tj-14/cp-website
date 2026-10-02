@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า top">
+    <meta name="description" content="Stack และ queue เป็นโครงสร้างข้อมูลเชิงเส้นที่ จำกัดว่าเพิ่มและนำข้อมูลออกได้ทางไหน ข้อจำกัดนี้ทำให้ทุก operation เป็น O(1) และตรงกับลักษณะของโจทย์หลายประเภท">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Stack and Queue | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า top">
+    <meta property="og:description" content="Stack และ queue เป็นโครงสร้างข้อมูลเชิงเส้นที่ จำกัดว่าเพิ่มและนำข้อมูลออกได้ทางไหน ข้อจำกัดนี้ทำให้ทุก operation เป็น O(1) และตรงกับลักษณะของโจทย์หลายประเภท">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2010_stack-queue.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2010_stack-queue.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Stack and Queue | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -97,25 +110,17 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#stack">Stack</a></li>
-                    <li><a href="#ตัวอย่างการใช้-vector-เพื่อ-implement-stack">ตัวอย่างการใช้ vector เพื่อ implement stack</a></li>
                     <li><a href="#queue">Queue</a></li>
-                    <li><a href="#stack-vs-queue">Stack vs Queue</a></li>
-                    <li><a href="#deque-double-ended-queue">Deque (double-ended queue)</a></li>
-                    <li><a href="#ตัวอย่าง-deque">ตัวอย่าง deque</a></li>
+                    <li><a href="#deque">Deque</a></li>
+                    <li><a href="#การประยุกต์ใช้">การประยุกต์ใช้</a></li>
+                    <li><a href="#ลองคิด">ลองคิด</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-<h4 id="stack">Stack<a class="heading-anchor" href="#stack" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า
-<strong>top</strong></p></li>
-<li><p>stack (กองซ้อน) จะใช้หลักเกณฑ์ LIFO (Last In First Out)
-ก็คือข้อมูลที่ถูกเพิ่มทีหลังสุดจะเป็นข้อมูลที่จะถูกนำออกก่อน</p></li>
-<li><p>การเพิ่มข้อมูลลงใน stack จะเรียกว่าการ <strong>push</strong>
-ส่วนการลบข้อมูลจะเรียกว่าการ <strong>pop</strong></p></li>
-<li><p>ใน stack เราจะมีตัวแปรเก็บตำแหน่งข้อมูลที่เข้าหลังสุดอยู่เสมอ โดยจะเรียกว่า
-<strong>top</strong></p></li>
-</ul>
+<p>Stack และ queue เป็นโครงสร้างข้อมูลเชิงเส้นที่
+<strong>จำกัดว่าเพิ่มและนำข้อมูลออกได้ทางไหน</strong> ข้อจำกัดนี้ทำให้ทุก operation
+เป็น <span class="math inline">O(1)</span>
+และตรงกับลักษณะของโจทย์หลายประเภท</p>
 <figure>
 <p><img
 src="assets/diagrams/stack-queue.svg"
@@ -123,131 +128,172 @@ style="width:88.0%" /></p>
 <figcaption><p>Stack and queue behavior. Original diagram for this
 guide.</p></figcaption>
 </figure>
-<h4 id="ตัวอย่างการใช้-vector-เพื่อ-implement-stack">ตัวอย่างการใช้ vector เพื่อ implement stack<a class="heading-anchor" href="#ตัวอย่างการใช้-vector-เพื่อ-implement-stack" aria-hidden="true" tabindex="-1">#</a></h4>
-<pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printvec<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> x <span class="op">:</span> a<span class="op">)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> x<span class="op">);</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// stack</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> a<span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>push_back<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  printvec<span class="op">(</span>a<span class="op">);</span> <span class="co">// 1 2 3 4</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>pop_back<span class="op">();</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  a<span class="op">.</span>pop_back<span class="op">();</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  printvec<span class="op">(</span>a<span class="op">);</span> <span class="co">// 1 2</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="queue">Queue<a class="heading-anchor" href="#queue" aria-hidden="true" tabindex="-1">#</a></h4>
+<h4 id="stack">Stack<a class="heading-anchor" href="#stack" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Stack (กองซ้อน) ทำงานแบบ <strong>LIFO</strong> (Last In, First Out):
+ข้อมูลที่ใส่หลังสุดถูกนำออกก่อน เหมือนกองจาน เพิ่มและหยิบได้เฉพาะใบบนสุด
+(<strong>top</strong>)</p>
 <ul>
-<li><p>queue (แถวคอย) เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลจะเข้าได้ทางหนึ่งที่เรียกว่า
-<strong>rear</strong> และจะถูกนำออกได้ในอีกทางที่เรียกว่า
-<strong>front</strong></p></li>
-<li><p>queue จะหลักกร (First In First Out)
-ก็คือข้อมูลที่ถูกนำเข้าแรกสุดจะเป็นข้อมูลที่ถูกนำออกแรกสุด</p></li>
-<li><p>การเพิ่มข้อมูลเข้า queue จะเรียกว่า <strong>enqueue</strong>
-และการลบข้อมูลจะเรียกว่า <strong>dequeue</strong></p></li>
-<li><p>ใน queue นั้นเราจะมีตัวแปรเก็บตำแหน่งสองตำแหน่ง</p>
-<ul>
-<li><p><strong>front</strong> ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า
-<strong>แรก</strong> สุด</p></li>
-<li><p><strong>rear</strong> ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า
-<strong>หลัง</strong> สุด</p></li>
-</ul></li>
+<li><p><code>push(x)</code> ใส่ <code>x</code> ไว้บนสุด</p></li>
+<li><p><code>pop()</code> นำตัวบนสุดออก</p></li>
+<li><p><code>top()</code> ดูตัวบนสุด</p></li>
 </ul>
-<p>ดูภาพรวม queue ในรูปเดียวกับ stack ด้านบน</p>
-<h4 id="stack-vs-queue">Stack vs Queue<a class="heading-anchor" href="#stack-vs-queue" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>stack<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> st<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>st<span class="op">.</span>push<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>st<span class="op">.</span>push<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>st<span class="op">.</span>push<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> st<span class="op">.</span>top<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// 3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>st<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> st<span class="op">.</span>top<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// 2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> st<span class="op">.</span>size<span class="op">();</span>         <span class="co">// 2</span></span></code></pre>
+<p><code>vector</code> ใช้เป็น stack ได้เช่นกันด้วย <code>push_back</code>,
+<code>pop_back</code> และ <code>back</code> ซึ่งสะดวกเมื่อต้องการวนดูทุกตัวใน
+stack</p>
+<p>ห้าม <code>top()</code> หรือ <code>pop()</code> ตอน stack ว่าง (runtime
+error) ให้เช็ค <code>st.empty()</code> ก่อนเสมอ</p>
+<h4 id="queue">Queue<a class="heading-anchor" href="#queue" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Queue (แถวคอย) ทำงานแบบ <strong>FIFO</strong> (First In, First Out):
+ข้อมูลที่เข้าก่อนออกก่อน เหมือนแถวซื้อของ เข้าทางท้าย (<strong>back/rear</strong>)
+ออกทางหน้า (<strong>front</strong>)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>q<span class="op">.</span>push<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>q<span class="op">.</span>push<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>q<span class="op">.</span>push<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> q<span class="op">.</span>front<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// 1</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> q<span class="op">.</span>front<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// 2</span></span></code></pre>
+<p>ลองใส่ค่าชุดเดียวกันลงทั้ง stack และ queue แล้วกด pop
+เพื่อเทียบว่าแต่ละตัวนำค่าใดออก</p>
+<div class="widget" data-widget="stack-queue"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
 <table>
 <thead>
 <tr>
+<th></th>
 <th><p>Stack</p></th>
 <th><p>Queue</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><p>หลักการ</p></td>
 <td><p>LIFO</p></td>
 <td><p>FIFO</p></td>
 </tr>
 <tr>
-<td><p>one pointer (top)</p></td>
-<td><p>two pointers (front, rear)</p></td>
+<td><p>ใส่ข้อมูล</p></td>
+<td><p><code>push</code> บนสุด</p></td>
+<td><p><code>push</code> ท้ายแถว</p></td>
 </tr>
 <tr>
-<td><p>push</p></td>
-<td><p>enqueue</p></td>
+<td><p>นำออก</p></td>
+<td><p><code>pop</code> บนสุด</p></td>
+<td><p><code>pop</code> หน้าแถว</p></td>
 </tr>
 <tr>
-<td><p>pop</p></td>
-<td><p>dequeue</p></td>
+<td><p>ดูค่า</p></td>
+<td><p><code>top()</code></p></td>
+<td><p><code>front()</code>, <code>back()</code></p></td>
 </tr>
 <tr>
-<td><p>recursion</p></td>
-<td><p>sequential</p></td>
+<td><p>ใช้บ่อยกับ</p></td>
+<td><p>วงเล็บ, DFS, undo, monotonic stack</p></td>
+<td><p>BFS, จำลองแถวคอย</p></td>
 </tr>
 </tbody>
 </table>
-<h4 id="deque-double-ended-queue">Deque (double-ended queue)<a class="heading-anchor" href="#deque-double-ended-queue" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>ใน STL จะมีโครงสร้างข้อมูลชื่อ deque
-โดยจะเป็นโครงสร้างข้อมูลเชิงเส้นที่สามารถเพิ่มลบข้อมูลได้ทั้งสองทิศทางด้วยคำสั่ง</p>
-<ul>
-<li><p>push_front</p></li>
-<li><p>push_back</p></li>
-<li><p>pop_front</p></li>
-<li><p>pop_back</p></li>
-</ul></li>
-</ul>
-<h4 id="ตัวอย่าง-deque">ตัวอย่าง deque<a class="heading-anchor" href="#ตัวอย่าง-deque" aria-hidden="true" tabindex="-1">#</a></h4>
+<h4 id="deque">Deque<a class="heading-anchor" href="#deque" aria-hidden="true" tabindex="-1">#</a></h4>
+<p><code>deque</code> (double-ended queue) เพิ่มและนำออกได้
+<strong>ทั้งสองด้าน</strong> ใน <span class="math inline">O(1)</span>
+และเข้าถึง <code>dq[i]</code> ได้เหมือน vector</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printq<span class="op">(</span>deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> x <span class="op">:</span> a<span class="op">)</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> x<span class="op">);</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// double-ended queue</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> b<span class="op">;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>push_back<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  printq<span class="op">(</span>b<span class="op">);</span> <span class="co">// 1 2 3 4</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>pop_front<span class="op">();</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>pop_front<span class="op">();</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  printq<span class="op">(</span>b<span class="op">);</span> <span class="co">// 3 4</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>pop_back<span class="op">();</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  printq<span class="op">(</span>b<span class="op">);</span> <span class="co">// 3</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dq<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dq<span class="op">.</span>push_back<span class="op">(</span><span class="dv">1</span><span class="op">);</span>   <span class="co">// 1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dq<span class="op">.</span>push_back<span class="op">(</span><span class="dv">2</span><span class="op">);</span>   <span class="co">// 1 2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dq<span class="op">.</span>push_front<span class="op">(</span><span class="dv">0</span><span class="op">);</span>  <span class="co">// 0 1 2</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dq<span class="op">.</span>pop_back<span class="op">();</span>     <span class="co">// 0 1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dq<span class="op">.</span>pop_front<span class="op">();</span>    <span class="co">// 1</span></span></code></pre>
+<h4 id="การประยุกต์ใช้">การประยุกต์ใช้<a class="heading-anchor" href="#การประยุกต์ใช้" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="ตรวจวงเล็บ">ตรวจวงเล็บ<a class="heading-anchor" href="#ตรวจวงเล็บ" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ข้อความ <code>{[()()]}</code> มีวงเล็บถูกต้องหรือไม่ อ่านทีละตัว
+ถ้าเป็นวงเล็บเปิดให้ push ถ้าเป็นวงเล็บปิดต้องคู่กับตัวบนสุดของ stack แล้ว pop เมื่ออ่านจบ
+stack ต้องว่าง (เลือกโหมด “ตรวจวงเล็บด้วย stack” ใน widget
+ด้านบนเพื่อดูทีละขั้น)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> valid<span class="op">(</span><span class="at">const</span> string<span class="op">&amp;</span> s<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  stack<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> st<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">char</span> c <span class="op">:</span> s<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>c <span class="op">==</span> <span class="ch">&#39;(&#39;</span> <span class="op">||</span> c <span class="op">==</span> <span class="ch">&#39;[&#39;</span> <span class="op">||</span> c <span class="op">==</span> <span class="ch">&#39;{&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      st<span class="op">.</span>push<span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>st<span class="op">.</span>empty<span class="op">())</span> <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">char</span> open <span class="op">=</span> st<span class="op">.</span>top<span class="op">();</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      st<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">((</span>c <span class="op">==</span> <span class="ch">&#39;)&#39;</span> <span class="op">&amp;&amp;</span> open <span class="op">!=</span> <span class="ch">&#39;(&#39;</span><span class="op">)</span> <span class="op">||</span> <span class="op">(</span>c <span class="op">==</span> <span class="ch">&#39;]&#39;</span> <span class="op">&amp;&amp;</span> open <span class="op">!=</span> <span class="ch">&#39;[&#39;</span><span class="op">)</span> <span class="op">||</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>          <span class="op">(</span>c <span class="op">==</span> <span class="ch">&#39;}&#39;</span> <span class="op">&amp;&amp;</span> open <span class="op">!=</span> <span class="ch">&#39;{&#39;</span><span class="op">))</span> <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> st<span class="op">.</span>empty<span class="op">();</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="monotonic-stack-ค่าที่น้อยกว่าตัวแรกทางซ้าย">Monotonic stack: ค่าที่น้อยกว่าตัวแรกทางซ้าย<a class="heading-anchor" href="#monotonic-stack-ค่าที่น้อยกว่าตัวแรกทางซ้าย" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>โจทย์: สำหรับแต่ละตำแหน่ง <span class="math inline">i</span> หาตำแหน่ง
+<span class="math inline">j &lt; i</span> ที่ใกล้ที่สุดซึ่ง
+<code>a[j] &lt; a[i]</code> วิธีตรง ๆ ใช้ <span class="math inline">O\left(
+n^{2} \right)</span> แต่ถ้าเก็บ stack ของตำแหน่งที่ค่ายังเรียงจากน้อยไปมาก
+ทุกตัวจะถูก push และ pop ไม่เกินอย่างละครั้ง จึงเหลือ <span
+class="math inline">O(n)</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> st<span class="op">;</span>  <span class="co">// เก็บ index, ค่าใน stack เพิ่มขึ้นจากล่างไปบน</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>st<span class="op">.</span>empty<span class="op">()</span> <span class="op">&amp;&amp;</span> a<span class="op">[</span>st<span class="op">.</span>back<span class="op">()]</span> <span class="op">&gt;=</span> a<span class="op">[</span>i<span class="op">])</span> st<span class="op">.</span>pop_back<span class="op">();</span>  <span class="co">// ตัวที่ใหญ่กว่าไม่มีวันเป็นคำตอบอีก</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> answer <span class="op">=</span> st<span class="op">.</span>empty<span class="op">()</span> <span class="op">?</span> <span class="op">-</span><span class="dv">1</span> <span class="op">:</span> st<span class="op">.</span>back<span class="op">();</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  st<span class="op">.</span>push_back<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="sliding-window-minimum-ด้วย-deque">Sliding window minimum ด้วย deque<a class="heading-anchor" href="#sliding-window-minimum-ด้วย-deque" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>หาค่าน้อยสุดของทุกช่วงยาว <span class="math inline">k</span> ที่ติดกัน: เก็บ
+index ใน deque โดยค่ายังเรียงจากน้อยไปมาก ตัวหน้าสุดคือค่าน้อยสุดของ window ปัจจุบัน
+ใช้เวลา <span class="math inline">O(n)</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dq<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>dq<span class="op">.</span>empty<span class="op">()</span> <span class="op">&amp;&amp;</span> a<span class="op">[</span>dq<span class="op">.</span>back<span class="op">()]</span> <span class="op">&gt;=</span> a<span class="op">[</span>i<span class="op">])</span> dq<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  dq<span class="op">.</span>push_back<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>dq<span class="op">.</span>front<span class="op">()</span> <span class="op">&lt;=</span> i <span class="op">-</span> k<span class="op">)</span> dq<span class="op">.</span>pop_front<span class="op">();</span>  <span class="co">// หลุดออกจาก window แล้ว</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;=</span> k <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> cout <span class="op">&lt;&lt;</span> a<span class="op">[</span>dq<span class="op">.</span>front<span class="op">()]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="queue-ในการจำลองและ-bfs">Queue ในการจำลองและ BFS<a class="heading-anchor" href="#queue-ในการจำลองและ-bfs" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>Queue เหมาะกับการจำลองสิ่งที่ “มาก่อนได้ก่อน” และเป็นหัวใจของ BFS ในบท Graph
+Algorithm</p>
+<h4 id="ลองคิด">ลองคิด<a class="heading-anchor" href="#ลองคิด" aria-hidden="true" tabindex="-1">#</a></h4>
+<ol>
+<li><p>push 1, 2, 3 แล้ว pop หนึ่งครั้ง แล้ว push 4 ถ้าเป็น stack จะเหลืออะไร
+ถ้าเป็น queue จะเหลืออะไร</p></li>
+<li><p>ทำไม monotonic stack จึงเป็น <span class="math inline">O(n)</span>
+ทั้งที่มี <code>while</code> ซ้อนอยู่ใน <code>for</code></p></li>
+</ol>
+<h5 id="เฉลย">เฉลย<a class="heading-anchor" href="#เฉลย" aria-hidden="true" tabindex="-1">#</a></h5>
+<ol>
+<li><p>Stack: 1 2 4 (4 อยู่บนสุด) Queue: 2 3 4 (2 อยู่หน้าสุด)</p></li>
+<li><p>แต่ละ index ถูก push หนึ่งครั้งและ pop ได้ไม่เกินหนึ่งครั้ง จำนวนรอบของ
+<code>while</code> รวมทั้งโปรแกรมจึงไม่เกิน <span
+class="math inline">n</span> (amortized analysis)</p></li>
+</ol>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a
-href="https://cses.fi/problemset/task/1073">Towers</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/2162">Josephus Problem
-I</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/2163">Josephus Problem
-II</a></p></li>
+I</a> (queue)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1645">Nearest Smaller
+Values</a> (monotonic stack)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/3221">Sliding Window
+Minimum</a> (deque)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/stack-queue.js"></script>
             <div class="page-nav">
                 <a href="2005_big-o-notation.html" class="prev">Big O Notation</a>
                 <a href="2001_linked-list.html" class="next">Linked List</a>
