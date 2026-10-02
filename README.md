@@ -124,7 +124,7 @@ cp-website/
 
 ### หนังสือ (Books)
 - [Competitive Programmer's Handbook](https://cses.fi/book/book.pdf) - หนังสือหลัก
-- [Principles of Algorithmic Problem Solving](https://www.csc.kth.se/~jsannemo/slask/main.pdf)
+- [Principles of Algorithmic Problem Solving](https://usaco.guide/PAPS.pdf)
 
 ### เว็บไซต์อ้างอิง (Reference Sites)
 - [CP-Algorithms](https://cp-algorithms.com/) - อัลกอริทึมต่างๆ อย่างละเอียด
