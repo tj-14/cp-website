@@ -1,142 +1,118 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
+#import "widgets.typ": widget
 
 == Heap
 
 === คำอธิบาย
 
-- Heap เป็นโครงสร้างข้อมูลต้นไม้ (tree) ที่มีเงื่อนไขพิเศษ และเป็น complete binary tree
-- โดยทั่วไปแล้ว heap มีสองประเภท
-    - Max-Heap: ใน max heap นั้น key ที่ root จะมีค่าที่มากที่สุด และคุณสมบัตินี้เป็นจริงในทุก ๆ sub-trees
-    - Min-Heap: ใน min heap นั้น key ที่ root จะมีค่าที่น้อยที่สุด และคุณสมบัตินี้เป็นจริงในทุก ๆ sub-trees
+Binary heap คือ binary tree ที่มีคุณสมบัติสองข้อ
+
++ *Complete binary tree*: ทุกชั้นเต็มยกเว้นชั้นล่างสุด ซึ่งเติมจากซ้ายไปขวา
++ *Heap property*: ใน *min-heap* ทุก node มีค่า $<=$ ลูกของตัวเอง ค่าน้อยสุดจึงอยู่ที่ root เสมอ (*max-heap* กลับกัน ค่ามากสุดอยู่ที่ root)
+
+Heap *ไม่ได้เรียงทั้งหมด* รู้แค่ว่า root เป็นค่าน้อยสุด ซึ่งพอสำหรับงานที่ต้องดึงค่าน้อยสุดออกซ้ำ ๆ และทำให้ทุก operation เร็ว
 
 #figure(
   image("../assets/diagrams/heap.svg", width: 88%),
   caption: [Min heap and array representation. Original diagram for this guide.],
 )
 
-=== คุณสมบัติ
+=== เก็บใน array
 
-Binary Heap เป็น Binary Tree ที่มีคุณสมบัติเพิ่มเติมดังนี้
+เพราะเป็น complete tree จึงเก็บใน array ได้พอดีโดยไม่มีช่องว่าง เรียงทีละชั้นจากซ้ายไปขวา ถ้าเริ่ม index ที่ 0
 
-- เป็น complete tree (ทุกระดับจะมีโหนดเต็มระดับยกเว้นระดับสุดท้ายซึ่งระดับสุดท้ายจะต้องมีโหนดทางซ้ายให้ได้มากที่สุด
-- คุณสมบัตินี้ทำให้ Binary Heap เหมาะกับการใช้ array ในการเก็บ
-- Binary Heap นั้นเป็น Min Heap หรือ Max Heap
-    - ใน Min Binary Heap นั้น ค่าที่ root จะเป็นค่าที่น้อยที่สุด และคุณสมบัตินี้ต้องเป็นจริงสำหรับทุก node ใน Binary Tree
-    - Max Binary Heap นั้นแค่เปลี่ยนจากค่าที่น้อยที่สุดเป็นมากที่สุด
+- ลูกซ้ายของ $i$ คือ $2i + 1$ และลูกขวาคือ $2i + 2$
+- parent ของ $i$ คือ $floor((i - 1) / 2)$
 
-=== Operations (Min Heap)
+ความสูงของ heap ที่มี $n$ node คือ $floor(log_2 n)$ ทุก operation ที่เดินตามความสูงจึงเป็น $O(log n)$
 
-- `getMin()`: คืนค่า root ของ Min Heap ได้เลย ซึ่งใช้เวลา $O(1)$
-- `extractMin()`: นำค่าที่น้อยที่สุดใน MinHeap ออก ซึ่งใช้เวลา $O(log{n})$  เพราะเมื่อนำ root ออกแล้วจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap
-- `decreaseKey()`: ลดค่าของโหนดที่ระบุ ซึ่งใช้เวลา $O(log{n})$  เพราะจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap
-- `insert()`: เพิ่มโหนดใหม่ ซึ่งใช้เวลา $O(log{n})$  เพราะสามารถเพิ่มโหนดที่ตำแหน่งสุดท้าย แล้วค่อยปรับโครงสร้างให้ตรงคุณสมบัติ heap
-- `delete()`: ลบโหนด ซึ่งใช้เวลา $O(log{n})$  เพราะสามารถ `decreaseKey()` ให้เป็น $-inf$ แล้ว `extractMin()`
+=== Operations (min-heap)
 
-=== ตัวอย่างการ implement
+==== Insert: sift up
 
-- implement subroutine สองฟังก์ชันคือ
-    - `jom` เป็นการปรับโหนดตำแหน่งที่ระบุให้จมลงไปตามคุณสมบัติของ heap
-    - `loy` เป็นการปรับโหนดตำแหน่งที่ระบุให้ลอยขึ้นตามคุณสมบัติของ heap
+ใส่ค่าใหม่ที่ช่องท้ายสุดของ array (รักษาความเป็น complete tree) แล้ว *ลอยขึ้น* (sift up): ถ้าน้อยกว่า parent ให้สลับ ทำซ้ำจนไม่น้อยกว่า parent หรือถึง root
+
+==== Extract min: sift down
+
+นำ root ออก แล้วย้ายตัวสุดท้ายขึ้นมาเป็น root แทน จากนั้น *จมลง* (sift down): สลับกับ *ลูกที่น้อยกว่า* ถ้าลูกนั้นน้อยกว่าตัวเอง ทำซ้ำจนไม่มีลูกที่น้อยกว่า
+
+ต้องสลับกับลูกที่ *น้อยกว่า* เพราะตัวนั้นจะขึ้นมาเป็น parent ของอีกลูกหนึ่ง ถ้าเลือกลูกที่มากกว่าจะผิด heap property
+
+ลอง insert ค่าต่าง ๆ และ extract min แล้วกด "ขั้นถัดไป" เพื่อดูการสลับทีละขั้น สังเกตว่าตำแหน่งใน tree และใน array ตรงกันอย่างไร
+
+#widget("heap")
+
+#table(
+  columns: 2,
+  header([Operation], [เวลา]),
+  [ดูค่าน้อยสุด (`top`)], [$O(1)$],
+  [insert (`push`)], [$O(log n)$],
+  [extract min (`pop`)], [$O(log n)$],
+  [สร้าง heap จาก array $n$ ตัว (heapify)], [$O(n)$],
+)
+
+=== Implementation
 
 ```cpp
-#include <bits/stdc++.h>
-int d[100010] = {};
-int cnt = 0, heap[100010] = {};
+vector<int> h;  // min-heap, index เริ่มที่ 0
 
-using namespace std;
-
-void jom(int i) {
-  while (i <= cnt / 2) {
-    int j = i;
-    if (i * 2 < cnt)
-      if (d[heap[i * 2]] < d[heap[j]])
-        j = i * 2;
-    if (i * 2 + 1 < cnt)
-      if (d[heap[i * 2 + 1]] < d[heap[j]])
-        j = i * 2 + 1;
-    if (j == i)
-      break;
-    swap(heap[i], heap[j]);
-    i = j;
+void push(int x) {
+  h.push_back(x);
+  int i = h.size() - 1;
+  while (i > 0) {
+    int p = (i - 1) / 2;
+    if (h[p] <= h[i]) break;
+    swap(h[p], h[i]);  // sift up
+    i = p;
   }
 }
 
-void loy(int i) {
-  while (i > 1) {
-    if (d[heap[i / 2]] > d[heap[i]]) {
-      swap(heap[i / 2], heap[i]);
-      i /= 2;
-    } else
-      break;
+int pop() {            // คืนและลบค่าน้อยสุด (สมมติว่า heap ไม่ว่าง)
+  int top = h[0];
+  h[0] = h.back();
+  h.pop_back();
+  int i = 0, n = h.size();
+  while (true) {
+    int l = 2 * i + 1, r = 2 * i + 2, c = i;
+    if (l < n && h[l] < h[c]) c = l;
+    if (r < n && h[r] < h[c]) c = r;  // c = ตัวที่น้อยสุดในสามตัว
+    if (c == i) break;
+    swap(h[i], h[c]);  // sift down
+    i = c;
   }
-}
-
-void insertKey(int k) {
-  // First insert the new key at the end
-  d[++cnt] = k;
-  heap[cnt] = cnt;
-
-  // Fix the min heap property if it is violated
-  loy(cnt);
-}
-
-void decreaseKey(int i, int new_val) {
-  d[heap[i]] = new_val;
-  loy(i);
-}
-
-// Method to remove minimum element (or root) from min heap
-int extractMin() {
-  // Store the minimum value, and remove it from heap
-  int root = heap[1];
-  heap[1] = heap[cnt];
-  cnt--;
-  jom(1);
-  return d[root];
-}
-
-// This function deletes key at index i. It first reduced value to minus
-// infinite, then calls extractMin()
-void deleteKey(int i) {
-  decreaseKey(i, INT_MIN);
-  extractMin();
-}
-
-int getMin() { return d[heap[1]]; }
-
-void printHeap() {
-  for (int i = 1; i <= cnt; i++) {
-    printf("%d ", d[heap[i]]);
-  }
-  printf("\n");
-}
-
-int main() {
-  insertKey(3);
-  insertKey(2);
-  printHeap();
-  deleteKey(1);
-  printHeap();
-  insertKey(15);
-  insertKey(5);
-  insertKey(4);
-  insertKey(45);
-  printHeap();
-  printf("extractMin %d\n", extractMin());
-  printHeap();
-  printf("getMin %d\n", getMin());
-  decreaseKey(2, 1);
-  printHeap();
-  printf("getMin %d\n", getMin());
-  return 0;
+  return top;
 }
 ```
+
+=== Heap sort
+
+Push ทุกค่าลง heap แล้ว pop ออกทีละตัว จะได้ค่าเรียงจากน้อยไปมาก ใช้เวลา $O(n log n)$
+
+=== ใช้ใน STL
+
+ในการแข่งขันใช้ `priority_queue` ซึ่งเป็น heap สำเร็จรูป (ค่าเริ่มต้นเป็น max-heap) รายละเอียดอยู่ในบท Priority Queue
+
+```cpp
+priority_queue<int> maxHeap;
+priority_queue<int, vector<int>, greater<int>> minHeap;
+```
+
+=== ลองคิด
+
++ ใน min-heap ค่ามากสุดอยู่ที่ไหนได้บ้าง
++ ถ้า insert 5, 3, 8, 1 ลง min-heap ว่างตามลำดับ array สุดท้ายเป็นอย่างไร (ตรวจด้วย widget ได้)
+
+==== เฉลย
+
++ อยู่ที่ใบ (leaf) ตัวใดตัวหนึ่ง เพราะ node ที่มีลูกต้องน้อยกว่าหรือเท่ากับลูก จึงตรวจแค่ครึ่งหลังของ array ก็พอ
++ `1 3 8 5`: insert 3 สลับกับ 5, insert 8 อยู่ที่เดิม, insert 1 ลอยขึ้นผ่าน 5 และ 3 จนถึง root
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1091")[Concert Tickets]
-- #link("https://cses.fi/problemset/task/1163")[Traffic Lights]
+- #link("https://cses.fi/problemset/task/1164")[Room Allocation] (min-heap ของเวลาที่ห้องว่าง)
+- #link("https://cses.fi/problemset/task/1076")[Sliding Window Median] (ท้าทาย: ใช้ heap สองตัว)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

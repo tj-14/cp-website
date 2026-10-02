@@ -1006,6 +1006,73 @@ footer a:hover {
     font-size: 0.85rem;
 }
 
+.hp-tree svg,
+.bst-tree svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.hp-edge,
+.bst-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.hp-node circle,
+.bst-node circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.hp-node text,
+.bst-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.hp-node.is-hl circle,
+.bst-node.is-hl circle {
+    fill: var(--surface-hover);
+    stroke: var(--nav-accent);
+    stroke-width: 3.5;
+}
+
+.hp-array {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+    margin: 0.5rem 0;
+}
+
+.hp-cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 2.2rem;
+    padding: 0.15rem 0.35rem;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.hp-cell small {
+    color: var(--muted);
+    font-size: 0.65rem;
+}
+
+.hp-cell.is-hl {
+    border-color: var(--nav-accent);
+    border-width: 3px;
+    background-color: var(--surface-hover);
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
