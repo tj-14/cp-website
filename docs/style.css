@@ -865,6 +865,52 @@ footer a:hover {
     stroke-width: 4;
 }
 
+.widget input.cx-n {
+    width: 8rem;
+}
+
+.content .cx-table td,
+.content .cx-table th {
+    padding: 0.35rem 0.6rem;
+    white-space: nowrap;
+}
+
+.content .cx-table .cx-bar-cell {
+    min-width: 10rem;
+    width: 30%;
+    background-image: linear-gradient(to right, transparent calc(var(--cx-limit) - 1px),
+            var(--text) calc(var(--cx-limit) - 1px), var(--text) calc(var(--cx-limit) + 1px),
+            transparent calc(var(--cx-limit) + 1px));
+}
+
+.content .cx-table thead .cx-bar-cell {
+    background-image: none;
+    white-space: normal;
+}
+
+.cx-bar {
+    display: block;
+    height: 0.7rem;
+    border-radius: 3px;
+    background-color: var(--border-strong);
+}
+
+.cx-table .is-pass .cx-bar {
+    background-color: var(--memo-border);
+}
+
+.cx-table .is-fail .cx-bar {
+    background-color: var(--repeat-border);
+}
+
+.cx-table tr[role="button"] {
+    cursor: pointer;
+}
+
+.content .cx-table tr.is-picked th {
+    box-shadow: inset 4px 0 0 var(--nav-accent);
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
