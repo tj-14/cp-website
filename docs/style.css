@@ -1035,6 +1035,11 @@ footer a:hover {
     text-anchor: middle;
 }
 
+.bst-node.is-path circle {
+    stroke: var(--link);
+    stroke-width: 2.5;
+}
+
 .hp-node.is-hl circle,
 .bst-node.is-hl circle {
     fill: var(--surface-hover);
