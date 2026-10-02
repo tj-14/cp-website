@@ -23,7 +23,7 @@ DOCS = ROOT / "docs"
 BOOK_ASSETS = ROOT / "book" / "assets"
 DOCS_ASSETS = DOCS / "assets"
 
-SITE_URL = "https://tj-14.github.io/cp-website"
+SITE_URL = "https://tossatree.com/cp-website"
 SITE_TITLE = "คู่มือโอลิมปิกคอมพิวเตอร์"
 SITE_TAGLINE = "Computer Olympiad Guide for Thai High School Students"
 DEFAULT_DESCRIPTION = "คู่มือการเขียนโปรแกรมเชิงแข่งขันสำหรับนักเรียนไทย สรุปอัลกอริทึมและโครงสร้างข้อมูลตั้งแต่พื้นฐานจนถึงระดับสูง พร้อมโจทย์ฝึกฝนจาก CSES และ programming.in.th"
