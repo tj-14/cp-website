@@ -114,6 +114,7 @@
                     <li><a href="#type">Type</a></li>
                     <li><a href="#terminology">Terminology</a></li>
                     <li><a href="#representation">Representation</a></li>
+                    <li><a href="#อ่านกราฟจาก-input">อ่านกราฟจาก input</a></li>
                     <li><a href="#traversal">Traversal</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
@@ -211,17 +212,62 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;&gt;</span> adj<span class="op">(</span>n<span class="op">);</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">({</span>v<span class="op">,</span> w<span class="op">});</span></span></code></pre>
+<h5 id="edge-list">Edge list<a class="heading-anchor" href="#edge-list" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เก็บ edge ทั้งหมดเป็นรายการ <code>(u, v, w)</code> เหมาะกับอัลกอริทึมที่ไล่ทุก
+edge เช่น Kruskal และ Bellman-Ford</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> edges<span class="op">;</span>  <span class="co">// (u, v, w)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>edges<span class="op">.</span>push_back<span class="op">({</span>u<span class="op">,</span> v<span class="op">,</span> w<span class="op">});</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><p>Adjacency matrix</p></th>
+<th><p>Adjacency list</p></th>
+<th><p>Edge list</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>หน่วยความจำ</p></td>
+<td><p><span class="math inline">O\left( V^{2} \right)</span></p></td>
+<td><p><span class="math inline">O(V + E)</span></p></td>
+<td><p><span class="math inline">O(E)</span></p></td>
+</tr>
+<tr>
+<td><p>มี edge <span class="math inline">uv</span> ไหม</p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
+<td><p><span class="math inline">O\left( \text{deg}(u)
+\right)</span></p></td>
+<td><p><span class="math inline">O(E)</span></p></td>
+</tr>
+<tr>
+<td><p>ไล่เพื่อนบ้านของ <span class="math inline">u</span></p></td>
+<td><p><span class="math inline">O(V)</span></p></td>
+<td><p><span class="math inline">O\left( \text{deg}(u)
+\right)</span></p></td>
+<td><p><span class="math inline">O(E)</span></p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="อ่านกราฟจาก-input">อ่านกราฟจาก input<a class="heading-anchor" href="#อ่านกราฟจาก-input" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>โจทย์ส่วนใหญ่ให้ <span class="math inline">n</span> (จำนวน vertex) และ
+<span class="math inline">m</span> (จำนวน edge) ตามด้วย edge ทีละบรรทัด</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span>  <span class="co">// vertex หมายเลข 1..n</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> u<span class="op">,</span> v<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  cin <span class="op">&gt;&gt;</span> u <span class="op">&gt;&gt;</span> v<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  adj<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  adj<span class="op">[</span>v<span class="op">].</span>push_back<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ตรวจให้ดีว่าโจทย์ใช้หมายเลข vertex เริ่มที่ 0 หรือ 1</p>
 <h4 id="traversal">Traversal<a class="heading-anchor" href="#traversal" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><a
-href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
-<ul>
-<li><p>graph traversal</p></li>
-<li><p>DFS เหมาะกับการหา connected component, cycle และ topological
-sort</p></li>
-<li><p>BFS เหมาะกับ shortest path ใน unweighted graph</p></li>
-</ul>
-<p>เวลาทำงานของ traversal บน adjacency list คือ <span
-class="math inline">O(V + E)</span></p>
+<p>การเดินสำรวจกราฟ (BFS และ DFS) ใช้เวลา <span class="math inline">O(V +
+E)</span> บน adjacency list อ่านต่อพร้อม widget ให้ลองเดินทีละขั้นในบท Graph
+Algorithm</p>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>

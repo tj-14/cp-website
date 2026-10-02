@@ -1,4 +1,5 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
 
 == Graph Structure
 
@@ -87,13 +88,44 @@ vector<vector<pair<int, int>>> adj(n);
 adj[u].push_back({v, w});
 ```
 
-=== Traversal
-https://usaco.guide/CPH.pdf#page=119
-- graph traversal
-- DFS เหมาะกับการหา connected component, cycle และ topological sort
-- BFS เหมาะกับ shortest path ใน unweighted graph
+==== Edge list
 
-เวลาทำงานของ traversal บน adjacency list คือ $O(V+E)$
+เก็บ edge ทั้งหมดเป็นรายการ `(u, v, w)` เหมาะกับอัลกอริทึมที่ไล่ทุก edge เช่น Kruskal และ Bellman-Ford
+
+```cpp
+vector<tuple<int, int, int>> edges;  // (u, v, w)
+edges.push_back({u, v, w});
+```
+
+#table(
+  columns: 4,
+  header([], [Adjacency matrix], [Adjacency list], [Edge list]),
+  [หน่วยความจำ], [$O(V^2)$], [$O(V + E)$], [$O(E)$],
+  [มี edge $u v$ ไหม], [$O(1)$], [$O("deg"(u))$], [$O(E)$],
+  [ไล่เพื่อนบ้านของ $u$], [$O(V)$], [$O("deg"(u))$], [$O(E)$],
+)
+
+=== อ่านกราฟจาก input
+
+โจทย์ส่วนใหญ่ให้ $n$ (จำนวน vertex) และ $m$ (จำนวน edge) ตามด้วย edge ทีละบรรทัด
+
+```cpp
+int n, m;
+cin >> n >> m;
+vector<vector<int>> adj(n + 1);  // vertex หมายเลข 1..n
+for (int i = 0; i < m; i++) {
+  int u, v;
+  cin >> u >> v;
+  adj[u].push_back(v);
+  adj[v].push_back(u);
+}
+```
+
+ตรวจให้ดีว่าโจทย์ใช้หมายเลข vertex เริ่มที่ 0 หรือ 1
+
+=== Traversal
+
+การเดินสำรวจกราฟ (BFS และ DFS) ใช้เวลา $O(V + E)$ บน adjacency list อ่านต่อพร้อม widget ให้ลองเดินทีละขั้นในบท Graph Algorithm
 
 === โจทย์ฝึกฝน (Practice Problems)
 
