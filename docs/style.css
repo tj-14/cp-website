@@ -799,6 +799,72 @@ footer a:hover {
     stroke-width: 3.5;
 }
 
+.gt-graph svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.gt-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.gt-edge.is-tree {
+    stroke: var(--nav-accent);
+    stroke-width: 3;
+}
+
+.gt-node circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.gt-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.gt-node .gt-dist {
+    fill: var(--muted);
+    font-size: 12px;
+}
+
+.gt-node.is-frontier circle {
+    stroke: var(--link);
+    stroke-width: 2;
+    stroke-dasharray: 4 3;
+}
+
+.gt-node.is-done circle {
+    fill: var(--surface-hover);
+    stroke: var(--nav-accent);
+    stroke-width: 2;
+    stroke-dasharray: none;
+}
+
+.gt-node.is-current circle {
+    stroke-width: 4;
+}
+
+.gt-node[tabindex="0"] {
+    cursor: pointer;
+}
+
+/* The circle stroke is the focus indicator, so drop the default box outline. */
+.gt-node:focus {
+    outline: none;
+}
+
+.gt-node:focus-visible circle {
+    stroke: var(--link);
+    stroke-width: 4;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
