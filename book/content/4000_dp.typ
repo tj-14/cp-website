@@ -1,96 +1,142 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
+#import "widgets.typ": widget
 
-= Anon's Guide to DP
+== Dynamic Programming ขั้นสูง
 
-== Improving from Divide & Conquer - Memoization
+บทนี้ต่อจากบท Dynamic Programming ซึ่งปูพื้นเรื่อง memoization, tabulation, coin change และ LIS ไว้แล้ว ที่นี่จะเพิ่ม DP ที่มี state สองมิติขึ้นไป และกรอบความคิดสำหรับออกแบบ DP ใหม่ ๆ
 
-ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท \# Divide Conquer
-ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง // $\mathcal{O}(\varphi^n)$ 
+=== กรอบความคิด SRTBOT
 
-สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ $n$ ซึ่งเป็นรูปแบบการเติบโตแบบ exponential เลยทีเดียว! แล้วเราจะทำอะไรได้เพื่อลดเวลาที่ต้องใช้ในการคำนวณ?
+กรอบนี้มาจากวิชา MIT 6.006 ใช้ตรวจว่า DP ที่ออกแบบครบทุกส่วน
 
-ถ้าเราวาดแผนผังต้นไม้ในการหาจำนวนฟิโบนัชชีลำดับที่ $n$ จะเห็นว่ามีการเรียกฟังก์ชันซ้ำค่อนข้างมาก เช่น $"Fib"(3)$ ที่ถูกเรียกถึง 5 ครั้ง ลองจินตนาการดูว่าถ้าเราจะหา $"Fib"(100)$ จะต้องเรียกฟังก์ชันซ้ำมากขนาดไหน
+- *Subproblem*: นิยามปัญหาย่อย เช่น `dp[i][j]` หมายถึงอะไร
+- *Relate*: ความสัมพันธ์ระหว่างปัญหาย่อย (transition)
+- *Topological order*: ลำดับการคำนวณที่ปัญหาย่อยที่ต้องใช้ถูกคำนวณก่อนเสมอ (ไม่มีวงวน)
+- *Base case*: ปัญหาย่อยที่ตอบได้ทันที
+- *Original problem*: คำตอบของโจทย์อยู่ที่ state ไหน
+- *Time*: (จำนวน state) $times$ (เวลาต่อ transition)
 
-ถ้าเรา *จำ* $"Fib"(i)$ ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง โดยให้เก็บค่าของ $"Fib"(i)$ และเรียกค่าจากที่เก็บมาได้ โค้ดจะมีลักษณะดังนี้:
+=== Grid paths
+
+นับจำนวนทางเดินจากมุมซ้ายบนไปมุมขวาล่างของตาราง $n times n$ โดยเดินได้แค่ขวาหรือลง และห้ามผ่านช่องที่เป็น `*`
+
+- *Subproblem*: `dp[r][c]` = จำนวนทางจาก $(0, 0)$ ถึง $(r, c)$
+- *Relate*: มาถึง $(r, c)$ ได้จากบนหรือซ้ายเท่านั้น: `dp[r][c] = dp[r-1][c] + dp[r][c-1]`
+- *Topological order*: แถวบนลงล่าง ซ้ายไปขวา
+- *Base*: `dp[0][0] = 1` (ถ้าไม่ใช่ `*`)
+- *Time*: $O(n^2)$
 
 ```cpp
-vector<int> v(n, -1);
-int fib(int i) {
-    if(v[i] > -1) return v[i];
-    if(i == 0 || i == 1) {
-        v[i] = i;
-        return v[i];
-    }
-    v[i] = fib(i-1) + fib(i-2);
-    return v[i];
+dp[0][0] = (grid[0][0] == '.');
+for (int r = 0; r < n; r++) {
+  for (int c = 0; c < n; c++) {
+    if (grid[r][c] == '*') { dp[r][c] = 0; continue; }
+    if (r > 0) dp[r][c] = (dp[r][c] + dp[r - 1][c]) % MOD;
+    if (c > 0) dp[r][c] = (dp[r][c] + dp[r][c - 1]) % MOD;
+  }
+}
+// คำตอบ dp[n-1][n-1]
+```
+
+=== 0/1 Knapsack
+
+มีของ $n$ ชิ้น ชิ้นที่ $i$ หนัก $w_i$ มีมูลค่า $v_i$ ใส่กระเป๋าที่รับน้ำหนักได้ $W$ ให้มูลค่ารวมมากที่สุด (แต่ละชิ้นเลือกได้ครั้งเดียว)
+
+- *Subproblem*: `dp[i][c]` = มูลค่ามากสุดเมื่อพิจารณาของ $i$ ชิ้นแรก และน้ำหนักรวมไม่เกิน $c$
+- *Relate*: ชิ้นที่ $i$ ไม่เลือกหรือเลือก: `dp[i][c] = max(dp[i-1][c], dp[i-1][c - w_i] + v_i)`
+- *Base*: `dp[0][c] = 0`
+- *Time*: $O(n W)$
+
+สังเกตว่าแถว $i$ ใช้แค่แถว $i - 1$ จึงลดเหลือ array มิติเดียวได้ แต่ต้องวน $c$ *จากมากไปน้อย* เพื่อไม่ให้ใช้ชิ้นเดิมซ้ำในแถวเดียวกัน
+
+```cpp
+vector<long long> dp(W + 1, 0);
+for (int i = 0; i < n; i++) {
+  for (int c = W; c >= w[i]; c--) {  // มากไปน้อย: dp[c - w[i]] ยังเป็นค่าของแถวก่อน
+    dp[c] = max(dp[c], dp[c - w[i]] + v[i]);
+  }
+}
+// คำตอบ dp[W]
+```
+
+ถ้าวน $c$ จากน้อยไปมาก จะได้ *unbounded knapsack* (เลือกชิ้นเดิมได้ไม่จำกัด) ซึ่งเป็นอีกโจทย์หนึ่ง
+
+=== Edit distance
+
+แปลงข้อความ $a$ เป็น $b$ ด้วยการ *เพิ่ม*, *ลบ* หรือ *แทน* ตัวอักษรทีละตัว ใช้กี่ครั้งน้อยที่สุด
+
+- *Subproblem*: `dp[i][j]` = จำนวนครั้งน้อยสุดที่แปลง $i$ ตัวแรกของ $a$ เป็น $j$ ตัวแรกของ $b$
+- *Relate*: ดูตัวสุดท้ายของทั้งสองฝั่ง
+  - ถ้า `a[i-1] == b[j-1]` ไม่ต้องแก้: `dp[i-1][j-1]`
+  - ไม่เช่นนั้น $1 + min$ ของ ลบ `dp[i-1][j]`, เพิ่ม `dp[i][j-1]`, แทน `dp[i-1][j-1]`
+- *Base*: `dp[i][0] = i` (ลบทุกตัว) และ `dp[0][j] = j` (เพิ่มทุกตัว)
+- *Time*: $O(|a| |b|)$
+
+ลองเติมตารางทีละช่อง สังเกตว่าแต่ละช่องใช้แค่สามช่อง (บน ซ้าย และทแยงซ้ายบน) เมื่อเติมครบ เส้นทางย้อนรอยจะบอกว่าต้องแก้อะไรบ้าง
+
+#widget("edit-distance")
+
+```cpp
+int n = a.size(), m = b.size();
+vector<vector<int>> dp(n + 1, vector<int>(m + 1));
+for (int i = 0; i <= n; i++) {
+  for (int j = 0; j <= m; j++) {
+    if (i == 0 || j == 0) dp[i][j] = i + j;
+    else if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1];
+    else dp[i][j] = 1 + min({dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]});
+  }
 }
 ```
 
-การใช้เทคนิคนี้เรียกว่า memoization โดยมาจากการเก็บค่าไว้ใน memo หรือโน้ตเตือนความจำนั่นเอง
+*Longest common subsequence* (LCS) ใช้ตารางแบบเดียวกัน: ถ้าตัวอักษรตรงกันได้ `dp[i-1][j-1] + 1` ไม่เช่นนั้น `max(dp[i-1][j], dp[i][j-1])`
 
-== Definition of Dynamic Programming
+=== Interval DP
 
-Dynamic Programming (หรือ DP) ก็คือการทำ Divide & Conquer โดยนำเอา memoization มาช่วยบูสต์ให้สามารถคำนวณผลเฉลยโดยพิจารณาจาก state ก่อนหน้าหรือ state ที่เล็กกว่า ทำให้ปัญหานั้นสามารถแก้ได้ภายในเวลา Polynomial Time
+เมื่อปัญหาย่อยคือ *ช่วง* $[l, r]$ ของ array และปัญหาใหญ่สร้างจากช่วงที่สั้นกว่า
 
-DP นั้นเหมาะกับการแก้ปัญหา Optimization หรือการหาค่าที่ดีที่สุด เช่น ราคาถูกที่สุด ยาวที่สุด ได้กำไรมากที่สุด ใช้เวลาน้อยที่สุด โดยปัญหาที่ใช้ DP แก้ได้จะต้องมีองค์ประกอบ 2 อย่างด้วยกัน
+ตัวอย่าง (Removal Game): มีเลขเรียงกัน ผู้เล่นสองคนผลัดกันหยิบเลขจากหัวหรือท้าย ทั้งคู่เล่นดีที่สุด ผู้เล่นคนแรกได้คะแนนรวมเท่าไร
 
-== Optimal Substructure
+- *Subproblem*: `dp[l][r]` = (คะแนนของคนที่ได้เล่นตา) $-$ (คะแนนของอีกฝ่าย) เมื่อเหลือเลขช่วง $[l, r]$
+- *Relate*: หยิบหัวหรือท้าย แล้วอีกฝ่ายจะได้เปรียบตามช่วงที่เหลือ: `dp[l][r] = max(x[l] - dp[l+1][r], x[r] - dp[l][r-1])`
+- *Topological order*: ช่วงสั้นก่อนช่วงยาว
+- *Base*: `dp[i][i] = x[i]`
+- *Original*: คะแนนคนแรก $= ("sum" + "dp"[0][n-1]) / 2$
 
-ปัญหาที่จะใช้ DP นั้นจะมี Optimal Substructure หรือโครงสร้างย่อยที่ดีที่สุด ก็ต่อเมื่อคำตอบที่ดีที่สุดของปัญหาใด ๆ สามารถหาได้จากการนำคำตอบที่ดีที่สุดของปัญหาย่อย ๆ มาผ่านขั้นตอนการคำนวณที่วางไว้
-
-== Overlapping Subproblem
-
-ปัญหาที่จะใช้ DP นั้นจะมี Overlapping Subproblem หรือปัญหาย่อยที่ซ้อนเหลื่อมกัน ก็ต่อเมื่อปัญหานั้นสามารถแบ่งเป็นปัญหาย่อย ๆ ที่ถูกใช้ซ้ำหลาย ๆ ครั้ง
-
-== Framework for Recursive Algorithm - SRTBOT
-	•	SUBPROBLEM definition: การนิยามปัญหาย่อย
-	•	RELATE subproblems to solutions recursively: หาความสัมพันธ์แบบเวียนเกิดในการหาคำตอบของปัญหาย่อย
-	•	TOPOLOGICAL order on subproblem to guarantee acyclicness: ลำดับในการแก้ปัญหาจากปัญหาที่ควรแก้ก่อนเพื่อป้องกัน infinite loop
-	•	BASE case of relation: กำหนดขั้นฐานของความสัมพันธ์เวียนเกิด
-	•	ORIGINAL problem: solve via subproblems: กำหนดปัญหาเดิมที่สามารถหาคำตอบได้ผ่านปัญหาย่อย
-	•	TIME analysis: วิเคราะห์เวลาที่ต้องใช้ (ส่วนใหญ่ผ่าน Master Theorem)
-
-== Top-Down & Bottom-up Approach to Dynamic Programming
-
-เมื่อนำ DP มาเขียนโค้ด จะเห็นว่าเราสามารถพิจารณาขั้นตอนการแก้ปัญหาได้ 2 แบบ คือ Top-Down (บนลงล่าง) และ Bottom-up (ล่างขึ้นบน) โดยด้านบนมักจะเป็นปัญหาที่ใหญ่กว่าด้านล่าง
-
-== Top-Down
-
-vector<int> v(n, -1);
-int fib(int i) {
-    if(v[i] > -1) return v[i];
-    if(i == 0 || i == 1) {
-        v[i] = i;
-        return v[i];
-    }
-    v[i] = fib(i-1) + fib(i-2);
-    return v[i];
+```cpp
+for (int len = 1; len <= n; len++) {
+  for (int l = 0; l + len - 1 < n; l++) {
+    int r = l + len - 1;
+    if (l == r) dp[l][r] = x[l];
+    else dp[l][r] = max(x[l] - dp[l + 1][r], x[r] - dp[l][r - 1]);
+  }
 }
+long long first = (total + dp[0][n - 1]) / 2;
+```
 
-วิธีคิดแบบ Top-Down นั้นจะพิจารณาหาคำตอบของ Original Case โดยแบ่งไปหาให้ค่อย ๆ เล็กลงจนถึง Base Case แล้วนำมาแก้ปัญหา
+Time $O(n^2)$ ถ้า transition ต้องลองจุดแบ่งทุกจุดในช่วง (เช่น matrix chain multiplication) จะเป็น $O(n^3)$
 
-== Bottom-up
+=== Bitmask DP
 
-vector<int> v(n, -1);
-int fib(int i) {
-    for(int j = 0; j < i; j++) {
-        if(j == 0 || j == 1) {
-            v[j] = j;
-        }
-        else v[j] = fib(j-1) + fib(j-2);
-    }
-    return v[i];
-}
+เมื่อ state ต้องจำว่า *เลือกอะไรไปแล้วบ้าง* จากของไม่เกินประมาณ 20 ชิ้น ให้แทนเซตด้วยบิตของจำนวนเต็ม `mask` (บิตที่ $i$ เป็น 1 แปลว่าเลือกชิ้นที่ $i$ แล้ว) มี state $2^n$ แบบ
+ตัวอย่าง Hamiltonian path ใช้ `dp[mask][v]` ดูได้ในบท Paths and Circuits และ Travelling Salesman ใช้ state เดียวกันแต่เก็บระยะทางน้อยสุด
 
-วิธีคิดแบบ Bottom-up จะเริ่มวนลูปจาก Base Case ไปยัง Original Case โดยค่อย ๆ สร้างคำตอบของปัญหาให้ใหญ่ขึ้นเรื่อย ๆ จนสามารถแก้ปัญหาเดิมได้ในที่สุด
+=== เคล็ดลับ
+
+- ถ้าคิด transition ไม่ออก ลองถามว่า "การตัดสินใจ *สุดท้าย* คืออะไร" (ของชิ้นสุดท้าย ตัวอักษรสุดท้าย ก้าวสุดท้าย)
+- เขียนแบบ top-down (memoization) ก่อนได้ถ้ายังไม่แน่ใจเรื่องลำดับการคำนวณ
+- ถ้าแถว $i$ ใช้แค่แถว $i - 1$ ลดหน่วยความจำเหลือสองแถวหรือแถวเดียวได้
+- ตรวจขนาดตาราง: $n W$ ที่ $10^5 times 10^5$ ใหญ่เกินหน่วยความจำแน่นอน
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1158")[Book Shop]
-- #link("https://cses.fi/problemset/task/1140")[Projects]
-- #link("https://cses.fi/problemset/task/1746")[Array Description]
+- #link("https://cses.fi/problemset/task/1638")[Grid Paths]
+- #link("https://cses.fi/problemset/task/1158")[Book Shop] (0/1 knapsack)
 - #link("https://cses.fi/problemset/task/1639")[Edit Distance]
+- #link("https://cses.fi/problemset/task/1097")[Removal Game] (interval DP)
+- #link("https://cses.fi/problemset/task/1746")[Array Description]
+- #link("https://cses.fi/problemset/task/1140")[Projects] (DP + binary search)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

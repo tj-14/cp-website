@@ -736,6 +736,11 @@ footer a:hover {
     font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
 }
 
+.content .widget-table td.is-path {
+    background-color: var(--memo-surface);
+    box-shadow: inset 0 0 0 2px var(--memo-border);
+}
+
 .content .widget-table td.is-read {
     background-color: var(--surface-hover);
     box-shadow: inset 0 0 0 2px var(--link);

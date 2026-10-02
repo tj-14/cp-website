@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง">
+    <meta name="description" content="บทนี้ต่อจากบท Dynamic Programming ซึ่งปูพื้นเรื่อง memoization, tabulation, coin change และ LIS ไว้แล้ว ที่นี่จะเพิ่ม DP ที่มี state สองมิติขึ้นไป…">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Dynamic Programming Advanced | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง">
+    <meta property="og:description" content="บทนี้ต่อจากบท Dynamic Programming ซึ่งปูพื้นเรื่อง memoization, tabulation, coin change และ LIS ไว้แล้ว ที่นี่จะเพิ่ม DP ที่มี state สองมิติขึ้นไป…">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/4000_dp.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/4000_dp.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -105,90 +105,208 @@
             </div>
 
             <article class="content">
-<h1>Anon’s Guide to DP</h1>
-<h3 id="improving-from-divide-conquer-memoization">Improving from Divide &amp; Conquer - Memoization<a class="heading-anchor" href="#improving-from-divide-conquer-memoization" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide
-Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง</p>
-<p>สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ <span class="math inline">n</span>
-ซึ่งเป็นรูปแบบการเติบโตแบบ exponential เลยทีเดียว!
-แล้วเราจะทำอะไรได้เพื่อลดเวลาที่ต้องใช้ในการคำนวณ?</p>
-<p>ถ้าเราวาดแผนผังต้นไม้ในการหาจำนวนฟิโบนัชชีลำดับที่ <span
-class="math inline">n</span> จะเห็นว่ามีการเรียกฟังก์ชันซ้ำค่อนข้างมาก เช่น <span
-class="math inline">\text{Fib}(3)</span> ที่ถูกเรียกถึง 5 ครั้ง
-ลองจินตนาการดูว่าถ้าเราจะหา <span class="math inline">\text{Fib}(100)</span>
-จะต้องเรียกฟังก์ชันซ้ำมากขนาดไหน</p>
-<p>ถ้าเรา <strong>จำ</strong> <span
-class="math inline">\text{Fib}(i)</span> ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง
-โดยให้เก็บค่าของ <span class="math inline">\text{Fib}(i)</span>
-และเรียกค่าจากที่เก็บมาได้ โค้ดจะมีลักษณะดังนี้:</p>
+<h3 id="dynamic-programming-ขั้นสูง">Dynamic Programming ขั้นสูง<a class="heading-anchor" href="#dynamic-programming-ขั้นสูง" aria-hidden="true" tabindex="-1">#</a></h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#กรอบความคิด-srtbot">กรอบความคิด SRTBOT</a></li>
+                    <li><a href="#grid-paths">Grid paths</a></li>
+                    <li><a href="#0-1-knapsack">0/1 Knapsack</a></li>
+                    <li><a href="#edit-distance">Edit distance</a></li>
+                    <li><a href="#interval-dp">Interval DP</a></li>
+                    <li><a href="#bitmask-dp">Bitmask DP</a></li>
+                    <li><a href="#เคล็ดลับ">เคล็ดลับ</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
+                </ul>
+            </nav>
+<p>บทนี้ต่อจากบท Dynamic Programming ซึ่งปูพื้นเรื่อง memoization, tabulation,
+coin change และ LIS ไว้แล้ว ที่นี่จะเพิ่ม DP ที่มี state สองมิติขึ้นไป
+และกรอบความคิดสำหรับออกแบบ DP ใหม่ ๆ</p>
+<h4 id="กรอบความคิด-srtbot">กรอบความคิด SRTBOT<a class="heading-anchor" href="#กรอบความคิด-srtbot" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>กรอบนี้มาจากวิชา MIT 6.006 ใช้ตรวจว่า DP ที่ออกแบบครบทุกส่วน</p>
+<ul>
+<li><p><strong>Subproblem</strong>: นิยามปัญหาย่อย เช่น
+<code>dp[i][j]</code> หมายถึงอะไร</p></li>
+<li><p><strong>Relate</strong>: ความสัมพันธ์ระหว่างปัญหาย่อย
+(transition)</p></li>
+<li><p><strong>Topological order</strong>:
+ลำดับการคำนวณที่ปัญหาย่อยที่ต้องใช้ถูกคำนวณก่อนเสมอ (ไม่มีวงวน)</p></li>
+<li><p><strong>Base case</strong>: ปัญหาย่อยที่ตอบได้ทันที</p></li>
+<li><p><strong>Original problem</strong>: คำตอบของโจทย์อยู่ที่ state
+ไหน</p></li>
+<li><p><strong>Time</strong>: (จำนวน state) <span
+class="math inline">\times</span> (เวลาต่อ transition)</p></li>
+</ul>
+<h4 id="grid-paths">Grid paths<a class="heading-anchor" href="#grid-paths" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>นับจำนวนทางเดินจากมุมซ้ายบนไปมุมขวาล่างของตาราง <span class="math inline">n
+\times n</span> โดยเดินได้แค่ขวาหรือลง และห้ามผ่านช่องที่เป็น <code>*</code></p>
+<ul>
+<li><p><strong>Subproblem</strong>: <code>dp[r][c]</code> = จำนวนทางจาก
+<span class="math inline">(0,0)</span> ถึง <span
+class="math inline">(r,c)</span></p></li>
+<li><p><strong>Relate</strong>: มาถึง <span
+class="math inline">(r,c)</span> ได้จากบนหรือซ้ายเท่านั้น:
+<code>dp[r][c] = dp[r-1][c] + dp[r][c-1]</code></p></li>
+<li><p><strong>Topological order</strong>: แถวบนลงล่าง ซ้ายไปขวา</p></li>
+<li><p><strong>Base</strong>: <code>dp[0][0] = 1</code> (ถ้าไม่ใช่
+<code>*</code>)</p></li>
+<li><p><strong>Time</strong>: <span class="math inline">O\left( n^{2}
+\right)</span></p></li>
+</ul>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v<span class="op">(</span>n<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fib<span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>v<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">return</span> v<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>i <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> i <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        v<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> v<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    v<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> fib<span class="op">(</span>i<span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">+</span> fib<span class="op">(</span>i<span class="op">-</span><span class="dv">2</span><span class="op">);</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>การใช้เทคนิคนี้เรียกว่า memoization โดยมาจากการเก็บค่าไว้ใน memo
-หรือโน้ตเตือนความจำนั่นเอง</p>
-<h3 id="definition-of-dynamic-programming">Definition of Dynamic Programming<a class="heading-anchor" href="#definition-of-dynamic-programming" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>Dynamic Programming (หรือ DP) ก็คือการทำ Divide &amp; Conquer โดยนำเอา
-memoization มาช่วยบูสต์ให้สามารถคำนวณผลเฉลยโดยพิจารณาจาก state ก่อนหน้าหรือ
-state ที่เล็กกว่า ทำให้ปัญหานั้นสามารถแก้ได้ภายในเวลา Polynomial Time</p>
-<p>DP นั้นเหมาะกับการแก้ปัญหา Optimization หรือการหาค่าที่ดีที่สุด เช่น ราคาถูกที่สุด
-ยาวที่สุด ได้กำไรมากที่สุด ใช้เวลาน้อยที่สุด โดยปัญหาที่ใช้ DP แก้ได้จะต้องมีองค์ประกอบ 2
-อย่างด้วยกัน</p>
-<h3 id="optimal-substructure">Optimal Substructure<a class="heading-anchor" href="#optimal-substructure" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>ปัญหาที่จะใช้ DP นั้นจะมี Optimal Substructure หรือโครงสร้างย่อยที่ดีที่สุด
-ก็ต่อเมื่อคำตอบที่ดีที่สุดของปัญหาใด ๆ สามารถหาได้จากการนำคำตอบที่ดีที่สุดของปัญหาย่อย ๆ
-มาผ่านขั้นตอนการคำนวณที่วางไว้</p>
-<h3 id="overlapping-subproblem">Overlapping Subproblem<a class="heading-anchor" href="#overlapping-subproblem" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>ปัญหาที่จะใช้ DP นั้นจะมี Overlapping Subproblem หรือปัญหาย่อยที่ซ้อนเหลื่อมกัน
-ก็ต่อเมื่อปัญหานั้นสามารถแบ่งเป็นปัญหาย่อย ๆ ที่ถูกใช้ซ้ำหลาย ๆ ครั้ง</p>
-<h3 id="framework-for-recursive-algorithm-srtbot">Framework for Recursive Algorithm - SRTBOT<a class="heading-anchor" href="#framework-for-recursive-algorithm-srtbot" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>• SUBPROBLEM definition: การนิยามปัญหาย่อย • RELATE subproblems to
-solutions recursively: หาความสัมพันธ์แบบเวียนเกิดในการหาคำตอบของปัญหาย่อย •
-TOPOLOGICAL order on subproblem to guarantee acyclicness:
-ลำดับในการแก้ปัญหาจากปัญหาที่ควรแก้ก่อนเพื่อป้องกัน infinite loop • BASE case of
-relation: กำหนดขั้นฐานของความสัมพันธ์เวียนเกิด • ORIGINAL problem: solve via
-subproblems: กำหนดปัญหาเดิมที่สามารถหาคำตอบได้ผ่านปัญหาย่อย • TIME analysis:
-วิเคราะห์เวลาที่ต้องใช้ (ส่วนใหญ่ผ่าน Master Theorem)</p>
-<h3 id="top-down-bottom-up-approach-to-dynamic-programming">Top-Down &amp; Bottom-up Approach to Dynamic Programming<a class="heading-anchor" href="#top-down-bottom-up-approach-to-dynamic-programming" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>เมื่อนำ DP มาเขียนโค้ด จะเห็นว่าเราสามารถพิจารณาขั้นตอนการแก้ปัญหาได้ 2 แบบ คือ
-Top-Down (บนลงล่าง) และ Bottom-up (ล่างขึ้นบน)
-โดยด้านบนมักจะเป็นปัญหาที่ใหญ่กว่าด้านล่าง</p>
-<h3 id="top-down">Top-Down<a class="heading-anchor" href="#top-down" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>vector<span id="int"></span>v(n, -1); int fib(int i) { if(v[i] &gt;
--1) return v[i]; if(i == 0 || i == 1) { v[i] = i; return v[i]; } v[i] =
-fib(i-1) + fib(i-2); return v[i]; }</p>
-<p>วิธีคิดแบบ Top-Down นั้นจะพิจารณาหาคำตอบของ Original Case โดยแบ่งไปหาให้ค่อย ๆ
-เล็กลงจนถึง Base Case แล้วนำมาแก้ปัญหา</p>
-<h3 id="bottom-up">Bottom-up<a class="heading-anchor" href="#bottom-up" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>vector<span id="int"></span>v(n, -1); int fib(int i) { for(int j = 0;
-j &lt; i; j++) { if(j == 0 || j == 1) { v[j] = j; } else v[j] = fib(j-1)
-+ fib(j-2); } return v[i]; }</p>
-<p>วิธีคิดแบบ Bottom-up จะเริ่มวนลูปจาก Base Case ไปยัง Original Case โดยค่อย ๆ
-สร้างคำตอบของปัญหาให้ใหญ่ขึ้นเรื่อย ๆ จนสามารถแก้ปัญหาเดิมได้ในที่สุด</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>grid<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">&#39;.&#39;</span><span class="op">);</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> r <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> r <span class="op">&lt;</span> n<span class="op">;</span> r<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> n<span class="op">;</span> c<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>grid<span class="op">[</span>r<span class="op">][</span>c<span class="op">]</span> <span class="op">==</span> <span class="ch">&#39;*&#39;</span><span class="op">)</span> <span class="op">{</span> dp<span class="op">[</span>r<span class="op">][</span>c<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="cf">continue</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>r <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> dp<span class="op">[</span>r<span class="op">][</span>c<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>dp<span class="op">[</span>r<span class="op">][</span>c<span class="op">]</span> <span class="op">+</span> dp<span class="op">[</span>r <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>c<span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>c <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> dp<span class="op">[</span>r<span class="op">][</span>c<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>dp<span class="op">[</span>r<span class="op">][</span>c<span class="op">]</span> <span class="op">+</span> dp<span class="op">[</span>r<span class="op">][</span>c <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">// คำตอบ dp[n-1][n-1]</span></span></code></pre>
+<h4 id="0-1-knapsack">0/1 Knapsack<a class="heading-anchor" href="#0-1-knapsack" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>มีของ <span class="math inline">n</span> ชิ้น ชิ้นที่ <span
+class="math inline">i</span> หนัก <span class="math inline">w_{i}</span>
+มีมูลค่า <span class="math inline">v_{i}</span> ใส่กระเป๋าที่รับน้ำหนักได้ <span
+class="math inline">W</span> ให้มูลค่ารวมมากที่สุด (แต่ละชิ้นเลือกได้ครั้งเดียว)</p>
+<ul>
+<li><p><strong>Subproblem</strong>: <code>dp[i][c]</code> =
+มูลค่ามากสุดเมื่อพิจารณาของ <span class="math inline">i</span> ชิ้นแรก
+และน้ำหนักรวมไม่เกิน <span class="math inline">c</span></p></li>
+<li><p><strong>Relate</strong>: ชิ้นที่ <span class="math inline">i</span>
+ไม่เลือกหรือเลือก:
+<code>dp[i][c] = max(dp[i-1][c], dp[i-1][c - w_i] + v_i)</code></p></li>
+<li><p><strong>Base</strong>: <code>dp[0][c] = 0</code></p></li>
+<li><p><strong>Time</strong>: <span
+class="math inline">O(nW)</span></p></li>
+</ul>
+<p>สังเกตว่าแถว <span class="math inline">i</span> ใช้แค่แถว <span
+class="math inline">i - 1</span> จึงลดเหลือ array มิติเดียวได้ แต่ต้องวน <span
+class="math inline">c</span> <strong>จากมากไปน้อย</strong>
+เพื่อไม่ให้ใช้ชิ้นเดิมซ้ำในแถวเดียวกัน</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> dp<span class="op">(</span>W <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">=</span> W<span class="op">;</span> c <span class="op">&gt;=</span> w<span class="op">[</span>i<span class="op">];</span> c<span class="op">--)</span> <span class="op">{</span>  <span class="co">// มากไปน้อย: dp[c - w[i]] ยังเป็นค่าของแถวก่อน</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dp<span class="op">[</span>c<span class="op">]</span> <span class="op">=</span> max<span class="op">(</span>dp<span class="op">[</span>c<span class="op">],</span> dp<span class="op">[</span>c <span class="op">-</span> w<span class="op">[</span>i<span class="op">]]</span> <span class="op">+</span> v<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">// คำตอบ dp[W]</span></span></code></pre>
+<p>ถ้าวน <span class="math inline">c</span> จากน้อยไปมาก จะได้
+<strong>unbounded knapsack</strong> (เลือกชิ้นเดิมได้ไม่จำกัด)
+ซึ่งเป็นอีกโจทย์หนึ่ง</p>
+<h4 id="edit-distance">Edit distance<a class="heading-anchor" href="#edit-distance" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>แปลงข้อความ <span class="math inline">a</span> เป็น <span
+class="math inline">b</span> ด้วยการ <strong>เพิ่ม</strong>,
+<strong>ลบ</strong> หรือ <strong>แทน</strong> ตัวอักษรทีละตัว
+ใช้กี่ครั้งน้อยที่สุด</p>
+<ul>
+<li><p><strong>Subproblem</strong>: <code>dp[i][j]</code> =
+จำนวนครั้งน้อยสุดที่แปลง <span class="math inline">i</span> ตัวแรกของ <span
+class="math inline">a</span> เป็น <span class="math inline">j</span>
+ตัวแรกของ <span class="math inline">b</span></p></li>
+<li><p><strong>Relate</strong>: ดูตัวสุดท้ายของทั้งสองฝั่ง</p>
+<ul>
+<li><p>ถ้า <code>a[i-1] == b[j-1]</code> ไม่ต้องแก้:
+<code>dp[i-1][j-1]</code></p></li>
+<li><p>ไม่เช่นนั้น <span class="math inline">1 + \min</span> ของ ลบ
+<code>dp[i-1][j]</code>, เพิ่ม <code>dp[i][j-1]</code>, แทน
+<code>dp[i-1][j-1]</code></p></li>
+</ul></li>
+<li><p><strong>Base</strong>: <code>dp[i][0] = i</code> (ลบทุกตัว) และ
+<code>dp[0][j] = j</code> (เพิ่มทุกตัว)</p></li>
+<li><p><strong>Time</strong>: <span class="math inline">O\left( |a||b|
+\right)</span></p></li>
+</ul>
+<p>ลองเติมตารางทีละช่อง สังเกตว่าแต่ละช่องใช้แค่สามช่อง (บน ซ้าย และทแยงซ้ายบน)
+เมื่อเติมครบ เส้นทางย้อนรอยจะบอกว่าต้องแก้อะไรบ้าง</p>
+<div class="widget" data-widget="edit-distance"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n <span class="op">=</span> a<span class="op">.</span>size<span class="op">(),</span> m <span class="op">=</span> b<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> dp<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>m <span class="op">+</span> <span class="dv">1</span><span class="op">));</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;=</span> m<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> j <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> dp<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> i <span class="op">+</span> j<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">==</span> b<span class="op">[</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> dp<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> dp<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> dp<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> min<span class="op">({</span>dp<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>j<span class="op">],</span> dp<span class="op">[</span>i<span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">],</span> dp<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">]});</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p><strong>Longest common subsequence</strong> (LCS) ใช้ตารางแบบเดียวกัน:
+ถ้าตัวอักษรตรงกันได้ <code>dp[i-1][j-1] + 1</code> ไม่เช่นนั้น
+<code>max(dp[i-1][j], dp[i][j-1])</code></p>
+<h4 id="interval-dp">Interval DP<a class="heading-anchor" href="#interval-dp" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>เมื่อปัญหาย่อยคือ <strong>ช่วง</strong> <span class="math inline">\lbrack
+l,r\rbrack</span> ของ array และปัญหาใหญ่สร้างจากช่วงที่สั้นกว่า</p>
+<p>ตัวอย่าง (Removal Game): มีเลขเรียงกัน ผู้เล่นสองคนผลัดกันหยิบเลขจากหัวหรือท้าย
+ทั้งคู่เล่นดีที่สุด ผู้เล่นคนแรกได้คะแนนรวมเท่าไร</p>
+<ul>
+<li><p><strong>Subproblem</strong>: <code>dp[l][r]</code> =
+(คะแนนของคนที่ได้เล่นตา) <span class="math inline">-</span> (คะแนนของอีกฝ่าย)
+เมื่อเหลือเลขช่วง <span class="math inline">\lbrack
+l,r\rbrack</span></p></li>
+<li><p><strong>Relate</strong>: หยิบหัวหรือท้าย
+แล้วอีกฝ่ายจะได้เปรียบตามช่วงที่เหลือ:
+<code>dp[l][r] = max(x[l] - dp[l+1][r], x[r] - dp[l][r-1])</code></p></li>
+<li><p><strong>Topological order</strong>: ช่วงสั้นก่อนช่วงยาว</p></li>
+<li><p><strong>Base</strong>: <code>dp[i][i] = x[i]</code></p></li>
+<li><p><strong>Original</strong>: คะแนนคนแรก <span class="math inline">=
+\frac{\text{sum } + \text{ dp}\lbrack 0\rbrack\lbrack n -
+1\rbrack}{2}</span></p></li>
+</ul>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> len <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> len <span class="op">&lt;=</span> n<span class="op">;</span> len<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> l <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> l <span class="op">+</span> len <span class="op">-</span> <span class="dv">1</span> <span class="op">&lt;</span> n<span class="op">;</span> l<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> r <span class="op">=</span> l <span class="op">+</span> len <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>l <span class="op">==</span> r<span class="op">)</span> dp<span class="op">[</span>l<span class="op">][</span>r<span class="op">]</span> <span class="op">=</span> x<span class="op">[</span>l<span class="op">];</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> dp<span class="op">[</span>l<span class="op">][</span>r<span class="op">]</span> <span class="op">=</span> max<span class="op">(</span>x<span class="op">[</span>l<span class="op">]</span> <span class="op">-</span> dp<span class="op">[</span>l <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>r<span class="op">],</span> x<span class="op">[</span>r<span class="op">]</span> <span class="op">-</span> dp<span class="op">[</span>l<span class="op">][</span>r <span class="op">-</span> <span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> first <span class="op">=</span> <span class="op">(</span>total <span class="op">+</span> dp<span class="op">[</span><span class="dv">0</span><span class="op">][</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span></code></pre>
+<p>Time <span class="math inline">O\left( n^{2} \right)</span> ถ้า
+transition ต้องลองจุดแบ่งทุกจุดในช่วง (เช่น matrix chain multiplication) จะเป็น
+<span class="math inline">O\left( n^{3} \right)</span></p>
+<h4 id="bitmask-dp">Bitmask DP<a class="heading-anchor" href="#bitmask-dp" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>เมื่อ state ต้องจำว่า <strong>เลือกอะไรไปแล้วบ้าง</strong> จากของไม่เกินประมาณ
+20 ชิ้น ให้แทนเซตด้วยบิตของจำนวนเต็ม <code>mask</code> (บิตที่ <span
+class="math inline">i</span> เป็น 1 แปลว่าเลือกชิ้นที่ <span
+class="math inline">i</span> แล้ว) มี state <span
+class="math inline">2^{n}</span> แบบ ตัวอย่าง Hamiltonian path ใช้
+<code>dp[mask][v]</code> ดูได้ในบท Paths and Circuits และ Travelling
+Salesman ใช้ state เดียวกันแต่เก็บระยะทางน้อยสุด</p>
+<h4 id="เคล็ดลับ">เคล็ดลับ<a class="heading-anchor" href="#เคล็ดลับ" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p>ถ้าคิด transition ไม่ออก ลองถามว่า “การตัดสินใจ <strong>สุดท้าย</strong>
+คืออะไร” (ของชิ้นสุดท้าย ตัวอักษรสุดท้าย ก้าวสุดท้าย)</p></li>
+<li><p>เขียนแบบ top-down (memoization)
+ก่อนได้ถ้ายังไม่แน่ใจเรื่องลำดับการคำนวณ</p></li>
+<li><p>ถ้าแถว <span class="math inline">i</span> ใช้แค่แถว <span
+class="math inline">i - 1</span>
+ลดหน่วยความจำเหลือสองแถวหรือแถวเดียวได้</p></li>
+<li><p>ตรวจขนาดตาราง: <span class="math inline">nW</span> ที่ <span
+class="math inline">10^{5} \times 10^{5}</span>
+ใหญ่เกินหน่วยความจำแน่นอน</p></li>
+</ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a href="https://cses.fi/problemset/task/1158">Book
-Shop</a></p></li>
-<li><p><a
-href="https://cses.fi/problemset/task/1140">Projects</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1746">Array
-Description</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1638">Grid
+Paths</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1158">Book Shop</a> (0/1
+knapsack)</p></li>
 <li><p><a href="https://cses.fi/problemset/task/1639">Edit
 Distance</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1097">Removal Game</a>
+(interval DP)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1746">Array
+Description</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1140">Projects</a> (DP +
+binary search)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/edit-distance.js"></script>
             <div class="page-nav">
                 <a href="3102_path-circuit.html" class="prev">Path and Circuit</a>
                 <a href="9000_resources.html" class="next">Resources</a>
