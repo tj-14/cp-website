@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -326,10 +329,9 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ตัวอย่างด้านบนจะเป็นการรับค่า <code>n</code> เพื่อที่จะรับจำนวนเต็มต่ออีก <span
-class="math inline"><em>n</em></span> จำนวน (ใช้ต่อในเงื่อนไขของ for
-loop)</p>
+class="math inline">n</span> จำนวน (ใช้ต่อในเงื่อนไขของ for loop)</p>
 <p>จากนั้นรับค่าเข้าสู่ <code>a[i]</code> ไปเรื่อย ๆ โดย <span
-class="math inline"><em>i</em> = {0, 1, …, <em>n</em>}</span></p>
+class="math inline">i = \{ 0,1,\ldots,n\}</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -380,9 +382,8 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> addint<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">4</span><span class="op">);</span></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>ตัวอย่างด้านบนเป็นการสร้างฟังก์ชัน <span
-class="math inline"><em>f</em>(<em>a</em>, <em>b</em>) = <em>a</em> + <em>b</em></span>
-โดยให้ชื่อว่า <code>addint</code> พร้อมตัวอย่างการเรียกใช้</p>
+<p>ตัวอย่างด้านบนเป็นการสร้างฟังก์ชัน <span class="math inline">f(a,b) = a +
+b</span> โดยให้ชื่อว่า <code>addint</code> พร้อมตัวอย่างการเรียกใช้</p>
 <h4 id="array-หลายมิติ">Array หลายมิติ<a class="heading-anchor" href="#array-หลายมิติ" aria-hidden="true" tabindex="-1">#</a></h4>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>

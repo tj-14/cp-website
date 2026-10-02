@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -148,21 +151,21 @@ this guide.</p></figcaption>
 <h4 id="operations-min-heap">Operations (Min Heap)<a class="heading-anchor" href="#operations-min-heap" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p><code>getMin()</code>: คืนค่า root ของ Min Heap ได้เลย ซึ่งใช้เวลา
-<span class="math inline"><em>O</em>(1)</span></p></li>
+<span class="math inline">O(1)</span></p></li>
 <li><p><code>extractMin()</code>: นำค่าที่น้อยที่สุดใน MinHeap ออก ซึ่งใช้เวลา
-<span class="math inline"><em>O</em>(log {<em>n</em>})</span> เพราะเมื่อนำ
-root ออกแล้วจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap</p></li>
+<span class="math inline">O\left( \log\left\{ n \right\} \right)</span>
+เพราะเมื่อนำ root ออกแล้วจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap</p></li>
 <li><p><code>decreaseKey()</code>: ลดค่าของโหนดที่ระบุ ซึ่งใช้เวลา <span
-class="math inline"><em>O</em>(log {<em>n</em>})</span>
+class="math inline">O\left( \log\left\{ n \right\} \right)</span>
 เพราะจำเป็นต้องปรับโครงสร้างให้ตรงตามคุณสมบัติ heap</p></li>
 <li><p><code>insert()</code>: เพิ่มโหนดใหม่ ซึ่งใช้เวลา <span
-class="math inline"><em>O</em>(log {<em>n</em>})</span>
+class="math inline">O\left( \log\left\{ n \right\} \right)</span>
 เพราะสามารถเพิ่มโหนดที่ตำแหน่งสุดท้าย แล้วค่อยปรับโครงสร้างให้ตรงคุณสมบัติ
 heap</p></li>
 <li><p><code>delete()</code>: ลบโหนด ซึ่งใช้เวลา <span
-class="math inline"><em>O</em>(log {<em>n</em>})</span> เพราะสามารถ
-<code>decreaseKey()</code> ให้เป็น <span class="math inline">−inf </span>
-แล้ว <code>extractMin()</code></p></li>
+class="math inline">O\left( \log\left\{ n \right\} \right)</span>
+เพราะสามารถ <code>decreaseKey()</code> ให้เป็น <span class="math inline">-
+\inf</span> แล้ว <code>extractMin()</code></p></li>
 </ul>
 <h4 id="ตัวอย่างการ-implement">ตัวอย่างการ implement<a class="heading-anchor" href="#ตัวอย่างการ-implement" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>

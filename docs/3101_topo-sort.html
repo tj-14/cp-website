@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge u → v มี u มาก่อน v ในลำดับคำตอบ">
+    <meta name="description" content="Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge u \rightarrow v มี u มาก่อน v ในลำดับคำตอบ">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Topological Sort | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge u → v มี u มาก่อน v ในลำดับคำตอบ">
+    <meta property="og:description" content="Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge u \rightarrow v มี u มาก่อน v ในลำดับคำตอบ">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/3101_topo-sort.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/3101_topo-sort.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -115,9 +118,9 @@
                 </ul>
             </nav>
 <p>Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge
-<span class="math inline"><em>u</em> → <em>v</em></span> มี <span
-class="math inline"><em>u</em></span> มาก่อน <span
-class="math inline"><em>v</em></span> ในลำดับคำตอบ</p>
+<span class="math inline">u \rightarrow v</span> มี <span
+class="math inline">u</span> มาก่อน <span class="math inline">v</span>
+ในลำดับคำตอบ</p>
 <p>กราฟที่ทำ topological sort ได้ต้องเป็น DAG หรือ Directed Acyclic Graph
 คือกราฟมีทิศทางที่ไม่มี cycle</p>
 <p><a
@@ -154,8 +157,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#c
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    reverse<span class="op">(</span>ans<span class="op">.</span>begin<span class="op">(),</span> ans<span class="op">.</span>end<span class="op">());</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>เวลาทำงานคือ <span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> เพราะแต่ละ
+<p>เวลาทำงานคือ <span class="math inline">O(V + E)</span> เพราะแต่ละ
 vertex และ edge ถูกพิจารณาจำนวนคงที่</p>
 <h4 id="kahn-s-algorithm">Kahn’s algorithm<a class="heading-anchor" href="#kahn-s-algorithm" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>อีกวิธีคือใช้ indegree และ queue โดยเริ่มจาก vertex ที่ไม่มี edge เข้ามา</p>

@@ -652,6 +652,7 @@ footer a:hover {
 .content a {
     color: var(--link);
     text-decoration: none;
+    overflow-wrap: anywhere; /* long bare URLs in footnotes */
 }
 
 .content a:hover {
@@ -755,6 +756,8 @@ footer a:hover {
     }
 
     .content table {
+        display: block;
+        overflow-x: auto;
         font-size: 0.9rem;
     }
 

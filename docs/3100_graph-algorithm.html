@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -170,9 +173,9 @@ ad-hoc, implementation</p></li>
 <p>DFS แล้วเช็คว่า visit ครบทุกโหนดหรือไม่</p>
 <h4 id="finding-cycles">Finding cycles<a class="heading-anchor" href="#finding-cycles" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a class="resource-card" href="https://visualgo.net/en/cyclefinding?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
-<p>ถ้า component มี <span class="math inline"><em>c</em></span> โหนด
-และไม่มี cycle เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด <span
-class="math inline"><em>c</em> − 1</span> เส้น และเป็นกราฟต้นไม้</p>
+<p>ถ้า component มี <span class="math inline">c</span> โหนด และไม่มี cycle
+เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด <span class="math inline">c -
+1</span> เส้น และเป็นกราฟต้นไม้</p>
 <h4 id="bipartiteness-check">Bipartiteness check<a class="heading-anchor" href="#bipartiteness-check" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>กราฟ bipartite
 เป็นกราฟเมื่อสามารถใช้สีสองสีในการระบายสีโหนดโดยทุกโหนดที่ติดกันต้องมีสีที่แตกต่างกัน</p>

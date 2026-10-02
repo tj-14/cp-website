@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -214,32 +217,29 @@ input</p></li>
 <h4 id="กฏของการคำนวณ">กฏของการคำนวณ<a class="heading-anchor" href="#กฏของการคำนวณ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>time complexity ของอัลกอริทึมหนึ่งจะถูกแทนด้วยสัญลักษณ์ <span
-class="math inline"><em>O</em>(⋯)</span> โดยจุดสามจุดแสดงถึงฟังก์ชันใด
-ๆ</p></li>
-<li><p>โดยทั่วไปแล้ว ตัวแปร <span class="math inline"><em>n</em></span>
-แสดงถึงขนาดของ input</p></li>
+class="math inline">O(\cdots)</span> โดยจุดสามจุดแสดงถึงฟังก์ชันใด ๆ</p></li>
+<li><p>โดยทั่วไปแล้ว ตัวแปร <span class="math inline">n</span> แสดงถึงขนาดของ
+input</p></li>
 <li><p>ตัวอย่างเช่น หาก input เป็นอาเรย์ของตัวเลข <span
-class="math inline"><em>n</em></span> จะเป็นขนาดของอาเรย์นั้น และหาก input
-เป็น string <span class="math inline"><em>n</em></span> จะเป็นความยาวของ
-string นั้น</p></li>
+class="math inline">n</span> จะเป็นขนาดของอาเรย์นั้น และหาก input เป็น string
+<span class="math inline">n</span> จะเป็นความยาวของ string นั้น</p></li>
 </ul>
 <h4 id="การวนซ้ำ">การวนซ้ำ<a class="heading-anchor" href="#การวนซ้ำ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>เหตุผลที่พบบ่อยจากการที่อัลกอริทึมช้าเกินไปเกิดจากการใช้การวนซ้ำจำนวนมากสำหรับ
 input</p></li>
 <li><p>ยิ่งวนซ้ำหลายชั้น อัลกอริทีมจะยิ่งช้า</p></li>
-<li><p>หากมีการวนซ้ำ <span class="math inline"><em>k</em></span> ชั้น time
-complexity จะเป็น <span
-class="math inline"><em>O</em>(<em>n</em><sup><em>k</em></sup>)</span></p></li>
+<li><p>หากมีการวนซ้ำ <span class="math inline">k</span> ชั้น time complexity
+จะเป็น <span class="math inline">O\left( n^{k} \right)</span></p></li>
 </ul>
 <p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างจะเป็น <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p>
+class="math inline">O(n)</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>และ time complexity ของโค้ดด้านล่างนี้ <span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p>
+<p>และ time complexity ของโค้ดด้านล่างนี้ <span class="math inline">O\left(
+n^{2} \right)</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span>    <span class="co">// ชั้นที่ 1</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span>  <span class="co">// ชั้นที่ 2</span></span>
@@ -251,11 +251,9 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#c
 <li><p>time complexity จะไม่สนใจจำนวนรอบเป๊ะ ๆ ภายใน loop แต่จะสนใจเฉพาะ
 order of magnitude</p></li>
 <li><p>ในตัวอย่างต่อไปนี้ จำนวนรอบในการวนเป็น <span
-class="math inline">3<em>n</em></span>, <span
-class="math inline"><em>n</em> + 5</span> และ <span
-class="math inline">$l\frac{n}{2}r$</span> ครั้ง แต่ time complexity
-นั้นเท่ากันคือ <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
+class="math inline">3n</span>, <span class="math inline">n + 5</span>
+และ <span class="math inline">l\frac{n}{2}r</span> ครั้ง แต่ time
+complexity นั้นเท่ากันคือ <span class="math inline">O(n)</span></p></li>
 </ul>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">3</span><span class="op">*</span>n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
@@ -270,7 +268,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#c
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// code</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ในอีกตัวอย่างหนึ่ง time complexity ของโค้ดต่อไปนี้เป็น <span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p>
+class="math inline">O\left( n^{2} \right)</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> n<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
@@ -283,11 +281,10 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#c
 complexity ที่สูงสุดของ phase หนึ่ง</p></li>
 <li><p>เนื่องจาก bottleneck จะอยู่ที่ phase ที่ช้าที่สุด</p></li>
 <li><p>ตัวอย่างเช่น โค้ดต่อไปนี้ประกอบด้วย 3 phases ที่มี time complexity <span
-class="math inline"><em>O</em>(<em>n</em>)</span>, <span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span> และ <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
-<li><p>ดังนั้นคอขวดจะเป็น <span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p></li>
+class="math inline">O(n)</span>, <span class="math inline">O\left( n^{2}
+\right)</span> และ <span class="math inline">O(n)</span></p></li>
+<li><p>ดังนั้นคอขวดจะเป็น <span class="math inline">O\left( n^{2}
+\right)</span></p></li>
 </ul>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
@@ -306,7 +303,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#c
 <li><p>บางครั้ง time complexity จะขึ้นอยู่กับหลายปัจจัย</p></li>
 <li><p>ซึ่งเราสามารถใช้หลายตัวแปรแทนได้</p></li>
 <li><p>ตัวอย่างเช่น time complexity ของโค้ดด้านล่างเป็น <span
-class="math inline"><em>O</em>(<em>n</em><em>m</em>)</span></p></li>
+class="math inline">O(nm)</span></p></li>
 </ul>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
@@ -328,12 +325,11 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  f<span class="op">(</span>n<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <ul>
-<li><p>การเรียกฟังก์ชัน <span
-class="math inline"><em>f</em>(<em>n</em>)</span> จะเรียกฟังก์ชันทั้งหมด <span
-class="math inline"><em>n</em></span> ครั้ง และแต่ละครั้งจะใช้ time complexity
-<span class="math inline"><em>O</em>(1)</span></p></li>
-<li><p>ดังนั้น time complexity รวมคือ <span
-class="math inline"><em>O</em>(<em>n</em>) ⋅ <em>O</em>(1) = <em>O</em>(<em>n</em>)</span></p></li>
+<li><p>การเรียกฟังก์ชัน <span class="math inline">f(n)</span>
+จะเรียกฟังก์ชันทั้งหมด <span class="math inline">n</span> ครั้ง และแต่ละครั้งจะใช้
+time complexity <span class="math inline">O(1)</span></p></li>
+<li><p>ดังนั้น time complexity รวมคือ <span class="math inline">O(n) \cdot
+O(1) = O(n)</span></p></li>
 <li><p>อีกตัวอย่าง เช่น</p></li>
 </ul>
 <pre
@@ -344,10 +340,9 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <ul>
 <li><p>ในกรณีนี้ การเรียกฟังก์ชั้นแต่ละครั้งจะเรียกเพิ่มอีกสองครั้ง ยกเว้นกรณี <span
-class="math inline"><em>n</em> = 1</span></p></li>
-<li><p>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก <span
-class="math inline"><em>g</em></span> ด้วยพารามิเตอร์ <span
-class="math inline"><em>n</em></span></p></li>
+class="math inline">n = 1</span></p></li>
+<li><p>พิจารณาสิ่งที่เกิดขึ้นจากการเรียก <span class="math inline">g</span>
+ด้วยพารามิเตอร์ <span class="math inline">n</span></p></li>
 <li><p>ตารางด้านล่างแสดงจำนวนการเรียก function ที่เกิดขึ้น</p></li>
 </ul>
 <table>
@@ -359,117 +354,106 @@ class="math inline"><em>n</em></span></p></li>
 </thead>
 <tbody>
 <tr>
-<td><p><span class="math inline"><em>g</em>(<em>n</em>)</span></p></td>
+<td><p><span class="math inline">g(n)</span></p></td>
 <td><p>1</p></td>
 </tr>
 <tr>
-<td><p><span
-class="math inline"><em>g</em>(<em>n</em> − 1)</span></p></td>
+<td><p><span class="math inline">g(n - 1)</span></p></td>
 <td><p>2</p></td>
 </tr>
 <tr>
-<td><p><span
-class="math inline"><em>g</em>(<em>n</em> − 2)</span></p></td>
+<td><p><span class="math inline">g(n - 2)</span></p></td>
 <td><p>4</p></td>
 </tr>
 <tr>
-<td><p><span class="math inline">⋯</span></p></td>
-<td><p><span class="math inline">⋯</span></p></td>
+<td><p><span class="math inline">\cdots</span></p></td>
+<td><p><span class="math inline">\cdots</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>g</em>(1)</span></p></td>
-<td><p><span
-class="math inline">2<sup><em>n</em> − 1</sup></span></p></td>
+<td><p><span class="math inline">g(1)</span></p></td>
+<td><p><span class="math inline">2^{n - 1}</span></p></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><p>จากตารางนี้ time complexity คือ <span
-class="math inline">1 + 2 + 4 + ⋯ + 2<sup><em>n</em> − 1</sup> = 2<sup><em>n</em></sup> − 1 = <em>O</em>(2<sup><em>n</em></sup>)</span></p></li>
+<li><p>จากตารางนี้ time complexity คือ <span class="math inline">1 + 2 + 4
++ \cdots + 2^{n - 1} = 2^{n} - 1 = O\left( 2^{n} \right)</span></p></li>
 </ul>
 <h4 id="complexity-classes">Complexity classes<a class="heading-anchor" href="#complexity-classes" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>รายการต่อไปนี้รวม time complexity ของอัลกอริทึมที่เจอบ่อย</p></li>
-<li><p><span class="math inline"><em>O</em>(1)</span> constant-time
-algorithm</p>
+<li><p><span class="math inline">O(1)</span> constant-time algorithm</p>
 <ul>
 <li><p>เวลาที่ใช้ในการรันจะเป็น constant ซึ่งไม่สนใจขนาดของ input</p></li>
 <li><p>ยกตัวอย่างเช่นอัลกอริทึมที่มีสูตรคำนวณคำตอบโดยไม่ต้องทำซ้ำใด ๆ</p></li>
 </ul></li>
-<li><p><span class="math inline"><em>O</em>(log <em>n</em>)</span>
+<li><p><span class="math inline">O\left( \log n \right)</span>
 logarithmic algorithm</p>
 <ul>
 <li><p>อัลกอริทึมแบบ <strong>logarithmic</strong> ส่วนใหญ่จะหารครึ่งขนาดของ
 input ที่จำเป็นต้องพิจารณาในแต่ละขั้นตอน</p></li>
 <li><p>เวลาที่ใช้ในการรันจะเป็น logarithmic เนื่องจาก <span
-class="math inline">log<sub>2</sub><em>n</em></span> เท่ากับจำนวนครั้งที่หาร
-<span class="math inline"><em>n</em></span> ด้วย 2 จนกว่าจะเป็น 1</p></li>
+class="math inline">\log_{2}n</span> เท่ากับจำนวนครั้งที่หาร <span
+class="math inline">n</span> ด้วย 2 จนกว่าจะเป็น 1</p></li>
 </ul></li>
-<li><p><span class="math inline">$O\left( \sqrt{n} \right)$</span>
-square root algorithm</p>
+<li><p><span class="math inline">O\left( \sqrt{n} \right)</span> square
+root algorithm</p>
 <ul>
-<li><p>ช้ากว่า <span class="math inline"><em>O</em>(log <em>n</em>)</span>
-แต่เร็วกว่า <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
-<li><p>เป็นกรณีที่หารขนาด input <span class="math inline"><em>n</em></span>
-ด้วย <span class="math inline">$\sqrt{n} =
-\frac{n}{\sqrt{n}}$</span></p></li>
+<li><p>ช้ากว่า <span class="math inline">O\left( \log n \right)</span>
+แต่เร็วกว่า <span class="math inline">O(n)</span></p></li>
+<li><p>เป็นกรณีที่หารขนาด input <span class="math inline">n</span> ด้วย <span
+class="math inline">\sqrt{n} = \frac{n}{\sqrt{n}}</span></p></li>
 </ul></li>
-<li><p><span class="math inline"><em>O</em>(<em>n</em>)</span> linear
-algorithm</p>
+<li><p><span class="math inline">O(n)</span> linear algorithm</p>
 <ul>
 <li><p>อัลกอริทึมแบบ <strong>linear</strong> จะวนใน input
 เป็นจำนวนครั้งที่แน่นอน</p></li>
 <li><p>ส่วนใหญ่แล้วจะเป็น time complexity ที่ค่อนข้างดี
 เนื่องจากปกติแล้วจะจำเป็นต้องอ่านค่าทุกค่าใน input</p></li>
 </ul></li>
-<li><p><span
-class="math inline"><em>O</em>(<em>n</em>log <em>n</em>)</span></p>
+<li><p><span class="math inline">O\left( n\log n \right)</span></p>
 <ul>
 <li><p>ส่วนใหญ่จะเกิดจากการเรียงข้อมูล</p></li>
-<li><p>หรือ data structure ที่ใช้ <span
-class="math inline"><em>O</em>(log <em>n</em>)</span> ในแต่ละ
-operation</p></li>
+<li><p>หรือ data structure ที่ใช้ <span class="math inline">O\left( \log n
+\right)</span> ในแต่ละ operation</p></li>
 </ul></li>
-<li><p><span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span> quadratic
+<li><p><span class="math inline">O\left( n^{2} \right)</span> quadratic
 algorithm</p>
 <ul>
 <li><p>ส่วนใหญ่ใช้ลูปสองชั้น</p></li>
 <li><p>เช่นการพิจารณาทุกคู่ของ input</p></li>
 </ul></li>
-<li><p><span
-class="math inline"><em>O</em>(<em>n</em><sup>3</sup>)</span> cubic
+<li><p><span class="math inline">O\left( n^{3} \right)</span> cubic
 algorithm</p>
 <ul>
 <li><p>ลูปสามชั้น</p></li>
 </ul></li>
-<li><p><span
-class="math inline"><em>O</em>(2<sup><em>n</em></sup>)</span></p>
+<li><p><span class="math inline">O\left( 2^{n} \right)</span></p>
 <ul>
 <li><p>การพิจารณาทุก subsets ของ input</p></li>
-<li><p>ตัวอย่างเช่น subsets ของ <span class="math inline">{1, 2, 3}</span>
-คือ</p></li>
+<li><p>ตัวอย่างเช่น subsets ของ <span class="math inline">\left\{ 1,2,3
+\right\}</span> คือ</p></li>
 </ul>
-<p><span class="math inline">⌀</span>, <span
-class="math inline">{1}</span>, <span class="math inline">{2}</span>,
-<span class="math inline">{3}</span>, <span
-class="math inline">{1, 2}</span>, <span
-class="math inline">{1, 3}</span>, <span
-class="math inline">{2, 3}</span> และ <span
-class="math inline">{1, 2, 3}</span>.</p></li>
-<li><p><span class="math inline"><em>O</em>(<em>n</em>!)</span></p>
+<p><span class="math inline">\varnothing</span>, <span
+class="math inline">\left\{ 1 \right\}</span>, <span
+class="math inline">\left\{ 2 \right\}</span>, <span
+class="math inline">\left\{ 3 \right\}</span>, <span
+class="math inline">\left\{ 1,2 \right\}</span>, <span
+class="math inline">\left\{ 1,3 \right\}</span>, <span
+class="math inline">\left\{ 2,3 \right\}</span> และ <span
+class="math inline">\left\{ 1,2,3 \right\}</span>.</p></li>
+<li><p><span class="math inline">O(n!)</span></p>
 <ul>
 <li><p>การพิจารณาทุกการจัดเรียงของ input</p></li>
-<li><p>ตัวอย่างเช่นการจัดเรียงของ <span class="math inline">{1, 2, 3}</span>
-คือ</p></li>
+<li><p>ตัวอย่างเช่นการจัดเรียงของ <span class="math inline">\left\{ 1,2,3
+\right\}</span> คือ</p></li>
 </ul>
-<p><span class="math inline">(1, 2, 3)</span>, <span
-class="math inline">(1, 3, 2)</span>, <span
-class="math inline">(2, 1, 3)</span>, <span
-class="math inline">(2, 3, 1)</span>, <span
-class="math inline">(3, 1, 2)</span> and <span
-class="math inline">(3, 2, 1)</span>.</p></li>
+<p><span class="math inline">(1,2,3)</span>, <span
+class="math inline">(1,3,2)</span>, <span
+class="math inline">(2,1,3)</span>, <span
+class="math inline">(2,3,1)</span>, <span
+class="math inline">(3,1,2)</span> and <span
+class="math inline">(3,2,1)</span>.</p></li>
 </ul>
 <h4 id="การประเมินประสิทธิภาพ">การประเมินประสิทธิภาพ<a class="heading-anchor" href="#การประเมินประสิทธิภาพ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
@@ -477,24 +461,20 @@ class="math inline">(3, 2, 1)</span>.</p></li>
 ของอัลกอริทึมนั้นทำให้สามารถตรวจสอบประสิทธิภาพของอัลกอริทึมก่อนการ implement
 ได้</p></li>
 <li><p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ <span
-class="math inline">1, 000, 000, 000</span> (พันล้าน)
-คำสั่งต่อหนึ่งวินาที</p></li>
+class="math inline">1,000,000,000</span> (พันล้าน) คำสั่งต่อหนึ่งวินาที</p></li>
 <li><p>ตัวอย่างเช่นถ้าข้อจำนวนของโจทย์นั้นให้เวลาในการคำนวณหนึ่งวินาทีและ <span
-class="math inline"><em>n</em> = 10<sup>5</sup></span></p></li>
-<li><p>ถ้า time complexity เป็น <span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span>
-อัลกอริทึมนี้จะรันทั้งหมด <span
-class="math inline">(10<sup>5</sup>)<sup>2</sup> = 10<sup>{10}</sup></span>
-คำสั่ง</p></li>
+class="math inline">n = 10^{5}</span></p></li>
+<li><p>ถ้า time complexity เป็น <span class="math inline">O\left( n^{2}
+\right)</span> อัลกอริทึมนี้จะรันทั้งหมด <span class="math inline">\left( 10^{5}
+\right)^{2} = 10^{\left\{ 10 \right\}}</span> คำสั่ง</p></li>
 <li><p>ซึ่งโดยคร่าวใช้เวลาประมาณสิบวินาที ซึ่งจะช้าเกินไปสำหรับโจทย์ข้อนี้</p></li>
 <li><p>ในอีกทางหนึ่ง หากว่าเรารู้ขนาด input แล้ว เราสามารถเดา time complexity
 ของอัลกอริทึมที่ใช้แก้ปัญหาได้เช่นกัน</p></li>
 <li><p>ตารางต่อไปนี้บอกการประเมินที่พบบ่อยในกรณีที่ให้เวลาในการคำนวณหนึ่งวินาที</p></li>
-<li><p>ยกตัวอย่างเช่น หากขนาดของ input เป็น <span
-class="math inline"><em>n</em> = 10<sup>5</sup></span> time complexity
-ที่ต้องการจากอัลกอริทึมก็คือ <span
-class="math inline"><em>O</em>(<em>n</em>)</span> หรือ <span
-class="math inline"><em>O</em>(<em>n</em>log <em>n</em>)</span></p></li>
+<li><p>ยกตัวอย่างเช่น หากขนาดของ input เป็น <span class="math inline">n =
+10^{5}</span> time complexity ที่ต้องการจากอัลกอริทึมก็คือ <span
+class="math inline">O(n)</span> หรือ <span class="math inline">O\left(
+n\log n \right)</span></p></li>
 <li><p>ด้วยความรู้นี้จะทำให้คิดอัลกอริทึมได้ง่ายขี้นจากการตัดอัลกอริทึมที่ใช้เวลานานออก</p></li>
 </ul>
 <table>
@@ -506,35 +486,30 @@ class="math inline"><em>O</em>(<em>n</em>log <em>n</em>)</span></p></li>
 </thead>
 <tbody>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 10</span></p></td>
-<td><p><span class="math inline"><em>O</em>(<em>N</em>!)</span></p></td>
+<td><p><span class="math inline">N \leq 10</span></p></td>
+<td><p><span class="math inline">O(N!)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 20</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></td>
+<td><p><span class="math inline">N \leq 20</span></p></td>
+<td><p><span class="math inline">O\left( 2^{N} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 500</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>N</em><sup>3</sup>)</span></p></td>
+<td><p><span class="math inline">N \leq 500</span></p></td>
+<td><p><span class="math inline">O\left( N^{3} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 5000</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>N</em><sup>2</sup>)</span></p></td>
+<td><p><span class="math inline">N \leq 5000</span></p></td>
+<td><p><span class="math inline">O\left( N^{2} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span
-class="math inline"><em>N</em> ≤ 10<sup>6</sup></span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>N</em>log <em>N</em>)</span> or <span
-class="math inline"><em>O</em>(<em>N</em>)</span></p></td>
+<td><p><span class="math inline">N \leq 10^{6}</span></p></td>
+<td><p><span class="math inline">O\left( N\log N \right)</span> or <span
+class="math inline">O(N)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em></span> is large</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span> or <span
-class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
+<td><p><span class="math inline">N</span> is large</p></td>
+<td><p><span class="math inline">O(1)</span> or <span
+class="math inline">O\left( \log N \right)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -543,10 +518,9 @@ class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
 <li><p>อย่างไรก็ตาม ควรจำว่า time complexity
 นั้นแค่เป็นการประมาณประสิทธิภาพเท่านั้นเพราะไม่คิด <strong>constant
 factors</strong></p></li>
-<li><p>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา <span
-class="math inline"><em>O</em>(<em>n</em>)</span> อาจมีการคำนวณทั้งหมด
-<span class="math inline">$\frac{n}{2}$</span> หรือ <span
-class="math inline">5<em>n</em></span> คำสั่ง</p></li>
+<li><p>ตัวอย่างเช่น อัลกอริทึมที่ใช้เวลา <span class="math inline">O(n)</span>
+อาจมีการคำนวณทั้งหมด <span class="math inline">\frac{n}{2}</span> หรือ <span
+class="math inline">5n</span> คำสั่ง</p></li>
 <li><p>ซึ่งเป็นสิ่งสำคัญต่อเวลาที่ใช้จริงในการรันอัลกอริทึม</p></li>
 </ul>
 <h4 id="space-complexity">space complexity<a class="heading-anchor" href="#space-complexity" aria-hidden="true" tabindex="-1">#</a></h4>

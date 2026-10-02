@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -159,8 +162,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#c
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>สำหรับกราฟไม่มีทิศทาง ต้องลบ edge ทั้งสองด้าน และควรมี id ของ edge เพื่อไม่ใช้
 edge เดิมซ้ำ</p>
-<p>เวลาทำงานคือ <span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าลบ edge
+<p>เวลาทำงานคือ <span class="math inline">O(V + E)</span> ถ้าลบ edge
 ได้มีประสิทธิภาพ</p>
 <h4 id="hamiltonian">Hamiltonian<a class="heading-anchor" href="#hamiltonian" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>เป็น path ที่ท่องไปในทุกโหนดเพียงหนึ่งครั้งเท่านั้น</p>
@@ -201,9 +203,8 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าล�
 <ul>
 <li><p>ถ้าโจทย์พูดถึงการใช้ถนนทุกเส้นหนึ่งครั้ง ให้นึกถึง Eulerian</p></li>
 <li><p>ถ้าโจทย์พูดถึงการเยี่ยมเมืองทุกเมืองหนึ่งครั้ง ให้นึกถึง Hamiltonian</p></li>
-<li><p>ถ้ากราฟมีขนาดเล็กมาก เช่น <span
-class="math inline"><em>n</em> ≤ 20</span> Hamiltonian อาจใช้ DP bitmask
-ได้</p></li>
+<li><p>ถ้ากราฟมีขนาดเล็กมาก เช่น <span class="math inline">n \leq 20</span>
+Hamiltonian อาจใช้ DP bitmask ได้</p></li>
 </ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้

@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -162,24 +165,22 @@ priority</p></li>
 <tr>
 <td><p>เพิ่มข้อมูล</p></td>
 <td><p><code>push</code></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 </tr>
 <tr>
 <td><p>ดูค่าบนสุด</p></td>
 <td><p><code>top</code></p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
 </tr>
 <tr>
 <td><p>ลบค่าบนสุด</p></td>
 <td><p><code>pop</code></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 </tr>
 <tr>
 <td><p>จำนวนสมาชิก</p></td>
 <td><p><code>size</code></p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
 </tr>
 </tbody>
 </table>

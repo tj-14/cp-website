@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -143,17 +146,18 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#c
 <p>จะใช้วิธีการนับจำนวนครั้งที่จะมีการเรียกฟังก์ชันเกิดขึ้นตามพารามิเตอร์ของฟังก์ชันนั้น</p>
 <h4 id="โจทย์ตัวอย่าง-factorial">โจทย์ตัวอย่าง - Factorial<a class="heading-anchor" href="#โจทย์ตัวอย่าง-factorial" aria-hidden="true" tabindex="-1">#</a></h4>
 <h5 id="เนื้อหาโจทย์">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงหาค่าของ <span class="math inline"><em>n</em>!</span> โดย <span
-class="math inline"><em>n</em>! = <em>n</em> × (<em>n</em> − 1) × (<em>n</em> − 2) × ⋯ × 1</span></p>
+<p>จงหาค่าของ <span class="math inline">n!</span> โดย <span
+class="math inline">n! = n \times (n - 1) \times (n - 2) \times \cdots
+\times 1</span></p>
 <h5 id="แนวคิด-2">แนวคิด<a class="heading-anchor" href="#แนวคิด-2" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้
 แต่นำมาเป็นตัวอย่างเริ่มต้นในการใช้โครงสร้างของ recursion ในการแก้ปัญหา</p>
-<p>โดยมองค่าของ <span class="math inline"><em>n</em>!</span> เป็น
-recursive function ดังนี้</p>
-<p><span class="math display">$$f(n) = \begin{cases}
+<p>โดยมองค่าของ <span class="math inline">n!</span> เป็น recursive
+function ดังนี้</p>
+<p><span class="math display">f(n) = \begin{cases}
 1\text{ if }n \leq 1 \\
 n \times f(n - 1)\text{ else}
-\end{cases}$$</span></p>
+\end{cases}</span></p>
 <h5 id="รหัสเทียม">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
@@ -176,20 +180,19 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <pre><code>24</code></pre>
 <h4 id="โจทย์ตัวอย่าง-fibonacci">โจทย์ตัวอย่าง - Fibonacci<a class="heading-anchor" href="#โจทย์ตัวอย่าง-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
 <h5 id="เนื้อหาโจทย์-2">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-2" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงหาค่าของเลขฟิโบนัชชีลำดับที่ <span class="math inline"><em>n</em></span>
-โดยที่ เลขฟิโบนัชชีลำดับที่ <span class="math inline"><em>n</em></span>
-จะมีค่าเท่ากับผลบวกของเลขฟิโบนัชชีลำดับที่ <span
-class="math inline"><em>n</em> − 1</span> และ <span
-class="math inline"><em>n</em> − 2</span></p>
+<p>จงหาค่าของเลขฟิโบนัชชีลำดับที่ <span class="math inline">n</span> โดยที่
+เลขฟิโบนัชชีลำดับที่ <span class="math inline">n</span>
+จะมีค่าเท่ากับผลบวกของเลขฟิโบนัชชีลำดับที่ <span class="math inline">n - 1</span>
+และ <span class="math inline">n - 2</span></p>
 <h5 id="แนวคิด-3">แนวคิด<a class="heading-anchor" href="#แนวคิด-3" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้เช่นกัน
 แต่นำมาเป็นอีกตัวอย่างหนึ่งในการใช้โครงสร้างของ recursion ในการแก้ปัญหา</p>
-<p>โดยมองค่าของเลขฟิโบนัชชีลำดับที่ <span class="math inline"><em>n</em></span>
-เป็น recursive function ดังนี้</p>
-<p><span class="math display">$$f(n) = \begin{cases}
+<p>โดยมองค่าของเลขฟิโบนัชชีลำดับที่ <span class="math inline">n</span> เป็น
+recursive function ดังนี้</p>
+<p><span class="math display">f(n) = \begin{cases}
 n\text{ if }n \leq 1 \\
 f(n - 1) + f(n - 2)\text{ else}
-\end{cases}$$</span></p>
+\end{cases}</span></p>
 <h5 id="รหัสเทียม-2">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-2" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
@@ -212,15 +215,15 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#c
 <pre><code>3</code></pre>
 <h4 id="โจทย์ตัวอย่าง-permutation">โจทย์ตัวอย่าง - Permutation<a class="heading-anchor" href="#โจทย์ตัวอย่าง-permutation" aria-hidden="true" tabindex="-1">#</a></h4>
 <h5 id="เนื้อหาโจทย์-3">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-3" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงหาลำดับที่มีสมาชิก <span class="math inline"><em>n</em></span> ตัว
-โดยที่แต่ละสมาชิกมีค่าน้อยกว่า <span class="math inline"><em>r</em></span>
-ทั้งหมดที่เป็นไปได้ (จำเป็นต้องใช้ array)</p>
+<p>จงหาลำดับที่มีสมาชิก <span class="math inline">n</span> ตัว
+โดยที่แต่ละสมาชิกมีค่าน้อยกว่า <span class="math inline">r</span> ทั้งหมดที่เป็นไปได้
+(จำเป็นต้องใช้ array)</p>
 <h5 id="แนวคิด-4">แนวคิด<a class="heading-anchor" href="#แนวคิด-4" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เป็นการค้นทุกวิธีที่เป็นไปได้ (complete search) ซึ่งจะนำ recursive function
 เข้ามาใช้ โดยเริ่มต้นด้วยการสร้างลำดับที่ยังไม่มีสมาชิกใด ๆ และค่อย ๆ
 เติมสมาชิกเข้าไปในลำดับนั้น</p>
 <p>base case จะเป็นเงื่อนไขเมื่อลำดับมีสมาชิกครบ <span
-class="math inline"><em>n</em></span></p>
+class="math inline">n</span></p>
 <p>recursive case จะเป็นการเติมสมาชิกลำดับถัดไปด้วยทุกค่าที่เป็นไปได้</p>
 <h5 id="รหัสเทียม-3">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-3" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre

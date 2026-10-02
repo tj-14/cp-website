@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -106,17 +109,17 @@
 <h3 id="improving-from-divide-conquer-memoization">Improving from Divide &amp; Conquer - Memoization<a class="heading-anchor" href="#improving-from-divide-conquer-memoization" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>ลองพิจารณาถึงการคำนวณ Fibonacci Number ที่เราได้พูดคุยไปในบท # Divide
 Conquer ถ้าเรานำเอา Divide Conquer มาใช้จะต้องใช้เวลามากถึง</p>
-<p>สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ <span
-class="math inline"><em>n</em></span> ซึ่งเป็นรูปแบบการเติบโตแบบ exponential
-เลยทีเดียว! แล้วเราจะทำอะไรได้เพื่อลดเวลาที่ต้องใช้ในการคำนวณ?</p>
+<p>สำหรับการหาจำนวนฟิโบนัชชีลำดับที่ <span class="math inline">n</span>
+ซึ่งเป็นรูปแบบการเติบโตแบบ exponential เลยทีเดียว!
+แล้วเราจะทำอะไรได้เพื่อลดเวลาที่ต้องใช้ในการคำนวณ?</p>
 <p>ถ้าเราวาดแผนผังต้นไม้ในการหาจำนวนฟิโบนัชชีลำดับที่ <span
-class="math inline"><em>n</em></span> จะเห็นว่ามีการเรียกฟังก์ชันซ้ำค่อนข้างมาก
-เช่น <span class="math inline">Fib(3)</span> ที่ถูกเรียกถึง 5 ครั้ง
-ลองจินตนาการดูว่าถ้าเราจะหา <span class="math inline">Fib(100)</span>
+class="math inline">n</span> จะเห็นว่ามีการเรียกฟังก์ชันซ้ำค่อนข้างมาก เช่น <span
+class="math inline">\text{Fib}(3)</span> ที่ถูกเรียกถึง 5 ครั้ง
+ลองจินตนาการดูว่าถ้าเราจะหา <span class="math inline">\text{Fib}(100)</span>
 จะต้องเรียกฟังก์ชันซ้ำมากขนาดไหน</p>
 <p>ถ้าเรา <strong>จำ</strong> <span
-class="math inline">Fib(<em>i</em>)</span> ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง
-โดยให้เก็บค่าของ <span class="math inline">Fib(<em>i</em>)</span>
+class="math inline">\text{Fib}(i)</span> ที่เคยคำนวณไว้ในอาร์เรย์หนึ่ง
+โดยให้เก็บค่าของ <span class="math inline">\text{Fib}(i)</span>
 และเรียกค่าจากที่เก็บมาได้ โค้ดจะมีลักษณะดังนี้:</p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v<span class="op">(</span>n<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>

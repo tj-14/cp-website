@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -132,16 +135,15 @@ greedy</p></li>
 <li><p>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</p></li>
 </ul>
 <h4 id="ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)<a class="heading-anchor" href="#ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า <span
-class="math inline"><em>n</em></span> โดยใช้เหรียญที่มีมูลค่า <span
-class="math inline">{<em>c</em><sub>1</sub>, <em>c</em><sub>2</sub>, ⋯, <em>c</em><sub><em>k</em></sub>}</span>
-จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
+<p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า <span class="math inline">n</span>
+โดยใช้เหรียญที่มีมูลค่า <span class="math inline">\{
+c_{1},c_{2},\cdots,c_{k}\}</span> จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
 <p>หากมูลค่าของเหรียญเป็น</p>
-<p><span class="math inline">{1, 3, 4}</span></p>
+<p><span class="math inline">\{ 1,3,4\}</span></p>
 <table>
 <thead>
 <tr>
-<th><p>มูลค่ารวม <span class="math inline"><em>n</em></span></p></th>
+<th><p>มูลค่ารวม <span class="math inline">n</span></p></th>
 <th><p>จำนวนเหรียญที่น้อยที่สุด</p></th>
 </tr>
 </thead>
@@ -192,14 +194,15 @@ class="math inline">{<em>c</em><sub>1</sub>, <em>c</em><sub>2</sub>, ⋯, 
 </tr>
 </tbody>
 </table>
-<p>นิยาม <span class="math inline"><em>d</em><sub><em>n</em></sub></span>
+<p>นิยาม <span class="math inline">d_{n}</span>
 ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า <span
-class="math inline"><em>n</em></span></p>
+class="math inline">n</span></p>
 <p>จะได้ว่า</p>
-<p><span
-class="math inline"><em>d</em><sub><em>i</em></sub> = <em>m</em> ∈ {(<em>d</em><sub>{<em>i</em> − 1}</sub> + 1, <em>d</em><sub>{<em>i</em> − 3}</sub> + 1, <em>d</em><sub>{<em>i</em> − 4}</sub> + 1)}</span></p>
-<p>ซึ่งเป็น recursive case โดย base case คือ <span
-class="math inline"><em>d</em><sub>0</sub> = 0</span></p>
+<p><span class="math inline">d_{i} = m \in \left\{ \left( d_{\left\{ i -
+1 \right\}} + 1,d_{\left\{ i - 3 \right\}} + 1,d_{\left\{ i - 4
+\right\}} + 1 \right) \right\}</span></p>
+<p>ซึ่งเป็น recursive case โดย base case คือ <span class="math inline">d_{0}
+= 0</span></p>
 <h4 id="longest-increasing-subsequence">Longest Increasing Subsequence<a class="heading-anchor" href="#longest-increasing-subsequence" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a
 href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
@@ -224,8 +227,7 @@ href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">h
 <li><p>pascal (nCr)
 <code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></p></li>
 <li><p>coin change <code>dp[i] = f(dp[i-xj])</code></p></li>
-<li><p>matrix chain <span
-class="math inline"><em>N</em><sup>3</sup></span>,
+<li><p>matrix chain <span class="math inline">N^{3}</span>,
 <code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></p></li>
 <li><p>LCS longest common subsequence</p></li>
 <li><p>LCA lowest common ancestor</p></li>
@@ -233,57 +235,53 @@ class="math inline"><em>N</em><sup>3</sup></span>,
 <li><p>longest common substring    lis</p></li>
 <li><p>matrix exponential    divide&amp;conquer/bitwise</p>
 <ul>
-<li><p><span class="math inline"><em>x</em><sup>9</sup></span></p></li>
-<li><p><span class="math inline">9 = {1001}<sub>2</sub></span></p></li>
-<li><p><span
-class="math inline"><em>x</em><sup>1</sup> * <em>x</em><sup>8</sup></span></p></li>
+<li><p><span class="math inline">x^{9}</span></p></li>
+<li><p><span class="math inline">9 = \left\{ 1001
+\right\}_{2}</span></p></li>
+<li><p><span class="math inline">x^{1} \ast x^{8}</span></p></li>
 </ul></li>
 <li><p>KMP Knutt-Morris-Pratt</p></li>
 <li><p>z-function</p></li>
 <li><p>floyd-warshall    matrix chain <span
-class="math inline"><em>N</em><sup>3</sup></span>,
+class="math inline">N^{3}</span>,
 <code>dp[i][j] = min(f(dp[i][k], dp[k][j]))</code></p></li>
 <li><p>Manacher algorithm</p></li>
-<li><p>TSP travelling salesman <span
-class="math inline">2<sup><em>n</em></sup> * <em>n</em></span>,
-<code>dp[i][j]</code> โดยที่ <span class="math inline"><em>i</em></span>
+<li><p>TSP travelling salesman <span class="math inline">2^{n} \ast
+n</span>, <code>dp[i][j]</code> โดยที่ <span class="math inline">i</span>
 เป็น set</p></li>
 </ul>
-<p>ของเมืองที่เคยผ่านไปแล้ว และ <span class="math inline"><em>j</em></span>
+<p>ของเมืองที่เคยผ่านไปแล้ว และ <span class="math inline">j</span>
 เป็นเมืองสุดท้ายที่อยู่ตอนนั้น</p>
 <ul>
 <li><p>tribonacci</p></li>
 </ul>
 <h5 id="example">example<a class="heading-anchor" href="#example" aria-hidden="true" tabindex="-1">#</a></h5>
 <h6>fibonacci</h6>
-<p><span
-class="math inline"><em>f</em>(<em>n</em>) = <em>f</em>(<em>n</em> − 1) + <em>f</em>(<em>n</em> − 2)</span></p>
+<p><span class="math inline">f(n) = f(n - 1) + f(n - 2)</span></p>
 <ul>
 <li><p>1 1 2 3 5 8 11 ..</p></li>
-<li><p><span
-class="math inline"><em>f</em>(10) = <em>f</em>(9) + <em>f</em>(8)</span></p></li>
-<li><p><span
-class="math inline"><em>f</em>(9) = <em>f</em>(8) + <em>f</em>(7)</span></p></li>
+<li><p><span class="math inline">f(10) = f(9) + f(8)</span></p></li>
+<li><p><span class="math inline">f(9) = f(8) + f(7)</span></p></li>
 </ul>
 <p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
 <h6>LIS</h6>
 <p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
 <p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
-<p><span class="math inline"><em>N</em><sup>2</sup></span> solution:</p>
+<p><span class="math inline">N^{2}</span> solution:</p>
 <p>define state:
 <code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
 <p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
-<p>update state: new input: x, พิจารณา <span
-class="math inline"><em>a</em>[<em>j</em>] &lt; <em>x</em></span>,
-แล้วเก็บค่า <span
-class="math inline">dp[<em>i</em>] = max (dp[<em>j</em>] + 1)</span></p>
+<p>update state: new input: x, พิจารณา <span class="math inline">a\lbrack
+j\rbrack &lt; x</span>, แล้วเก็บค่า <span
+class="math inline">\text{dp}\lbrack i\rbrack = \max(\text{dp}\lbrack
+j\rbrack + 1)</span></p>
 <p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
 <pre><code>     0 1 2 3 4 5 6 7 8
 
 a  : 1 5 3 2 8 9 3 6
 dp : 0 1 2 2 2 3 4 3 4
 bt : 0 0 1 1 1 4 5 4 7</code></pre>
-<p><span class="math inline"><em>N</em>log {<em>N</em>}</span>
+<p><span class="math inline">N\log\left\{ N \right\}</span>
 solution:</p>
 <p>define state:
 <code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>

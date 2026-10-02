@@ -32,7 +32,6 @@ KATEX_VERSION = "0.16.47"
 KATEX_INTEGRITY = {
     "css": "sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA",
     "js": "sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp",
-    "auto": "sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz",
 }
 
 YEAR = datetime.date.today().year
@@ -108,14 +107,17 @@ SECTION_OF = {slug: section_title for section_title, _, items in SECTIONS for sl
 
 KATEX_HEAD = f"""    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.css" integrity="{KATEX_INTEGRITY['css']}" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.js" integrity="{KATEX_INTEGRITY['js']}" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/contrib/auto-render.min.js" integrity="{KATEX_INTEGRITY['auto']}" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {{
-            delimiters: [
-                {{left: '$$', right: '$$', display: true}},
-                {{left: '$', right: '$', display: false}}
-            ],
-            throwOnError: false
-        }});"></script>"""
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {{
+            document.querySelectorAll('.content .math').forEach((el) => {{
+                katex.render(el.textContent, el, {{
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                }});
+            }});
+        }});
+    </script>"""
 
 COPY_BUTTON_SCRIPT = """    <script>
         document.querySelectorAll('.content pre').forEach((pre) => {
@@ -217,12 +219,14 @@ def enhance_resource_paragraphs(fragment: str) -> str:
 
 def render_content(path: Path) -> str:
     result = subprocess.run(
-        ["pandoc", "-f", "typst", "-t", "html", str(path)],
+        # --katex keeps raw TeX in .math spans on both pandoc 3.10 and 3.11+.
+        ["pandoc", "-f", "typst", "-t", "html", "--katex", str(path)],
         cwd=ROOT,
-        check=True,
         text=True,
         capture_output=True,
     )
+    if result.returncode != 0:
+        raise SystemExit(f"error: pandoc failed on {path.name}:\n{result.stderr}")
     fragment = shift_headings(result.stdout)
     fragment = fragment.replace("../assets/", "assets/")
     fragment = fragment.replace("book/assets/", "assets/")

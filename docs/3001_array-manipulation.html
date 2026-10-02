@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -122,30 +125,28 @@
 แล้วต้องตอบคำถามหรือแก้ไขค่าในช่วงของ array ให้เร็วกว่าไล่ดูทุกช่องทุกครั้ง</p>
 <p>ตัวอย่างคำถามที่พบบ่อย</p>
 <ul>
-<li><p>หาผลรวมช่วง <span
-class="math inline">[<em>l</em>, <em>r</em>]</span></p></li>
-<li><p>เพิ่มค่าทุกตำแหน่งในช่วง <span
-class="math inline">[<em>l</em>, <em>r</em>]</span></p></li>
+<li><p>หาผลรวมช่วง <span class="math inline">\lbrack
+l,r\rbrack</span></p></li>
+<li><p>เพิ่มค่าทุกตำแหน่งในช่วง <span class="math inline">\lbrack
+l,r\rbrack</span></p></li>
 <li><p>หาค่าน้อยสุดหรือมากสุดในช่วง</p></li>
 <li><p>นับจำนวนค่าที่ตรงเงื่อนไขบางอย่าง</p></li>
 </ul>
 <h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>ถ้ามี array ขนาด <span class="math inline"><em>n</em></span> และมีคำถาม
-<span class="math inline"><em>q</em></span> ครั้ง
-แต่ละครั้งถามผลรวมตั้งแต่ตำแหน่ง <span class="math inline"><em>l</em></span> ถึง
-<span class="math inline"><em>r</em></span> วิธีตรงไปตรงมาคือวนตั้งแต่ <span
-class="math inline"><em>l</em></span> ถึง <span
-class="math inline"><em>r</em></span></p>
+<p>ถ้ามี array ขนาด <span class="math inline">n</span> และมีคำถาม <span
+class="math inline">q</span> ครั้ง แต่ละครั้งถามผลรวมตั้งแต่ตำแหน่ง <span
+class="math inline">l</span> ถึง <span class="math inline">r</span>
+วิธีตรงไปตรงมาคือวนตั้งแต่ <span class="math inline">l</span> ถึง <span
+class="math inline">r</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> l<span class="op">;</span> i <span class="op">&lt;=</span> r<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  sum <span class="op">+=</span> a<span class="op">[</span>i<span class="op">];</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>ถ้าแต่ละ query ใช้เวลา <span
-class="math inline"><em>O</em>(<em>n</em>)</span> เวลารวมจะเป็น <span
-class="math inline"><em>O</em>(<em>n</em><em>q</em>)</span> ซึ่งช้าเกินไปเมื่อ
-<span class="math inline"><em>n</em>, <em>q</em></span> มีค่าประมาณ <span
-class="math inline">10<sup>5</sup></span></p>
+<p>ถ้าแต่ละ query ใช้เวลา <span class="math inline">O(n)</span>
+เวลารวมจะเป็น <span class="math inline">O(nq)</span> ซึ่งช้าเกินไปเมื่อ <span
+class="math inline">n,q</span> มีค่าประมาณ <span
+class="math inline">10^{5}</span></p>
 <h4 id="prefix-sum">Prefix sum<a class="heading-anchor" href="#prefix-sum" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ถ้า array ไม่มีการแก้ไขค่า เราสามารถ preprocess ด้วย prefix sum ได้</p>
 <pre
@@ -153,16 +154,14 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  pref<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> pref<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>i<span class="op">];</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>ผลรวมช่วง <span class="math inline">[<em>l</em>, <em>r</em>]</span>
-คือ</p>
+<p>ผลรวมช่วง <span class="math inline">\lbrack l,r\rbrack</span> คือ</p>
 <p><code>pref[r] - pref[l-1]</code></p>
-<p>เวลา preprocess คือ <span
-class="math inline"><em>O</em>(<em>n</em>)</span> และตอบแต่ละ query ได้ใน
-<span class="math inline"><em>O</em>(1)</span></p>
+<p>เวลา preprocess คือ <span class="math inline">O(n)</span> และตอบแต่ละ
+query ได้ใน <span class="math inline">O(1)</span></p>
 <h4 id="difference-array">Difference array<a class="heading-anchor" href="#difference-array" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>ถ้าโจทย์ให้เพิ่มค่า <span class="math inline"><em>x</em></span>
-ทุกตำแหน่งในช่วง <span class="math inline">[<em>l</em>, <em>r</em>]</span>
-หลายครั้ง แล้วค่อยถามค่า array สุดท้าย ใช้ difference array ได้</p>
+<p>ถ้าโจทย์ให้เพิ่มค่า <span class="math inline">x</span> ทุกตำแหน่งในช่วง <span
+class="math inline">\lbrack l,r\rbrack</span> หลายครั้ง แล้วค่อยถามค่า array
+สุดท้าย ใช้ difference array ได้</p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diff<span class="op">[</span>l<span class="op">]</span> <span class="op">+=</span> x<span class="op">;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>diff<span class="op">[</span>r <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-=</span> x<span class="op">;</span></span></code></pre>
@@ -179,12 +178,11 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#c
 <p>Fenwick Tree หรือ Binary Indexed Tree ใช้ตอบ range sum และ point update
 ได้เร็ว</p>
 <ul>
-<li><p>update หนึ่งตำแหน่ง: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
-<li><p>query prefix sum: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
-<li><p>ใช้หน่วยความจำ <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
+<li><p>update หนึ่งตำแหน่ง: <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>query prefix sum: <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>ใช้หน่วยความจำ <span class="math inline">O(n)</span></p></li>
 </ul>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> bit<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
@@ -213,14 +211,13 @@ class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 <p>Segment Tree เหมาะเมื่อ operation ซับซ้อนกว่า sum เช่น min, max, gcd หรือมี
 range update</p>
 <ul>
-<li><p>build: <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
-<li><p>query ช่วง: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
-<li><p>update หนึ่งตำแหน่ง: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
+<li><p>build: <span class="math inline">O(n)</span></p></li>
+<li><p>query ช่วง: <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>update หนึ่งตำแหน่ง: <span class="math inline">O\left( \log n
+\right)</span></p></li>
 <li><p>ใช้หน่วยความจำประมาณ <span
-class="math inline"><em>O</em>(4<em>n</em>)</span></p></li>
+class="math inline">O(4n)</span></p></li>
 </ul>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> seg<span class="op">(</span><span class="dv">4</span> <span class="op">*</span> n<span class="op">);</span></span>
@@ -248,32 +245,26 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#c
 <tbody>
 <tr>
 <td><p>Prefix sum</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span> หลัง
-preprocess</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+<td><p><span class="math inline">O(1)</span> หลัง preprocess</p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
 <td><p>ไม่มีการแก้ค่า</p></td>
 </tr>
 <tr>
 <td><p>Difference array</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span> ต่อช่วง</p></td>
-<td><p><span class="math inline"><em>O</em>(<em>n</em>)</span>
-เพื่อสรุปผล</p></td>
+<td><p><span class="math inline">O(1)</span> ต่อช่วง</p></td>
+<td><p><span class="math inline">O(n)</span> เพื่อสรุปผล</p></td>
 <td><p>update หลายช่วงแบบ offline</p></td>
 </tr>
 <tr>
 <td><p>Fenwick Tree</p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 <td><p>sum และ frequency</p></td>
 </tr>
 <tr>
 <td><p>Segment Tree</p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 <td><p>operation หลากหลาย</p></td>
 </tr>
 </tbody>

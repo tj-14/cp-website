@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -124,9 +127,9 @@ optimization หลายแบบ</p>
 <p>ข้อดีคือคิดตรงไปตรงมาและใช้ตรวจคำตอบของวิธีที่ซับซ้อนได้ ข้อเสียคือ state space
 มักโตเร็วมาก จึงต้องวิเคราะห์จำนวนสถานะก่อนเขียนจริง</p>
 <h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>สมมติมีตัวเลข <span class="math inline"><em>n</em></span> ตัว
-และต้องเลือกบางตัวให้ผลรวมเท่ากับ <span class="math inline"><em>x</em></span>
-วิธี brute force คือพิจารณาทุก subset</p>
+<p>สมมติมีตัวเลข <span class="math inline">n</span> ตัว
+และต้องเลือกบางตัวให้ผลรวมเท่ากับ <span class="math inline">x</span> วิธี brute
+force คือพิจารณาทุก subset</p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> mask <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> mask <span class="op">&lt;</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> n<span class="op">);</span> mask<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
@@ -137,9 +140,8 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#c
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;found&quot;</span><span class="op">;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>จำนวน subset คือ <span
-class="math inline">2<sup><em>n</em></sup></span> ดังนั้นวิธีนี้เหมาะกับ <span
-class="math inline"><em>n</em> ≤ 20</span></p>
+<p>จำนวน subset คือ <span class="math inline">2^{n}</span> ดังนั้นวิธีนี้เหมาะกับ
+<span class="math inline">n \leq 20</span></p>
 <h4 id="generating-permutations">Generating Permutations<a class="heading-anchor" href="#generating-permutations" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>เขียน recursive function เพื่อ generate ทุก permutation ที่เป็นไปได้</p>
 <pre
@@ -160,8 +162,8 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>จำนวน permutation คือ <span class="math inline"><em>n</em>!</span>
-จึงใช้ได้เฉพาะ <span class="math inline"><em>n</em></span> เล็กมาก</p>
+<p>จำนวน permutation คือ <span class="math inline">n!</span> จึงใช้ได้เฉพาะ
+<span class="math inline">n</span> เล็กมาก</p>
 <h4 id="graph-traversal">Graph Traversal<a class="heading-anchor" href="#graph-traversal" aria-hidden="true" tabindex="-1">#</a></h4>
 <p><a class="resource-card" href="https://visualgo.net/en/dfsbfs?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
 <ul>
@@ -206,11 +208,10 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#c
 <li><p>เป็นเทคนิคที่ถ้า search จากต้นทางแล้ว space ใหญ่เกินไป ให้ search
 จากปลายทางแล้วมาเจอกันตรงกลาง</p></li>
 </ul>
-<p>ตัวอย่างเช่น subset sum ที่ <span
-class="math inline"><em>n</em> = 40</span> ถ้าลองทุก subset จะเป็น <span
-class="math inline">2<sup>40</sup></span> ซึ่งมากเกินไป แต่ถ้าแบ่ง array
-เป็นสองครึ่ง จะได้สองชุดขนาด <span class="math inline">2<sup>20</sup></span>
-แล้วนำผลรวมของสองฝั่งมาจับคู่กัน</p>
+<p>ตัวอย่างเช่น subset sum ที่ <span class="math inline">n = 40</span>
+ถ้าลองทุก subset จะเป็น <span class="math inline">2^{40}</span> ซึ่งมากเกินไป
+แต่ถ้าแบ่ง array เป็นสองครึ่ง จะได้สองชุดขนาด <span
+class="math inline">2^{20}</span> แล้วนำผลรวมของสองฝั่งมาจับคู่กัน</p>
 <p>ขั้นตอนทั่วไป</p>
 <ul>
 <li><p>แบ่งข้อมูลเป็นสองส่วน</p></li>
@@ -229,34 +230,30 @@ class="math inline">2<sup>40</sup></span> ซึ่งมากเกินไ�
 <tbody>
 <tr>
 <td><p>Subset brute force</p></td>
-<td><p><span
-class="math inline"><em>O</em>(2<sup><em>n</em></sup>)</span></p></td>
-<td><p><span class="math inline"><em>n</em></span>
+<td><p><span class="math inline">O\left( 2^{n} \right)</span></p></td>
+<td><p><span class="math inline">n</span>
 เล็กและต้องลองเลือกหรือไม่เลือก</p></td>
 </tr>
 <tr>
 <td><p>Permutation brute force</p></td>
-<td><p><span class="math inline"><em>O</em>(<em>n</em>!)</span></p></td>
+<td><p><span class="math inline">O(n!)</span></p></td>
 <td><p>ต้องลองลำดับทั้งหมด</p></td>
 </tr>
 <tr>
 <td><p>BFS</p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></td>
+<td><p><span class="math inline">O(V + E)</span></p></td>
 <td><p>กราฟไม่มีน้ำหนักหรือหาจำนวนก้าวน้อยสุด</p></td>
 </tr>
 <tr>
 <td><p>DFS</p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></td>
+<td><p><span class="math inline">O(V + E)</span></p></td>
 <td><p>สำรวจ component, cycle, ordering</p></td>
 </tr>
 <tr>
 <td><p>Meet in the middle</p></td>
-<td><p><span class="math inline">$O\left( 2^{\left\{ \frac{n}{2}
-\right\}} \right)$</span></p></td>
-<td><p><span class="math inline"><em>n</em></span> กลาง ๆ เช่น
-30-44</p></td>
+<td><p><span class="math inline">O\left( 2^{\left\{ \frac{n}{2}
+\right\}} \right)</span></p></td>
+<td><p><span class="math inline">n</span> กลาง ๆ เช่น 30-44</p></td>
 </tr>
 </tbody>
 </table>

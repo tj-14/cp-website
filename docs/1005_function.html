@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -202,17 +205,15 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#c
 <p>Output:</p>
 <pre><code>The result is 8</code></pre>
 <h5 id="มุมมองของฟังก์ชัน">มุมมองของฟังก์ชัน<a class="heading-anchor" href="#มุมมองของฟังก์ชัน" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ทางคณิตศาสตร์จะเขียนฟังก์ชันอยู่ในรูป <span
-class="math inline"><em>y</em> = <em>f</em>(<em>x</em>)</span>
-ซึ่งเมื่อเทียบกับทางคอมพิวเตอร์แล้วจะเทียบเท่าเป็นฟังก์ชันที่มี:</p>
+<p>ทางคณิตศาสตร์จะเขียนฟังก์ชันอยู่ในรูป <span class="math inline">y =
+f(x)</span> ซึ่งเมื่อเทียบกับทางคอมพิวเตอร์แล้วจะเทียบเท่าเป็นฟังก์ชันที่มี:</p>
 <ul>
 <li><p>ไม่ได้ระบุชนิดค่าที่จะคืนออกมา</p></li>
 <li><p>ชื่อ f</p></li>
 <li><p>รับพารามิเตอร์ x</p></li>
 </ul>
 <p>ตัวอย่างฟังก์ชันเอกลักษณ์:</p>
-<p><span
-class="math inline"><em>f</em>(<em>x</em>) = <em>x</em></span></p>
+<p><span class="math inline">f(x) = x</span></p>
 <p>ในภาษา C++:</p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> f<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
@@ -221,10 +222,10 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#c
 <h4 id="โจทย์ตัวอย่าง-ค่าถัดไปของฟังก์ชันเวียนเกิด">โจทย์ตัวอย่าง - ค่าถัดไปของฟังก์ชันเวียนเกิด<a class="heading-anchor" href="#โจทย์ตัวอย่าง-ค่าถัดไปของฟังก์ชันเวียนเกิด" aria-hidden="true" tabindex="-1">#</a></h4>
 <h5 id="เนื้อหาโจทย์">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>จงเขียนฟังก์ชัน <code>next_a(int p, int pn)</code> หาค่า:</p>
-<p><span
-class="math inline"><em>a</em><sub><em>n</em></sub> = <em>a</em><sub>{<em>n</em> − 1}</sub> + <em>n</em> × 2</span></p>
-<p>เมื่อทราบค่า <span
-class="math inline"><em>a</em><sub>{<em>n</em> − 1}</sub></span></p>
+<p><span class="math inline">a_{n} = a_{\left\{ n - 1 \right\}} + n
+\times 2</span></p>
+<p>เมื่อทราบค่า <span class="math inline">a_{\left\{ n - 1
+\right\}}</span></p>
 <h5 id="รหัสเทียม">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> next_a<span class="op">(</span><span class="dt">int</span> p<span class="op">,</span> <span class="dt">int</span> pn<span class="op">)</span> <span class="op">{</span></span>
@@ -232,10 +233,8 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#c
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <h4 id="โจทย์ตัวอย่าง-ระยะห่างระหว่างสองจุด">โจทย์ตัวอย่าง - ระยะห่างระหว่างสองจุด<a class="heading-anchor" href="#โจทย์ตัวอย่าง-ระยะห่างระหว่างสองจุด" aria-hidden="true" tabindex="-1">#</a></h4>
 <h5 id="เนื้อหาโจทย์-2">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-2" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>กำหนดให้ <span
-class="math inline"><em>A</em>(<em>x</em><sub>1</sub>, <em>y</em><sub>1</sub>)</span>
-และ <span
-class="math inline"><em>B</em>(<em>x</em><sub>2</sub>, <em>y</em><sub>2</sub>)</span>
+<p>กำหนดให้ <span class="math inline">A\left( x_{1},y_{1} \right)</span>
+และ <span class="math inline">B\left( x_{2},y_{2} \right)</span>
 เป็นจุดสองจุดบนระนาบ</p>
 <h5 id="รหัสเทียม-2">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-2" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre
@@ -245,8 +244,8 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#c
 <h4 id="โจทย์ตัวอย่าง-ระยะห่าง-manhattan">โจทย์ตัวอย่าง - ระยะห่าง Manhattan<a class="heading-anchor" href="#โจทย์ตัวอย่าง-ระยะห่าง-manhattan" aria-hidden="true" tabindex="-1">#</a></h4>
 <h5 id="เนื้อหาโจทย์-3">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-3" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>จงเขียนฟังก์ชัน <code>manhattan(x1, y1, x2, y2)</code> เพื่อหาระยะ
-Manhattan ระหว่าง <span class="math inline"><em>A</em></span> และ <span
-class="math inline"><em>B</em></span></p>
+Manhattan ระหว่าง <span class="math inline">A</span> และ <span
+class="math inline">B</span></p>
 <h5 id="รหัสเทียม-3">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-3" aria-hidden="true" tabindex="-1">#</a></h5>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> manhattan<span class="op">(</span><span class="dt">double</span> x1<span class="op">,</span> <span class="dt">double</span> y1<span class="op">,</span> <span class="dt">double</span> x2<span class="op">,</span> <span class="dt">double</span> y2<span class="op">)</span> <span class="op">{</span></span>

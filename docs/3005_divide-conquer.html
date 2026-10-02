@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -129,9 +132,8 @@
 <li><p>ปัญหาที่ยังสามารถย่อยต่อเพื่อแก้ปัญหาได้เรียกว่า recursive case</p></li>
 <li><p>ปัญหาที่ขนาดเล็กเพียงพอที่จะแก้ปัญหาได้โดยไม่ต้องย่อยต่อเรียกว่า base
 case</p></li>
-<li><p>ปัญหาส่วนใหญ่จะใช้เวลา <span
-class="math inline"><em>O</em>(<em>N</em><sup>?</sup>log <em>N</em>)</span>
-โดย <span class="math inline">log <em>N</em></span></p></li>
+<li><p>ปัญหาส่วนใหญ่จะใช้เวลา <span class="math inline">O\left( N^{?}\log N
+\right)</span> โดย <span class="math inline">\log N</span></p></li>
 </ul>
 <p>มาจากการแบ่งปัญหาเป็นครึ่ง ๆ ไปเรื่อย ๆ</p>
 <h5 id="general-pseudocode">General Pseudocode<a class="heading-anchor" href="#general-pseudocode" aria-hidden="true" tabindex="-1">#</a></h5>
@@ -181,45 +183,41 @@ role="doc-noteref"><sup>1</sup></a></p></li>
 <p><a
 href="https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/">https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/</a></p>
 <h4 id="ปัญหาเลขยกกำลัง">ปัญหาเลขยกกำลัง<a class="heading-anchor" href="#ปัญหาเลขยกกำลัง" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>พิจารณาวิธีหาค่าของ <span
-class="math inline"><em>A</em><sup><em>N</em></sup></span>
-หากทำการคูณเลขตรงๆ จะเป็น <span
-class="math inline"><em>O</em>(<em>N</em>)</span></p>
+<p>พิจารณาวิธีหาค่าของ <span class="math inline">A^{N}</span>
+หากทำการคูณเลขตรงๆ จะเป็น <span class="math inline">O(N)</span></p>
 <p>ถ้าเราแบ่ง</p>
 <ul>
 <li><p>Recursive case</p>
 <ul>
-<li><p><span class="math inline">$A^{N} = A^{\left\{ \frac{N}{2}
+<li><p><span class="math inline">A^{N} = A^{\left\{ \frac{N}{2}
 \right\}}c \cdot A^{\left\{ \frac{N}{2}
-\right\}}\text{  เมื่อ  }N\operatorname{mod}2 = 0$</span></p></li>
-<li><p><span class="math inline">$A^{N} = A^{\left\{ l\frac{N}{2}r
+\right\}}\text{  เมื่อ  }N\operatorname{mod}2 = 0</span></p></li>
+<li><p><span class="math inline">A^{N} = A^{\left\{ l\frac{N}{2}r
 \right\}}c \cdot A^{\left\{ l\frac{N}{2}r
-\right\}}\text{  เมื่อ  }N\operatorname{mod}2 = 1$</span></p></li>
+\right\}}\text{  เมื่อ  }N\operatorname{mod}2 = 1</span></p></li>
 </ul></li>
 <li><p>Base case</p>
 <ul>
-<li><p><span
-class="math inline"><em>A</em><sup><em>N</em></sup> = <em>A</em> เมื่อ
-<em>N</em> = 1</span></p></li>
-<li><p><span class="math inline"><em>A</em><sup><em>N</em></sup> = 1 เมื่อ
-<em>N</em> = 0</span></p></li>
+<li><p><span class="math inline">A^{N} = A\text{  เมื่อ  }N =
+1</span></p></li>
+<li><p><span class="math inline">A^{N} = 1\text{  เมื่อ  }N =
+0</span></p></li>
 </ul></li>
 </ul>
 <h4 id="จำนวน-fibonacci">จำนวน Fibonacci<a class="heading-anchor" href="#จำนวน-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>จำนวนฟิโบนัชชี (เขียนแทนว่า <span
-class="math inline"><em>F</em><sub><em>n</em></sub></span>)
+<p>จำนวนฟิโบนัชชี (เขียนแทนว่า <span class="math inline">F_{n}</span>)
 คือลำดับจำนวนที่ถูกนิยามจากผลบวกของจำนวนฟิโบนัชชีสองตัวก่อนหน้า
 โดยกำหนดให้จำนวนฟิโบนัชชีสองตัวแรกเป็น 0 และ 1 ตามลำดับ นั่นคือ</p>
-<p><span class="math display">$$F_{i} = \begin{cases}
+<p><span class="math display">F_{i} = \begin{cases}
 1\text{ if }i = 1 \\
 F_{i - 1} + F_{i - 2}\text{ else}
-\end{cases}$$</span></p>
+\end{cases}</span></p>
 <p>โดยจะสามารถเขียนลำดับได้เป็น</p>
 <p><span
-class="math inline">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, …</span></p>
-<p>เพราะฉะนั้นแล้ว base case ก็คือ <span
-class="math inline">0 ≤ <em>i</em> ≤ 1</span> และ recursive case ก็คือ
-<span class="math inline"><em>i</em> ≥ 2</span></p>
+class="math inline">0,1,1,2,3,5,8,13,21,34,55,89,144,\ldots</span></p>
+<p>เพราะฉะนั้นแล้ว base case ก็คือ <span class="math inline">0 \leq i \leq
+1</span> และ recursive case ก็คือ <span class="math inline">i \geq
+2</span></p>
 <h4 id="merge-sort">Merge Sort<a class="heading-anchor" href="#merge-sort" aria-hidden="true" tabindex="-1">#</a></h4>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> merge<span class="op">(</span><span class="dt">int</span> array<span class="op">[],</span> <span class="dt">int</span> <span class="at">const</span> left<span class="op">,</span> <span class="dt">int</span> <span class="at">const</span> mid<span class="op">,</span> <span class="dt">int</span> <span class="at">const</span> right<span class="op">)</span> <span class="op">{</span></span>

@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -138,22 +141,20 @@
 <li><p>Big O Notation
 เป็นสิ่งสำคัญที่ควรจะคาดคะเนให้ได้ว่าเราจะได้คะแนนเท่าไร</p></li>
 <li><p>จุดอ้างอิงคร่าวๆ ให้คาดว่า C++ สามารถรันได้ <span
-class="math inline">1, 000, 000, 000</span> (พันล้าน) คำสั่งต่อหนึ่งวินาที
+class="math inline">1,000,000,000</span> (พันล้าน) คำสั่งต่อหนึ่งวินาที
 ซึ่งหมายความว่า</p>
 <ul>
-<li><p><span class="math inline"><em>N</em> = 1, 000</span> สามารถคิดวิธี
-<span class="math inline"><em>O</em>(<em>N</em><sup>3</sup>)</span>
-ได้แบบฉิวเฉียด <span
-class="math inline"><em>O</em>(<em>N</em><sup>2</sup>log <em>N</em>)</span>
+<li><p><span class="math inline">N = 1,000</span> สามารถคิดวิธี <span
+class="math inline">O\left( N^{3} \right)</span> ได้แบบฉิวเฉียด <span
+class="math inline">O\left( N^{2}\log N \right)</span>
 ได้อย่างปลอดภัย</p></li>
-<li><p><span class="math inline"><em>N</em> = 1, 000, 000</span> ควรจะ
-<span
-class="math inline"><em>O</em>(<em>N</em>log <em>N</em>)</span></p></li>
-<li><p><span class="math inline"><em>N</em> = 20</span> อาจจะเป็น <span
-class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></li>
+<li><p><span class="math inline">N = 1,000,000</span> ควรจะ <span
+class="math inline">O\left( N\log N \right)</span></p></li>
+<li><p><span class="math inline">N = 20</span> อาจจะเป็น <span
+class="math inline">O\left( 2^{N} \right)</span></p></li>
 </ul></li>
-<li><p>จำว่า <span class="math inline">2<sup>20</sup></span> มีค่าประมาณ
-<span class="math inline">1, 000, 000</span> (หนึ่งล้าน)</p></li>
+<li><p>จำว่า <span class="math inline">2^{20}</span> มีค่าประมาณ <span
+class="math inline">1,000,000</span> (หนึ่งล้าน)</p></li>
 </ul>
 <table>
 <thead>
@@ -164,35 +165,30 @@ class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></li>
 </thead>
 <tbody>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 10</span></p></td>
-<td><p><span class="math inline"><em>O</em>(<em>N</em>!)</span></p></td>
+<td><p><span class="math inline">N \leq 10</span></p></td>
+<td><p><span class="math inline">O(N!)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 20</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(2<sup><em>N</em></sup>)</span></p></td>
+<td><p><span class="math inline">N \leq 20</span></p></td>
+<td><p><span class="math inline">O\left( 2^{N} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 500</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>N</em><sup>3</sup>)</span></p></td>
+<td><p><span class="math inline">N \leq 500</span></p></td>
+<td><p><span class="math inline">O\left( N^{3} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em> ≤ 5000</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>N</em><sup>2</sup>)</span></p></td>
+<td><p><span class="math inline">N \leq 5000</span></p></td>
+<td><p><span class="math inline">O\left( N^{2} \right)</span></p></td>
 </tr>
 <tr>
-<td><p><span
-class="math inline"><em>N</em> ≤ 10<sup>6</sup></span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(<em>N</em>log <em>N</em>)</span> or <span
-class="math inline"><em>O</em>(<em>N</em>)</span></p></td>
+<td><p><span class="math inline">N \leq 10^{6}</span></p></td>
+<td><p><span class="math inline">O\left( N\log N \right)</span> or <span
+class="math inline">O(N)</span></p></td>
 </tr>
 <tr>
-<td><p><span class="math inline"><em>N</em></span> is large</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span> or <span
-class="math inline"><em>O</em>(log <em>N</em>)</span></p></td>
+<td><p><span class="math inline">N</span> is large</p></td>
+<td><p><span class="math inline">O(1)</span> or <span
+class="math inline">O\left( \log N \right)</span></p></td>
 </tr>
 </tbody>
 </table>
