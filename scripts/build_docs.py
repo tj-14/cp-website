@@ -222,6 +222,7 @@ def render_content(path: Path) -> str:
         # --katex keeps raw TeX in .math spans on both pandoc 3.10 and 3.11+.
         ["pandoc", "-f", "typst", "-t", "html", "--katex", str(path)],
         cwd=ROOT,
+        check=False,  # handled below so pandoc's stderr reaches the user
         text=True,
         capture_output=True,
     )
@@ -541,13 +542,10 @@ def write_extras() -> None:
         f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n",
         encoding="utf-8",
     )
-    today = datetime.date.today().isoformat()
     pages = ["index.html"]
     pages += [f"{slug}.html" for slug, _ in ORDER if (BOOK / f"{slug}.typ").exists()]
-    urls = "\n".join(
-        f"  <url><loc>{SITE_URL}/{page}</loc><lastmod>{today}</lastmod></url>"
-        for page in pages
-    )
+    # No <lastmod>: a build-date stamp made CI's committed-docs check fail on any later day.
+    urls = "\n".join(f"  <url><loc>{SITE_URL}/{page}</loc></url>" for page in pages)
     (DOCS / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n',
         encoding="utf-8",
