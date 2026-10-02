@@ -447,12 +447,14 @@ def wrap_page(
 """
 
 
-def build_index(entries: list[tuple[str, str, str]]) -> str:
+def build_index(entries: list[tuple[str, str, str]], interactive: set[str]) -> str:
     cards = []
+    badge = ' <span class="badge">โต้ตอบได้</span>'
     for section_title, section_desc, items in SECTIONS:
         links = []
         for slug, title in items:
-            links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a></li>')
+            mark = badge if slug in interactive else ""
+            links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a>{mark}</li>')
         cards.append(
             f"""            <section class="course-section">
                 <h3>{html.escape(section_title)}</h3>
@@ -486,7 +488,7 @@ def build_index(entries: list[tuple[str, str, str]]) -> str:
     <main id="main-content" class="container home" tabindex="-1">
         <section class="home-intro">
             <h2>เส้นทางเรียน Competitive Programming สำหรับนักเรียนไทย</h2>
-            <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที เว็บไซต์นี้สร้างจาก source เดียวกับหนังสือใน <code>book/content</code></p>
+            <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที บทที่มีป้าย <span class="badge">โต้ตอบได้</span> มีแบบฝึกให้ลองเดินอัลกอริทึมทีละขั้นและทายคำตอบ</p>
             <label class="search-box">
                 <span>ค้นหาหัวข้อ</span>
                 <input id="topic-search" type="search" placeholder="เช่น DP, graph, recursion, queue (กด / เพื่อค้นหา)" autocomplete="off">
@@ -555,6 +557,7 @@ def write_extras() -> None:
 def main() -> None:
     copy_assets()
     entries: list[tuple[str, str, str]] = []
+    interactive: set[str] = set()
     for index, (slug, title) in enumerate(ORDER):
         source = BOOK / f"{slug}.typ"
         if not source.exists():
@@ -568,8 +571,10 @@ def main() -> None:
         (DOCS / f"{slug}.html").write_text(page_html, encoding="utf-8")
         heading_text = " ".join(label for _, label in sections)
         entries.append((slug, title, heading_text))
+        if "data-widget=" in fragment:
+            interactive.add(slug)
 
-    (DOCS / "index.html").write_text(build_index(entries), encoding="utf-8")
+    (DOCS / "index.html").write_text(build_index(entries, interactive), encoding="utf-8")
     write_extras()
     print(f"Built {len(entries)} lesson pages plus index, 404, robots.txt, sitemap.xml.")
 

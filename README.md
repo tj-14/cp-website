@@ -22,7 +22,7 @@ A guide website for Thai high school students interested in Computer Olympiad co
 
 - **HTML5**: โครงสร้างเนื้อหา (สร้างจาก Typst ด้วย pandoc)
 - **CSS3**: การจัดรูปแบบที่เรียบง่าย รองรับ dark mode
-- **Vanilla JavaScript เล็กน้อย**: ค้นหาหัวข้อ ปุ่มคัดลอกโค้ด (ไม่ใช้ framework)
+- **Vanilla JavaScript**: ค้นหาหัวข้อ ปุ่มคัดลอกโค้ด และแบบฝึกโต้ตอบใน `book/assets/widgets/` (ไม่ใช้ framework, ทดสอบด้วย `make test`)
 - **KaTeX**: แสดงสมการคณิตศาสตร์ (โหลดเฉพาะหน้าที่มีสมการ)
 - **Typst**: สร้างหนังสือเวอร์ชัน PDF
 - **GitHub Pages**: สำหรับการ deploy

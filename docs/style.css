@@ -663,6 +663,18 @@ footer a:hover {
     background-color: var(--surface-row-hover);
 }
 
+.badge {
+    display: inline-block;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background-color: var(--memo-surface);
+    color: var(--text);
+    border: 1px solid var(--memo-border);
+    font-size: 0.72rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
 /* Interactive widgets (book/assets/widgets/*.js) */
 .widget {
     border: 1px solid var(--border-strong);
