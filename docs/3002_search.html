@@ -112,8 +112,8 @@
                     <li><a href="#หลักการ">หลักการ</a></li>
                     <li><a href="#motivation-problem">Motivation problem</a></li>
                     <li><a href="#generating-permutations">Generating Permutations</a></li>
-                    <li><a href="#graph-traversal">Graph Traversal</a></li>
-                    <li><a href="#binary-search-tree">Binary Search Tree</a></li>
+                    <li><a href="#backtracking-และการตัดกิ่ง-pruning">Backtracking และการตัดกิ่ง (pruning)</a></li>
+                    <li><a href="#search-บน-state-ด้วย-bfs">Search บน state ด้วย BFS</a></li>
                     <li><a href="#meet-in-the-middle">Meet in the middle</a></li>
                     <li><a href="#การเลือกเทคนิค">การเลือกเทคนิค</a></li>
                     <li><a href="#ข้อควรระวัง">ข้อควรระวัง</a></li>
@@ -164,60 +164,88 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>จำนวน permutation คือ <span class="math inline">n!</span> จึงใช้ได้เฉพาะ
 <span class="math inline">n</span> เล็กมาก</p>
-<h4 id="graph-traversal">Graph Traversal<a class="heading-anchor" href="#graph-traversal" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><a class="resource-card" href="https://visualgo.net/en/dfsbfs?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
-<ul>
-<li><p>BFS ใช้ queue และสำรวจตามระยะทางจากจุดเริ่มต้น เหมาะกับ shortest path
-ในกราฟไม่มีน้ำหนัก</p></li>
-<li><p>DFS ใช้ recursion หรือ stack เหมาะกับ connectivity, cycle detection
-และ topological sort</p>
-<ul>
-<li><p>preorder: ทำงานกับ node ก่อนเข้าลูก</p></li>
-<li><p>inorder: ใช้กับ binary tree</p></li>
-<li><p>postorder: ทำงานกับ node หลังออกจากลูก</p></li>
-</ul></li>
-<li><p>Topological Sort</p></li>
-</ul>
-<p>ตัวอย่าง BFS</p>
+<h4 id="backtracking-และการตัดกิ่ง-pruning">Backtracking และการตัดกิ่ง (pruning)<a class="heading-anchor" href="#backtracking-และการตัดกิ่ง-pruning" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Backtracking คือ recursion ที่ค่อย ๆ สร้างคำตอบทีละส่วน และ
+<strong>ถอยกลับทันที</strong> เมื่อรู้ว่าส่วนที่สร้างมาไปต่อไม่ได้ การตัดกิ่งเร็วเท่าไร
+search ยิ่งเร็วขึ้นมาก</p>
+<p>ตัวอย่าง: วาง queen <span class="math inline">n</span> ตัวบนกระดาน <span
+class="math inline">n \times n</span> ไม่ให้กินกันได้ วางทีละแถว
+และเช็คคอลัมน์กับเส้นทแยงทั้งสองด้วย array จึงตัดตำแหน่งที่ชนได้ใน <span
+class="math inline">O(1)</span></p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dist<span class="op">(</span>n<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n <span class="op">=</span> <span class="dv">8</span><span class="op">,</span> ways <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> col<span class="op">[</span><span class="dv">20</span><span class="op">],</span> diag1<span class="op">[</span><span class="dv">40</span><span class="op">],</span> diag2<span class="op">[</span><span class="dv">40</span><span class="op">];</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dist<span class="op">[</span>start<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>q<span class="op">.</span>push<span class="op">(</span>start<span class="op">);</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>pop<span class="op">();</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> adj<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>dist<span class="op">[</span>v<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    dist<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> dist<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="binary-search-tree">Binary Search Tree<a class="heading-anchor" href="#binary-search-tree" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><a class="resource-card" href="https://visualgo.net/en/bst?slide=1" target="_blank" rel="noopener"><strong>VisuAlgo interactive visualization</strong><span>visualgo.net</span></a></p>
-<ul>
-<li><p>create</p></li>
-<li><p>search(v)</p></li>
-<li><p>insert(v)</p></li>
-<li><p>remove(v)</p></li>
-</ul>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> place<span class="op">(</span><span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>r <span class="op">==</span> n<span class="op">)</span> <span class="op">{</span> ways<span class="op">++;</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> n<span class="op">;</span> c<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>col<span class="op">[</span>c<span class="op">]</span> <span class="op">||</span> diag1<span class="op">[</span>r <span class="op">+</span> c<span class="op">]</span> <span class="op">||</span> diag2<span class="op">[</span>r <span class="op">-</span> c <span class="op">+</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="cf">continue</span><span class="op">;</span>  <span class="co">// ตัดกิ่ง</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    col<span class="op">[</span>c<span class="op">]</span> <span class="op">=</span> diag1<span class="op">[</span>r <span class="op">+</span> c<span class="op">]</span> <span class="op">=</span> diag2<span class="op">[</span>r <span class="op">-</span> c <span class="op">+</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    place<span class="op">(</span>r <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    col<span class="op">[</span>c<span class="op">]</span> <span class="op">=</span> diag1<span class="op">[</span>r <span class="op">+</span> c<span class="op">]</span> <span class="op">=</span> diag2<span class="op">[</span>r <span class="op">-</span> c <span class="op">+</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span>           <span class="co">// backtrack</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">// place(0) แล้ว ways = 92 เมื่อ n = 8</span></span></code></pre>
+<h4 id="search-บน-state-ด้วย-bfs">Search บน state ด้วย BFS<a class="heading-anchor" href="#search-บน-state-ด้วย-bfs" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>หลายโจทย์ไม่ได้ให้กราฟมาตรง ๆ แต่ถามว่า <strong>ใช้กี่ขั้นน้อยที่สุด</strong>
+ในการเปลี่ยนสถานะหนึ่งไปอีกสถานะหนึ่ง ให้มองแต่ละสถานะเป็น node และแต่ละการกระทำเป็น
+edge แล้ว BFS (ดูหลักการ BFS ใน widget ของบท Graph Algorithm)</p>
+<p>ตัวอย่าง: เริ่มที่เลข <span class="math inline">a</span> ทำได้สองอย่างคือ คูณ 2
+หรือ ลบ 1 ต้องใช้กี่ขั้นจึงได้ <span class="math inline">b</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> minSteps<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> <span class="dt">int</span> LIMIT <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> max<span class="op">(</span>a<span class="op">,</span> b<span class="op">)</span> <span class="op">+</span> <span class="dv">2</span><span class="op">;</span>  <span class="co">// ไม่จำเป็นต้องไปไกลกว่านี้</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dist<span class="op">(</span>LIMIT<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  dist<span class="op">[</span>a<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>u <span class="op">==</span> b<span class="op">)</span> <span class="cf">return</span> dist<span class="op">[</span>u<span class="op">];</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> <span class="op">{</span>u <span class="op">*</span> <span class="dv">2</span><span class="op">,</span> u <span class="op">-</span> <span class="dv">1</span><span class="op">})</span> <span class="op">{</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>v <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">||</span> v <span class="op">&gt;=</span> LIMIT <span class="op">||</span> dist<span class="op">[</span>v<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      dist<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> dist<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">// minSteps(3, 10) = 3: 3 -&gt; 6 -&gt; 5 -&gt; 10</span></span></code></pre>
 <h4 id="meet-in-the-middle">Meet in the middle<a class="heading-anchor" href="#meet-in-the-middle" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>เป็นเทคนิคที่ถ้า search จากต้นทางแล้ว space ใหญ่เกินไป ให้ search
-จากปลายทางแล้วมาเจอกันตรงกลาง</p></li>
-</ul>
-<p>ตัวอย่างเช่น subset sum ที่ <span class="math inline">n = 40</span>
-ถ้าลองทุก subset จะเป็น <span class="math inline">2^{40}</span> ซึ่งมากเกินไป
-แต่ถ้าแบ่ง array เป็นสองครึ่ง จะได้สองชุดขนาด <span
-class="math inline">2^{20}</span> แล้วนำผลรวมของสองฝั่งมาจับคู่กัน</p>
-<p>ขั้นตอนทั่วไป</p>
-<ul>
-<li><p>แบ่งข้อมูลเป็นสองส่วน</p></li>
-<li><p>generate คำตอบย่อยของแต่ละส่วน</p></li>
-<li><p>sort หรือใช้ hash เพื่อหาคู่ที่รวมกันเป็นคำตอบ</p></li>
-</ul>
+<p>ถ้า <span class="math inline">n</span> ใหญ่เกินกว่าจะลองทุก subset
+แต่ยังไม่ใหญ่มาก (ประมาณ 30-40) ให้ <strong>แบ่งครึ่ง</strong> แล้วลองทุก subset
+ของแต่ละครึ่งแยกกัน จากนั้นจับคู่ผลของสองฝั่ง</p>
+<p>ตัวอย่าง subset sum ที่ <span class="math inline">n = 40</span>: ทุก
+subset มี <span class="math inline">2^{40} \approx 10^{12}</span>
+ซึ่งมากเกินไป แต่สองครึ่งมีครึ่งละ <span class="math inline">2^{20} \approx
+10^{6}</span> เท่านั้น</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> sums<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&amp;</span> v<span class="op">)</span> <span class="op">{</span>  <span class="co">// ผลรวมของทุก subset</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> out <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> x <span class="op">:</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> k <span class="op">=</span> out<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> k<span class="op">;</span> i<span class="op">++)</span> out<span class="op">.</span>push_back<span class="op">(</span>out<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> x<span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">// นับจำนวน subset ที่ผลรวมเท่ากับ target</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> countSubsets<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&amp;</span> a<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> h <span class="op">=</span> a<span class="op">.</span>size<span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> L <span class="op">=</span> sums<span class="op">({</span>a<span class="op">.</span>begin<span class="op">(),</span> a<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> h<span class="op">});</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> R <span class="op">=</span> sums<span class="op">({</span>a<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> h<span class="op">,</span> a<span class="op">.</span>end<span class="op">()});</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  sort<span class="op">(</span>R<span class="op">.</span>begin<span class="op">(),</span> R<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> ways <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> s <span class="op">:</span> L<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> range <span class="op">=</span> equal_range<span class="op">(</span>R<span class="op">.</span>begin<span class="op">(),</span> R<span class="op">.</span>end<span class="op">(),</span> target <span class="op">-</span> s<span class="op">);</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    ways <span class="op">+=</span> range<span class="op">.</span>second <span class="op">-</span> range<span class="op">.</span>first<span class="op">;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ways<span class="op">;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>เวลา <span class="math inline">O\left( 2^{\frac{n}{2}} \cdot n
+\right)</span> แทน <span class="math inline">O\left( 2^{n}
+\right)</span></p>
 <h4 id="การเลือกเทคนิค">การเลือกเทคนิค<a class="heading-anchor" href="#การเลือกเทคนิค" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
@@ -240,14 +268,15 @@ class="math inline">2^{20}</span> แล้วนำผลรวมของส�
 <td><p>ต้องลองลำดับทั้งหมด</p></td>
 </tr>
 <tr>
-<td><p>BFS</p></td>
-<td><p><span class="math inline">O(V + E)</span></p></td>
-<td><p>กราฟไม่มีน้ำหนักหรือหาจำนวนก้าวน้อยสุด</p></td>
+<td><p>Backtracking + pruning</p></td>
+<td><p>ขึ้นกับการตัดกิ่ง</p></td>
+<td><p>มีเงื่อนไขที่ตรวจได้ระหว่างสร้างคำตอบ</p></td>
 </tr>
 <tr>
-<td><p>DFS</p></td>
-<td><p><span class="math inline">O(V + E)</span></p></td>
-<td><p>สำรวจ component, cycle, ordering</p></td>
+<td><p>BFS บน state</p></td>
+<td><p><span class="math inline">O\left( \text{states } + \text{
+transitions} \right)</span></p></td>
+<td><p>หาจำนวนขั้นน้อยสุด</p></td>
 </tr>
 <tr>
 <td><p>Meet in the middle</p></td>
@@ -269,12 +298,14 @@ class="math inline">2^{20}</span> แล้วนำผลรวมของส�
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a
-href="https://cses.fi/problemset/task/1084">Apartments</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1620">Factory
-Machines</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/2422">Multiplication
-Table</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1623">Apple Division</a>
+(ทุก subset)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1622">Creating
+Strings</a> (permutation)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1624">Chessboard and
+Queens</a> (backtracking)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1628">Meet in the
+Middle</a></p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
