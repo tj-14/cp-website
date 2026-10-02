@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy">
+    <meta name="description" content="Dynamic programming (DP) คือการแก้ปัญหาใหญ่จากคำตอบของปัญหาย่อย (subproblem) โดย จำคำตอบของแต่ละปัญหาย่อยไว้ เพื่อไม่ต้องคำนวณซ้ำ DP ทำให้ complete search…">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Dynamic Programming | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy">
+    <meta property="og:description" content="Dynamic programming (DP) คือการแก้ปัญหาใหญ่จากคำตอบของปัญหาย่อย (subproblem) โดย จำคำตอบของแต่ละปัญหาย่อยไว้ เพื่อไม่ต้องคำนวณซ้ำ DP ทำให้ complete search…">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/3003_dynamic-programming.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/3003_dynamic-programming.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -110,194 +110,456 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#หลักการ">หลักการ</a></li>
-                    <li><a href="#ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)</a></li>
-                    <li><a href="#longest-increasing-subsequence">Longest Increasing Subsequence</a></li>
-                    <li><a href="#review">Review</a></li>
+                    <li><a href="#จาก-recursion-สู่-dp-fibonacci">จาก recursion สู่ DP: Fibonacci</a></li>
+                    <li><a href="#สี่ขั้นตอนในการออกแบบ-dp">สี่ขั้นตอนในการออกแบบ DP</a></li>
+                    <li><a href="#ปัญหาการทอนเหรียญ-coin-change">ปัญหาการทอนเหรียญ (Coin Change)</a></li>
+                    <li><a href="#longest-increasing-subsequence-lis">Longest Increasing Subsequence (LIS)</a></li>
+                    <li><a href="#dp-ที่พบบ่อย">DP ที่พบบ่อย</a></li>
+                    <li><a href="#ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย</a></li>
+                    <li><a href="#ลองคิด">ลองคิด</a></li>
                     <li><a href="#เพิ่มเติม">เพิ่มเติม</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Dynamic programming (DP) คือการแก้ปัญหาใหญ่จากคำตอบของปัญหาย่อย
+(subproblem) โดย <strong>จำคำตอบของแต่ละปัญหาย่อยไว้</strong>
+เพื่อไม่ต้องคำนวณซ้ำ DP ทำให้ complete search ที่ช้าแบบ exponential กลายเป็น
+polynomial ได้</p>
+<p>ปัญหาที่ใช้ DP ได้มักมีสองคุณสมบัติ</p>
 <ul>
-<li><p>Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ
-greedy</p></li>
-<li><p>DP
-จะแก้ปัญหาได้หากปัญหานั้นสามารถแบ่งออกมาเป็นปัญหาย่อยที่ทับซ้อนกันและสามารถแก้ได้อย่างมีประสิทธิภาพ</p></li>
-<li><p>ประโยชน์หลักของ DP คือ</p>
-<ul>
-<li><p>หาวิธีแก้ปัญหาที่ optimal</p></li>
-<li><p>หาจำนวนวิธีแก้ปัญหา</p></li>
-</ul></li>
-<li><p>ไอเดีย DP เป็นไอเดียที่ง่ายแต่ส่วนที่ยากจะเป็นการนำไปใช้กับปัญหาจริง</p></li>
+<li><p><strong>Optimal substructure</strong>: คำตอบที่ดีที่สุดของปัญหาใหญ่
+สร้างได้จากคำตอบที่ดีที่สุดของปัญหาย่อย</p></li>
+<li><p><strong>Overlapping subproblems</strong>:
+ปัญหาย่อยเดิมถูกถามซ้ำหลายครั้ง จึงคุ้มที่จะจำไว้</p></li>
 </ul>
-<p>ซึ่งต้องใช้ประสบการณ์</p>
+<p>โจทย์ DP ส่วนใหญ่ถามหนึ่งในสองแบบ</p>
 <ul>
-<li><p>Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ</p></li>
+<li><p>หาคำตอบที่ดีที่สุด (optimal) เช่น ใช้เหรียญน้อยที่สุด</p></li>
+<li><p>นับจำนวนวิธี (counting) เช่น มีกี่วิธีที่ทอนเงินได้</p></li>
 </ul>
-<h4 id="ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy">ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)<a class="heading-anchor" href="#ปัญหาการทอนเหรียญ-ปัญหาเดียวกับ-greedy" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า <span class="math inline">n</span>
-โดยใช้เหรียญที่มีมูลค่า <span class="math inline">\{
-c_{1},c_{2},\cdots,c_{k}\}</span> จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
-<p>หากมูลค่าของเหรียญเป็น</p>
-<p><span class="math inline">\{ 1,3,4\}</span></p>
+<h4 id="จาก-recursion-สู่-dp-fibonacci">จาก recursion สู่ DP: Fibonacci<a class="heading-anchor" href="#จาก-recursion-สู่-dp-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ลำดับ Fibonacci คือ <span
+class="math inline">1,1,2,3,5,8,13,\cdots</span> โดย <span
+class="math inline">f(n) = f(n - 1) + f(n - 2)</span></p>
+<p>ถ้าเขียน recursion ตรง ๆ จะเรียก <code>fib(n - 2)</code> ซ้ำหลายรอบมาก
+เช่น <code>fib(5)</code> เรียก <code>fib(3)</code> สองครั้ง และ
+<code>fib(2)</code> สามครั้ง จำนวนการเรียกฟังก์ชันจึงโตแบบ <span
+class="math inline">O\left( 2^{n} \right)</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> fib<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">2</span><span class="op">)</span> <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> fib<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> fib<span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span>  <span class="co">// คำนวณ subproblem เดิมซ้ำ</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="top-down-memoization">Top-down (memoization)<a class="heading-anchor" href="#top-down-memoization" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เก็บคำตอบที่เคยคำนวณไว้ใน array แล้วตอบทันทีเมื่อถูกถามซ้ำ แต่ละ <span
+class="math inline">n</span> คำนวณจริงเพียงครั้งเดียว จึงเหลือ <span
+class="math inline">O(n)</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> memo<span class="op">[</span><span class="dv">91</span><span class="op">];</span>  <span class="co">// 0 = ยังไม่เคยคำนวณ</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> fib<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">2</span><span class="op">)</span> <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>memo<span class="op">[</span>n<span class="op">]</span> <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="cf">return</span> memo<span class="op">[</span>n<span class="op">];</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> memo<span class="op">[</span>n<span class="op">]</span> <span class="op">=</span> fib<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> fib<span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="bottom-up-tabulation">Bottom-up (tabulation)<a class="heading-anchor" href="#bottom-up-tabulation" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เติมตารางจากปัญหาเล็กไปใหญ่ด้วย loop ไม่ต้องใช้ recursion จึงไม่เสี่ยง stack
+overflow และมักเร็วกว่าเล็กน้อย</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> dp<span class="op">[</span><span class="dv">91</span><span class="op">];</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> dp<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">3</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> dp<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> dp<span class="op">[</span>i <span class="op">-</span> <span class="dv">2</span><span class="op">];</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ในการแข่งขันนิยมเขียนแบบ bottom-up แต่ top-down มักคิดง่ายกว่าเมื่อเพิ่งเริ่มออกแบบ
+state</p>
+<h4 id="สี่ขั้นตอนในการออกแบบ-dp">สี่ขั้นตอนในการออกแบบ DP<a class="heading-anchor" href="#สี่ขั้นตอนในการออกแบบ-dp" aria-hidden="true" tabindex="-1">#</a></h4>
+<ol>
+<li><p><strong>State</strong>: <code>dp[i]</code> หมายถึงอะไร
+ต้องเขียนเป็นประโยคให้ชัด</p></li>
+<li><p><strong>Transition</strong>: คำนวณ <code>dp[i]</code> จาก state
+ที่เล็กกว่าอย่างไร</p></li>
+<li><p><strong>Base case</strong>: state เล็กสุดที่รู้คำตอบทันที</p></li>
+<li><p><strong>Answer และลำดับการคำนวณ</strong>: คำตอบอยู่ที่ state ไหน
+และต้องเติมตารางตามลำดับใดให้ state ที่ต้องใช้ถูกคำนวณก่อนเสมอ</p></li>
+</ol>
+<p>Time complexity โดยประมาณคือ (จำนวน state) <span
+class="math inline">\times</span> (เวลาต่อหนึ่ง transition)</p>
+<h4 id="ปัญหาการทอนเหรียญ-coin-change">ปัญหาการทอนเหรียญ (Coin Change)<a class="heading-anchor" href="#ปัญหาการทอนเหรียญ-coin-change" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>มีเหรียญมูลค่า <span class="math inline">c_{1},c_{2},\cdots,c_{k}</span>
+แต่ละแบบใช้ได้ไม่จำกัด ต้องการทอนเงิน <span class="math inline">n</span>
+บาทโดยใช้เหรียญ <strong>น้อยที่สุด</strong></p>
+<h5 id="ทำไม-greedy-ไม่พอ">ทำไม greedy ไม่พอ<a class="heading-anchor" href="#ทำไม-greedy-ไม่พอ" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ในบท Greedy เราหยิบเหรียญมูลค่ามากที่สุดก่อน ซึ่งใช้ได้กับเหรียญไทย แต่ถ้าเหรียญเป็น
+<span class="math inline">\{ 1,3,4\}</span> และ <span
+class="math inline">n = 6</span></p>
+<ul>
+<li><p>Greedy: <span class="math inline">4 + 1 + 1</span> ใช้ 3
+เหรียญ</p></li>
+<li><p>คำตอบจริง: <span class="math inline">3 + 3</span> ใช้ 2
+เหรียญ</p></li>
+</ul>
+<p>การเลือกที่ดูดีที่สุดตอนนี้ (หยิบ 4) ทำให้คำตอบรวมแย่ลง เราจึงต้องลองทุกทางเลือก แล้วใช้
+DP จำผลไว้</p>
+<h5 id="ออกแบบ-dp">ออกแบบ DP<a class="heading-anchor" href="#ออกแบบ-dp" aria-hidden="true" tabindex="-1">#</a></h5>
+<ol>
+<li><p><strong>State</strong>: <code>dp[i]</code> =
+จำนวนเหรียญน้อยที่สุดที่ใช้ทอนเงิน <span class="math inline">i</span>
+บาท</p></li>
+<li><p><strong>Transition</strong>: เหรียญสุดท้ายที่ใช้ต้องเป็นเหรียญใดเหรียญหนึ่ง
+ถ้าเหรียญสุดท้ายคือ <span class="math inline">c</span> ที่เหลือคือการทอน <span
+class="math inline">i - c</span> ให้ดีที่สุด <span
+class="math display">\text{ dp}\lbrack i\rbrack = \min\limits_{c \leq
+i}\left( \text{dp}\lbrack i - c\rbrack + 1 \right)</span></p></li>
+<li><p><strong>Base case</strong>: <code>dp[0] = 0</code> และถ้าทอนไม่ได้ให้
+<code>dp[i]</code> เป็น <span class="math inline">\infty</span></p></li>
+<li><p><strong>Answer</strong>: <code>dp[n]</code> โดยเติมจาก <span
+class="math inline">i = 1</span> ขึ้นไป เพราะ <code>dp[i]</code>
+ใช้แค่ช่องที่ดัชนีน้อยกว่า</p></li>
+</ol>
+<p>ผลลัพธ์เมื่อเหรียญเป็น <span class="math inline">\{ 1,3,4\}</span></p>
 <table>
 <thead>
 <tr>
-<th><p>มูลค่ารวม <span class="math inline">n</span></p></th>
-<th><p>จำนวนเหรียญที่น้อยที่สุด</p></th>
+<th><p><span class="math inline">i</span></p></th>
+<th><p>0</p></th>
+<th><p>1</p></th>
+<th><p>2</p></th>
+<th><p>3</p></th>
+<th><p>4</p></th>
+<th><p>5</p></th>
+<th><p>6</p></th>
+<th><p>7</p></th>
+<th><p>8</p></th>
+<th><p>9</p></th>
+<th><p>10</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><p><code>dp[i]</code></p></td>
 <td><p>0</p></td>
-<td><p>0</p></td>
-</tr>
-<tr>
+<td><p>1</p></td>
+<td><p>2</p></td>
 <td><p>1</p></td>
 <td><p>1</p></td>
-</tr>
-<tr>
 <td><p>2</p></td>
 <td><p>2</p></td>
-</tr>
-<tr>
+<td><p>2</p></td>
+<td><p>2</p></td>
 <td><p>3</p></td>
-<td><p>1</p></td>
-</tr>
-<tr>
-<td><p>4</p></td>
-<td><p>1</p></td>
-</tr>
-<tr>
-<td><p>5</p></td>
-<td><p>2</p></td>
-</tr>
-<tr>
-<td><p>6</p></td>
-<td><p>2</p></td>
-</tr>
-<tr>
-<td><p>7</p></td>
-<td><p>2</p></td>
-</tr>
-<tr>
-<td><p>8</p></td>
-<td><p>2</p></td>
-</tr>
-<tr>
-<td><p>9</p></td>
-<td><p>3</p></td>
-</tr>
-<tr>
-<td><p>10</p></td>
 <td><p>3</p></td>
 </tr>
 </tbody>
 </table>
-<p>นิยาม <span class="math inline">d_{n}</span>
-ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า <span
+<p>ลองเติมตารางเองทีละช่องด้านล่าง เปิด “ให้ฉันทายก่อน” เพื่อทายค่าแต่ละช่องก่อนดูเฉลย
+และลองเปลี่ยนชุดเหรียญเพื่อหาตัวอย่างที่ greedy ผิด</p>
+<div class="widget" data-widget="coin-change"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<h5 id="implementation">Implementation<a class="heading-anchor" href="#implementation" aria-hidden="true" tabindex="-1">#</a></h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> INF <span class="op">=</span> <span class="fl">1e9</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dp<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> INF<span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">:</span> coins<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;=</span> i <span class="op">&amp;&amp;</span> dp<span class="op">[</span>i <span class="op">-</span> c<span class="op">]</span> <span class="op">!=</span> INF<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> min<span class="op">(</span>dp<span class="op">[</span>i<span class="op">],</span> dp<span class="op">[</span>i <span class="op">-</span> c<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">(</span>dp<span class="op">[</span>n<span class="op">]</span> <span class="op">==</span> INF <span class="op">?</span> <span class="op">-</span><span class="dv">1</span> <span class="op">:</span> dp<span class="op">[</span>n<span class="op">]);</span></span></code></pre>
+<p>Time complexity <span class="math inline">O(nk)</span> เพราะมี <span
+class="math inline">n</span> state และแต่ละ state ลอง <span
+class="math inline">k</span> เหรียญ</p>
+<h5 id="ย้อนรอยหาเหรียญที่ใช้-backtracking">ย้อนรอยหาเหรียญที่ใช้ (backtracking)<a class="heading-anchor" href="#ย้อนรอยหาเหรียญที่ใช้-backtracking" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้าโจทย์ถามว่าใช้เหรียญอะไรบ้าง ให้เก็บ <code>pick[i]</code> = เหรียญที่ทำให้
+<code>dp[i]</code> ดีที่สุด แล้วเดินย้อนจาก <span
 class="math inline">n</span></p>
-<p>จะได้ว่า</p>
-<p><span class="math inline">d_{i} = m \in \left\{ \left( d_{\left\{ i -
-1 \right\}} + 1,d_{\left\{ i - 3 \right\}} + 1,d_{\left\{ i - 4
-\right\}} + 1 \right) \right\}</span></p>
-<p>ซึ่งเป็น recursive case โดย base case คือ <span class="math inline">d_{0}
-= 0</span></p>
-<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence<a class="heading-anchor" href="#longest-increasing-subsequence" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><a
-href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a></p>
-<h4 id="review">Review<a class="heading-anchor" href="#review" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="คืออะไร">คืออะไร?<a class="heading-anchor" href="#คืออะไร" aria-hidden="true" tabindex="-1">#</a></h5>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ใน loop: ถ้า dp[i - c] + 1 &lt; dp[i] ให้ตั้ง dp[i] และ pick[i] = c</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> n<span class="op">;</span> i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">-=</span> pick<span class="op">[</span>i<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> pick<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="นับจำนวนวิธี">นับจำนวนวิธี<a class="heading-anchor" href="#นับจำนวนวิธี" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้าเปลี่ยนคำถามเป็น “มีกี่ลำดับการหยิบเหรียญที่รวมได้ <span
+class="math inline">n</span>” ให้เปลี่ยน <span
+class="math inline">\min</span> เป็นผลบวก</p>
+<p><span class="math display">\text{ dp}\lbrack 0\rbrack = 1,\quad\text{
+dp}\lbrack i\rbrack = \sum_{c \leq i}\text{ dp}\lbrack i -
+c\rbrack</span></p>
+<p>นี่คือโจทย์ CSES Coin Combinations I (อย่าลืม mod <span
+class="math inline">10^{9} + 7</span>)</p>
+<h4 id="longest-increasing-subsequence-lis">Longest Increasing Subsequence (LIS)<a class="heading-anchor" href="#longest-increasing-subsequence-lis" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ให้ array <span class="math inline">a</span> จงหาความยาวของ
+subsequence ที่เพิ่มขึ้นอย่างเดียว (strictly increasing) ที่ยาวที่สุด Subsequence
+คือการเลือกบางตัวโดยคงลำดับเดิม ไม่จำเป็นต้องติดกัน</p>
+<p>ตัวอย่าง <code>1 5 3 2 8 9 3 6</code> มี LIS ยาว 4 เช่น
+<code>1 5 8 9</code> หรือ <code>1 2 3 6</code></p>
+<h5 id="วิธี-o-left-n-2-right">วิธี <span class="math inline">O\left( n^{2} \right)</span><a class="heading-anchor" href="#วิธี-o-left-n-2-right" aria-hidden="true" tabindex="-1">#</a></h5>
+<ol>
+<li><p><strong>State</strong>: <code>dp[i]</code> = ความยาว LIS ที่
+<strong>ลงท้ายด้วย</strong> <code>a[i]</code> พอดี</p></li>
+<li><p><strong>Transition</strong>: ตัวก่อนหน้าคือ <code>a[j]</code> ใดก็ได้ที่
+<span class="math inline">j &lt; i</span> และ
+<code>a[j] &lt; a[i]</code> <span class="math display">\text{ dp}\lbrack
+i\rbrack = 1 + \max\limits_{j &lt; i,a\lbrack j\rbrack &lt; a\lbrack
+i\rbrack}\text{ dp}\lbrack j\rbrack</span> (ถ้าไม่มี <span
+class="math inline">j</span> ที่ใช้ได้ <code>dp[i] = 1</code>)</p></li>
+<li><p><strong>Answer</strong>: <span
+class="math inline">\max\limits_{i}\text{ dp}\lbrack i\rbrack</span>
+ไม่ใช่ <code>dp[n-1]</code> เพราะ LIS อาจไม่ได้จบที่ตัวสุดท้าย</p></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><p><span class="math inline">i</span></p></th>
+<th><p>0</p></th>
+<th><p>1</p></th>
+<th><p>2</p></th>
+<th><p>3</p></th>
+<th><p>4</p></th>
+<th><p>5</p></th>
+<th><p>6</p></th>
+<th><p>7</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><code>a[i]</code></p></td>
+<td><p>1</p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+</tr>
+<tr>
+<td><p><code>dp[i]</code></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+<tr>
+<td><p><code>parent[i]</code></p></td>
+<td><p>-</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+</tr>
+</tbody>
+</table>
+<p><code>parent[i]</code> คือ <span class="math inline">j</span>
+ที่ให้ค่าดีที่สุด ใช้ย้อนรอยหา LIS จริง เช่น จาก <span class="math inline">i =
+7</span>: <code>6 ← 3 ← 2 ← 1</code></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dp<span class="op">(</span>n<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>j<span class="op">]</span> <span class="op">&lt;</span> a<span class="op">[</span>i<span class="op">])</span> dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> max<span class="op">(</span>dp<span class="op">[</span>i<span class="op">],</span> dp<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">*</span>max_element<span class="op">(</span>dp<span class="op">.</span>begin<span class="op">(),</span> dp<span class="op">.</span>end<span class="op">());</span></span></code></pre>
+<h5 id="วิธี-o-left-n-log-n-right">วิธี <span class="math inline">O\left( n\log n \right)</span><a class="heading-anchor" href="#วิธี-o-left-n-log-n-right" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เปลี่ยน state เป็น <code>tail[k]</code> = ค่าสุดท้ายที่
+<strong>น้อยที่สุด</strong> ของ increasing subsequence ที่ยาว <span
+class="math inline">k + 1</span> ยิ่งค่าสุดท้ายน้อย ยิ่งต่อตัวถัดไปได้ง่าย และ
+<code>tail</code> จะเรียงจากน้อยไปมากเสมอ จึงใช้ binary search ได้</p>
+<p>สำหรับแต่ละ <span class="math inline">x</span> ให้หาตำแหน่งแรกที่
+<code>tail[k] &gt;= x</code></p>
 <ul>
-<li><p>คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่</p></li>
-<li><p>recursion ที่เรียก overlapping sub-problem</p></li>
+<li><p>ถ้าไม่มี: <span class="math inline">x</span> ต่อท้ายได้ทุก subsequence
+จึง <code>push_back(x)</code> (LIS ยาวขึ้น 1)</p></li>
+<li><p>ถ้ามี: แทน <code>tail[k] = x</code> เพราะได้ subsequence
+ยาวเท่าเดิมแต่ปลายเล็กกว่า</p></li>
 </ul>
-<p>แล้วเอามาใช้ได้เลยโดยไม่ต้องไปคำนวณใหม่</p>
+<table>
+<thead>
+<tr>
+<th><p>อ่าน <span class="math inline">x</span></p></th>
+<th><p><code>tail</code> หลังอัปเดต</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>1</p></td>
+<td><p><code>1</code></p></td>
+</tr>
+<tr>
+<td><p>5</p></td>
+<td><p><code>1 5</code></p></td>
+</tr>
+<tr>
+<td><p>3</p></td>
+<td><p><code>1 3</code></p></td>
+</tr>
+<tr>
+<td><p>2</p></td>
+<td><p><code>1 2</code></p></td>
+</tr>
+<tr>
+<td><p>8</p></td>
+<td><p><code>1 2 8</code></p></td>
+</tr>
+<tr>
+<td><p>9</p></td>
+<td><p><code>1 2 8 9</code></p></td>
+</tr>
+<tr>
+<td><p>3</p></td>
+<td><p><code>1 2 3 9</code></p></td>
+</tr>
+<tr>
+<td><p>6</p></td>
+<td><p><code>1 2 3 6</code></p></td>
+</tr>
+</tbody>
+</table>
+<p>คำตอบคือขนาดของ <code>tail</code> = 4 (ระวัง: <code>tail</code>
+ไม่จำเป็นต้องเป็น LIS จริงเสมอไป)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> it <span class="op">=</span> lower_bound<span class="op">(</span>tail<span class="op">.</span>begin<span class="op">(),</span> tail<span class="op">.</span>end<span class="op">(),</span> x<span class="op">);</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>it <span class="op">==</span> tail<span class="op">.</span>end<span class="op">())</span> tail<span class="op">.</span>push_back<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="op">*</span>it <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> tail<span class="op">.</span>size<span class="op">();</span></span></code></pre>
+<p>ถ้าโจทย์ยอมให้เท่ากันได้ (non-decreasing) ให้เปลี่ยน <code>lower_bound</code>
+เป็น <code>upper_bound</code></p>
+<h4 id="dp-ที่พบบ่อย">DP ที่พบบ่อย<a class="heading-anchor" href="#dp-ที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
+<table>
+<thead>
+<tr>
+<th><p>โจทย์</p></th>
+<th><p>State</p></th>
+<th><p>Transition</p></th>
+<th><p>Time</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>Prefix sum</p></td>
+<td><p><code>s[i]</code> ผลรวม <span class="math inline">a_{0.}.a_{i -
+1}</span></p></td>
+<td><p><code>s[i] = s[i-1] + a[i-1]</code></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p>Coin change (min)</p></td>
+<td><p><code>dp[i]</code> เหรียญน้อยสุดของ <span
+class="math inline">i</span></p></td>
+<td><p><code>min(dp[i-c] + 1)</code></p></td>
+<td><p><span class="math inline">O(nk)</span></p></td>
+</tr>
+<tr>
+<td><p>0/1 Knapsack</p></td>
+<td><p><code>dp[i][w]</code> ใช้ของ <span class="math inline">i</span>
+ชิ้นแรก น้ำหนักไม่เกิน <span class="math inline">w</span></p></td>
+<td><p><code>max(dp[i-1][w], dp[i-1][w-wi] + vi)</code></p></td>
+<td><p><span class="math inline">O(nW)</span></p></td>
+</tr>
+<tr>
+<td><p>LIS</p></td>
+<td><p><code>dp[i]</code> LIS ที่จบที่ <span
+class="math inline">i</span></p></td>
+<td><p><code>max(dp[j]) + 1</code></p></td>
+<td><p><span class="math inline">O\left( n^{2} \right)</span> หรือ <span
+class="math inline">O\left( n\log n \right)</span></p></td>
+</tr>
+<tr>
+<td><p>LCS</p></td>
+<td><p><code>dp[i][j]</code> ของ prefix ยาว <span
+class="math inline">i</span> และ <span
+class="math inline">j</span></p></td>
+<td><p>เท่ากันใช้ <code>dp[i-1][j-1] + 1</code> ไม่เท่าใช้ max</p></td>
+<td><p><span class="math inline">O(nm)</span></p></td>
+</tr>
+<tr>
+<td><p><span class="math inline">\binom{n}{r}</span> (Pascal)</p></td>
+<td><p><code>C[i][j]</code></p></td>
+<td><p><code>C[i-1][j-1] + C[i-1][j]</code></p></td>
+<td><p><span class="math inline">O(nr)</span></p></td>
+</tr>
+<tr>
+<td><p>Grid paths</p></td>
+<td><p><code>dp[r][c]</code> จำนวนทางมาช่อง <span
+class="math inline">(r,c)</span></p></td>
+<td><p><code>dp[r-1][c] + dp[r][c-1]</code></p></td>
+<td><p><span class="math inline">O(RC)</span></p></td>
+</tr>
+<tr>
+<td><p>Interval DP (matrix chain)</p></td>
+<td><p><code>dp[l][r]</code> ช่วง <span
+class="math inline">l..r</span></p></td>
+<td><p><code>min(dp[l][k] + dp[k+1][r] + cost)</code></p></td>
+<td><p><span class="math inline">O\left( n^{3} \right)</span></p></td>
+</tr>
+<tr>
+<td><p>Floyd-Warshall</p></td>
+<td><p><code>d[i][j]</code> ใช้จุดกลางได้แค่ <span
+class="math inline">0..k</span></p></td>
+<td><p><code>min(d[i][j], d[i][k] + d[k][j])</code></p></td>
+<td><p><span class="math inline">O\left( n^{3} \right)</span></p></td>
+</tr>
+<tr>
+<td><p>Bitmask DP (TSP)</p></td>
+<td><p><code>dp[mask][v]</code> ไปแล้วตาม mask และอยู่ที่ <span
+class="math inline">v</span></p></td>
+<td><p><code>min(dp[mask ^ (1&lt;&lt;v)][u] + w(u, v))</code></p></td>
+<td><p><span class="math inline">O\left( 2^{n}n^{2}
+\right)</span></p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย<a class="heading-anchor" href="#ข้อผิดพลาดที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ</p></li>
-<li><p>หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก</p></li>
+<li><p><strong>State ไม่ชัด</strong>: ถ้าอธิบาย <code>dp[i]</code>
+เป็นประโยคไม่ได้ มักจะเขียน transition ผิด</p></li>
+<li><p><strong>ลืม base case</strong> หรือกำหนด base case ผิด เช่น
+<code>dp[0] = 0</code> กับ <code>dp[0] = 1</code>
+ให้ความหมายต่างกันมาก</p></li>
+<li><p><strong>INF overflow</strong>: ถ้าใช้ <code>INT_MAX</code> เป็น
+<span class="math inline">\infty</span> แล้วบวก 1 จะกลายเป็นค่าติดลบ ใช้
+<code>1e9</code> และเช็คก่อนบวก</p></li>
+<li><p><strong>ลำดับการเติมตารางผิด</strong>: ต้องคำนวณ state
+ที่ต้องใช้ก่อนเสมอ</p></li>
+<li><p><strong>ขนาด array</strong>: state <code>0..n</code> ต้องใช้ขนาด
+<span class="math inline">n + 1</span></p></li>
+<li><p><strong>ลืม mod</strong> ในโจทย์นับจำนวนวิธี ทำให้ overflow</p></li>
 </ul>
-<h5 id="มีอะไรบ้าง">มีอะไรบ้าง?<a class="heading-anchor" href="#มีอะไรบ้าง" aria-hidden="true" tabindex="-1">#</a></h5>
-<ul>
-<li><p>quicksum <code>dp[i] = dp[i-1] + a[i]</code></p></li>
-<li><p>knapsack <code>dp[i] = max(dp[i-wi] + ci)</code></p></li>
-<li><p>fibonacci <code>dp[i] = dp[i-2] + dp[i-1]</code></p></li>
-<li><p>dijkstra <code>dp[v] = min(dp[u] + w)</code></p></li>
-<li><p>LIS longest increasing subsequence</p></li>
-<li><p>pascal (nCr)
-<code>dp[i][j] = dp[i-1][j-1] + dp[i-1][j]</code></p></li>
-<li><p>coin change <code>dp[i] = f(dp[i-xj])</code></p></li>
-<li><p>matrix chain <span class="math inline">N^{3}</span>,
-<code>dp[i][j] = min(f(dp[i][k],dp[k+1][j]))</code></p></li>
-<li><p>LCS longest common subsequence</p></li>
-<li><p>LCA lowest common ancestor</p></li>
-<li><p>#paths    pascal</p></li>
-<li><p>longest common substring    lis</p></li>
-<li><p>matrix exponential    divide&amp;conquer/bitwise</p>
-<ul>
-<li><p><span class="math inline">x^{9}</span></p></li>
-<li><p><span class="math inline">9 = \left\{ 1001
-\right\}_{2}</span></p></li>
-<li><p><span class="math inline">x^{1} \ast x^{8}</span></p></li>
-</ul></li>
-<li><p>KMP Knutt-Morris-Pratt</p></li>
-<li><p>z-function</p></li>
-<li><p>floyd-warshall    matrix chain <span
-class="math inline">N^{3}</span>,
-<code>dp[i][j] = min(f(dp[i][k], dp[k][j]))</code></p></li>
-<li><p>Manacher algorithm</p></li>
-<li><p>TSP travelling salesman <span class="math inline">2^{n} \ast
-n</span>, <code>dp[i][j]</code> โดยที่ <span class="math inline">i</span>
-เป็น set</p></li>
-</ul>
-<p>ของเมืองที่เคยผ่านไปแล้ว และ <span class="math inline">j</span>
-เป็นเมืองสุดท้ายที่อยู่ตอนนั้น</p>
-<ul>
-<li><p>tribonacci</p></li>
-</ul>
-<h5 id="example">example<a class="heading-anchor" href="#example" aria-hidden="true" tabindex="-1">#</a></h5>
-<h6>fibonacci</h6>
-<p><span class="math inline">f(n) = f(n - 1) + f(n - 2)</span></p>
-<ul>
-<li><p>1 1 2 3 5 8 11 ..</p></li>
-<li><p><span class="math inline">f(10) = f(9) + f(8)</span></p></li>
-<li><p><span class="math inline">f(9) = f(8) + f(7)</span></p></li>
-</ul>
-<p><code>for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]</code></p>
-<h6>LIS</h6>
-<p>หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence</p>
-<p><code>1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4</code></p>
-<p><span class="math inline">N^{2}</span> solution:</p>
-<p>define state:
-<code>dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]</code></p>
-<p>คำตอบสุดท้าย <code>max(dp[1:N])</code></p>
-<p>update state: new input: x, พิจารณา <span class="math inline">a\lbrack
-j\rbrack &lt; x</span>, แล้วเก็บค่า <span
-class="math inline">\text{dp}\lbrack i\rbrack = \max(\text{dp}\lbrack
-j\rbrack + 1)</span></p>
-<p>backtrack: + ให้เก็บด้วย j เป็นเท่าไร</p>
-<pre><code>     0 1 2 3 4 5 6 7 8
-
-a  : 1 5 3 2 8 9 3 6
-dp : 0 1 2 2 2 3 4 3 4
-bt : 0 0 1 1 1 4 5 4 7</code></pre>
-<p><span class="math inline">N\log\left\{ N \right\}</span>
-solution:</p>
-<p>define state:
-<code>dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i</code></p>
-<p>update state: new input: x ไล่ตั้่งแต่ <code>dp[j: 0 → mx]</code></p>
-<ul>
-<li><p>ถ้าค่า dp[j] มากกว่า x และ j มีค่าน้อยที่สุด,
-<code>dp[j] = x</code>,</p></li>
-<li><p>แต่ถ้าหาไม่ได้เลย ก็ให้ <code>dp[mx+1] = x</code></p></li>
-</ul>
-<p>คำตอบสุดท้าย mx</p>
-<pre><code>dp[0] = 0 
-dp[1] = 1
-dp[2] = 2
-dp[3] = 3
-dp[4] = 6
-dp[5] =</code></pre>
+<h4 id="ลองคิด">ลองคิด<a class="heading-anchor" href="#ลองคิด" aria-hidden="true" tabindex="-1">#</a></h4>
+<ol>
+<li><p>ถ้าเหรียญเป็น <span class="math inline">\{ 1,5,6,9\}</span> greedy
+ให้คำตอบผิดเมื่อทอน <span class="math inline">n = 11</span> หรือไม่</p></li>
+<li><p>ใน Coin Change ถ้าไม่มีเหรียญ 1 บาท ช่องไหนบ้างที่อาจเป็น <span
+class="math inline">\infty</span></p></li>
+<li><p>ทำไมคำตอบของ LIS แบบ <span class="math inline">O\left( n^{2}
+\right)</span> ต้องเป็น <span class="math inline">\max\limits_{i}\text{
+dp}\lbrack i\rbrack</span> แทนที่จะเป็น <code>dp[n-1]</code></p></li>
+</ol>
+<h5 id="เฉลย">เฉลย<a class="heading-anchor" href="#เฉลย" aria-hidden="true" tabindex="-1">#</a></h5>
+<ol>
+<li><p>ผิด greedy ได้ <span class="math inline">9 + 1 + 1</span> (3 เหรียญ)
+แต่ <span class="math inline">5 + 6</span> ใช้แค่ 2 เหรียญ (ลองกับ widget
+ด้านบนได้)</p></li>
+<li><p>ช่อง <span class="math inline">i</span> ที่เขียนเป็นผลรวมของเหรียญไม่ได้
+เช่น เหรียญ <span class="math inline">\{ 3,5\}</span> จะทอน <span
+class="math inline">1,2,4,7</span> ไม่ได้</p></li>
+<li><p>เพราะ <code>dp[i]</code> บังคับให้ LIS จบที่ <code>a[i]</code>
+ถ้าตัวสุดท้ายของ array มีค่าน้อย <code>dp[n-1]</code> จะสั้นกว่าคำตอบจริง</p></li>
+</ol>
 <h4 id="เพิ่มเติม">เพิ่มเติม<a class="heading-anchor" href="#เพิ่มเติม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>An Introduction to Dynamic Programming (aquablitz11) <a
@@ -306,6 +568,10 @@ role="doc-noteref"><sup>1</sup></a></p></li>
 <li><p>Dynamic Programming by Aj. Nattee <a href="#fn2"
 class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a></p></li>
+<li><p>Longest Increasing Subsequence (CP-Algorithms) <a href="#fn3"
+class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p></li>
+<li><p>เทคนิค DP ขั้นสูงอยู่ในบท Dynamic Programming Advanced</p></li>
 </ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
@@ -319,6 +585,8 @@ Coins</a></p></li>
 I</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1637">Removing
 Digits</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1145">Increasing
+Subsequence</a></p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
@@ -333,9 +601,13 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p><a
 href="https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf">https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf</a><a
 href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a
+href="https://cp-algorithms.com/sequences/longest_increasing_subsequence.html">https://cp-algorithms.com/sequences/longest_increasing_subsequence.html</a><a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
+<script defer src="assets/widgets/coin-change.js"></script>
             <div class="page-nav">
                 <a href="3002_search.html" class="prev">Search</a>
                 <a href="3004_adhoc.html" class="next">Ad-hoc Problems</a>

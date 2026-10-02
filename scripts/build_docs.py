@@ -234,7 +234,30 @@ def render_content(path: Path) -> str:
     fragment = re.sub(r'<div class="sourceCode"[^>]*>\s*(<pre[^>]*>)', r"\1", fragment)
     fragment = re.sub(r"</pre>\s*</div>", "</pre>", fragment)
     fragment = enhance_resource_paragraphs(fragment)
-    return fragment
+    return embed_widgets(fragment)
+
+
+# Emitted by #widget(...) in book/content/widgets.typ; see that file.
+WIDGET_MARKER = re.compile(r"<p>▶ Interactive: <code>([a-z0-9-]+)</code>.*?</p>", re.DOTALL)
+
+
+def embed_widgets(fragment: str) -> str:
+    names: list[str] = []
+
+    def repl(match: re.Match[str]) -> str:
+        name = match.group(1)
+        if not (BOOK_ASSETS / "widgets" / f"{name}.js").exists():
+            raise SystemExit(f"error: widget '{name}' has no book/assets/widgets/{name}.js")
+        if name not in names:
+            names.append(name)
+        return (
+            f'<div class="widget" data-widget="{name}">'
+            "<noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>"
+        )
+
+    fragment = WIDGET_MARKER.sub(repl, fragment)
+    scripts = "".join(f'\n<script defer src="assets/widgets/{name}.js"></script>' for name in names)
+    return fragment + scripts
 
 
 def slugify(text: str) -> str:

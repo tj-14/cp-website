@@ -42,6 +42,7 @@ macOS: `brew install pandoc typst`
 
 - แก้เนื้อหาบทเรียนที่ `book/content/*.typ`
 - แก้ diagram/image ที่ `book/assets/`
+- เพิ่มแบบฝึกโต้ตอบ (interactive widget) ด้วย `#widget("name")` จาก `book/content/widgets.typ` และเขียน `book/assets/widgets/name.js` (ใน PDF จะแสดงเป็นลิงก์ไปเว็บไซต์)
 - แก้หน้าตาเว็บไซต์ที่ `docs/style.css`
 - แก้โครงสร้าง HTML/navigation/meta tags ที่ `scripts/build_docs.py`
 - ไม่ควรแก้ `docs/*.html` โดยตรง เพราะ `make site` จะสร้างไฟล์เหล่านี้ใหม่และเขียนทับ
