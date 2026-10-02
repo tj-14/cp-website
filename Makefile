@@ -3,7 +3,8 @@
 PORT ?= 8080
 PDF := book/comp_book.pdf
 
-all: site pdf validate
+# pdf runs first: typst downloads @preview packages that pandoc needs for site.
+all: pdf site validate
 
 site:
 	@command -v pandoc >/dev/null 2>&1 || { echo "error: pandoc is required (brew install pandoc)"; exit 1; }

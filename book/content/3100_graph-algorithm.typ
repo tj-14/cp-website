@@ -1,485 +1,445 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
+#import "widgets.typ": widget
 
 == Graph Algorithm
 
-=== Search in Graph
-
-- Depth-First Search
-    - https://grader.mwit.ac.th/problem/vance dfs from all node
-- Breadth-First Search
-    - https://grader.mwit.ac.th/problem/toi17_wall dfs/bfs โจทย์ซับซ้อน
-- Backtracking
-    - เป็นการเก็บคำตอบย้อนหลัง หลังจากที่เข้าเงื่อนไขบางอย่างแล้ว
-    - https://grader.mwit.ac.th/problem/walking_bot_2
-- Branch and Bound (implementation)
-    - https://grader.mwit.ac.th/problem/snakeword
-- Challenge
-    - https://grader.mwit.ac.th/problem/teleport ad-hoc, implementation
-- Eulerian
-- Hamiltonian
-
-== Graph Applications
-
-=== Colorings
-
-สามารถใช้การ search ต่าง ๆ เช่น dfs ในการระบายสีโหนดได้
-
-ปัญหาการระบายสีโหนดให้โหนดที่ติดกันมีสีต่างกันเสมอเป็นปัญหาที่พบเจอได้บ่อยในสาขาคอมพิวเตอร์
-
-=== Connectivity check
-
-DFS แล้วเช็คว่า visit ครบทุกโหนดหรือไม่
-
-=== Finding cycles
-
-https://visualgo.net/en/cyclefinding?slide=1
-
-ถ้า component มี $c$ โหนด และไม่มี cycle เลยแล้ว component นั้นจะต้องมีเส้นเชื่อมทั้งหมด $c-1$ เส้น และเป็นกราฟต้นไม้
-
-=== Bipartiteness check
-
-กราฟ bipartite  เป็นกราฟเมื่อสามารถใช้สีสองสีในการระบายสีโหนดโดยทุกโหนดที่ติดกันต้องมีสีที่แตกต่างกัน
-
-https://cp-algorithms.com/graph/bipartite-check.html
-
-== Weighted Shortest Path
-
-https://visualgo.net/en/sssp?slide=1
-
-=== Dijkstra’s Algorithm (implementation)
-
-https://cp-algorithms.com/graph/dijkstra.html
+บทนี้ต่อจากบท Graph Structure โดยเก็บกราฟแบบ adjacency list ให้ $n$ คือจำนวนโหนด (V) และ $m$ คือจำนวนเส้นเชื่อม (E)
 
 ```cpp
-const int INF = 1000000000;
-vector<vector<pair<int, int>>> adj;
+vector<int> adj[N];                 // unweighted
+vector<pair<int, int>> wadj[N];     // weighted: {ปลายทาง, น้ำหนัก}
 
-void dijkstra(int s, vector<int> & d, vector<int> & p) {
-    int n = adj.size();
-    d.assign(n, INF);
-    p.assign(n, -1);
-    vector<bool> u(n, false);
-
-    d[s] = 0;
-    for (int i = 0; i < n; i++) {
-        int v = -1;
-        for (int j = 0; j < n; j++) {
-            if (!u[j] && (v == -1 || d[j] < d[v]))
-                v = j;
-        }
-
-        if (d[v] == INF)
-            break;
-
-        u[v] = true;
-        for (auto edge : adj[v]) {
-            int to = edge.first;
-            int len = edge.second;
-
-            if (d[v] + len < d[to]) {
-                d[to] = d[v] + len;
-                p[to] = v;
-            }
-        }
-    }
+for (int i = 0; i < m; i++) {
+  int u, v;
+  cin >> u >> v;
+  adj[u].push_back(v);
+  adj[v].push_back(u);  // ลบบรรทัดนี้ถ้าเป็น directed graph
 }
 ```
 
-- https://grader.mwit.ac.th/problem/turboprogramming
-    dijkstra ตรงๆ
+=== Graph traversal
 
-    ```cpp
-    // credit Mok MWIT29
-    #include <bits/stdc++.h>
-    #define ii pair<int, int>
-    using namespace std;
-    vector<ii> adj[100100];
-    int dist[100100];
-    int main() {
-      int N, M, Q;
-      scanf("%d %d %d", &N, &M, &Q);
-      for (int i = 1, u, v, w; i <= M; i++) {
-        scanf("%d %d %d", &u, &v, &w);
-        adj[u].push_back(make_pair(v, w));
-        // adj[v].push_back(make_pair(u, w));
-      }
-      for (int i = 1; i <= N; i++)
-        dist[i] = INT_MAX;
-      priority_queue<ii, vector<ii>, greater<ii>> pq;
-      dist[1] = 0;
-      pq.push(make_pair(0, 1));
-      while (!pq.empty()) {
-        int d = pq.top().first;
-        int n = pq.top().second;
-        pq.pop();
-        for (auto x : adj[n]) {
-          if (dist[x.first] > d + x.second) {
-            dist[x.first] = d + x.second;
-            pq.push(make_pair(d + x.second, x.first));
-          }
-        }
-      }
-      while (Q--) {
-        int a;
-        scanf("%d", &a);
-        if (dist[a] == INT_MAX)
-          printf("-1\n");
-        else
-          printf("%d\n", dist[a]);
-      }
-    }
-    ```
-- https://grader.mwit.ac.th/problem/town
-    dijkstra ไม่ตรงมาก
-- https://grader.mwit.ac.th/problem/followpeatt
-    dijkstra แบบมีเงื่อนไข
-- https://grader.mwit.ac.th/problem/toi14_logistics
-    dijkstra ซับซ้อนขึ้น
+การเดินสำรวจกราฟ (traversal) คือการเยี่ยมทุกโหนดที่ไปถึงได้จากจุดเริ่มต้น โดยแต่ละโหนดเยี่ยมเพียงครั้งเดียว มีสองแบบหลัก
 
-=== Bellman-Ford
+==== Breadth-First Search (BFS)
 
-- Negative cycles
+BFS เยี่ยมโหนดเป็น *ชั้น* ตามระยะห่างจากจุดเริ่มต้น: ระยะ 0, ระยะ 1, ระยะ 2, ... โดยใช้ *queue* (เข้าก่อนออกก่อน)
+
+เพราะเยี่ยมตามลำดับระยะทาง `dist[v]` ที่ได้จึงเป็น *shortest path ในกราฟไม่มีน้ำหนัก* เสมอ
 
 ```cpp
-// credit from https://github.com/Autoratch/practice
-#include <bits/stdc++.h>
-using namespace std;
-
-int n, m, s, e;
-vector<pair<int, pair<int, int>>> adj;
-vector<int> dist;
-
-int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-
-  cin >> n >> m >> s >> e;
-
-  adj.resize(m);
-  dist.assign(n, INT_MAX);
-
-  for (int i = 0; i < m; i++) {
-    int a, b, d;
-    cin >> a >> b >> d;
-    adj[i] = {d, {a, b}};
-  }
-
-  dist[0] = 0;
-  for (int i = 0; i < n - 1; i++)
-    for (int j = 0; j < m; j++) {
-      int a = adj[i].second.first, b = adj[i].second.second, d = adj[i].first;
-      if (dist[a] != INT_MAX and dist[a] + d < dist[b])
-        dist[b] = dist[a] + d;
-    }
-
-  cout << dist[e];
-}
-```
-
-=== Floyd-Warshall (implementation)
-
-https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html
-
-```cpp
-for (int k = 0; k < n; ++k) {
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            d[i][j] = min(d[i][j], d[i][k] + d[k][j]); 
-        }
-    }
-}
-```
-
-- https://grader.mwit.ac.th/problem/toi17_1221
-    all-pair
-
-=== Johnson (exist)
-
-=== A\* Search
-
-https://www.redblobgames.com/pathfinding/a-star/introduction.html
-
-== Minimum Spanning Tree
-
-https://visualgo.net/en/mst?slide=1
-
-=== Kruskal’s (implementation)
-
-- Union-find
-
-```cpp
-// credit from https://github.com/Autoratch/practice
-#include <bits/stdc++.h>
-using namespace std;
-#define endl '\n'
-#define MOD 1e9 + 7
-#define pii pair<int, pair<int, int>>
-
-int n, m;
-vector<int> pa;
-priority_queue<pii, vector<pii>, greater<pii>> q;
-
-int root(int x) {
-  if (pa[x] == x)
-    return x;
-  else
-    return pa[x] = root(pa[x]);
-}
-
-int kruskal() {
-  int ans = 0;
-
-  pa.resize(n);
-  for (int i = 0; i < n; i++)
-    pa[i] = i;
-
-  while (!q.empty()) {
-    int w = q.top().first, x = q.top().second.first, y = q.top().second.second;
-    q.pop();
-    if (root(x) == root(y))
-      continue;
-    ans += w;
-    pa[root(x)] = pa[root(y)];
-  }
-
-  return ans;
-}
-
-int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-
-  cin >> n >> m;
-
-  for (int i = 0; i < m; i++) {
-    int a, b, d;
-    cin >> a >> b >> d;
-    q.push({d, {a, b}});
-  }
-
-  cout << kruskal();
-}
-```
-
-- https://grader.mwit.ac.th/problem/mst ตรงสุด ๆ
-
-=== Prim’s
-
-```cpp
-// credit from https://github.com/Autoratch/practice
-#include <bits/stdc++.h>
-using namespace std;
-#define endl '\n'
-#define MOD 1e9 + 7
-
-int n, m, ans;
-vector<bool> visited;
-vector<vector<pair<int, int>>> adj;
-priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>>
-    q;
-
-int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-
-  cin >> n >> m;
-
-  adj.resize(n);
-  visited.resize(n);
-
-  for (int i = 0; i < m; i++) {
-    int a, b, d;
-    cin >> a >> b >> d;
-    adj[a].push_back({d, b});
-    adj[b].push_back({d, a});
-  }
-
-  q.push({0, 0});
-
-  while (!q.empty()) {
-    int w = q.top().first, p = q.top().second;
-    q.pop();
-    if (visited[p])
-      continue;
-    visited[p] = true;
-    ans += w;
-    for (int i = 0; i < adj[p].size(); i++)
-      if (!visited[adj[p][i].second])
-        q.push(adj[p][i]);
-  }
-
-  cout << ans;
-}
-```
-
-== Tree algorithms
-
-=== Diameter
-
-- Algorithm 1
-    - ดึง node มั่ว ๆ มาเป็น root
-    - หา path ยาวสุดของแต่ละลูก แล้วหาเส้นผ่านศูนย์กลาง
-
-// <img src="/assets/competitive-programming-starter/graph-algorithm/tree-algorithm/Untitled.png"/>
-
-- Algorithm 2
-    - เลือกโหนดมั่ว ๆ เป็นโหนด a
-    - หาโหนดที่อยู่ไกลที่สุดจากโหนด a เป็นโหนด b
-    - หาโหนดที่อยู่ไกลที่สุดจากโหนด b เป็นโหนด c
-    - จะได้เส้นผ่านศูนย์กลางคือเส้นทางจาก b ไป c
-    
-// <img src="/assets/competitive-programming-starter/graph-algorithm/tree-algorithm/Untitled 1.png"/>
-
-=== Lowest common ancestor (implementation)
-
-```cpp
-// credit from https://github.com/Autoratch/practice
-#include <bits/stdc++.h>
-using namespace std;
-
-const int N = 1e5 + 1;
-
-int n, q;
-int dp[21][N], lv[N];
-vector<int> adj[N];
-
-void dfs(int u, int p, int l) {
-  dp[0][u] = p, lv[u] = l;
-  for (int v : adj[u])
-    dfs(v, u, l + 1);
-}
-
-int lca(int a, int b) {
-  if (lv[a] < lv[b])
-    swap(a, b);
-  for (int i = 20; i >= 0; i--)
-    if (lv[dp[i][a]] >= lv[b])
-      a = dp[i][a];
-  if (a == b)
-    return a;
-  for (int i = 20; i >= 0; i--)
-    if (dp[i][a] != dp[i][b])
-      a = dp[i][a], b = dp[i][b];
-  return dp[0][a];
-}
-
-int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-
-  cin >> n;
-
-  for (int i = 0; i < n - 1; i++) {
-    int a, b;
-    cin >> a >> b;
-    adj[a].push_back(b);
-  }
-
-  dfs(0, 0, 1);
-
-  for (int i = 1; i <= 20; i++)
-    for (int j = 1; j <= n; j++)
-      dp[i][j] = dp[i - 1][dp[i - 1][j]];
-
-  cin >> q;
-
-  while (q--) {
-    int a, b;
-    cin >> a >> b;
-    cout << lca(a, b) << '\n';
+vector<int> dist(n, -1);  // -1 = ยังไม่เคยเจอ
+queue<int> q;
+dist[s] = 0;
+q.push(s);
+while (!q.empty()) {
+  int u = q.front();
+  q.pop();
+  for (int v : adj[u]) {
+    if (dist[v] != -1) continue;  // เคยเจอแล้ว
+    dist[v] = dist[u] + 1;
+    q.push(v);
   }
 }
 ```
 
-=== Euler Tour Technique
+==== Depth-First Search (DFS)
 
-https://usaco.guide/gold/tree-euler?lang=cpp
-https://cses.fi/problemset/task/1137
-
-=== Challenge
-
-- https://grader.mwit.ac.th/problem/toi12_weakpoint one-cycle, dp?
-- https://grader.mwit.ac.th/problem/toi14_technology
-
-== Strong connectivity
-
-https://cp-algorithms.com/graph/strongly-connected-components.html
-
-=== Kosaraju’s
+DFS เดิน *ลึก* ไปเรื่อย ๆ จนไปต่อไม่ได้ แล้วจึงถอยกลับ (backtrack) มาลองทางอื่น เขียนด้วย recursion ได้สั้นที่สุด
 
 ```cpp
-// credit from https://github.com/Autoratch/practice
-#include <bits/stdc++.h>
-using namespace std;
-
-const int N = 1e5 + 1;
-
-int n, m;
-vector<int> adj[N], rev[N];
-stack<int> st;
 bool visited[N];
 
 void dfs(int u) {
-  if (visited[u])
-    return;
   visited[u] = true;
-  for (int v : adj[u])
-    dfs(v);
-  st.push(u);
-}
-
-void scc(int u) {
-  if (visited[u])
-    return;
-  visited[u] = true;
-  cout << u << ' ';
-  for (int v : rev[u])
-    scc(v);
-}
-
-int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-
-  cin >> n >> m;
-
-  for (int i = 0; i < m; i++) {
-    int a, b;
-    cin >> a >> b;
-    adj[a].push_back(b);
-    rev[b].push_back(a);
-  }
-
-  for (int i = 1; i <= n; i++)
-    if (!visited[i])
-      dfs(i);
-
-  memset(visited, 0, sizeof visited);
-
-  while (!st.empty()) {
-    int u = st.top();
-    st.pop();
-    if (visited[u])
-      continue;
-    scc(u);
-    cout << '\n';
+  for (int v : adj[u]) {
+    if (!visited[v]) dfs(v);
   }
 }
 ```
 
-=== Challenge
-- https://grader.mwit.ac.th/problem/walk_around cycle, union find, reverse query
+ทั้งสองแบบใช้เวลา $O(n + m)$ เพราะแต่ละโหนดถูกเยี่ยมครั้งเดียว และแต่ละ edge ถูกดูไม่เกินสองครั้ง
+
+ลองเทียบลำดับการเยี่ยมของ BFS และ DFS บนกราฟเดียวกัน (เพื่อนบ้านถูกพิจารณาจากเลขน้อยไปมาก) เปิด "ให้ฉันทายก่อน" แล้วคลิกโหนดที่คิดว่าจะถูกเยี่ยมถัดไป ตัวเลขเล็กข้างโหนดใน BFS คือ `dist` และเส้นหนาคือเส้นที่ใช้เดินไปพบโหนดนั้นครั้งแรก
+
+#widget("graph-traversal")
+
+#table(
+  columns: 3,
+  header([], [BFS], [DFS]),
+  [โครงสร้างข้อมูล], [queue], [recursion (call stack) หรือ stack],
+  [ลำดับการเยี่ยม], [ตามระยะห่างจากจุดเริ่ม], [ลึกก่อน แล้วถอยกลับ],
+  [ใช้บ่อยกับ], [shortest path ไม่มีน้ำหนัก, grid], [component, cycle, topological sort, tree],
+  [ข้อควรระวัง], [ใช้หน่วยความจำตามความกว้างของชั้น], [recursion ลึกมากอาจ stack overflow],
+)
+
+=== Graph applications
+
+==== Connected components
+
+วนทุกโหนด ถ้าเจอโหนดที่ยังไม่ถูกเยี่ยม แปลว่าเจอ component ใหม่ ให้ DFS จากโหนดนั้น กราฟ *connected* ก็ต่อเมื่อมีเพียง 1 component
+
+```cpp
+int components = 0;
+for (int u = 0; u < n; u++) {
+  if (!visited[u]) {
+    components++;
+    dfs(u);
+  }
+}
+```
+
+==== Grid เป็นกราฟ
+
+ตาราง (grid) คือกราฟที่แต่ละช่องเป็นโหนด และเชื่อมกับช่องข้างเคียง 4 ทิศ ไม่ต้องสร้าง `adj` จริง ให้คำนวณเพื่อนบ้านตอนเดิน
+
+```cpp
+int dr[] = {-1, 1, 0, 0}, dc[] = {0, 0, -1, 1};
+
+void dfs(int r, int c) {
+  seen[r][c] = true;
+  for (int k = 0; k < 4; k++) {
+    int nr = r + dr[k], nc = c + dc[k];
+    if (nr < 0 || nr >= R || nc < 0 || nc >= C) continue;  // ออกนอกตาราง
+    if (grid[nr][nc] == '#' || seen[nr][nc]) continue;
+    dfs(nr, nc);
+  }
+}
+```
+
+ระวัง: grid ขนาด $1000 times 1000$ อาจทำให้ recursion ลึกถึงหนึ่งล้านชั้น ถ้าเสี่ยงให้ใช้ BFS แทน
+
+==== Cycle detection (undirected)
+
+ระหว่าง DFS ถ้าเจอเพื่อนบ้านที่เคยเยี่ยมแล้ว *และไม่ใช่ parent* ที่เพิ่งเดินมา แปลว่ามี cycle
+
+```cpp
+bool hasCycle(int u, int parent) {
+  visited[u] = true;
+  for (int v : adj[u]) {
+    if (v == parent) continue;
+    if (visited[v] || hasCycle(v, u)) return true;
+  }
+  return false;
+}
+```
+
+อีกวิธีคือนับ edge: component ที่มี $c$ โหนดและไม่มี cycle จะมี edge พอดี $c - 1$ เส้น (เป็นต้นไม้)
+(ถ้ากราฟมี edge ซ้ำระหว่างคู่เดิม ต้องเช็คด้วย id ของ edge แทน parent)
+
+==== Bipartite check
+
+กราฟเป็น *bipartite* ถ้าระบายสีโหนดด้วยสองสีได้โดยโหนดที่ติดกันมีสีต่างกันเสมอ ให้ BFS แล้วระบายเพื่อนบ้านด้วยสีตรงข้าม ถ้าเจอเพื่อนบ้านสีเดียวกันแปลว่าไม่ใช่ bipartite (มี cycle ความยาวคี่)
+
+```cpp
+vector<int> color(n, -1);
+bool bipartite = true;
+for (int s = 0; s < n; s++) {
+  if (color[s] != -1) continue;
+  color[s] = 0;
+  queue<int> q;
+  q.push(s);
+  while (!q.empty()) {
+    int u = q.front();
+    q.pop();
+    for (int v : adj[u]) {
+      if (color[v] == -1) {
+        color[v] = 1 - color[u];
+        q.push(v);
+      } else if (color[v] == color[u]) {
+        bipartite = false;
+      }
+    }
+  }
+}
+```
+
+=== Weighted shortest path
+
+เมื่อ edge มีน้ำหนัก BFS ใช้ไม่ได้อีกแล้ว เพราะ path ที่ผ่าน edge น้อยกว่าอาจยาวกว่า
+
+ทุกอัลกอริทึมในส่วนนี้ใช้ขั้นตอน *relax* เหมือนกัน: ถ้าไป `v` ผ่าน `u` แล้วสั้นกว่าเดิมให้อัปเดต
+
+```cpp
+if (dist[u] + w < dist[v]) dist[v] = dist[u] + w;
+```
+
+==== Dijkstra's Algorithm
+
+ใช้กับกราฟที่ *ไม่มี edge น้ำหนักติดลบ* เลือกโหนดที่ `dist` น้อยที่สุดที่ยังไม่ได้ยืนยันด้วย priority queue โหนดนั้นจะมีระยะถูกต้องแน่นอน แล้ว relax เพื่อนบ้านของมัน
+
+```cpp
+const long long INF = 1e18;
+vector<long long> dist(n, INF);
+priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> pq;
+dist[s] = 0;
+pq.push({0, s});
+while (!pq.empty()) {
+  auto [d, u] = pq.top();
+  pq.pop();
+  if (d != dist[u]) continue;  // ข้อมูลเก่า มีระยะที่ดีกว่าแล้ว
+  for (auto [v, w] : wadj[u]) {
+    if (dist[u] + w < dist[v]) {
+      dist[v] = dist[u] + w;
+      pq.push({dist[v], v});
+    }
+  }
+}
+```
+
+Time complexity $O((n + m) log n)$ ระวังใช้ `long long` เมื่อผลรวมน้ำหนักอาจเกิน $2^31$
+
+==== Bellman-Ford
+
+Relax *ทุก edge* ซ้ำ $n - 1$ รอบ (shortest path ไม่มี cycle จึงมี edge ไม่เกิน $n - 1$ เส้น) ใช้ได้แม้มีน้ำหนักติดลบ
+ถ้ารอบที่ $n$ ยัง relax ได้อีก แปลว่ามี *negative cycle* ที่ไปถึงได้จาก $s$
+
+```cpp
+struct Edge { int u, v; long long w; };
+vector<Edge> edges;
+
+vector<long long> dist(n, INF);
+dist[s] = 0;
+for (int round = 0; round < n - 1; round++) {
+  for (auto [u, v, w] : edges) {
+    if (dist[u] != INF && dist[u] + w < dist[v]) dist[v] = dist[u] + w;
+  }
+}
+bool negativeCycle = false;
+for (auto [u, v, w] : edges) {
+  if (dist[u] != INF && dist[u] + w < dist[v]) negativeCycle = true;
+}
+```
+
+Time complexity $O(n m)$
+
+==== Floyd-Warshall
+
+หาระยะสั้นสุดของ *ทุกคู่* โหนด `d[i][j]` หลังรอบที่ `k` คือระยะสั้นสุดที่ใช้โหนด $0..k$ เป็นจุดกลางทาง (นี่คือ DP) ต้องวน `k` เป็น loop นอกสุดเสมอ
+
+```cpp
+// เริ่มต้น: d[i][i] = 0, d[u][v] = w ถ้ามี edge, ที่เหลือ = INF
+for (int k = 0; k < n; k++)
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      if (d[i][k] != INF && d[k][j] != INF)
+        d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+```
+
+Time complexity $O(n^3)$ จึงใช้ได้กับ $n$ ไม่เกินประมาณ 500
+
+==== เลือกใช้อะไรดี
+
+#table(
+  columns: 4,
+  header([สถานการณ์], [อัลกอริทึม], [Time], [หมายเหตุ]),
+  [ไม่มีน้ำหนัก], [BFS], [$O(n + m)$], [เร็วและง่ายที่สุด],
+  [น้ำหนักไม่ติดลบ, จุดเริ่มเดียว], [Dijkstra], [$O((n + m) log n)$], [ใช้บ่อยที่สุด],
+  [มีน้ำหนักติดลบ], [Bellman-Ford], [$O(n m)$], [ตรวจ negative cycle ได้],
+  [ทุกคู่, $n$ เล็ก], [Floyd-Warshall], [$O(n^3)$], [เขียนสั้นที่สุด],
+)
+
+=== Minimum Spanning Tree (MST)
+
+Spanning tree คือการเลือก edge $n - 1$ เส้นที่เชื่อมทุกโหนดโดยไม่มี cycle
+MST คือ spanning tree ที่ผลรวมน้ำหนักน้อยที่สุด เช่น สร้างถนนให้ทุกเมืองไปถึงกันได้โดยค่าใช้จ่ายน้อยที่สุด
+
+==== Union-Find (Disjoint Set Union)
+
+เก็บว่าแต่ละโหนดอยู่กลุ่มไหน รองรับสองคำสั่ง: `find(x)` หาตัวแทนของกลุ่ม และ `unite(a, b)` รวมสองกลุ่ม
+เมื่อใช้ path compression และ union by size แต่ละคำสั่งเร็วจนเกือบเป็น $O(1)$
+
+```cpp
+vector<int> par, sz;
+
+int find(int x) {
+  return par[x] == x ? x : par[x] = find(par[x]);  // path compression
+}
+
+bool unite(int a, int b) {
+  a = find(a), b = find(b);
+  if (a == b) return false;     // อยู่กลุ่มเดียวกันแล้ว
+  if (sz[a] < sz[b]) swap(a, b);
+  par[b] = a;                   // ต่อต้นไม้เล็กเข้ากับต้นไม้ใหญ่
+  sz[a] += sz[b];
+  return true;
+}
+// เริ่มต้น: par[i] = i, sz[i] = 1
+```
+
+==== Kruskal's Algorithm
+
+เรียง edge จากน้ำหนักน้อยไปมาก แล้วหยิบทีละเส้น ถ้าเส้นนั้นไม่ทำให้เกิด cycle (สองปลายอยู่คนละกลุ่ม) ให้เลือกใส่ MST
+
+```cpp
+sort(edges.begin(), edges.end(),
+     [](const Edge& a, const Edge& b) { return a.w < b.w; });
+long long total = 0;
+int used = 0;
+for (auto [u, v, w] : edges) {
+  if (unite(u, v)) {
+    total += w;
+    used++;
+  }
+}
+// ถ้า used < n - 1 แปลว่ากราฟไม่ connected จึงไม่มี MST
+```
+
+Time complexity $O(m log m)$ จากการ sort
+
+==== Prim's Algorithm
+
+เริ่มจากโหนดเดียว แล้วขยายต้นไม้ทีละโหนดด้วย edge ที่เบาที่สุดที่ออกจากต้นไม้ เขียนคล้าย Dijkstra
+
+```cpp
+vector<bool> inTree(n, false);
+priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;  // {w, v}
+long long total = 0;
+pq.push({0, 0});
+while (!pq.empty()) {
+  auto [w, u] = pq.top();
+  pq.pop();
+  if (inTree[u]) continue;
+  inTree[u] = true;
+  total += w;
+  for (auto [v, wv] : wadj[u]) {
+    if (!inTree[v]) pq.push({wv, v});
+  }
+}
+```
+
+Time complexity $O(m log m)$
+
+=== Tree algorithms
+
+ต้นไม้ (tree) คือกราฟ connected ที่ไม่มี cycle มี $n - 1$ edge และมี path เดียวระหว่างทุกคู่โหนด
+
+==== Diameter
+
+Diameter คือ path ที่ยาวที่สุดในต้นไม้ หาได้ด้วยการ BFS/DFS สองครั้ง
+
++ เริ่มจากโหนดใดก็ได้ $a$ หาโหนดที่ไกลที่สุดจาก $a$ เรียกว่า $b$
++ หาโหนดที่ไกลที่สุดจาก $b$ เรียกว่า $c$
++ Path จาก $b$ ไป $c$ คือ diameter
+
+(อีกวิธีคือ DP บนต้นไม้: ที่แต่ละโหนด รวมความลึกของลูกสองสายที่ลึกที่สุด)
+
+==== Lowest Common Ancestor (LCA)
+
+LCA ของ $a$ และ $b$ คือบรรพบุรุษร่วมที่ลึกที่สุด ใช้ *binary lifting*: เก็บ `up[j][v]` = บรรพบุรุษชั้นที่ $2^j$ ของ `v` แล้วกระโดดทีละ $2^j$ ทำให้ตอบแต่ละคำถามได้ใน $O(log n)$
+
+```cpp
+const int LOG = 17;  // 2^17 > 100000
+int up[LOG][N], depth[N];
+
+void dfs(int u, int p) {
+  up[0][u] = p;
+  for (int j = 1; j < LOG; j++) up[j][u] = up[j - 1][up[j - 1][u]];
+  for (int v : adj[u]) {
+    if (v == p) continue;
+    depth[v] = depth[u] + 1;
+    dfs(v, u);
+  }
+}
+
+int lca(int a, int b) {
+  if (depth[a] < depth[b]) swap(a, b);
+  for (int j = LOG - 1; j >= 0; j--)        // ยก a ขึ้นให้ลึกเท่า b
+    if (depth[a] - (1 << j) >= depth[b]) a = up[j][a];
+  if (a == b) return a;
+  for (int j = LOG - 1; j >= 0; j--)        // ยกทั้งคู่จนอยู่ใต้ LCA พอดี
+    if (up[j][a] != up[j][b]) a = up[j][a], b = up[j][b];
+  return up[0][a];
+}
+// เรียก dfs(root, root) ก่อน ราก (root) จะเป็นบรรพบุรุษของตัวเอง
+```
+
+==== Euler Tour Technique
+
+DFS แล้วบันทึกเวลาเข้า `tin[u]` และเวลาออก `tout[u]` ของแต่ละโหนด subtree ของ `u` จะกลายเป็นช่วงต่อเนื่อง `[tin[u], tout[u]]` ใน array
+จึงใช้ prefix sum หรือ segment tree ตอบคำถามเกี่ยวกับ subtree ได้ (อ่านเพิ่ม: USACO Guide Euler Tour #footnote[https://usaco.guide/gold/tree-euler?lang=cpp] และโจทย์ CSES Subtree Queries)
+
+=== Strongly Connected Components (SCC)
+
+ใน directed graph กลุ่มโหนดที่ *ทุกคู่เดินไปหากันได้ทั้งสองทาง* เรียกว่า SCC
+
+==== Kosaraju's Algorithm
+
++ DFS บนกราฟเดิม และเก็บโหนดลง list ตามลำดับที่ *ออกจาก* DFS (post-order)
++ ไล่โหนดจากท้าย list ไปหน้า แล้ว DFS บน *กราฟกลับทิศ* แต่ละครั้งที่เริ่ม DFS ใหม่จะได้ SCC หนึ่งกลุ่ม
+
+```cpp
+vector<int> adj[N], radj[N], order;
+int comp[N];  // เริ่มต้นเป็น -1
+bool visited[N];
+
+void dfs1(int u) {
+  visited[u] = true;
+  for (int v : adj[u]) if (!visited[v]) dfs1(v);
+  order.push_back(u);  // post-order
+}
+
+void dfs2(int u, int c) {
+  comp[u] = c;
+  for (int v : radj[u]) if (comp[v] == -1) dfs2(v, c);
+}
+
+// main
+for (int u = 0; u < n; u++) if (!visited[u]) dfs1(u);
+int count = 0;
+for (int i = n - 1; i >= 0; i--) {
+  int u = order[i];
+  if (comp[u] == -1) dfs2(u, count++);
+}
+```
+
+Time complexity $O(n + m)$
+
+=== ลองคิด
+
++ บนกราฟตัวอย่างใน widget ถ้าเริ่มที่โหนด 7 โหนดไหนถูกเยี่ยมเป็นลำดับสุดท้ายใน BFS
++ ทำไม Dijkstra ใช้ไม่ได้เมื่อมี edge ติดลบ ลองหาตัวอย่างกราฟ 3 โหนด
++ ใน Floyd-Warshall ถ้าย้าย loop `k` ไปไว้ในสุดจะเกิดอะไรขึ้น
+
+==== เฉลย
+
++ โหนด 0 (ระยะ 3) ลองตรวจด้วย widget ได้
++ ตัวอย่าง edge $s -> a$ น้ำหนัก 2, $s -> b$ น้ำหนัก 3, $b -> a$ น้ำหนัก $-2$ Dijkstra นำ $a$ ออกจาก priority queue ที่ระยะ 2 ก่อน แต่ระยะจริงคือ $3 - 2 = 1$ หลักการ "โหนดที่ออกจาก queue มีระยะถูกต้องแล้ว" จึงไม่จริง (โค้ดด้านบนกลับมาแก้ค่าได้ แต่ในกราฟทั่วไปอาจช้าแบบ exponential จึงควรใช้ Bellman-Ford)
++ คำตอบผิด เพราะตอนคำนวณ `d[i][j]` ค่า `d[i][k]` และ `d[k][j]` ยังไม่ได้ใช้จุดกลางครบ
 
 === เพิ่มเติม
 
-- ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11) #footnote[http://tcpc.me/2019/08/19/state-graph-tutorial.html]
+- ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11) #footnote[https://web.archive.org/web/20250515101547/https://tcpc.me/2019/08/19/state-graph-tutorial.html]
+- VisuAlgo: Graph Traversal #footnote[https://visualgo.net/en/dfsbfs], Single-Source Shortest Paths #footnote[https://visualgo.net/en/sssp], Minimum Spanning Tree #footnote[https://visualgo.net/en/mst]
+- CP-Algorithms: Dijkstra #footnote[https://cp-algorithms.com/graph/dijkstra.html], Bipartite check #footnote[https://cp-algorithms.com/graph/bipartite-check.html], SCC #footnote[https://cp-algorithms.com/graph/strongly-connected-components.html]
+- A\* Search (Red Blob Games) #footnote[https://www.redblobgames.com/pathfinding/a-star/introduction.html] ต่อยอดจาก Dijkstra ด้วยการประมาณระยะที่เหลือ
+- Johnson's algorithm ใช้ Bellman-Ford ปรับน้ำหนักให้ไม่ติดลบ แล้วรัน Dijkstra จากทุกโหนด
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1192")[Counting Rooms]
-- #link("https://cses.fi/problemset/task/1667")[Message Route]
-- #link("https://cses.fi/problemset/task/1668")[Building Teams]
+- #link("https://cses.fi/problemset/task/1192")[Counting Rooms] (grid DFS)
+- #link("https://cses.fi/problemset/task/1666")[Building Roads] (connected components)
+- #link("https://cses.fi/problemset/task/1667")[Message Route] (BFS)
+- #link("https://cses.fi/problemset/task/1668")[Building Teams] (bipartite)
+- #link("https://cses.fi/problemset/task/1669")[Round Trip] (cycle)
+- #link("https://cses.fi/problemset/task/1671")[Shortest Routes I] (Dijkstra)
+- #link("https://cses.fi/problemset/task/1672")[Shortest Routes II] (Floyd-Warshall)
+- #link("https://cses.fi/problemset/task/1197")[Cycle Finding] (Bellman-Ford)
+- #link("https://cses.fi/problemset/task/1675")[Road Reparation] (MST)
+- #link("https://cses.fi/problemset/task/1131")[Tree Diameter]
+- #link("https://cses.fi/problemset/task/1688")[Company Queries II] (LCA)
+- #link("https://cses.fi/problemset/task/1683")[Planets and Kingdoms] (SCC)
+
+==== โจทย์จาก MWIT Grader
+
+- Search: #link("https://grader.mwit.ac.th/problem/vance")[vance] (DFS จากทุกโหนด), #link("https://grader.mwit.ac.th/problem/toi17_wall")[toi17_wall] (DFS/BFS โจทย์ซับซ้อน), #link("https://grader.mwit.ac.th/problem/walking_bot_2")[walking_bot_2] (backtracking), #link("https://grader.mwit.ac.th/problem/snakeword")[snakeword] (branch and bound), #link("https://grader.mwit.ac.th/problem/teleport")[teleport] (ad-hoc)
+- Dijkstra: #link("https://grader.mwit.ac.th/problem/turboprogramming")[turboprogramming] (ตรง ๆ), #link("https://grader.mwit.ac.th/problem/town")[town], #link("https://grader.mwit.ac.th/problem/followpeatt")[followpeatt] (มีเงื่อนไข), #link("https://grader.mwit.ac.th/problem/toi14_logistics")[toi14_logistics] (ซับซ้อนขึ้น)
+- All-pairs: #link("https://grader.mwit.ac.th/problem/toi17_1221")[toi17_1221]
+- MST: #link("https://grader.mwit.ac.th/problem/mst")[mst] (ตรงสุด ๆ)
+- Tree challenge: #link("https://grader.mwit.ac.th/problem/toi12_weakpoint")[toi12_weakpoint] (one-cycle), #link("https://grader.mwit.ac.th/problem/toi14_technology")[toi14_technology]
+- Connectivity challenge: #link("https://grader.mwit.ac.th/problem/walk_around")[walk_around] (union-find, reverse query)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

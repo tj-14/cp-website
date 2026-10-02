@@ -1,15 +1,13 @@
 #import "@preview/ilm:1.4.0": *
+#import "widgets.typ": widget
 
-== Topological sorting (implementation)
+== Topological Sort
 
 Topological sort คือการเรียงลำดับ vertex ของ directed graph เพื่อให้ทุก edge $u -> v$ มี $u$ มาก่อน $v$ ในลำดับคำตอบ
 
 กราฟที่ทำ topological sort ได้ต้องเป็น DAG หรือ Directed Acyclic Graph คือกราฟมีทิศทางที่ไม่มี cycle
 
-// <img src="/assets/competitive-programming-starter/graph-algorithm/topo-sort/Untitled.png" width="500px"/>
-// <img src="/assets/competitive-programming-starter/graph-algorithm/topo-sort/Untitled 1.png" width="500px"/>
-
-https://cp-algorithms.com/graph/topological-sort.html
+เช่น ถ้า `A -> C` และ `B -> C` แปลว่า A และ B ต้องมาก่อน C ลำดับ `A B C` และ `B A C` ถูกทั้งคู่
 
 === Motivation problem
 
@@ -17,9 +15,45 @@ https://cp-algorithms.com/graph/topological-sort.html
 
 โจทย์ dependency เช่น build system, ตารางงาน, course planning และ task scheduling มักแปลงเป็น topological sort ได้
 
+=== Kahn's algorithm
+
+แนวคิด: โหนดที่ *ไม่มี edge เข้ามา* (in-degree = 0) ไม่ต้องรอใคร จึงอยู่ลำดับแรกได้เลย
+เอาโหนดนั้นออกพร้อม edge ที่ออกจากมัน โหนดอื่นจะมี in-degree ลดลง และอาจกลายเป็น 0 ทำซ้ำจนหมด
+
+ลองทำตาม queue ทีละขั้น จากนั้นเปลี่ยนเป็นโหมด "เลือกเอง" แล้วลองเลือกลำดับต่างกัน สุดท้ายเลือกกราฟ "มี cycle" เพื่อดูว่าเกิดอะไรขึ้น
+
+#widget("topo-sort")
+
+=== Implementation ของ Kahn's algorithm
+
+```cpp
+vector<int> indeg(n);
+for (int u = 0; u < n; u++) {
+  for (int v : adj[u]) indeg[v]++;
+}
+
+queue<int> q;
+for (int i = 0; i < n; i++) {
+  if (indeg[i] == 0) q.push(i);
+}
+
+vector<int> order;
+while (!q.empty()) {
+  int u = q.front();
+  q.pop();
+  order.push_back(u);
+  for (int v : adj[u]) {
+    indeg[v]--;
+    if (indeg[v] == 0) q.push(v);
+  }
+}
+```
+
+ถ้าหลังจบแล้ว `order.size() < n` แปลว่ากราฟมี cycle จึงไม่มี topological order
+
 === DFS approach
 
-แนวคิดคือ DFS ลงไปให้สุดก่อน แล้วค่อยนำ vertex ใส่คำตอบตอนกำลังย้อนกลับ ถ้า reverse คำตอบหลังจบ DFS จะได้ลำดับ topological order
+อีกวิธีคือ DFS แล้วนำ vertex ใส่คำตอบ *ตอนออก* จาก DFS (post-order) เพราะ vertex จะออกหลังจากทุกตัวที่มันชี้ไปออกหมดแล้ว เมื่อ reverse คำตอบจึงได้ topological order
 
 ```cpp
 int n; // number of vertices
@@ -49,34 +83,21 @@ void topological_sort() {
 
 เวลาทำงานคือ $O(V+E)$ เพราะแต่ละ vertex และ edge ถูกพิจารณาจำนวนคงที่
 
-=== Kahn's algorithm
+=== DP บน DAG
 
-อีกวิธีคือใช้ indegree และ queue โดยเริ่มจาก vertex ที่ไม่มี edge เข้ามา
+Topological order รับประกันว่าเมื่อประมวลผล $v$ ทุกโหนดที่ชี้มาหา $v$ ถูกประมวลผลแล้ว จึงทำ DP บน DAG ได้ตรง ๆ เช่น นับจำนวนเส้นทางจาก $s$ ไปทุกโหนด
 
 ```cpp
-vector<int> indeg(n);
-for (int u = 0; u < n; u++) {
-  for (int v : adj[u]) indeg[v]++;
-}
-
-queue<int> q;
-for (int i = 0; i < n; i++) {
-  if (indeg[i] == 0) q.push(i);
-}
-
-vector<int> order;
-while (!q.empty()) {
-  int u = q.front();
-  q.pop();
-  order.push_back(u);
+vector<long long> ways(n, 0);
+ways[s] = 1;
+for (int u : order) {             // order จาก Kahn's algorithm
   for (int v : adj[u]) {
-    indeg[v]--;
-    if (indeg[v] == 0) q.push(v);
+    ways[v] = (ways[v] + ways[u]) % MOD;
   }
 }
 ```
 
-ถ้าหลังจบแล้ว `order.size() < n` แปลว่ากราฟมี cycle จึงไม่มี topological order
+เปลี่ยนการบวกเป็น `max(dist[u] + 1)` ก็ได้เส้นทางที่ยาวที่สุดใน DAG (ซึ่งในกราฟทั่วไปเป็นปัญหาที่ยากมาก)
 
 === ข้อควรระวัง
 
@@ -87,7 +108,8 @@ while (!q.empty()) {
 
 === แบบฝึกหัด
 
-- TOI14 Technology #footnote[https://grader.mwit.ac.th/problem/toi14_technology]
+- #link("https://grader.mwit.ac.th/problem/toi14_technology")[TOI14 Technology] (MWIT Grader)
+- อ่านเพิ่ม: Topological sorting (CP-Algorithms) #footnote[https://cp-algorithms.com/graph/topological-sort.html]
 
 === โจทย์ฝึกฝน (Practice Problems)
 
@@ -95,6 +117,7 @@ while (!q.empty()) {
 
 - #link("https://cses.fi/problemset/task/1679")[Course Schedule]
 - #link("https://cses.fi/problemset/task/1757")[Course Schedule II]
-- #link("https://cses.fi/problemset/task/1681")[Game Routes]
+- #link("https://cses.fi/problemset/task/1680")[Longest Flight Route] (DP บน DAG)
+- #link("https://cses.fi/problemset/task/1681")[Game Routes] (นับเส้นทาง)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

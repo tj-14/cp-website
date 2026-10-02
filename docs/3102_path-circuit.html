@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -125,47 +128,73 @@
 <h5 id="circuit">Circuit<a class="heading-anchor" href="#circuit" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เป็น Eulerian path ที่เริ่มและจบที่โหนดเดียวกัน</p>
 <h5 id="existence">Existence<a class="heading-anchor" href="#existence" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>เงื่อนไขที่จะมี Eulerian path สำหรับ</p>
+<p>เงื่อนไขแรกเสมอ: ทุก edge ต้องอยู่ใน <strong>component เดียวกัน</strong>
+(โหนดที่ไม่มี edge เลยไม่นับ) จากนั้น</p>
 <ul>
 <li><p>กราฟไม่มีทิศทาง</p>
 <ul>
-<li><p>ดีกรีของทุกโหนดเป็นจำนวนคู่ หรือ</p></li>
-<li><p>ดีกรีของสองโหนดเป็นจำนวนคี่ (🧠 เพราะอะไร?)</p></li>
+<li><p>Eulerian circuit: ดีกรีของทุกโหนดเป็นจำนวนคู่</p></li>
+<li><p>Eulerian path: มีโหนดดีกรีคี่ 0 หรือ 2 โหนด ถ้ามี 2 โหนด path
+ต้องเริ่มที่โหนดหนึ่งและจบที่อีกโหนด</p></li>
 </ul></li>
 <li><p>กราฟมีทิศทาง</p>
 <ul>
-<li><p>ในแต่ละโหนด ดีกรีเข้าจะต้องเท่ากับดีกรีออก หรือ</p></li>
-<li><p>มีโหนดหนึ่งมีดีกรีเข้ามากกว่าดีกรีออกเท่ากับหนึ่ง
-อีกโหนดหนึ่งมีดีกรีออกมากกว่าดีกรีเข้าเท่ากับหนึ่ง
-และโหนดที่เหลือมีดีกรีเข้่าเท่ากับดีกรีออก</p></li>
+<li><p>Eulerian circuit: ทุกโหนดมีดีกรีเข้าเท่ากับดีกรีออก</p></li>
+<li><p>Eulerian path: มีโหนดเริ่มที่ดีกรีออกมากกว่าดีกรีเข้า 1
+โหนดจบที่ดีกรีเข้ามากกว่าดีกรีออก 1 และโหนดที่เหลือดีกรีเข้าเท่ากับดีกรีออก</p></li>
 </ul></li>
 </ul>
+<p><strong>ทำไมต้องเป็นดีกรีคู่</strong>: ทุกครั้งที่ path ผ่านโหนดกลางทาง จะใช้ edge
+สองเส้น (เข้าหนึ่ง ออกหนึ่ง) โหนดกลางทางจึงใช้ edge เป็นจำนวนคู่เสมอ
+มีแค่โหนดเริ่มและโหนดจบเท่านั้นที่ใช้ edge เป็นจำนวนคี่ได้</p>
 <h5 id="hierholzer-s-algorithm">Hierholzer’s algorithm<a class="heading-anchor" href="#hierholzer-s-algorithm" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>Hierholzer’s algorithm ใช้หา Eulerian circuit/path
 เมื่อรู้แล้วว่าเงื่อนไขมีคำตอบ</p>
 <p>แนวคิดคือเดินตาม edge ที่ยังไม่ใช้ไปเรื่อย ๆ ถ้าติดทางตันให้ย้อนกลับและใส่ vertex
 ลงคำตอบตอนย้อนกลับ</p>
+<p>สำหรับกราฟไม่มีทิศทาง edge หนึ่งเส้นอยู่ใน adjacency list ของปลายทั้งสอง จึงเก็บ
+<strong>id</strong> ของ edge และทำเครื่องหมายว่าใช้แล้ว เพื่อไม่เดิน edge
+เดิมซ้ำจากอีกฝั่ง</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> path<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs<span class="op">(</span><span class="dt">int</span> u<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>adj<span class="op">[</span>u<span class="op">].</span>empty<span class="op">())</span> <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> v <span class="op">=</span> adj<span class="op">[</span>u<span class="op">].</span>back<span class="op">();</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    adj<span class="op">[</span>u<span class="op">].</span>pop_back<span class="op">();</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dfs<span class="op">(</span>v<span class="op">);</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  path<span class="op">.</span>push_back<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>สำหรับกราฟไม่มีทิศทาง ต้องลบ edge ทั้งสองด้าน และควรมี id ของ edge เพื่อไม่ใช้
-edge เดิมซ้ำ</p>
-<p>เวลาทำงานคือ <span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าลบ edge
-ได้มีประสิทธิภาพ</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;&gt;</span> adj<span class="op">;</span>  <span class="co">// {เพื่อนบ้าน, id ของ edge}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> used<span class="op">;</span>                   <span class="co">// used[id]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> ptr<span class="op">,</span> path<span class="op">;</span>               <span class="co">// ptr[u] = edge ถัดไปที่ต้องลองของ u</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs<span class="op">(</span><span class="dt">int</span> u<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>ptr<span class="op">[</span>u<span class="op">]</span> <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>adj<span class="op">[</span>u<span class="op">].</span>size<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>v<span class="op">,</span> id<span class="op">]</span> <span class="op">=</span> adj<span class="op">[</span>u<span class="op">][</span>ptr<span class="op">[</span>u<span class="op">]++];</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>used<span class="op">[</span>id<span class="op">])</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>id<span class="op">]</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    dfs<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  path<span class="op">.</span>push_back<span class="op">(</span>u<span class="op">);</span>  <span class="co">// ใส่ตอนออก: path ที่ได้เรียงกลับด้าน</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">// เรียก dfs(start) โดย start เป็นโหนดดีกรีคี่ (ถ้ามี) แล้ว path.size() ต้องเท่ากับ m + 1</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">// ถ้าน้อยกว่าแปลว่าบาง edge อยู่คนละ component จึงไม่มีคำตอบ</span></span></code></pre>
+<p>ใช้ <code>ptr[u]</code> เพื่อไม่ต้องไล่ edge ที่ใช้แล้วซ้ำ เวลาทำงานจึงเป็น <span
+class="math inline">O(V + E)</span></p>
 <h4 id="hamiltonian">Hamiltonian<a class="heading-anchor" href="#hamiltonian" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>เป็น path ที่ท่องไปในทุกโหนดเพียงหนึ่งครั้งเท่านั้น</p>
 <h5 id="existence-2">Existence<a class="heading-anchor" href="#existence-2" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ไม่มี efficient method เนื่องจากยังเป็นปัญหาประเภท NP-hard</p>
+<p>ยังไม่มีใครรู้วิธีที่เร็ว (เป็นปัญหา NP-complete) แต่ถ้า <span
+class="math inline">n \leq 20</span> ใช้ bitmask DP ได้:
+<code>dp[mask][v]</code> = จำนวนวิธีเดินผ่านโหนดในเซต <code>mask</code>
+ครบพอดีและจบที่ <code>v</code></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// dp[1 &lt;&lt; 0][0] = 1 (เริ่มที่โหนด 0)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> mask <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> mask <span class="op">&lt;</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> n<span class="op">);</span> mask<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> v <span class="op">&lt;</span> n<span class="op">;</span> v<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>dp<span class="op">[</span>mask<span class="op">][</span>v<span class="op">])</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> w <span class="op">:</span> adj<span class="op">[</span>v<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>mask <span class="op">&amp;</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> w<span class="op">))</span> <span class="cf">continue</span><span class="op">;</span>  <span class="co">// ไปแล้ว</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      dp<span class="op">[</span>mask <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> w<span class="op">)][</span>w<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>dp<span class="op">[</span>mask <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> w<span class="op">)][</span>w<span class="op">]</span> <span class="op">+</span> dp<span class="op">[</span>mask<span class="op">][</span>v<span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">// คำตอบสำหรับ path ที่ผ่านทุกโหนดและจบที่ t: dp[(1 &lt;&lt; n) - 1][t]</span></span></code></pre>
+<p>เวลา <span class="math inline">O\left( 2^{n}n^{2} \right)</span> (หรือ
+<span class="math inline">O\left( 2^{n}(n + m) \right)</span> เมื่อใช้
+adjacency list)</p>
 <h4 id="เปรียบเทียบ">เปรียบเทียบ<a class="heading-anchor" href="#เปรียบเทียบ" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
@@ -201,20 +230,21 @@ class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span> ถ้าล�
 <ul>
 <li><p>ถ้าโจทย์พูดถึงการใช้ถนนทุกเส้นหนึ่งครั้ง ให้นึกถึง Eulerian</p></li>
 <li><p>ถ้าโจทย์พูดถึงการเยี่ยมเมืองทุกเมืองหนึ่งครั้ง ให้นึกถึง Hamiltonian</p></li>
-<li><p>ถ้ากราฟมีขนาดเล็กมาก เช่น <span
-class="math inline"><em>n</em> ≤ 20</span> Hamiltonian อาจใช้ DP bitmask
-ได้</p></li>
+<li><p>ถ้ากราฟมีขนาดเล็กมาก เช่น <span class="math inline">n \leq 20</span>
+Hamiltonian อาจใช้ DP bitmask ได้</p></li>
 </ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a href="https://cses.fi/problemset/task/1671">Shortest Routes
-I</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1672">Shortest Routes
-II</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1691">Mail
-Delivery</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1691">Mail Delivery</a>
+(Eulerian circuit)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1693">Teleporters
+Path</a> (Eulerian path, directed)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1692">De Bruijn
+Sequence</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1690">Hamiltonian
+Flights</a> (bitmask DP)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a

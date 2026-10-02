@@ -1,12 +1,12 @@
 #import "@preview/ilm:1.4.0": *
+#import table: cell, header
 
 == Binary Tree
 
 === คำอธิบาย
 
-- tree เป็นโครงสร้างข้อมูลแบบมีชนชั้น ซึ่งแตกต่างจาก array, linked list, stack และ queue ที่เป็นโครงสร้างเชิงเส้น
-- ตัวอย่าง tree เบื้องต้นคือ binary tree โดยแต่ละ node สามารถมีลูกได้มากที่สุดไม่เกิน 2 ลูก ดังรูป
-- ซึ่งเราสามารถเรียกลูกว่า left และ right child ได้
+*Tree* คือโครงสร้างข้อมูลแบบลำดับชั้น (hierarchical) ต่างจาก array, linked list, stack และ queue ที่เป็นเชิงเส้น
+*Binary tree* คือ tree ที่แต่ละ node มีลูกได้ไม่เกินสองตัว เรียกว่า *left child* และ *right child*
 
 #figure(
   image("../assets/diagrams/binary-tree.svg", width: 82%),
@@ -15,122 +15,135 @@
 
 === คำศัพท์
 
-- node ด้านบนสุดจะถูกเรียกว่า *root*
-- ลูกด้านล่างที่อยู่ติดกับ node โดยตรงจะเรียกว่า *children*
-- node ด้านบนจะเรียกว่า *parent*
-- เช่น `a` เป็น child ของ `f` และ `f` เป็น parent ของ `a`
-- และ node ที่ไม่มีลูกเลยจะเรียกว่า *leaves*
-
-```cpp
-      tree
-      ----
-       j    <-- root
+```
+       j        <-- root (depth 0)
      /   \
-   f      k
- /   \      \
-a     h      z    <-- leaves
+    f     k     <-- depth 1
+   / \     \
+  a   h     z   <-- leaves (depth 2)
 ```
 
-=== เมื่อไรถึงใช้ tree?
+- *root*: node บนสุด ไม่มี parent (`j`)
+- *parent* / *child*: `f` เป็น parent ของ `a` และ `a` เป็น child ของ `f`
+- *leaf*: node ที่ไม่มีลูก (`a`, `h`, `z`)
+- *subtree*: node หนึ่งพร้อมลูกหลานทั้งหมดของมัน
+- *depth* ของ node: จำนวน edge จาก root ถึง node นั้น
+- *height* ของ tree: depth ที่มากที่สุด (tree ด้านบนสูง 2)
 
-- หากต้องการเก็บข้อมูลที่มีลำดับขั้น เช่น ระบบไฟล์ในคอมพิวเตอร์
+=== ชนิดของ binary tree
 
-```
-file system
------------
-     /    <-- root
-   /      \
- ...       home
-        /          \
-     ugrad        course
-      /       /      |     \
-   ...      cs101  cs112  cs113
+- *Full*: ทุก node มีลูก 0 หรือ 2 ตัว
+- *Complete*: ทุกชั้นเต็มยกเว้นชั้นล่างสุดซึ่งเติมจากซ้ายไปขวา (เช่น heap)
+- *Perfect*: ทุกชั้นเต็ม มี $2^(h+1) - 1$ node เมื่อสูง $h$
+- *Balanced*: ความสูงเป็น $O(log n)$
 
-```
+=== เมื่อไรใช้ tree
 
-- tree (ประกอบกับ ordering บางอย่าง e.g., BST) สามารถเข้าถึงข้อมูลได้เร็วกว่า linear data structure
-- tree สามารถเพิ่มลบข้อมูลได้สะดวกกว่าในบางกรณี
-- tree สามารถ implement ในรูปแบบคล้ายกับ linked list ได้
+- ข้อมูลที่มีลำดับชั้น เช่น ระบบไฟล์ ผังองค์กร
+- เมื่อรวมกับการจัดเรียงบางอย่าง เช่น BST หรือ heap จะค้นหา เพิ่ม และลบได้ใน $O(log n)$
+- โจทย์กราฟจำนวนมากเป็น tree (กราฟ connected ที่ไม่มี cycle)
 
-=== Binary Tree
+=== การเก็บ binary tree
 
-- คือ tree ที่แต่ละ node มีลูกไม่เกินสองลูก คือ left และ right
-
-=== ตัวอย่าง
-
-- Binary Tree node มีส่วนประกอบต่อไปนี้
-    - ข้อมูล
-    - Pointer to left child
-    - Pointer to right child
+==== ด้วย pointer
 
 ```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
 struct Node {
   int data;
-  struct Node *left;
-  struct Node *right;
-
-  // val is the key or the value that
-  // has to be added to the data part
-  Node(int val) {
-    data = val;
-
-    // Left and right child for node
-    // will be initialized to null
-    left = NULL;
-    right = NULL;
-  }
+  Node* left = nullptr;
+  Node* right = nullptr;
 };
 
-int main() {
-  /*create root*/
-  struct Node *root = new Node(1);
-  /* following is the tree after above statement
-
-     1
-     / \
-     NULL NULL
-   */
-
-  root->left = new Node(2);
-  root->right = new Node(3);
-  /* 2 and 3 become left and right children of 1
-     1
-     / \\
-     2     3
-     / \\    /  \\
-     NULL NULL NULL NULL
-   */
-
-  root->left->left = new Node(4);
-  /* 4 becomes left child of 2
+Node* root = new Node{1};
+root->left = new Node{2};
+root->right = new Node{3};
+root->left->left = new Node{4};
+/*
         1
-     /     \\
-     2        3
-     / \\     / \\
-     4 NULL NULL NULL
-     / \\
-     NULL NULL
-   */
+      /   \
+     2     3
+    /
+   4
+*/
+```
 
-  return 0;
+==== ด้วย array ของลูก (นิยมในการแข่งขัน)
+
+โจทย์มักให้ node เป็นหมายเลข $1..n$ พร้อมลูกซ้ายและขวา เก็บใน array ได้ทันที (0 = ไม่มีลูก)
+
+```cpp
+int L[N], R[N];  // L[u], R[u] = ลูกซ้าย/ขวาของ u
+```
+
+==== ด้วย index (สำหรับ complete tree)
+
+ถ้าเป็น complete tree และเริ่ม index ที่ 1: ลูกของ $i$ คือ $2i$ และ $2i + 1$ และ parent คือ $floor(i / 2)$ ไม่ต้องเก็บ pointer เลย (ใช้ใน heap และ segment tree)
+
+=== Traversal
+
+การเยี่ยมทุก node มีสามแบบหลักตามจังหวะที่ประมวลผล node เทียบกับลูก
+
+#table(
+  columns: 3,
+  header([ชื่อ], [ลำดับ], [ผลกับ tree ตัวอย่าง (1, 2, 3, 4) ด้านบน]),
+  [Preorder], [node, ซ้าย, ขวา], [`1 2 4 3`],
+  [Inorder], [ซ้าย, node, ขวา], [`4 2 1 3`],
+  [Postorder], [ซ้าย, ขวา, node], [`4 2 3 1`],
+  [Level order], [ทีละชั้น (BFS)], [`1 2 3 4`],
+)
+
+```cpp
+void preorder(Node* t) {
+  if (t == nullptr) return;
+  cout << t->data << ' ';
+  preorder(t->left);
+  preorder(t->right);
+}
+// inorder และ postorder สลับตำแหน่งบรรทัด cout
+```
+
+ลองดู traversal ทั้งสี่แบบทีละ node ได้ใน widget ของบท Binary Search Tree
+
+=== คำนวณค่าด้วย recursion
+
+หลายคำถามเกี่ยวกับ tree ตอบได้จากคำตอบของ subtree ซ้ายและขวา
+
+```cpp
+int size(Node* t) {    // จำนวน node
+  if (t == nullptr) return 0;
+  return 1 + size(t->left) + size(t->right);
+}
+
+int height(Node* t) {  // ความสูง (tree ว่าง = -1, node เดียว = 0)
+  if (t == nullptr) return -1;
+  return 1 + max(height(t->left), height(t->right));
 }
 ```
 
-=== ใช้ array ในการสร้าง binary tree
+ทั้งสองฟังก์ชันเยี่ยมทุก node ครั้งเดียว จึงเป็น $O(n)$
 
-- ขนาดเรารู้ขนาดของ binary tree แล้วเราสามารถใช้ array ได้
-- Consider node `A[i]` has
-    - `A[i*2]` as left child
-    - `A[i*2+1]` as right child
+=== Tree ทั่วไป (ลูกกี่ตัวก็ได้)
+
+ในโจทย์ส่วนใหญ่ tree ไม่จำกัดจำนวนลูก ให้เก็บแบบ adjacency list เหมือนกราฟ แล้ว DFS โดยจำ parent ไว้เพื่อไม่เดินย้อนกลับ
+
+```cpp
+vector<int> children[N];
+int sub[N];  // sub[u] = จำนวน node ใน subtree ของ u
+
+void dfs(int u) {
+  sub[u] = 1;
+  for (int v : children[u]) {
+    dfs(v);
+    sub[u] += sub[v];
+  }
+}
+```
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1674")[Subordinates]
+- #link("https://cses.fi/problemset/task/1674")[Subordinates] (ขนาด subtree)
 - #link("https://cses.fi/problemset/task/1131")[Tree Diameter]
 - #link("https://cses.fi/problemset/task/1132")[Tree Distances I]
 

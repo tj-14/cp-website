@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Recursion คือกระบวนการเรียกตัวเอง">
+    <meta name="description" content="Recursion คือการแก้ปัญหาโดยให้ฟังก์ชัน เรียกตัวเอง กับปัญหาที่เล็กลง ทุก recursive function ต้องมีสองส่วน">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Recursion | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="Recursion คือกระบวนการเรียกตัวเอง">
+    <meta property="og:description" content="Recursion คือการแก้ปัญหาโดยให้ฟังก์ชัน เรียกตัวเอง กับปัญหาที่เล็กลง ทุก recursive function ต้องมีสองส่วน">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/1004_recursion.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/1004_recursion.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html" aria-current="page">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html" aria-current="page">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -107,191 +110,237 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#แนวคิด">แนวคิด</a></li>
-                    <li><a href="#การเขียนโปรแกรม">การเขียนโปรแกรม</a></li>
+                    <li><a href="#call-stack">Call stack</a></li>
+                    <li><a href="#ตัวอย่าง-factorial">ตัวอย่าง: Factorial</a></li>
+                    <li><a href="#ตัวอย่าง-fibonacci">ตัวอย่าง: Fibonacci</a></li>
                     <li><a href="#วิเคราะห์ประสิทธิภาพ">วิเคราะห์ประสิทธิภาพ</a></li>
-                    <li><a href="#โจทย์ตัวอย่าง-factorial">โจทย์ตัวอย่าง - Factorial</a></li>
-                    <li><a href="#โจทย์ตัวอย่าง-fibonacci">โจทย์ตัวอย่าง - Fibonacci</a></li>
-                    <li><a href="#โจทย์ตัวอย่าง-permutation">โจทย์ตัวอย่าง - Permutation</a></li>
-                    <li><a href="#ปัญหาที่พบบ่อย">ปัญหาที่พบบ่อย</a></li>
+                    <li><a href="#complete-search-ด้วย-recursion">Complete search ด้วย recursion</a></li>
+                    <li><a href="#ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย</a></li>
+                    <li><a href="#ลองคิด">ลองคิด</a></li>
                     <li><a href="#โจทย์แนะนำ">โจทย์แนะนำ</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="แนวคิด">แนวคิด<a class="heading-anchor" href="#แนวคิด" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Recursion คือการแก้ปัญหาโดยให้ฟังก์ชัน <strong>เรียกตัวเอง</strong>
+กับปัญหาที่เล็กลง ทุก recursive function ต้องมีสองส่วน</p>
 <ul>
-<li><p>Recursion คือกระบวนการเรียกตัวเอง</p></li>
-<li><p>ตามปกติแล้วแบ่งกรณีเป็น</p>
-<ul>
-<li><p>base case</p></li>
-<li><p>recursion case</p></li>
+<li><p><strong>Base case</strong>:
+ปัญหาที่เล็กพอจะตอบได้ทันทีโดยไม่ต้องเรียกตัวเองอีก</p></li>
+<li><p><strong>Recursive case</strong>: ย่อยปัญหาให้เล็กลง
+เรียกตัวเองแก้ปัญหาที่เล็กกว่า แล้วนำคำตอบมารวมกัน</p></li>
 </ul>
-<p>โดยที่จะย่อยปัญหาให้เล็กลงจนกระทั่งแก้ได้ด้วย base case</p></li>
-</ul>
-<h4 id="การเขียนโปรแกรม">การเขียนโปรแกรม<a class="heading-anchor" href="#การเขียนโปรแกรม" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>จะเขียนกระบวนการนั้นด้วยฟังก์ชัน
-และการเรียกตัวเองจะเป็นการเรียกฟังก์ชันที่เขียนขึ้นมาภายในฟังก์ชันนั้น</p>
-<p>ตัวอย่างการเขียน recursive function ในภาษา C++
-โดยยังไม่คำนึงถึงการนำไปใช้แก้โจทย์ปัญหา</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> recursive_function<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>base condition<span class="op">)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span> <span class="co">// base case</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        recursive_function<span class="op">();</span> <span class="co">// recursion case</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> solve<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span>           <span class="co">// base case</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">...;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">...</span> solve<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">...;</span>  <span class="co">// recursive case: n ต้องเล็กลงทุกครั้ง</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="วิเคราะห์ประสิทธิภาพ">วิเคราะห์ประสิทธิภาพ<a class="heading-anchor" href="#วิเคราะห์ประสิทธิภาพ" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>จะใช้วิธีการนับจำนวนครั้งที่จะมีการเรียกฟังก์ชันเกิดขึ้นตามพารามิเตอร์ของฟังก์ชันนั้น</p>
-<h4 id="โจทย์ตัวอย่าง-factorial">โจทย์ตัวอย่าง - Factorial<a class="heading-anchor" href="#โจทย์ตัวอย่าง-factorial" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="เนื้อหาโจทย์">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงหาค่าของ <span class="math inline"><em>n</em>!</span> โดย <span
-class="math inline"><em>n</em>! = <em>n</em> × (<em>n</em> − 1) × (<em>n</em> − 2) × ⋯ × 1</span></p>
-<h5 id="แนวคิด-2">แนวคิด<a class="heading-anchor" href="#แนวคิด-2" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้
-แต่นำมาเป็นตัวอย่างเริ่มต้นในการใช้โครงสร้างของ recursion ในการแก้ปัญหา</p>
-<p>โดยมองค่าของ <span class="math inline"><em>n</em>!</span> เป็น
-recursive function ดังนี้</p>
-<p><span class="math display">$$f(n) = \begin{cases}
-1\text{ if }n \leq 1 \\
-n \times f(n - 1)\text{ else}
-\end{cases}$$</span></p>
-<h5 id="รหัสเทียม">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เคล็ดลับในการคิดคือ <strong>เชื่อใจ recursive call</strong> (leap of
+faith): ให้สมมติว่า <code>solve(n - 1)</code> ตอบถูกแล้ว แล้วถามตัวเองแค่ว่า
+“ถ้ารู้คำตอบของปัญหาที่เล็กกว่า จะได้คำตอบของ <span class="math inline">n</span>
+อย่างไร” ไม่ต้องไล่ทุกชั้นในหัว</p>
+<h4 id="call-stack">Call stack<a class="heading-anchor" href="#call-stack" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ทุกครั้งที่เรียกฟังก์ชัน โปรแกรมจะจองพื้นที่ใน <strong>call stack</strong>
+สำหรับตัวแปรและตำแหน่งที่ต้องกลับไป เมื่อฟังก์ชันคืนค่า (return) พื้นที่นั้นจะถูกคืน
+และโปรแกรมกลับไปทำงานต่อที่ผู้เรียก</p>
+<h4 id="ตัวอย่าง-factorial">ตัวอย่าง: Factorial<a class="heading-anchor" href="#ตัวอย่าง-factorial" aria-hidden="true" tabindex="-1">#</a></h4>
+<p><span class="math display">n! = \begin{cases}
+1 &amp; \text{ if }n \leq 1 \\
+n \times (n - 1)! &amp; \text{ otherwise}
+\end{cases}</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> factorial<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span> <span class="co">// base case</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n<span class="op">;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n <span class="op">*</span> factorial<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> factorial<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>จะได้ output</p>
-<pre><code>24</code></pre>
-<h4 id="โจทย์ตัวอย่าง-fibonacci">โจทย์ตัวอย่าง - Fibonacci<a class="heading-anchor" href="#โจทย์ตัวอย่าง-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="เนื้อหาโจทย์-2">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-2" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงหาค่าของเลขฟิโบนัชชีลำดับที่ <span class="math inline"><em>n</em></span>
-โดยที่ เลขฟิโบนัชชีลำดับที่ <span class="math inline"><em>n</em></span>
-จะมีค่าเท่ากับผลบวกของเลขฟิโบนัชชีลำดับที่ <span
-class="math inline"><em>n</em> − 1</span> และ <span
-class="math inline"><em>n</em> − 2</span></p>
-<h5 id="แนวคิด-3">แนวคิด<a class="heading-anchor" href="#แนวคิด-3" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>โจทย์นี้สามารถใช้โครงสร้าง loop ในการแก้ปัญหาได้เช่นกัน
-แต่นำมาเป็นอีกตัวอย่างหนึ่งในการใช้โครงสร้างของ recursion ในการแก้ปัญหา</p>
-<p>โดยมองค่าของเลขฟิโบนัชชีลำดับที่ <span class="math inline"><em>n</em></span>
-เป็น recursive function ดังนี้</p>
-<p><span class="math display">$$f(n) = \begin{cases}
-n\text{ if }n \leq 1 \\
-f(n - 1) + f(n - 2)\text{ else}
-\end{cases}$$</span></p>
-<h5 id="รหัสเทียม-2">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-2" aria-hidden="true" tabindex="-1">#</a></h5>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> factorial<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span>            <span class="co">// base case</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> n <span class="op">*</span> factorial<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span>     <span class="co">// recursive case</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> factorial<span class="op">(</span><span class="dv">4</span><span class="op">);</span>  <span class="co">// 24</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ลำดับการทำงานของ <code>factorial(4)</code> จะลงไปจนถึง base case ก่อน
+แล้วค่อยคูณกลับขึ้นมา</p>
+<pre><code>factorial(4) = 4 * factorial(3)
+             = 4 * (3 * factorial(2))
+             = 4 * (3 * (2 * factorial(1)))
+             = 4 * (3 * (2 * 1))
+             = 24</code></pre>
+<p>ระหว่างนั้น call stack ลึกสุด 4 ชั้น:
+<code>factorial(4) → factorial(3) → factorial(2) → factorial(1)</code></p>
+<h4 id="ตัวอย่าง-fibonacci">ตัวอย่าง: Fibonacci<a class="heading-anchor" href="#ตัวอย่าง-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
+<p><span class="math display">f(n) = \begin{cases}
+n &amp; \text{ if }n \leq 1 \\
+f(n - 1) + f(n - 2) &amp; \text{ otherwise}
+\end{cases}</span></p>
+<p>ลำดับคือ <span class="math inline">0,1,1,2,3,5,8,13,\cdots</span></p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fibo<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span> <span class="co">// base case</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fibo<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> fibo<span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> fibo<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>จะได้ output</p>
-<pre><code>3</code></pre>
-<h4 id="โจทย์ตัวอย่าง-permutation">โจทย์ตัวอย่าง - Permutation<a class="heading-anchor" href="#โจทย์ตัวอย่าง-permutation" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="เนื้อหาโจทย์-3">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-3" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงหาลำดับที่มีสมาชิก <span class="math inline"><em>n</em></span> ตัว
-โดยที่แต่ละสมาชิกมีค่าน้อยกว่า <span class="math inline"><em>r</em></span>
-ทั้งหมดที่เป็นไปได้ (จำเป็นต้องใช้ array)</p>
-<h5 id="แนวคิด-4">แนวคิด<a class="heading-anchor" href="#แนวคิด-4" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>เป็นการค้นทุกวิธีที่เป็นไปได้ (complete search) ซึ่งจะนำ recursive function
-เข้ามาใช้ โดยเริ่มต้นด้วยการสร้างลำดับที่ยังไม่มีสมาชิกใด ๆ และค่อย ๆ
-เติมสมาชิกเข้าไปในลำดับนั้น</p>
-<p>base case จะเป็นเงื่อนไขเมื่อลำดับมีสมาชิกครบ <span
-class="math inline"><em>n</em></span></p>
-<p>recursive case จะเป็นการเติมสมาชิกลำดับถัดไปด้วยทุกค่าที่เป็นไปได้</p>
-<h5 id="รหัสเทียม-3">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-3" aria-hidden="true" tabindex="-1">#</a></h5>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fib<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span> n<span class="op">;</span>              <span class="co">// base case</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> fib<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> fib<span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span>    <span class="co">// recursive case เรียกตัวเองสองครั้ง</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> fib<span class="op">(</span><span class="dv">4</span><span class="op">);</span>  <span class="co">// 3</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ฟังก์ชันนี้เรียกตัวเอง <strong>สองครั้ง</strong> การเรียกจึงแตกกิ่งเป็นต้นไม้ (call
+tree) และมีการคำนวณ <code>fib</code> ของค่าเดิมซ้ำหลายรอบ</p>
+<p>ลองกด “ถัดไป” เพื่อดูการเรียกทีละครั้ง กล่องสีแดงคือการคำนวณซ้ำ จากนั้นเปิด “ใช้
+memoization” แล้วสังเกตว่าต้นไม้เล็กลงแค่ไหน และลองเปลี่ยนเป็น
+<code>factorial</code> เพื่อเทียบกับฟังก์ชันที่เรียกตัวเองครั้งเดียว</p>
+<div class="widget" data-widget="recursion-tree"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<h4 id="วิเคราะห์ประสิทธิภาพ">วิเคราะห์ประสิทธิภาพ<a class="heading-anchor" href="#วิเคราะห์ประสิทธิภาพ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>เวลาที่ใช้ <span class="math inline">\approx</span> (จำนวนครั้งที่เรียกฟังก์ชัน)
+<span class="math inline">\times</span>
+(งานที่ทำในแต่ละครั้งไม่นับการเรียกย่อย)</p>
+<table>
+<thead>
+<tr>
+<th><p>ฟังก์ชัน</p></th>
+<th><p>จำนวนการเรียก</p></th>
+<th><p>Time</p></th>
+<th><p>ความลึกของ stack</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><code>factorial(n)</code></p></td>
+<td><p><span class="math inline">n</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
+</tr>
+<tr>
+<td><p><code>fib(n)</code></p></td>
+<td><p>โตประมาณ <span class="math inline">1.6^{n}</span></p></td>
+<td><p><span class="math inline">O\left( 2^{n} \right)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
+</tr>
+<tr>
+<td><p><code>fib(n)</code> + memoization</p></td>
+<td><p><span class="math inline">2n - 1</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
+</tr>
+<tr>
+<td><p><code>gen(0)</code> สร้างลำดับยาว <span
+class="math inline">n</span> ค่า <span class="math inline">0..r -
+1</span></p></td>
+<td><p><span class="math inline">\approx r^{n}</span></p></td>
+<td><p><span class="math inline">O\left( nr^{n} \right)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
+</tr>
+</tbody>
+</table>
+<p><code>fib(40)</code> แบบไม่จำคำตอบเรียกฟังก์ชันกว่า 300 ล้านครั้ง
+การจำคำตอบที่เคยคำนวณ (memoization) คือจุดเริ่มต้นของ Dynamic Programming</p>
+<h4 id="complete-search-ด้วย-recursion">Complete search ด้วย recursion<a class="heading-anchor" href="#complete-search-ด้วย-recursion" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Recursion เหมาะกับการลองทุกความเป็นไปได้ (complete search)
+โดยตัดสินใจทีละตำแหน่ง</p>
+<p><strong>โจทย์</strong>: พิมพ์ลำดับยาว <span class="math inline">n</span>
+ทั้งหมดที่แต่ละตัวมีค่า <span class="math inline">0</span> ถึง <span
+class="math inline">r - 1</span></p>
+<ul>
+<li><p><strong>State</strong>: <code>d</code> =
+จำนวนตำแหน่งที่เติมแล้ว</p></li>
+<li><p><strong>Base case</strong>: <code>d == n</code> แปลว่าได้ลำดับครบ
+ให้พิมพ์ออกมา</p></li>
+<li><p><strong>Recursive case</strong>: ลองใส่ทุกค่าที่ตำแหน่ง <code>d</code>
+แล้วเรียก <code>gen(d + 1)</code></p></li>
+</ul>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> perm<span class="op">(</span><span class="dt">int</span> d<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>d <span class="op">==</span> n<span class="op">)</span> <span class="op">{</span> <span class="co">// base case</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      cout <span class="op">&lt;&lt;</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> r<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    a<span class="op">[</span>d<span class="op">]</span> <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    perm<span class="op">(</span>d <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">,</span> n<span class="op">);</span> <span class="co">// recursive case</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span> perm<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">3</span><span class="op">);</span> <span class="op">}</span></span></code></pre>
-<p>จะได้ output</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n <span class="op">=</span> <span class="dv">3</span><span class="op">,</span> r <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gen<span class="op">(</span><span class="dt">int</span> d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>d <span class="op">==</span> n<span class="op">)</span> <span class="op">{</span>  <span class="co">// base case: ได้ลำดับครบ n ตัว</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> cout <span class="op">&lt;&lt;</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span><span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> v <span class="op">&lt;</span> r<span class="op">;</span> v<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    a<span class="op">[</span>d<span class="op">]</span> <span class="op">=</span> v<span class="op">;</span>    <span class="co">// เลือก</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    gen<span class="op">(</span>d <span class="op">+</span> <span class="dv">1</span><span class="op">);</span>  <span class="co">// ตัดสินใจตำแหน่งถัดไป</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span> gen<span class="op">(</span><span class="dv">0</span><span class="op">);</span> <span class="op">}</span></span></code></pre>
+<p>ผลลัพธ์มี <span class="math inline">3^{3} = 27</span> บรรทัด</p>
 <pre><code>0 0 0
 0 0 1
 ...
 2 2 2</code></pre>
-<h4 id="ปัญหาที่พบบ่อย">ปัญหาที่พบบ่อย<a class="heading-anchor" href="#ปัญหาที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="overflow">Overflow<a class="heading-anchor" href="#overflow" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>กรณีไม่มี base case หรือ base case ไม่ครอบคลุม จะทำให้เกิดการ overflow ได้</p>
+<h5 id="backtracking-เลือก-แล้วยกเลิก">Backtracking: เลือก แล้วยกเลิก<a class="heading-anchor" href="#backtracking-เลือก-แล้วยกเลิก" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้ามีเงื่อนไข เช่น ห้ามใช้ค่าซ้ำ ให้เก็บสถานะว่าใช้อะไรไปแล้ว และ
+<strong>คืนสถานะ</strong> หลังเรียกเสร็จ เพื่อให้ทางเลือกถัดไปเริ่มจากสถานะเดิม</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> factorial<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> n <span class="op">*</span> factorial<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span> <span class="op">}</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> factorial<span class="op">(</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>จะเกิด error เช่น:</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> used<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> perm<span class="op">(</span><span class="dt">int</span> d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>d <span class="op">==</span> n<span class="op">)</span> <span class="op">{</span> <span class="co">/* พิมพ์ a[0..n-1] */</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> v <span class="op">&lt;</span> n<span class="op">;</span> v<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>used<span class="op">[</span>v<span class="op">])</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>   <span class="co">// เลือก</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    a<span class="op">[</span>d<span class="op">]</span> <span class="op">=</span> v<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    perm<span class="op">(</span>d <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span>  <span class="co">// ยกเลิก (backtrack)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>จำนวน permutation คือ <span class="math inline">n!</span> จึงใช้ได้กับ
+<span class="math inline">n</span> ไม่เกินประมาณ 10 (ดูเพิ่มในบท Search)</p>
+<h4 id="ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย<a class="heading-anchor" href="#ข้อผิดพลาดที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="ไม่มี-base-case-หรือปัญหาไม่เล็กลง">ไม่มี base case หรือปัญหาไม่เล็กลง<a class="heading-anchor" href="#ไม่มี-base-case-หรือปัญหาไม่เล็กลง" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ฟังก์ชันจะเรียกตัวเองไม่รู้จบจน call stack เต็ม (stack overflow)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> factorial<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> n <span class="op">*</span> factorial<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span> <span class="op">}</span>  <span class="co">// ไม่มี base case</span></span></code></pre>
+<p>จะเกิด error เช่น</p>
 <pre><code>&quot;./a.out&quot; terminated by signal SIGSEGV (Address boundary error)</code></pre>
+<h5 id="ลืมคืนสถานะใน-backtracking">ลืมคืนสถานะใน backtracking<a class="heading-anchor" href="#ลืมคืนสถานะใน-backtracking" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้าลืม <code>used[v] = false</code> ทางเลือกถัดไปจะเห็นสถานะผิด
+และคำตอบหายไปบางส่วน</p>
+<h5 id="recursion-ลึกเกินไป">Recursion ลึกเกินไป<a class="heading-anchor" href="#recursion-ลึกเกินไป" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>แม้จะถูกต้อง แต่ถ้าความลึกถึงหลักแสนหรือล้านชั้น (เช่น DFS บน path ยาว) อาจ stack
+overflow ได้ ขึ้นกับขนาด stack ของ grader ถ้าเสี่ยงให้เปลี่ยนเป็น loop หรือใช้ stack
+เอง</p>
+<h4 id="ลองคิด">ลองคิด<a class="heading-anchor" href="#ลองคิด" aria-hidden="true" tabindex="-1">#</a></h4>
+<ol>
+<li><p><code>fib(5)</code> แบบไม่ใช้ memoization เรียกฟังก์ชันทั้งหมดกี่ครั้ง
+(ตรวจคำตอบกับ widget ด้านบนได้)</p></li>
+<li><p>ถ้าเปลี่ยน base case ของ <code>factorial</code> เป็น
+<code>if (n == 1) return 1;</code> จะเกิดอะไรขึ้นเมื่อเรียก
+<code>factorial(0)</code></p></li>
+<li><p>เขียน recursive function กลับข้อความ (reverse string) โดยไม่ใช้
+loop</p></li>
+</ol>
+<h5 id="เฉลย">เฉลย<a class="heading-anchor" href="#เฉลย" aria-hidden="true" tabindex="-1">#</a></h5>
+<ol>
+<li><p>15 ครั้ง และเป็นการคำนวณซ้ำ 9 ครั้ง</p></li>
+<li><p>ไม่มีวันถึง base case เพราะ <span class="math inline">n</span> ลดเป็น
+<span class="math inline">- 1, - 2,\cdots</span> ไปเรื่อย ๆ จน stack
+overflow</p></li>
+<li><p>ตัวอย่าง: ถ้า <code>s</code> ว่าง คืน <code>""</code> ไม่เช่นนั้นคืน
+<code>rev(s.substr(1)) + s[0]</code></p></li>
+</ol>
 <h4 id="โจทย์แนะนำ">โจทย์แนะนำ<a class="heading-anchor" href="#โจทย์แนะนำ" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>หาลำดับ permutation โดยมีเงื่อนไขที่แตกต่างกัน</p>
+<li><p>ลำดับยาว 5 ที่แต่ละหลักมีค่าไม่เกิน 6 โดยเพิ่มเงื่อนไขทีละข้อ</p>
 <ul>
-<li><p>จำนวน 5 หลัก และแต่ละหลักมีค่าไม่เกิน 6</p></li>
 <li><p>ตัวเลขก่อนหน้าต้องน้อยกว่าหรือเท่ากับตัวถัดไป</p></li>
 <li><p>ตัวเลขห้ามซ้ำ</p></li>
 </ul></li>
-<li><p>กลับข้อความ (reverse string) ห้ามใช้ loop, array หรือ string</p>
+<li><p>กลับข้อความ (reverse string) โดยไม่ใช้ loop</p>
 <ul>
-<li><p>กลับทั้งข้อความ เช่น: “iamastring” เป็น “gnirtsamai”</p></li>
-<li><p>กลับเฉพาะภายในคำที่คั่นด้วยเว้นวรรค เช่น: “i am a string” เป็น “i ma a
-gnirts”</p></li>
+<li><p>กลับทั้งข้อความ เช่น <code>iamastring</code> เป็น
+<code>gnirtsamai</code></p></li>
+<li><p>กลับเฉพาะภายในคำที่คั่นด้วยเว้นวรรค เช่น <code>i am a string</code> เป็น
+<code>i ma a gnirts</code></p></li>
 </ul></li>
-<li><p>Programming.in.th</p>
-<ul>
-<li><p>0019 Perket</p></li>
-<li><p>0039 Food</p></li>
-</ul></li>
-<li><p>cses.fi</p>
-<ul>
-<li><p>2205 Gray Code</p></li>
-<li><p>2165 Tower of Hanoi</p></li>
-<li><p>1622 Creating Strings</p></li>
-<li><p>1623 Apple Division</p></li>
-</ul></li>
+<li><p>programming.in.th: 0019 Perket, 0039 Food</p></li>
 </ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
@@ -303,14 +352,17 @@ Hanoi</a></p></li>
 Strings</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1623">Apple
 Division</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2205">Gray
+Code</a></p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/recursion-tree.js"></script>
             <div class="page-nav">
-                <a href="1003_syntax.html" class="prev">C++ Syntax</a>
-                <a href="1005_function.html" class="next">Function</a>
+                <a href="1005_function.html" class="prev">Function</a>
+                <a href="1001_basic.html" class="next">การเขียนโปรแกรมเชิงแข่งขัน</a>
             </div>
             </article>
         </main>

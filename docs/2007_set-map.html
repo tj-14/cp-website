@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="set และ map ใน STL นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ…">
+    <meta name="description" content="set และ map ใน STL เก็บข้อมูล เรียงลำดับเสมอ โดยภายในเป็น red-black tree (self-balancing BST แบบหนึ่ง ดูบท Binary Search Tree) ความสูงจึงเป็น O\left( \log n…">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Set and Map | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="set และ map ใน STL นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ…">
+    <meta property="og:description" content="set และ map ใน STL เก็บข้อมูล เรียงลำดับเสมอ โดยภายในเป็น red-black tree (self-balancing BST แบบหนึ่ง ดูบท Binary Search Tree) ความสูงจึงเป็น O\left( \log n…">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2007_set-map.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2007_set-map.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -107,100 +110,148 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
-                    <li><a href="#ข้อแตกต่าง">ข้อแตกต่าง</a></li>
-                    <li><a href="#set-example">Set example</a></li>
-                    <li><a href="#map-example">Map example</a></li>
+                    <li><a href="#set">set</a></li>
+                    <li><a href="#multiset">multiset</a></li>
+                    <li><a href="#map">map</a></li>
+                    <li><a href="#ความเร็ว">ความเร็ว</a></li>
+                    <li><a href="#ตัวอย่าง-นับความถี่และหาค่าที่พบบ่อยที่สุด">ตัวอย่าง: นับความถี่และหาค่าที่พบบ่อยที่สุด</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><code>set</code> และ <code>map</code> ใน STL
-นั้นมีความคล้ายกันในแง่ที่ทั้งคู่ใช้โครงสร้างข้อมูล Red Black Tree (self balancing BST
-ประเภทหนึ่ง) โดยใช้เวลาในการ search, insert และ delete เพียง <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p>
-<h4 id="ข้อแตกต่าง">ข้อแตกต่าง<a class="heading-anchor" href="#ข้อแตกต่าง" aria-hidden="true" tabindex="-1">#</a></h4>
+<p><code>set</code> และ <code>map</code> ใน STL เก็บข้อมูล
+<strong>เรียงลำดับเสมอ</strong> โดยภายในเป็น red-black tree (self-balancing
+BST แบบหนึ่ง ดูบท Binary Search Tree) ความสูงจึงเป็น <span
+class="math inline">O\left( \log n \right)</span> ทำให้ค้นหา เพิ่ม และลบได้ใน
+<span class="math inline">O\left( \log n \right)</span></p>
 <ul>
-<li><p><code>set</code> ใช้เก็บ keys แต่ <code>map</code> ใช้เก็บคู่
-key-value</p></li>
-<li><p>ตัวอย่างเช่น หากเราต้องการแสดงค่าสมาชิกที่แตกต่างกันเท่านั้น เราสามารถใช้ set
-ได้เนื่องจากต้องการเก็บแค่ key</p></li>
-<li><p>แต่ถ้าหากเราต้องการเก็บความถี่ของแต่ละสมาชิกด้วย เราควรใช้ map เพื่อเก็บ key
-ตามสมาชิกโดย value เป็นความถี่</p></li>
+<li><p><code>set</code> เก็บ <strong>key</strong> ที่ไม่ซ้ำกัน
+เหมือนเซตในคณิตศาสตร์</p></li>
+<li><p><code>multiset</code> เหมือน <code>set</code> แต่เก็บค่าซ้ำได้</p></li>
+<li><p><code>map</code> เก็บคู่ <strong>key-value</strong> ที่ key ไม่ซ้ำกัน
+เหมือน dictionary ใน Python หรือ array ที่ index เป็นอะไรก็ได้</p></li>
 </ul>
-<h4 id="set-example">Set example<a class="heading-anchor" href="#set-example" aria-hidden="true" tabindex="-1">#</a></h4>
+<h4 id="set">set<a class="heading-anchor" href="#set" aria-hidden="true" tabindex="-1">#</a></h4>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CPP program to demonstrate working of set</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span><span class="pp"> </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> s1<span class="op">;</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// self-balancing binary search tree</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// binary search tree ที่มีความสูงไม่เกิน O(log n) เสมอ</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">2</span><span class="op">);</span> <span class="co">// log(n)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">10</span><span class="op">);</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">5</span><span class="op">);</span> </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">3</span><span class="op">);</span> </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  s1<span class="op">.</span>insert<span class="op">(</span><span class="dv">6</span><span class="op">);</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Elements in set:</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">:</span> s1<span class="op">)</span> </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> it <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span> <span class="co">// Sorted </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>output</p>
-<pre><code>Elements in set:
-2 3 5 6</code></pre>
-<h4 id="map-example">Map example<a class="heading-anchor" href="#map-example" aria-hidden="true" tabindex="-1">#</a></h4>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> s<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>s<span class="op">.</span>insert<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>s<span class="op">.</span>insert<span class="op">(</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>s<span class="op">.</span>insert<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>s<span class="op">.</span>insert<span class="op">(</span><span class="dv">5</span><span class="op">);</span>                 <span class="co">// ซ้ำ: ไม่มีผล</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> s<span class="op">)</span> cout <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span><span class="op">;</span>  <span class="co">// 2 5 10 (เรียงเสมอ)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> s<span class="op">.</span>size<span class="op">();</span>            <span class="co">// 3</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> s<span class="op">.</span>count<span class="op">(</span><span class="dv">5</span><span class="op">);</span>          <span class="co">// 1 (มี) หรือ 0 (ไม่มี)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>s<span class="op">.</span>erase<span class="op">(</span><span class="dv">5</span><span class="op">);</span>                  <span class="co">// ลบ 5</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">*</span>s<span class="op">.</span>begin<span class="op">();</span>          <span class="co">// 2 = ค่าน้อยสุด</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">*</span>s<span class="op">.</span>rbegin<span class="op">();</span>         <span class="co">// 10 = ค่ามากสุด</span></span></code></pre>
+<h5 id="ค้นหาค่าที่ใกล้ที่สุด">ค้นหาค่าที่ใกล้ที่สุด<a class="heading-anchor" href="#ค้นหาค่าที่ใกล้ที่สุด" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เพราะข้อมูลเรียงอยู่แล้ว จึงหาค่าแรกที่ <span class="math inline">\geq x</span>
+หรือ <span class="math inline">&gt; x</span> ได้ใน <span
+class="math inline">O\left( \log n \right)</span> ใช้บ่อยมากในการแข่งขัน</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CPP program to demonstrate working of map</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  map<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> m<span class="op">;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// คล้ายๆ dictionary ในภาษา python</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// โครงสร้างเดียวกับ set ก็คือ self-balancing binary search tree</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  m<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// Insertion by indexing</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Insertion of pair by make_pair</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  m<span class="op">.</span>insert<span class="op">(</span>make_pair<span class="op">(</span><span class="dv">8</span><span class="op">,</span> <span class="dv">5</span><span class="op">));</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Elements in m:</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">:</span> m<span class="op">)</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;[ &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>first <span class="op">&lt;&lt;</span> <span class="st">&quot;, &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>second <span class="op">&lt;&lt;</span> <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// Sorted</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  map<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> m2<span class="op">;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  m2<span class="op">[</span><span class="st">&quot;tt&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> <span class="co">// log(n)</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  m2<span class="op">[</span><span class="st">&quot;aw&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="dv">2399</span><span class="op">;</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Elements in m2:</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">:</span> m2<span class="op">)</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;[ &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>first <span class="op">&lt;&lt;</span> <span class="st">&quot;, &quot;</span> <span class="op">&lt;&lt;</span> it<span class="op">.</span>second <span class="op">&lt;&lt;</span> <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="co">// Sorted</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>output</p>
-<pre><code>Elements in m:
-[ 1, 2]
-[ 8, 5]
-Elements in m2:
-[ aw, 2399]
-[ tt, 5]</code></pre>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> s <span class="op">=</span> <span class="op">{</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span><span class="op">};</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> s<span class="op">.</span>lower_bound<span class="op">(</span><span class="dv">15</span><span class="op">);</span>  <span class="co">// ตัวแรกที่ &gt;= 15</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">*</span>it<span class="op">;</span>                  <span class="co">// 20</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>it <span class="op">=</span> s<span class="op">.</span>upper_bound<span class="op">(</span><span class="dv">30</span><span class="op">);</span>       <span class="co">// ตัวแรกที่ &gt; 30</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>it <span class="op">==</span> s<span class="op">.</span>end<span class="op">())</span> cout <span class="op">&lt;&lt;</span> <span class="st">&quot;none&quot;</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> jt <span class="op">=</span> s<span class="op">.</span>lower_bound<span class="op">(</span><span class="dv">25</span><span class="op">);</span>  <span class="co">// ค่าที่มากที่สุดที่ &lt; 25: ถอยหนึ่งตำแหน่ง</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>jt <span class="op">!=</span> s<span class="op">.</span>begin<span class="op">())</span> cout <span class="op">&lt;&lt;</span> <span class="op">*</span>prev<span class="op">(</span>jt<span class="op">);</span>  <span class="co">// 20</span></span></code></pre>
+<p>ต้องใช้ <code>s.lower_bound(x)</code> ไม่ใช่
+<code>lower_bound(s.begin(), s.end(), x)</code> เพราะแบบหลังกับ set ใช้เวลา
+<span class="math inline">O(n)</span></p>
+<h4 id="multiset">multiset<a class="heading-anchor" href="#multiset" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>multiset<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> ms <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> ms<span class="op">.</span>count<span class="op">(</span><span class="dv">5</span><span class="op">);</span>      <span class="co">// 2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ms<span class="op">.</span>erase<span class="op">(</span>ms<span class="op">.</span>find<span class="op">(</span><span class="dv">5</span><span class="op">));</span>     <span class="co">// ลบ 5 ออกหนึ่งตัว</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> ms<span class="op">.</span>count<span class="op">(</span><span class="dv">5</span><span class="op">);</span>      <span class="co">// 1</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ms<span class="op">.</span>erase<span class="op">(</span><span class="dv">5</span><span class="op">);</span>              <span class="co">// ระวัง: ลบ 5 ออก *ทุกตัว*</span></span></code></pre>
+<p><code>ms.erase(x)</code> ลบทุกตัวที่เท่ากับ <code>x</code>
+ถ้าต้องการลบตัวเดียวต้องใช้ <code>ms.erase(ms.find(x))</code> (ตรวจก่อนว่า
+<code>find</code> ไม่คืน <code>end()</code>)</p>
+<h4 id="map">map<a class="heading-anchor" href="#map" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>map<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> cnt<span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cnt<span class="op">[</span><span class="st">&quot;apple&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span>          <span class="co">// เพิ่มหรือแก้ค่า</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>cnt<span class="op">[</span><span class="st">&quot;banana&quot;</span><span class="op">]++;</span>           <span class="co">// key ที่ยังไม่มี จะถูกสร้างด้วยค่า 0 ก่อน แล้ว ++ เป็น 1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>key<span class="op">,</span> value<span class="op">]</span> <span class="op">:</span> cnt<span class="op">)</span> <span class="op">{</span>   <span class="co">// เรียงตาม key</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> key <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span> <span class="op">&lt;&lt;</span> value <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">// apple 3</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">// banana 1</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>cnt<span class="op">.</span>count<span class="op">(</span><span class="st">&quot;cherry&quot;</span><span class="op">))</span> cout <span class="op">&lt;&lt;</span> <span class="st">&quot;found&quot;</span><span class="op">;</span>  <span class="co">// ตรวจว่ามี key โดยไม่สร้างใหม่</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>cnt<span class="op">.</span>erase<span class="op">(</span><span class="st">&quot;apple&quot;</span><span class="op">);</span></span></code></pre>
+<p>ระวัง: แค่ <strong>อ่าน</strong> <code>cnt["cherry"]</code> ก็สร้าง key
+<code>"cherry"</code> ด้วยค่า 0 ขึ้นมาทันที ถ้าต้องการแค่ตรวจให้ใช้
+<code>count</code> หรือ <code>find</code></p>
+<h4 id="ความเร็ว">ความเร็ว<a class="heading-anchor" href="#ความเร็ว" aria-hidden="true" tabindex="-1">#</a></h4>
+<table>
+<thead>
+<tr>
+<th><p>Operation</p></th>
+<th><p>set / map</p></th>
+<th><p>vector ที่ไม่เรียง</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>insert</p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O(1)</span> ท้าย</p></td>
+</tr>
+<tr>
+<td><p>ค้นหาว่ามี <span class="math inline">x</span> หรือไม่</p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p>erase ค่า <span class="math inline">x</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p>ค่าน้อยสุด/มากสุด</p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+<tr>
+<td><p>ค่าแรกที่ <span class="math inline">\geq x</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>ถ้าไม่ต้องการลำดับ <code>unordered_set</code> และ
+<code>unordered_map</code> ใช้ hash table (ดูบท Hash Table) เร็วกว่าเฉลี่ย
+<span class="math inline">O(1)</span> แต่ไม่มี <code>lower_bound</code>
+และอาจช้าลงมากถ้าถูกออกแบบ input มาให้ชนกัน</p>
+<h4 id="ตัวอย่าง-นับความถี่และหาค่าที่พบบ่อยที่สุด">ตัวอย่าง: นับความถี่และหาค่าที่พบบ่อยที่สุด<a class="heading-anchor" href="#ตัวอย่าง-นับความถี่และหาค่าที่พบบ่อยที่สุด" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>string<span class="op">&gt;</span> words <span class="op">=</span> <span class="op">{</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">,</span> <span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="st">&quot;c&quot;</span><span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">,</span> <span class="st">&quot;a&quot;</span><span class="op">};</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>map<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> freq<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="at">const</span> string<span class="op">&amp;</span> w <span class="op">:</span> words<span class="op">)</span> freq<span class="op">[</span>w<span class="op">]++;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>string best<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>w<span class="op">,</span> c<span class="op">]</span> <span class="op">:</span> freq<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>best<span class="op">.</span>empty<span class="op">()</span> <span class="op">||</span> c <span class="op">&gt;</span> freq<span class="op">[</span>best<span class="op">])</span> best <span class="op">=</span> w<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> best <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span> <span class="op">&lt;&lt;</span> freq<span class="op">[</span>best<span class="op">];</span>  <span class="co">// a 3</span></span></code></pre>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
 <li><p><a href="https://cses.fi/problemset/task/1621">Distinct
-Numbers</a></p></li>
-<li><p><a
-href="https://cses.fi/problemset/task/1141">Playlist</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1619">Restaurant
-Customers</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/2183">Missing Coin
-Sum</a></p></li>
+Numbers</a> (<code>set</code>)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1091">Concert
+Tickets</a> (<code>multiset</code> + <code>upper_bound</code>)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1141">Playlist</a>
+(<code>map</code> หรือ <code>set</code> กับสองตัวชี้)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1163">Traffic Lights</a>
+(<code>set</code> + <code>multiset</code>)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a

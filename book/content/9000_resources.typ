@@ -6,7 +6,7 @@
 
 === สำหรับก่อน สอวน. ค่าย 1
 
-ถ้าหากไม่เคยเขียนภาษา C++ มาก่อน แนะนำให้เริ่มจากหนังสือ C++ Language Tutorial #footnote[https://cplusplus.com/files/tutorial.pdf] แล้วใช้หนังสือ Competitive Programmer's Handbook #footnote[https://cses.fi/book/book.pdf] 
+ถ้าไม่เคยเขียนภาษา C++ มาก่อน แนะนำให้เริ่มจาก #link("https://cplusplus.com/files/tutorial.pdf")[C++ Language Tutorial] แล้วต่อด้วย #link("https://cses.fi/book/book.pdf")[Competitive Programmer's Handbook] ซึ่งเป็นหนังสือหลักของคู่มือนี้
 
 เป้าหมายของช่วงนี้คือเขียนโปรแกรมพื้นฐานได้คล่อง
 
@@ -45,18 +45,22 @@
 ในช่วงนี้ควรเริ่มอ่านเฉลยหลังพยายามเองพอสมควร เพราะสิ่งสำคัญคือการสะสม pattern ของโจทย์
 
 === สำหรับขั้นต่อไป
-- หากไม่เข้าใจแล้วอยากอ่านเพิ่มเป็นหัวข้อ
- - USACO Guide #footnote[https://usaco.guide/]
- - CP-Algorithm #footnote[https://cp-algorithms.com/]
-- เว็บไซต์สำหรับทำโจทย์ (graders)
- - https://cses.fi/problemset/ แหล่งเดียวกับหนังสือหลัก
- - https://beta.programming.in.th/ เว็บหลักในไทย
- - https://otog.in.th/ เว็บที่นักเรียน สอวน ช่วยกันทำขึ้นมาเอง
- - https://codeforces.com/ เว็บหลักในต่างประเทศ
- - Kattis #footnote[https://open.kattis.com/]
- - AtCoder #footnote[https://atcoder.jp/] (ใช้ร่วมกับ Kenkoooo #footnote[https://kenkoooo.com/atcoder#/table/])
-- หนังสือเพิ่มเติม (เนื้อหาจะซ้ำซ้อนกับด้านบน) https://usaco.guide/PAPS.pdf
-- การบรรยายวิชา การออกแบบและวิเคราะห์อัลกอริทึม โดย สมชาย ประสิทธิ์จูตระกูล #footnote[https://www.youtube.com/watch?v=1S0mP_I8YzU&list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m]
+
+==== อ่านเพิ่มเป็นหัวข้อ
+
+- #link("https://usaco.guide/")[USACO Guide] เนื้อหาเรียงตามระดับ พร้อมโจทย์
+- #link("https://cp-algorithms.com/")[CP-Algorithms] อธิบายอัลกอริทึมละเอียดพร้อม implementation
+- #link("https://usaco.guide/PAPS.pdf")[Principles of Algorithmic Problem Solving] (เนื้อหาซ้อนกับ Competitive Programmer's Handbook บางส่วน)
+- #link("https://www.youtube.com/watch?v=1S0mP_I8YzU&list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m")[การออกแบบและวิเคราะห์อัลกอริทึม] โดย อ.สมชาย ประสิทธิ์จูตระกูล
+
+==== เว็บไซต์ทำโจทย์ (graders)
+
+- #link("https://cses.fi/problemset/")[CSES Problem Set] ชุดโจทย์คู่กับหนังสือหลัก เรียงตามหัวข้อ
+- #link("https://programming.in.th/")[programming.in.th] เว็บหลักในไทย มีโจทย์ TOI และ สอวน.
+- #link("https://otog.in.th/")[OTOG] เว็บที่นักเรียน สอวน. ช่วยกันทำ
+- #link("https://codeforces.com/")[Codeforces] แข่งออนไลน์สม่ำเสมอ เหมาะฝึกความเร็ว
+- #link("https://atcoder.jp/")[AtCoder] โจทย์คุณภาพดี ใช้คู่กับ #link("https://kenkoooo.com/atcoder/")[AtCoder Problems] เพื่อเลือกโจทย์ตามระดับ
+- #link("https://open.kattis.com/")[Kattis]
 
 === วิธีใช้เวลาอ่านเฉลย
 

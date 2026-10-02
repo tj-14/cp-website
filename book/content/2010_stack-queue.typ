@@ -1,116 +1,153 @@
 #import "@preview/ilm:1.4.0": *
 #import table: cell, header
+#import "widgets.typ": widget
 
 == Stack & Queue
 
-=== Stack
-
-- เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลสามารถเข้าและออกได้เพียงทางเดียวที่เรียกว่า *top*
-- stack (กองซ้อน) จะใช้หลักเกณฑ์ LIFO (Last In First Out) ก็คือข้อมูลที่ถูกเพิ่มทีหลังสุดจะเป็นข้อมูลที่จะถูกนำออกก่อน
-- การเพิ่มข้อมูลลงใน stack จะเรียกว่าการ *push* ส่วนการลบข้อมูลจะเรียกว่าการ *pop*
-- ใน stack เราจะมีตัวแปรเก็บตำแหน่งข้อมูลที่เข้าหลังสุดอยู่เสมอ โดยจะเรียกว่า *top*
+Stack และ queue เป็นโครงสร้างข้อมูลเชิงเส้นที่ *จำกัดว่าเพิ่มและนำข้อมูลออกได้ทางไหน* ข้อจำกัดนี้ทำให้ทุก operation เป็น $O(1)$ และตรงกับลักษณะของโจทย์หลายประเภท
 
 #figure(
   image("../assets/diagrams/stack-queue.svg", width: 88%),
   caption: [Stack and queue behavior. Original diagram for this guide.],
 )
 
-=== ตัวอย่างการใช้ vector เพื่อ implement stack
+=== Stack
+
+Stack (กองซ้อน) ทำงานแบบ *LIFO* (Last In, First Out): ข้อมูลที่ใส่หลังสุดถูกนำออกก่อน เหมือนกองจาน เพิ่มและหยิบได้เฉพาะใบบนสุด (*top*)
+
+- `push(x)` ใส่ `x` ไว้บนสุด
+- `pop()` นำตัวบนสุดออก
+- `top()` ดูตัวบนสุด
 
 ```cpp
-#include <bits/stdc++.h>
-
-using namespace std;
-
-void printvec(vector<int> &a) {
-  for (auto x : a)
-    printf("%d ", x);
-  printf("\n");
-}
-
-int main() {
-  // stack
-  vector<int> a;
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(4);
-  printvec(a); // 1 2 3 4
-  a.pop_back();
-  a.pop_back();
-  printvec(a); // 1 2
-}
+stack<int> st;
+st.push(1);
+st.push(2);
+st.push(3);
+cout << st.top() << '\n';  // 3
+st.pop();
+cout << st.top() << '\n';  // 2
+cout << st.size();         // 2
 ```
+
+`vector` ใช้เป็น stack ได้เช่นกันด้วย `push_back`, `pop_back` และ `back` ซึ่งสะดวกเมื่อต้องการวนดูทุกตัวใน stack
+
+ห้าม `top()` หรือ `pop()` ตอน stack ว่าง (runtime error) ให้เช็ค `st.empty()` ก่อนเสมอ
 
 === Queue
 
-- queue (แถวคอย) เป็นโครงสร้างข้อมูลเชิงเส้น โดยข้อมูลจะเข้าได้ทางหนึ่งที่เรียกว่า *rear* และจะถูกนำออกได้ในอีกทางที่เรียกว่า *front*
-- queue จะหลักกร (First In First Out) ก็คือข้อมูลที่ถูกนำเข้าแรกสุดจะเป็นข้อมูลที่ถูกนำออกแรกสุด
-- การเพิ่มข้อมูลเข้า queue จะเรียกว่า *enqueue* และการลบข้อมูลจะเรียกว่า *dequeue*
-- ใน queue นั้นเราจะมีตัวแปรเก็บตำแหน่งสองตำแหน่ง
-    - *front* ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า *แรก* สุด
-    - *rear* ในการเก็บข้อมูลปัจจุบันที่ถูกนำเข้า *หลัง* สุด
-
-ดูภาพรวม queue ในรูปเดียวกับ stack ด้านบน
-
-=== Stack vs Queue
-
-#table(
-    columns: 2,
-    header(
-	[Stack],
-	[Queue],
-    ),
-    [ LIFO ],[ FIFO ],
-    [ one pointer (top) ],[ two pointers (front, rear) ],
-    [ push ],[ enqueue ],
-    [ pop ],[ dequeue ],
-    [ recursion ],[ sequential ],
-)
-
-=== Deque (double-ended queue)
-
-- ใน STL จะมีโครงสร้างข้อมูลชื่อ deque โดยจะเป็นโครงสร้างข้อมูลเชิงเส้นที่สามารถเพิ่มลบข้อมูลได้ทั้งสองทิศทางด้วยคำสั่ง
-    - push_front
-    - push_back
-    - pop_front
-    - pop_back
-
-=== ตัวอย่าง deque
+Queue (แถวคอย) ทำงานแบบ *FIFO* (First In, First Out): ข้อมูลที่เข้าก่อนออกก่อน เหมือนแถวซื้อของ เข้าทางท้าย (*back/rear*) ออกทางหน้า (*front*)
 
 ```cpp
-#include <bits/stdc++.h>
+queue<int> q;
+q.push(1);
+q.push(2);
+q.push(3);
+cout << q.front() << '\n';  // 1
+q.pop();
+cout << q.front() << '\n';  // 2
+```
 
-using namespace std;
+ลองใส่ค่าชุดเดียวกันลงทั้ง stack และ queue แล้วกด pop เพื่อเทียบว่าแต่ละตัวนำค่าใดออก
 
-void printq(deque<int> &a) {
-  for (auto x : a)
-    printf("%d ", x);
-  printf("\n");
-}
+#widget("stack-queue")
 
-int main() {
-  // double-ended queue
-  deque<int> b;
-  b.push_back(1);
-  b.push_back(2);
-  b.push_back(3);
-  b.push_back(4);
-  printq(b); // 1 2 3 4
-  b.pop_front();
-  b.pop_front();
-  printq(b); // 3 4
-  b.pop_back();
-  printq(b); // 3
+#table(
+  columns: 3,
+  header([], [Stack], [Queue]),
+  [หลักการ], [LIFO], [FIFO],
+  [ใส่ข้อมูล], [`push` บนสุด], [`push` ท้ายแถว],
+  [นำออก], [`pop` บนสุด], [`pop` หน้าแถว],
+  [ดูค่า], [`top()`], [`front()`, `back()`],
+  [ใช้บ่อยกับ], [วงเล็บ, DFS, undo, monotonic stack], [BFS, จำลองแถวคอย],
+)
+
+=== Deque
+
+`deque` (double-ended queue) เพิ่มและนำออกได้ *ทั้งสองด้าน* ใน $O(1)$ และเข้าถึง `dq[i]` ได้เหมือน vector
+
+```cpp
+deque<int> dq;
+dq.push_back(1);   // 1
+dq.push_back(2);   // 1 2
+dq.push_front(0);  // 0 1 2
+dq.pop_back();     // 0 1
+dq.pop_front();    // 1
+```
+
+=== การประยุกต์ใช้
+
+==== ตรวจวงเล็บ
+
+ข้อความ `{[()()]}` มีวงเล็บถูกต้องหรือไม่ อ่านทีละตัว ถ้าเป็นวงเล็บเปิดให้ push ถ้าเป็นวงเล็บปิดต้องคู่กับตัวบนสุดของ stack แล้ว pop เมื่ออ่านจบ stack ต้องว่าง
+(เลือกโหมด "ตรวจวงเล็บด้วย stack" ใน widget ด้านบนเพื่อดูทีละขั้น)
+
+```cpp
+bool valid(const string& s) {
+  stack<char> st;
+  for (char c : s) {
+    if (c == '(' || c == '[' || c == '{') {
+      st.push(c);
+    } else {
+      if (st.empty()) return false;
+      char open = st.top();
+      st.pop();
+      if ((c == ')' && open != '(') || (c == ']' && open != '[') ||
+          (c == '}' && open != '{')) return false;
+    }
+  }
+  return st.empty();
 }
 ```
+
+==== Monotonic stack: ค่าที่น้อยกว่าตัวแรกทางซ้าย
+
+โจทย์: สำหรับแต่ละตำแหน่ง $i$ หาตำแหน่ง $j < i$ ที่ใกล้ที่สุดซึ่ง `a[j] < a[i]`
+วิธีตรง ๆ ใช้ $O(n^2)$ แต่ถ้าเก็บ stack ของตำแหน่งที่ค่ายังเรียงจากน้อยไปมาก ทุกตัวจะถูก push และ pop ไม่เกินอย่างละครั้ง จึงเหลือ $O(n)$
+
+```cpp
+vector<int> st;  // เก็บ index, ค่าใน stack เพิ่มขึ้นจากล่างไปบน
+for (int i = 0; i < n; i++) {
+  while (!st.empty() && a[st.back()] >= a[i]) st.pop_back();  // ตัวที่ใหญ่กว่าไม่มีวันเป็นคำตอบอีก
+  int answer = st.empty() ? -1 : st.back();
+  st.push_back(i);
+}
+```
+
+==== Sliding window minimum ด้วย deque
+
+หาค่าน้อยสุดของทุกช่วงยาว $k$ ที่ติดกัน: เก็บ index ใน deque โดยค่ายังเรียงจากน้อยไปมาก ตัวหน้าสุดคือค่าน้อยสุดของ window ปัจจุบัน ใช้เวลา $O(n)$
+
+```cpp
+deque<int> dq;
+for (int i = 0; i < n; i++) {
+  while (!dq.empty() && a[dq.back()] >= a[i]) dq.pop_back();
+  dq.push_back(i);
+  if (dq.front() <= i - k) dq.pop_front();  // หลุดออกจาก window แล้ว
+  if (i >= k - 1) cout << a[dq.front()] << ' ';
+}
+```
+
+==== Queue ในการจำลองและ BFS
+
+Queue เหมาะกับการจำลองสิ่งที่ "มาก่อนได้ก่อน" และเป็นหัวใจของ BFS ในบท Graph Algorithm
+
+=== ลองคิด
+
++ push 1, 2, 3 แล้ว pop หนึ่งครั้ง แล้ว push 4 ถ้าเป็น stack จะเหลืออะไร ถ้าเป็น queue จะเหลืออะไร
++ ทำไม monotonic stack จึงเป็น $O(n)$ ทั้งที่มี `while` ซ้อนอยู่ใน `for`
+
+==== เฉลย
+
++ Stack: 1 2 4 (4 อยู่บนสุด) Queue: 2 3 4 (2 อยู่หน้าสุด)
++ แต่ละ index ถูก push หนึ่งครั้งและ pop ได้ไม่เกินหนึ่งครั้ง จำนวนรอบของ `while` รวมทั้งโปรแกรมจึงไม่เกิน $n$ (amortized analysis)
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1073")[Towers]
-- #link("https://cses.fi/problemset/task/2162")[Josephus Problem I]
-- #link("https://cses.fi/problemset/task/2163")[Josephus Problem II]
+- #link("https://cses.fi/problemset/task/2162")[Josephus Problem I] (queue)
+- #link("https://cses.fi/problemset/task/1645")[Nearest Smaller Values] (monotonic stack)
+- #link("https://cses.fi/problemset/task/3221")[Sliding Window Minimum] (deque)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

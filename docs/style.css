@@ -36,6 +36,10 @@
     --syn-fu: #06287e;
     --syn-er: #f00000;
     --syn-bu: #3465a4;
+    --repeat-surface: #fbe3e1;
+    --repeat-border: #c0392b;
+    --memo-surface: #e3f4e6;
+    --memo-border: #2e8b47;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -74,6 +78,10 @@
         --syn-fu: #dcdcaa;
         --syn-er: #f48fb1;
         --syn-bu: #569cd6;
+        --repeat-surface: #4a2624;
+        --repeat-border: #e57368;
+        --memo-surface: #1f3d29;
+        --memo-border: #6cc785;
     }
 }
 
@@ -624,6 +632,13 @@ footer a:hover {
     font-family: Georgia, 'Times New Roman', serif;
 }
 
+/* Long display formulas scroll instead of widening the page on phones. */
+.content .math.display {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 /* Tables */
 .content table {
     width: 100%;
@@ -648,10 +663,712 @@ footer a:hover {
     background-color: var(--surface-row-hover);
 }
 
+.badge {
+    display: inline-block;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background-color: var(--memo-surface);
+    color: var(--text);
+    border: 1px solid var(--memo-border);
+    font-size: 0.72rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Interactive widgets (book/assets/widgets/*.js) */
+.widget {
+    border: 1px solid var(--border-strong);
+    border-left: 4px solid var(--nav-accent);
+    border-radius: 6px;
+    background-color: var(--surface-alt);
+    padding: 1rem 1.1rem;
+    margin: 1.25rem 0;
+}
+
+.widget-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.widget [hidden] {
+    display: none;
+}
+
+.widget input,
+.widget select {
+    font: inherit;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+.widget input[type="number"] {
+    width: 4.5rem;
+}
+
+.widget button {
+    font: inherit;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    color: var(--nav-link);
+    cursor: pointer;
+}
+
+.widget button:hover:not(:disabled) {
+    background-color: var(--surface-hover);
+}
+
+.widget button:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.widget-table {
+    overflow-x: auto;
+}
+
+.content .widget-table table {
+    width: auto;
+    margin: 0.5rem 0;
+}
+
+.content .widget-table th,
+.content .widget-table td {
+    min-width: 2.2rem;
+    padding: 0.35rem 0.5rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.content .widget-table td.is-path {
+    background-color: var(--memo-surface);
+    box-shadow: inset 0 0 0 2px var(--memo-border);
+}
+
+.content .widget-table td.is-read {
+    background-color: var(--surface-hover);
+    box-shadow: inset 0 0 0 2px var(--link);
+}
+
+.content .widget-table td.is-current {
+    box-shadow: inset 0 0 0 2px var(--nav-accent);
+    font-weight: bold;
+}
+
+.widget-explain,
+.widget-summary {
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    min-height: 1.5em;
+    margin: 0.5rem 0;
+}
+
+.widget-score {
+    color: var(--muted);
+}
+
+.rt-tree svg {
+    display: block;
+    margin: 0.5rem auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 13px;
+}
+
+.rt-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.rt-node rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.rt-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.rt-node .rt-value {
+    fill: var(--muted);
+    font-size: 12px;
+}
+
+.rt-node.is-repeat rect {
+    fill: var(--repeat-surface);
+    stroke: var(--repeat-border);
+}
+
+.rt-node.is-memo rect {
+    fill: var(--memo-surface);
+    stroke: var(--memo-border);
+    stroke-dasharray: 4 3;
+}
+
+.rt-node.is-active rect {
+    stroke: var(--nav-accent);
+    stroke-width: 2.5;
+}
+
+.rt-node.is-current rect {
+    stroke-width: 3.5;
+}
+
+.gt-graph svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.gt-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.gt-edge.is-tree {
+    stroke: var(--nav-accent);
+    stroke-width: 3;
+}
+
+.gt-node circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.gt-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.gt-node .gt-dist {
+    fill: var(--muted);
+    font-size: 12px;
+}
+
+.gt-node.is-frontier circle {
+    stroke: var(--link);
+    stroke-width: 2;
+    stroke-dasharray: 4 3;
+}
+
+.gt-node.is-done circle {
+    fill: var(--surface-hover);
+    stroke: var(--nav-accent);
+    stroke-width: 2;
+    stroke-dasharray: none;
+}
+
+.gt-node.is-current circle {
+    stroke-width: 4;
+}
+
+.gt-node[tabindex="0"] {
+    cursor: pointer;
+}
+
+/* The circle stroke is the focus indicator, so drop the default box outline. */
+.gt-node:focus {
+    outline: none;
+}
+
+.gt-node:focus-visible circle {
+    stroke: var(--link);
+    stroke-width: 4;
+}
+
+.widget input.cx-n {
+    width: 8rem;
+}
+
+.content .cx-table td,
+.content .cx-table th {
+    padding: 0.35rem 0.6rem;
+    white-space: nowrap;
+}
+
+.content .cx-table .cx-bar-cell {
+    min-width: 10rem;
+    width: 30%;
+    background-image: linear-gradient(to right, transparent calc(var(--cx-limit) - 1px),
+            var(--text) calc(var(--cx-limit) - 1px), var(--text) calc(var(--cx-limit) + 1px),
+            transparent calc(var(--cx-limit) + 1px));
+}
+
+.content .cx-table thead .cx-bar-cell {
+    background-image: none;
+    white-space: normal;
+}
+
+.cx-bar {
+    display: block;
+    height: 0.7rem;
+    border-radius: 3px;
+    background-color: var(--border-strong);
+}
+
+.cx-table .is-pass .cx-bar {
+    background-color: var(--memo-border);
+}
+
+.cx-table .is-fail .cx-bar {
+    background-color: var(--repeat-border);
+}
+
+.cx-table tr[role="button"] {
+    cursor: pointer;
+}
+
+.content .cx-table tr.is-picked th {
+    box-shadow: inset 4px 0 0 var(--nav-accent);
+}
+
+.sq-view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    margin: 0.75rem 0;
+}
+
+.sq-col p {
+    margin: 0 0 0.4rem;
+}
+
+.sq-stack {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 4px;
+    min-height: 2rem;
+}
+
+.sq-queue,
+.sq-text {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.sq-item,
+.sq-char {
+    display: inline-block;
+    min-width: 2.2rem;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.sq-item.is-end {
+    border-color: var(--nav-accent);
+    background-color: var(--surface-hover);
+    font-weight: bold;
+}
+
+.sq-char {
+    min-width: 1.6rem;
+    padding: 0.25rem;
+}
+
+.sq-char.is-done {
+    color: var(--muted);
+}
+
+.sq-char.is-current {
+    border-color: var(--nav-accent);
+    border-width: 3px;
+}
+
+.da-cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin: 0.75rem 0;
+}
+
+.da-cell {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.da-cell.is-full {
+    border-style: solid;
+    background-color: var(--surface-hover);
+}
+
+.da-cell.is-new {
+    border-style: solid;
+    border-color: var(--nav-accent);
+    border-width: 2.5px;
+    background-color: var(--surface-hover);
+}
+
+.da-more {
+    align-self: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.hp-tree svg,
+.bst-tree svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.hp-edge,
+.bst-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.hp-node circle,
+.bst-node circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.hp-node text,
+.bst-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.bst-node.is-path circle {
+    stroke: var(--link);
+    stroke-width: 2.5;
+}
+
+.hp-node.is-hl circle,
+.bst-node.is-hl circle {
+    fill: var(--surface-hover);
+    stroke: var(--nav-accent);
+    stroke-width: 3.5;
+}
+
+.hp-array {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+    margin: 0.5rem 0;
+}
+
+.hp-cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 2.2rem;
+    padding: 0.15rem 0.35rem;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.hp-cell small {
+    color: var(--muted);
+    font-size: 0.65rem;
+}
+
+.hp-cell.is-hl {
+    border-color: var(--nav-accent);
+    border-width: 3px;
+    background-color: var(--surface-hover);
+}
+
+.ht-table {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 0.75rem 0;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.ht-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.ht-row.is-hl {
+    background-color: var(--surface-hover);
+    box-shadow: inset 3px 0 0 var(--nav-accent);
+}
+
+.ht-index {
+    min-width: 2rem;
+    color: var(--muted);
+    text-align: right;
+    padding-right: 0.4rem;
+}
+
+.ht-key {
+    display: inline-block;
+    min-width: 2.2rem;
+    padding: 0.15rem 0.4rem;
+    text-align: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+}
+
+.ht-row.is-hl .ht-key {
+    border-color: var(--nav-accent);
+}
+
+.ht-arrow,
+.ht-empty {
+    color: var(--muted);
+}
+
+.qz-q {
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.qz-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.widget .qz-option.is-right {
+    border-color: var(--memo-border);
+    background-color: var(--memo-surface);
+    color: var(--text);
+    opacity: 1;
+}
+
+.widget .qz-option.is-wrong {
+    border-color: var(--repeat-border);
+    background-color: var(--repeat-surface);
+    color: var(--text);
+    opacity: 1;
+}
+
+.iv-timeline svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 12px;
+}
+
+.iv-job rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.iv-job text {
+    fill: var(--text);
+}
+
+.iv-time,
+.iv-tick {
+    text-anchor: middle;
+}
+
+.iv-tick {
+    fill: var(--muted);
+    font-size: 11px;
+}
+
+.iv-job.is-chosen rect {
+    fill: var(--memo-surface);
+    stroke: var(--memo-border);
+}
+
+.iv-job.is-rejected rect {
+    fill: var(--repeat-surface);
+    stroke: var(--repeat-border);
+    stroke-dasharray: 4 3;
+}
+
+.iv-job.is-current rect {
+    stroke-width: 3.5;
+}
+
+.content .ps-grid table {
+    width: auto;
+    margin: 0.5rem 0;
+}
+
+.content .ps-grid th,
+.content .ps-grid td {
+    min-width: 2.4rem;
+    padding: 0.35rem 0.5rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.content .ps-pick td {
+    cursor: pointer;
+}
+
+.content .ps-grid td.is-range {
+    background-color: var(--surface-hover);
+    box-shadow: inset 0 0 0 2px var(--link);
+}
+
+.content .ps-grid td.is-plus {
+    background-color: var(--memo-surface);
+    box-shadow: inset 0 0 0 2px var(--memo-border);
+}
+
+.content .ps-grid td.is-minus {
+    background-color: var(--repeat-surface);
+    box-shadow: inset 0 0 0 2px var(--repeat-border);
+}
+
+.ps-zero {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.bs-cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin: 0.75rem 0;
+}
+
+.bs-cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 2.4rem;
+    padding: 0.15rem 0.3rem;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.bs-cell small,
+.bs-cell em {
+    color: var(--muted);
+    font-size: 0.65rem;
+    font-style: normal;
+    min-height: 1em;
+}
+
+.bs-cell.is-out {
+    opacity: 0.35;
+}
+
+.bs-cell.is-mid {
+    border-color: var(--nav-accent);
+    border-width: 3px;
+    background-color: var(--surface-hover);
+}
+
+.bs-cell.is-answer {
+    border-color: var(--memo-border);
+    border-width: 3px;
+    background-color: var(--memo-surface);
+    opacity: 1;
+}
+
+.tp-graph svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.tp-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.8;
+}
+
+.tp-edge.is-gone {
+    stroke-dasharray: 3 4;
+    opacity: 0.4;
+}
+
+.tp-arrowhead {
+    fill: var(--border-strong);
+}
+
+.tp-node circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.tp-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.tp-node .tp-deg {
+    fill: var(--muted);
+    font-size: 11px;
+}
+
+.tp-node.is-ready circle {
+    fill: var(--memo-surface);
+    stroke: var(--memo-border);
+    stroke-width: 2.5;
+}
+
+.tp-node.is-done {
+    opacity: 0.35;
+}
+
+.tp-node[role="button"] {
+    cursor: pointer;
+}
+
+.tp-node:focus {
+    outline: none;
+}
+
+.tp-node:focus-visible circle {
+    stroke: var(--link);
+    stroke-width: 4;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
     text-decoration: none;
+    overflow-wrap: anywhere; /* long bare URLs in footnotes */
 }
 
 .content a:hover {
@@ -755,6 +1472,8 @@ footer a:hover {
     }
 
     .content table {
+        display: block;
+        overflow-x: auto;
         font-size: 0.9rem;
     }
 

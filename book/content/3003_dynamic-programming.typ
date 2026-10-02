@@ -1,153 +1,261 @@
 #import "@preview/ilm:1.4.0": *
 #import table: cell, header
+#import "widgets.typ": widget
 
 == Dynamic Programming
 
 === หลักการ
 
-- Dynamic programming (DP) เป็นเทคนิคที่รวมการค้นหาทั้งหมดเข้ากับวิธีคิดแบบ greedy
-- DP จะแก้ปัญหาได้หากปัญหานั้นสามารถแบ่งออกมาเป็นปัญหาย่อยที่ทับซ้อนกันและสามารถแก้ได้อย่างมีประสิทธิภาพ
-- ประโยชน์หลักของ DP คือ
-    - หาวิธีแก้ปัญหาที่ optimal
-    - หาจำนวนวิธีแก้ปัญหา
-- ไอเดีย DP เป็นไอเดียที่ง่ายแต่ส่วนที่ยากจะเป็นการนำไปใช้กับปัญหาจริง
-ซึ่งต้องใช้ประสบการณ์
-- Backtracking สร้างตารางคู่เก็บที่มาขอคำตอบหากโจทย์ต้องการ
+Dynamic programming (DP) คือการแก้ปัญหาใหญ่จากคำตอบของปัญหาย่อย (subproblem) โดย *จำคำตอบของแต่ละปัญหาย่อยไว้* เพื่อไม่ต้องคำนวณซ้ำ
+DP ทำให้ complete search ที่ช้าแบบ exponential กลายเป็น polynomial ได้
 
-=== ปัญหาการทอนเหรียญ (ปัญหาเดียวกับ Greedy)
+ปัญหาที่ใช้ DP ได้มักมีสองคุณสมบัติ
 
-พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า $n$ โดยใช้เหรียญที่มีมูลค่า
-$\{c_1, c_2, dots.c, c_k\}$
-จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?
+- *Optimal substructure*: คำตอบที่ดีที่สุดของปัญหาใหญ่ สร้างได้จากคำตอบที่ดีที่สุดของปัญหาย่อย
+- *Overlapping subproblems*: ปัญหาย่อยเดิมถูกถามซ้ำหลายครั้ง จึงคุ้มที่จะจำไว้
 
-หากมูลค่าของเหรียญเป็น
+โจทย์ DP ส่วนใหญ่ถามหนึ่งในสองแบบ
 
-$\{1,3,4\}$
+- หาคำตอบที่ดีที่สุด (optimal) เช่น ใช้เหรียญน้อยที่สุด
+- นับจำนวนวิธี (counting) เช่น มีกี่วิธีที่ทอนเงินได้
+
+=== จาก recursion สู่ DP: Fibonacci
+
+ลำดับ Fibonacci คือ $1, 1, 2, 3, 5, 8, 13, dots.c$ โดย $f(n) = f(n-1) + f(n-2)$
+
+ถ้าเขียน recursion ตรง ๆ จะเรียก `fib(n - 2)` ซ้ำหลายรอบมาก เช่น `fib(5)` เรียก `fib(3)` สองครั้ง และ `fib(2)` สามครั้ง
+จำนวนการเรียกฟังก์ชันจึงโตแบบ $O(2^n)$
+
+```cpp
+long long fib(int n) {
+  if (n <= 2) return 1;
+  return fib(n - 1) + fib(n - 2);  // คำนวณ subproblem เดิมซ้ำ
+}
+```
+
+==== Top-down (memoization)
+
+เก็บคำตอบที่เคยคำนวณไว้ใน array แล้วตอบทันทีเมื่อถูกถามซ้ำ แต่ละ $n$ คำนวณจริงเพียงครั้งเดียว จึงเหลือ $O(n)$
+
+```cpp
+long long memo[91];  // 0 = ยังไม่เคยคำนวณ
+
+long long fib(int n) {
+  if (n <= 2) return 1;
+  if (memo[n] != 0) return memo[n];
+  return memo[n] = fib(n - 1) + fib(n - 2);
+}
+```
+
+==== Bottom-up (tabulation)
+
+เติมตารางจากปัญหาเล็กไปใหญ่ด้วย loop ไม่ต้องใช้ recursion จึงไม่เสี่ยง stack overflow และมักเร็วกว่าเล็กน้อย
+
+```cpp
+long long dp[91];
+dp[1] = dp[2] = 1;
+for (int i = 3; i <= n; i++) {
+  dp[i] = dp[i - 1] + dp[i - 2];
+}
+```
+
+ในการแข่งขันนิยมเขียนแบบ bottom-up แต่ top-down มักคิดง่ายกว่าเมื่อเพิ่งเริ่มออกแบบ state
+
+=== สี่ขั้นตอนในการออกแบบ DP
+
++ *State*: `dp[i]` หมายถึงอะไร ต้องเขียนเป็นประโยคให้ชัด
++ *Transition*: คำนวณ `dp[i]` จาก state ที่เล็กกว่าอย่างไร
++ *Base case*: state เล็กสุดที่รู้คำตอบทันที
++ *Answer และลำดับการคำนวณ*: คำตอบอยู่ที่ state ไหน และต้องเติมตารางตามลำดับใดให้ state ที่ต้องใช้ถูกคำนวณก่อนเสมอ
+
+Time complexity โดยประมาณคือ (จำนวน state) $times$ (เวลาต่อหนึ่ง transition)
+
+=== ปัญหาการทอนเหรียญ (Coin Change)
+
+มีเหรียญมูลค่า $c_1, c_2, dots.c, c_k$ แต่ละแบบใช้ได้ไม่จำกัด ต้องการทอนเงิน $n$ บาทโดยใช้เหรียญ *น้อยที่สุด*
+
+==== ทำไม greedy ไม่พอ
+
+ในบท Greedy เราหยิบเหรียญมูลค่ามากที่สุดก่อน ซึ่งใช้ได้กับเหรียญไทย แต่ถ้าเหรียญเป็น $\{1, 3, 4\}$ และ $n = 6$
+
+- Greedy: $4 + 1 + 1$ ใช้ 3 เหรียญ
+- คำตอบจริง: $3 + 3$ ใช้ 2 เหรียญ
+
+การเลือกที่ดูดีที่สุดตอนนี้ (หยิบ 4) ทำให้คำตอบรวมแย่ลง เราจึงต้องลองทุกทางเลือก แล้วใช้ DP จำผลไว้
+
+==== ออกแบบ DP
+
++ *State*: `dp[i]` = จำนวนเหรียญน้อยที่สุดที่ใช้ทอนเงิน $i$ บาท
++ *Transition*: เหรียญสุดท้ายที่ใช้ต้องเป็นเหรียญใดเหรียญหนึ่ง ถ้าเหรียญสุดท้ายคือ $c$ ที่เหลือคือการทอน $i - c$ ให้ดีที่สุด
+  $ "dp"[i] = min_(c <= i) ("dp"[i - c] + 1) $
++ *Base case*: `dp[0] = 0` และถ้าทอนไม่ได้ให้ `dp[i]` เป็น $infinity$
++ *Answer*: `dp[n]` โดยเติมจาก $i = 1$ ขึ้นไป เพราะ `dp[i]` ใช้แค่ช่องที่ดัชนีน้อยกว่า
+
+ผลลัพธ์เมื่อเหรียญเป็น $\{1, 3, 4\}$
 
 #table(
-    columns: 2,
-    header(
-      [มูลค่ารวม $n$], [จำนวนเหรียญที่น้อยที่สุด],
-    ),
-[ 0 ],[ 0 ],
-[ 1 ],[ 1 ],
-[ 2 ],[ 2 ],
-[ 3 ],[ 1 ],
-[ 4 ],[ 1 ],
-[ 5 ],[ 2 ],
-[ 6 ],[ 2 ],
-[ 7 ],[ 2 ],
-[ 8 ],[ 2 ],
-[ 9 ],[ 3 ],
-[ 10 ],[ 3 ],
+  columns: 12,
+  header([$i$], [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10]),
+  [`dp[i]`], [0], [1], [2], [1], [1], [2], [2], [2], [2], [3], [3],
 )
 
-นิยาม $d_n$ ให้เก็บค่าแทนจำนวนเหรียญที่น้อยที่สุดที่ใช้ทอนเงินมูลค่า $n$
+ลองเติมตารางเองทีละช่องด้านล่าง เปิด "ให้ฉันทายก่อน" เพื่อทายค่าแต่ละช่องก่อนดูเฉลย และลองเปลี่ยนชุดเหรียญเพื่อหาตัวอย่างที่ greedy ผิด
 
-จะได้ว่า
+#widget("coin-change")
 
-$d_i = \min{(d_{i-1}+1, d_{i-3}+1, d_{i-4}+1)}$
+==== Implementation
 
-ซึ่งเป็น recursive case โดย base case คือ $d_0 = 0$
-
-=== Longest Increasing Subsequence
-
-https://cp-algorithms.com/sequences/longest_increasing_subsequence.html
-
-=== Review
-
-==== คืออะไร?
-
-- คำนวณค่าใน state หนึ่งจาก state ก่อนหน้า โดยไม่ต้องไปคำนวณใหม่
-- recursion ที่เรียก overlapping sub-problem
-แล้วเอามาใช้ได้เลยโดยไม่ต้องไปคำนวณใหม่
-- แก้โจทย์โดยการจำ เล่นกับหน่วยความจำ เพื่อที่จะได้ไม่ต้องคำนวณซ้ำ
-- หาค่าปัจจุบันจากค่าก่อนหน้า แล้วเราหาเคสเล็ก
-
-==== มีอะไรบ้าง?
-
-- quicksum `dp[i] = dp[i-1] + a[i]`
-- knapsack `dp[i] = max(dp[i-wi] + ci)`
-- fibonacci `dp[i] = dp[i-2] + dp[i-1]`
-- dijkstra `dp[v] = min(dp[u] + w)`
-- LIS longest increasing subsequence
-- pascal (nCr) `dp[i][j] = dp[i-1][j-1] + dp[i-1][j]`
-- coin change `dp[i] = f(dp[i-xj])`
-- matrix chain $N^3$, `dp[i][j] = min(f(dp[i][k],dp[k+1][j]))`
-- LCS longest common subsequence
-- LCA lowest common ancestor
-- \#paths ~~ pascal
-- longest common substring ~~ lis
-- matrix exponential ~~ divide&conquer/bitwise 
-  - $x^9$
-  - $9 = {1001}_2$
-  - $x^1 *x^8$
-- KMP Knutt-Morris-Pratt
-- z-function
-- floyd-warshall ~~ matrix chain $N^3$, `dp[i][j] = min(f(dp[i][k], dp[k][j]))`
-- Manacher algorithm
-- TSP travelling salesman $2^n * n$, `dp[i][j]` โดยที่ $i$ เป็น set
-ของเมืองที่เคยผ่านไปแล้ว และ $j$ เป็นเมืองสุดท้ายที่อยู่ตอนนั้น
-- tribonacci
-
-==== example
-
-===== fibonacci 
-$f(n) = f(n-1) + f(n-2)$
-  - 1 1 2 3 5 8 11 ..
-  - $f(10) = f(9) + f(8)$
-  - $f(9) = f(8) + f(7)$
-
-`for (i: 2 → n) dp[i] = dp[i-1] + dp[i-2]`
-
-===== LIS
-
-หาลำดับย่อยที่ยาวที่สุดที่เป็น increasing subsequence
-
-`1 5 3 2 8 9 3 6 → 1 2 3 6 / 1 2 8 9 / 1 5 8 9 / == 4`
-
-$N^2$ solution:
-
-define state: `dp[i] = ความยาวสูงสุดของ increasing subsequence เมื่อพิจารณาช่องที่ 0-i แล้วลงท้ายด้วยเลข a[i]`
-
-คำตอบสุดท้าย `max(dp[1:N])`
-
-update state: new input: x, พิจารณา $a[j] < x$, แล้วเก็บค่า $"dp"[i] = max("dp"[j]+1)$
-
-backtrack: + ให้เก็บด้วย j เป็นเท่าไร
-
-```
-     0 1 2 3 4 5 6 7 8
-
-a  : 1 5 3 2 8 9 3 6
-dp : 0 1 2 2 2 3 4 3 4
-bt : 0 0 1 1 1 4 5 4 7
+```cpp
+const int INF = 1e9;
+vector<int> dp(n + 1, INF);
+dp[0] = 0;
+for (int i = 1; i <= n; i++) {
+  for (int c : coins) {
+    if (c <= i && dp[i - c] != INF) {
+      dp[i] = min(dp[i], dp[i - c] + 1);
+    }
+  }
+}
+cout << (dp[n] == INF ? -1 : dp[n]);
 ```
 
-$N log{N}$ solution:
+Time complexity $O(n k)$ เพราะมี $n$ state และแต่ละ state ลอง $k$ เหรียญ
 
-define state: `dp[i] = ค่าที่น้อยที่สุดที่เป็นค่าสุดท้ายของ increasing subsequence ความยาว i`
+==== ย้อนรอยหาเหรียญที่ใช้ (backtracking)
 
-update state: new input: x ไล่ตั้่งแต่ `dp[j: 0 → mx]` 
+ถ้าโจทย์ถามว่าใช้เหรียญอะไรบ้าง ให้เก็บ `pick[i]` = เหรียญที่ทำให้ `dp[i]` ดีที่สุด แล้วเดินย้อนจาก $n$
 
-- ถ้าค่า dp[j] มากกว่า x และ j มีค่าน้อยที่สุด, `dp[j] = x`,
-- แต่ถ้าหาไม่ได้เลย ก็ให้ `dp[mx+1] = x`
-
-คำตอบสุดท้าย mx
-
+```cpp
+// ใน loop: ถ้า dp[i - c] + 1 < dp[i] ให้ตั้ง dp[i] และ pick[i] = c
+for (int i = n; i > 0; i -= pick[i]) {
+  cout << pick[i] << ' ';
+}
 ```
-dp[0] = 0 
-dp[1] = 1
-dp[2] = 2
-dp[3] = 3
-dp[4] = 6
-dp[5] =
+
+==== นับจำนวนวิธี
+
+ถ้าเปลี่ยนคำถามเป็น "มีกี่ลำดับการหยิบเหรียญที่รวมได้ $n$" ให้เปลี่ยน $min$ เป็นผลบวก
+
+$ "dp"[0] = 1, quad "dp"[i] = sum_(c <= i) "dp"[i - c] $
+
+นี่คือโจทย์ CSES Coin Combinations I (อย่าลืม mod $10^9 + 7$)
+
+=== Longest Increasing Subsequence (LIS)
+
+ให้ array $a$ จงหาความยาวของ subsequence ที่เพิ่มขึ้นอย่างเดียว (strictly increasing) ที่ยาวที่สุด
+Subsequence คือการเลือกบางตัวโดยคงลำดับเดิม ไม่จำเป็นต้องติดกัน
+
+ตัวอย่าง `1 5 3 2 8 9 3 6` มี LIS ยาว 4 เช่น `1 5 8 9` หรือ `1 2 3 6`
+
+==== วิธี $O(n^2)$
+
++ *State*: `dp[i]` = ความยาว LIS ที่ *ลงท้ายด้วย* `a[i]` พอดี
++ *Transition*: ตัวก่อนหน้าคือ `a[j]` ใดก็ได้ที่ $j < i$ และ `a[j] < a[i]`
+  $ "dp"[i] = 1 + max_(j < i, a[j] < a[i]) "dp"[j] $
+  (ถ้าไม่มี $j$ ที่ใช้ได้ `dp[i] = 1`)
++ *Answer*: $max_i "dp"[i]$ ไม่ใช่ `dp[n-1]` เพราะ LIS อาจไม่ได้จบที่ตัวสุดท้าย
+
+#table(
+  columns: 9,
+  header([$i$], [0], [1], [2], [3], [4], [5], [6], [7]),
+  [`a[i]`], [1], [5], [3], [2], [8], [9], [3], [6],
+  [`dp[i]`], [1], [2], [2], [2], [3], [4], [3], [4],
+  [`parent[i]`], [-], [0], [0], [0], [1], [4], [3], [6],
+)
+
+`parent[i]` คือ $j$ ที่ให้ค่าดีที่สุด ใช้ย้อนรอยหา LIS จริง เช่น จาก $i = 7$: `6 ← 3 ← 2 ← 1`
+
+```cpp
+vector<int> dp(n, 1);
+for (int i = 0; i < n; i++) {
+  for (int j = 0; j < i; j++) {
+    if (a[j] < a[i]) dp[i] = max(dp[i], dp[j] + 1);
+  }
+}
+cout << *max_element(dp.begin(), dp.end());
 ```
+
+==== วิธี $O(n log n)$
+
+เปลี่ยน state เป็น `tail[k]` = ค่าสุดท้ายที่ *น้อยที่สุด* ของ increasing subsequence ที่ยาว $k + 1$
+ยิ่งค่าสุดท้ายน้อย ยิ่งต่อตัวถัดไปได้ง่าย และ `tail` จะเรียงจากน้อยไปมากเสมอ จึงใช้ binary search ได้
+
+สำหรับแต่ละ $x$ ให้หาตำแหน่งแรกที่ `tail[k] >= x`
+
+- ถ้าไม่มี: $x$ ต่อท้ายได้ทุก subsequence จึง `push_back(x)` (LIS ยาวขึ้น 1)
+- ถ้ามี: แทน `tail[k] = x` เพราะได้ subsequence ยาวเท่าเดิมแต่ปลายเล็กกว่า
+
+#table(
+  columns: 2,
+  header([อ่าน $x$], [`tail` หลังอัปเดต]),
+  [1], [`1`],
+  [5], [`1 5`],
+  [3], [`1 3`],
+  [2], [`1 2`],
+  [8], [`1 2 8`],
+  [9], [`1 2 8 9`],
+  [3], [`1 2 3 9`],
+  [6], [`1 2 3 6`],
+)
+
+คำตอบคือขนาดของ `tail` = 4 (ระวัง: `tail` ไม่จำเป็นต้องเป็น LIS จริงเสมอไป)
+
+```cpp
+vector<int> tail;
+for (int x : a) {
+  auto it = lower_bound(tail.begin(), tail.end(), x);
+  if (it == tail.end()) tail.push_back(x);
+  else *it = x;
+}
+cout << tail.size();
+```
+
+ถ้าโจทย์ยอมให้เท่ากันได้ (non-decreasing) ให้เปลี่ยน `lower_bound` เป็น `upper_bound`
+
+=== DP ที่พบบ่อย
+
+#table(
+  columns: 4,
+  header([โจทย์], [State], [Transition], [Time]),
+  [Prefix sum], [`s[i]` ผลรวม $a_0..a_(i-1)$], [`s[i] = s[i-1] + a[i-1]`], [$O(n)$],
+  [Coin change (min)], [`dp[i]` เหรียญน้อยสุดของ $i$], [`min(dp[i-c] + 1)`], [$O(n k)$],
+  [0/1 Knapsack], [`dp[i][w]` ใช้ของ $i$ ชิ้นแรก น้ำหนักไม่เกิน $w$], [`max(dp[i-1][w], dp[i-1][w-wi] + vi)`], [$O(n W)$],
+  [LIS], [`dp[i]` LIS ที่จบที่ $i$], [`max(dp[j]) + 1`], [$O(n^2)$ หรือ $O(n log n)$],
+  [LCS], [`dp[i][j]` ของ prefix ยาว $i$ และ $j$], [เท่ากันใช้ `dp[i-1][j-1] + 1` ไม่เท่าใช้ max], [$O(n m)$],
+  [$binom(n, r)$ (Pascal)], [`C[i][j]`], [`C[i-1][j-1] + C[i-1][j]`], [$O(n r)$],
+  [Grid paths], [`dp[r][c]` จำนวนทางมาช่อง $(r, c)$], [`dp[r-1][c] + dp[r][c-1]`], [$O(R C)$],
+  [Interval DP (matrix chain)], [`dp[l][r]` ช่วง $l..r$], [`min(dp[l][k] + dp[k+1][r] + cost)`], [$O(n^3)$],
+  [Floyd-Warshall], [`d[i][j]` ใช้จุดกลางได้แค่ $0..k$], [`min(d[i][j], d[i][k] + d[k][j])`], [$O(n^3)$],
+  [Bitmask DP (TSP)], [`dp[mask][v]` ไปแล้วตาม mask และอยู่ที่ $v$], [`min(dp[mask ^ (1<<v)][u] + w(u, v))`], [$O(2^n n^2)$],
+)
+
+=== ข้อผิดพลาดที่พบบ่อย
+
+- *State ไม่ชัด*: ถ้าอธิบาย `dp[i]` เป็นประโยคไม่ได้ มักจะเขียน transition ผิด
+- *ลืม base case* หรือกำหนด base case ผิด เช่น `dp[0] = 0` กับ `dp[0] = 1` ให้ความหมายต่างกันมาก
+- *INF overflow*: ถ้าใช้ `INT_MAX` เป็น $infinity$ แล้วบวก 1 จะกลายเป็นค่าติดลบ ใช้ `1e9` และเช็คก่อนบวก
+- *ลำดับการเติมตารางผิด*: ต้องคำนวณ state ที่ต้องใช้ก่อนเสมอ
+- *ขนาด array*: state `0..n` ต้องใช้ขนาด $n + 1$
+- *ลืม mod* ในโจทย์นับจำนวนวิธี ทำให้ overflow
+
+=== ลองคิด
+
++ ถ้าเหรียญเป็น $\{1, 5, 6, 9\}$ greedy ให้คำตอบผิดเมื่อทอน $n = 11$ หรือไม่
++ ใน Coin Change ถ้าไม่มีเหรียญ 1 บาท ช่องไหนบ้างที่อาจเป็น $infinity$
++ ทำไมคำตอบของ LIS แบบ $O(n^2)$ ต้องเป็น $max_i "dp"[i]$ แทนที่จะเป็น `dp[n-1]`
+
+==== เฉลย
+
++ ผิด greedy ได้ $9 + 1 + 1$ (3 เหรียญ) แต่ $5 + 6$ ใช้แค่ 2 เหรียญ (ลองกับ widget ด้านบนได้)
++ ช่อง $i$ ที่เขียนเป็นผลรวมของเหรียญไม่ได้ เช่น เหรียญ $\{3, 5\}$ จะทอน $1, 2, 4, 7$ ไม่ได้
++ เพราะ `dp[i]` บังคับให้ LIS จบที่ `a[i]` ถ้าตัวสุดท้ายของ array มีค่าน้อย `dp[n-1]` จะสั้นกว่าคำตอบจริง
 
 === เพิ่มเติม
 
 - An Introduction to Dynamic Programming (aquablitz11) #footnote[http://tcpc.me/2019/01/28/an-introduction-to-dynamic-programming.html]
 - Dynamic Programming by Aj. Nattee #footnote[https://github.com/nattee/ioi-training-note/blob/main/Dynamic%20Programming/01-dynamic%20programming.pdf]
+- Longest Increasing Subsequence (CP-Algorithms) #footnote[https://cp-algorithms.com/sequences/longest_increasing_subsequence.html]
+- เทคนิค DP ขั้นสูงอยู่ในบท Dynamic Programming Advanced
 
 === โจทย์ฝึกฝน (Practice Problems)
 
@@ -157,5 +265,6 @@ dp[5] =
 - #link("https://cses.fi/problemset/task/1634")[Minimizing Coins]
 - #link("https://cses.fi/problemset/task/1635")[Coin Combinations I]
 - #link("https://cses.fi/problemset/task/1637")[Removing Digits]
+- #link("https://cses.fi/problemset/task/1145")[Increasing Subsequence]
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

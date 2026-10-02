@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure">
+    <meta name="description" content="hash table เป็นโครงสร้างข้อมูลสำหรับเก็บคู่ key-value (dictionary) ที่ค้นหา เพิ่ม และลบได้เฉลี่ย O(1)">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Hash Table | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data structure">
+    <meta property="og:description" content="hash table เป็นโครงสร้างข้อมูลสำหรับเก็บคู่ key-value (dictionary) ที่ค้นหา เพิ่ม และลบได้เฉลี่ย O(1)">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2011_hash-table.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2011_hash-table.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -110,16 +113,18 @@
                     <li><a href="#polynomial-hashing">Polynomial hashing</a></li>
                     <li><a href="#ตัวอย่างโปรแกรม">ตัวอย่างโปรแกรม</a></li>
                     <li><a href="#collision">Collision</a></li>
-                    <li><a href="#open-addressing">Open addressing</a></li>
                     <li><a href="#เปรียบเทียบ">เปรียบเทียบ</a></li>
+                    <li><a href="#hash-table-ใน-stl">Hash table ใน STL</a></li>
+                    <li><a href="#string-hashing">String hashing</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="idea">Idea<a class="heading-anchor" href="#idea" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>hash table เป็น data structure ที่เอาไว้สร้าง dictionary abstract data
-structure</p></li>
-<li><p>hash function</p></li>
+<li><p>hash table เป็นโครงสร้างข้อมูลสำหรับเก็บคู่ key-value (dictionary) ที่ค้นหา
+เพิ่ม และลบได้เฉลี่ย <span class="math inline">O(1)</span></p></li>
+<li><p>ใช้ <strong>hash function</strong> แปลง key เป็น index ของ array
+แล้วเก็บข้อมูลไว้ที่ช่องนั้น</p></li>
 </ul>
 <figure>
 <p><img
@@ -143,19 +148,21 @@ index = hash % array_size // mod ค่า hash ด้วย array_size เพ�
 <ul>
 <li><p>ในกรณีนี้ การ hash จะไม่สนใจขนาดของ array
 แล้วค่อยจำกัดขอบเขตภายหลังด้วยการ modulo (%) ให้ index อยู่ในช่วง <span
-class="math inline">[0,  array_size − 1]</span></p></li>
+class="math inline">\left\lbrack 0,\text{ array\_size} - 1
+\right\rbrack</span></p></li>
 </ul>
 <h4 id="polynomial-hashing">Polynomial hashing<a class="heading-anchor" href="#polynomial-hashing" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
 <li><p>ตัวอย่าง hash function หนึ่งคือ polynomial hashing
 ซึ่งมีลักษณะดังนี้</p></li>
 </ul>
-<p><span
-class="math inline">(<em>s</em>[0]<em>A</em><sup>{<em>n</em> − 1}</sup> + <em>s</em>[1]<em>A</em><sup>{<em>n</em> − 2}</sup> + ⋯ + <em>s</em>[<em>n</em> − 1]<em>A</em><sup>0</sup>)mod <em>B</em></span></p>
+<p><span class="math display">\left( s\lbrack 0\rbrack A^{n - 1} +
+s\lbrack 1\rbrack A^{n - 2} + \cdots + s\lbrack n - 1\rbrack A^{0}
+\right)\operatorname{mod}B</span></p>
 <ul>
-<li><p>โดย <span
-class="math inline"><em>s</em>[0], <em>s</em>[1], ⋯, <em>s</em>[<em>n</em> − 1]</span>
-คือค่าของแต่ละตัวอักษรของ <strong>s</strong></p></li>
+<li><p>โดย <span class="math inline">s\lbrack 0\rbrack,s\lbrack
+1\rbrack,\cdots,s\lbrack n - 1\rbrack</span> คือค่าของแต่ละตัวอักษรของ
+<strong>s</strong></p></li>
 <li><p>และ <strong>A</strong>, <strong>B</strong>
 เป็นค่าคงที่ที่เรากำหนด</p></li>
 </ul>
@@ -187,8 +194,9 @@ class="math inline"><em>s</em>[0], <em>s</em>[1], ⋯, <em>s</em>[<em>n</e
 <li><p>หากกำหนดให้ <strong>A</strong> = 3 และ <strong>B</strong> = 97
 จะทำให้ hash value มีค่าคือ</p></li>
 </ul>
-<p><span
-class="math inline">(65 × 3<sup>4</sup> + 76 × 3<sup>3</sup> + 76 × 3<sup>2</sup> + 69 × 3<sup>1</sup> + 89 × 3<sup>0</sup>)mod 97 = 52</span></p>
+<p><span class="math display">\left( 65 \times 3^{4} + 76 \times 3^{3} +
+76 \times 3^{2} + 69 \times 3^{1} + 89 \times 3^{0}
+\right)\operatorname{mod}97 = 52</span></p>
 <ul>
 <li><p>เราก็สามารถกำหนดได้ว่าคำว่า ALLEY ควรจะอยู่ช่องที่ 52</p></li>
 </ul>
@@ -220,7 +228,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#c
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ได้ output แบบนี้</p>
 <pre><code>Hash value of ALLEY is 52</code></pre>
-<p>💡 ข้อสังเกต</p>
+<h5 id="ข้อสังเกต">ข้อสังเกต<a class="heading-anchor" href="#ข้อสังเกต" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
 <li><p>hash function ควรจะเป็น deterministic function
 ซึ่งหมายความว่าถึงเราจะรันกี่ครั้งก็ควรจะได้ค่าเดิมเสมอ</p></li>
@@ -230,32 +238,96 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#c
 ทำให้ไม่มีการการันตีว่ารันสองครั้งแล้วจะได้ค่าเดิม</p></li>
 </ul>
 <h4 id="collision">Collision<a class="heading-anchor" href="#collision" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>เนื่องจากเวลาทำ hashing จะไม่สามารถการันตีได้ว่าค่า hash
-ของสองคำที่แตกต่างกันจะแตกต่างกันเสมอ</p></li>
-<li><p>เช่นหาก hash value ของ “John Smith” กับ “Sandra Dee” เป็นค่าเดียวกันที่ค่า
-152 จะเกิดปัญหาว่าไม่สามารถเก็บทั้งสองค่าในช่องเดียวกันได้</p></li>
-<li><p>มีวิธีการแก้ปัญหาหลายแบบ ข้อดีข้อเสียแตกต่างกัน</p></li>
-</ul>
-<h5 id="separate-chaining">Separate Chaining<a class="heading-anchor" href="#separate-chaining" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>Visual reference: separate chaining illustration from Wikipedia <a
-href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a></p>
-<ul>
-<li><p>ทำให้แต่ละช่องเป็น linked list</p></li>
-</ul>
-<h4 id="open-addressing">Open addressing<a class="heading-anchor" href="#open-addressing" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>Visual reference: open addressing illustration from Wikipedia <a
-href="#fn2" class="footnote-ref" id="fnref2"
-role="doc-noteref"><sup>2</sup></a></p>
-<ul>
-<li><p>ขยับไปช่องถัดไป</p></li>
-</ul>
+<p>ค่า hash ของ key ที่ต่างกันอาจได้ index เดียวกัน เรียกว่า
+<strong>collision</strong> เช่น ถ้า hash(“John Smith”) และ hash(“Sandra
+Dee”) เท่ากัน ทั้งสองต้องอยู่ช่องเดียวกัน collision หลีกเลี่ยงไม่ได้เพราะจำนวน key
+ที่เป็นไปได้มากกว่าจำนวนช่อง จึงต้องมีวิธีจัดการ</p>
+<h5 id="separate-chaining">Separate chaining<a class="heading-anchor" href="#separate-chaining" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>แต่ละช่องเก็บเป็น list ของทุก key ที่ hash มาลงช่องนั้น การค้นหาต้องไล่ list
+ในช่องนั้น</p>
+<h5 id="open-addressing-linear-probing">Open addressing (linear probing)<a class="heading-anchor" href="#open-addressing-linear-probing" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>แต่ละช่องเก็บได้ key เดียว ถ้าช่องที่คำนวณได้ไม่ว่าง ให้ขยับไปช่องถัดไปเรื่อย ๆ
+จนเจอช่องว่าง การค้นหาเดินแบบเดียวกันและหยุดเมื่อเจอ key หรือเจอช่องว่าง</p>
+<p>ลอง insert และ search ทั้งสองวิธี แล้วเลือกตัวอย่าง “ชนกันเยอะ” (7, 14, 21, 28
+หาร 7 ลงตัวจึงลงช่อง 0 ทั้งหมด ส่วน 3 แสดงว่า key อื่นก็โดนกลุ่มนี้ขวางได้) เพื่อดูว่า key
+กองรวมกันอย่างไร</p>
+<div class="widget" data-widget="hash-table"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
 <h4 id="เปรียบเทียบ">เปรียบเทียบ<a class="heading-anchor" href="#เปรียบเทียบ" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>พิจารณาถึงตอนที่เราต้องการตรวจสอบว่ามีข้อมูลดังกล่าวอยู่ในตารางหรือไม่</p></li>
-<li><p>พิจารณากรณีที่มีการลบข้อมูลเกิดขึ้น</p></li>
-</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><p>Separate chaining</p></th>
+<th><p>Linear probing</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>ค้นหา key ที่ไม่มี</p></td>
+<td><p>ไล่ list ของช่องนั้นจนหมด</p></td>
+<td><p>เดินจนเจอช่องว่าง</p></td>
+</tr>
+<tr>
+<td><p>ลบข้อมูล</p></td>
+<td><p>ลบออกจาก list ได้เลย</p></td>
+<td><p>ลบตรง ๆ ไม่ได้ เพราะช่องว่างจะตัดเส้นทางค้นหาของ key อื่น ต้องทำเครื่องหมาย
+“เคยมีข้อมูล” (tombstone) แทน</p></td>
+</tr>
+<tr>
+<td><p>เมื่อข้อมูลเยอะ</p></td>
+<td><p>list ยาวขึ้นเรื่อย ๆ</p></td>
+<td><p>key กองรวมเป็นกลุ่ม (clustering) และตารางเต็มได้</p></td>
+</tr>
+<tr>
+<td><p>หน่วยความจำ</p></td>
+<td><p>ใช้ pointer เพิ่ม</p></td>
+<td><p>ใช้ array เดียว cache ดี</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Load factor</strong> <span class="math inline">\alpha =
+\frac{n}{m}</span> (จำนวนข้อมูลต่อจำนวนช่อง) บอกความแน่นของตาราง ถ้า hash
+function กระจายดีและ <span class="math inline">\alpha</span> ไม่เกินค่าคงที่
+ทุก operation จะเป็น <strong>เฉลี่ย</strong> <span
+class="math inline">O(1)</span> ตารางที่ใช้จริงจึงขยายขนาดเมื่อ <span
+class="math inline">\alpha</span> สูงเกินไป (คล้าย dynamic array)</p>
+<h4 id="hash-table-ใน-stl">Hash table ใน STL<a class="heading-anchor" href="#hash-table-ใน-stl" aria-hidden="true" tabindex="-1">#</a></h4>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>unordered_map<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> cnt<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cnt<span class="op">[</span><span class="st">&quot;apple&quot;</span><span class="op">]++;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> cnt<span class="op">.</span>count<span class="op">(</span><span class="st">&quot;apple&quot;</span><span class="op">);</span>  <span class="co">// 1</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>unordered_set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> seen<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>seen<span class="op">.</span>insert<span class="op">(</span><span class="dv">42</span><span class="op">);</span></span></code></pre>
+<p>ใช้งานเหมือน <code>map</code> และ <code>set</code> แต่ไม่เรียงลำดับ
+และเร็วกว่าเฉลี่ย <span class="math inline">O(1)</span></p>
+<h5 id="ระวัง-anti-hash-test">ระวัง anti-hash test<a class="heading-anchor" href="#ระวัง-anti-hash-test" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>hash ของจำนวนเต็มใน STL คือค่าเดิม ผู้ตั้งโจทย์จึงสร้าง input ให้ทุก key ชนกันได้
+ทำให้ <code>unordered_map</code> ช้าเป็น <span
+class="math inline">O(n)</span> ต่อครั้ง (เกิดจริงบน Codeforces) ถ้ากังวลให้ใช้
+<code>map</code> หรือใส่ hash function ที่สุ่มด้วยเวลา</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> SafeHash <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> <span class="dt">uint64_t</span> splitmix64<span class="op">(</span><span class="dt">uint64_t</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">+=</span> <span class="bn">0x9e3779b97f4a7c15</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="op">(</span>x <span class="op">^</span> <span class="op">(</span>x <span class="op">&gt;&gt;</span> <span class="dv">30</span><span class="op">))</span> <span class="op">*</span> <span class="bn">0xbf58476d1ce4e5b9</span><span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="op">(</span>x <span class="op">^</span> <span class="op">(</span>x <span class="op">&gt;&gt;</span> <span class="dv">27</span><span class="op">))</span> <span class="op">*</span> <span class="bn">0x94d049bb133111eb</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">^</span> <span class="op">(</span>x <span class="op">&gt;&gt;</span> <span class="dv">31</span><span class="op">);</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">size_t</span> <span class="kw">operator</span><span class="op">()(</span><span class="dt">uint64_t</span> x<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> <span class="at">const</span> <span class="dt">uint64_t</span> seed <span class="op">=</span> chrono<span class="op">::</span>steady_clock<span class="op">::</span>now<span class="op">().</span>time_since_epoch<span class="op">().</span>count<span class="op">();</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> splitmix64<span class="op">(</span>x <span class="op">+</span> seed<span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>unordered_map<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> SafeHash<span class="op">&gt;</span> safeMap<span class="op">;</span></span></code></pre>
+<h4 id="string-hashing">String hashing<a class="heading-anchor" href="#string-hashing" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Polynomial hash ไม่ได้ใช้แค่ทำตาราง ยังใช้ <strong>เทียบ string ได้ใน <span
+class="math inline">O(1)</span></strong> ถ้าคำนวณ hash ของทุก prefix ไว้ก่อน
+ซึ่งเป็นพื้นฐานของ Rabin-Karp สำหรับค้นหา pattern ใน string (ดูบท Ad-hoc)
+ในการใช้จริงควรใช้ modulo เป็นจำนวนเฉพาะขนาดใหญ่ เช่น <span
+class="math inline">10^{9} + 7</span> และ <span
+class="math inline">A</span> ที่สุ่ม เพื่อให้โอกาสชนกันน้อยมาก</p>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
@@ -270,19 +342,8 @@ href="https://cses.fi/problemset/task/1141">Playlist</a></p></li>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
-<section id="footnotes" class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p><a
-href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hash_table_5_0_1_1_1_1_1_LL.svg/900px-Hash_table_5_0_1_1_1_1_1_LL.svg.png</a><a
-href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a
-href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png">https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Hash_table_5_0_1_1_1_1_0_SP.svg/760px-Hash_table_5_0_1_1_1_1_0_SP.svg.png</a><a
-href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
 
+<script defer src="assets/widgets/hash-table.js"></script>
             <div class="page-nav">
                 <a href="2000_graph-structure.html" class="prev">Graph Structure</a>
                 <a href="2009_review.html" class="next">Review</a>

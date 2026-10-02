@@ -22,7 +22,7 @@ A guide website for Thai high school students interested in Computer Olympiad co
 
 - **HTML5**: โครงสร้างเนื้อหา (สร้างจาก Typst ด้วย pandoc)
 - **CSS3**: การจัดรูปแบบที่เรียบง่าย รองรับ dark mode
-- **Vanilla JavaScript เล็กน้อย**: ค้นหาหัวข้อ ปุ่มคัดลอกโค้ด (ไม่ใช้ framework)
+- **Vanilla JavaScript**: ค้นหาหัวข้อ ปุ่มคัดลอกโค้ด และแบบฝึกโต้ตอบใน `book/assets/widgets/` (ไม่ใช้ framework, ทดสอบด้วย `make test`)
 - **KaTeX**: แสดงสมการคณิตศาสตร์ (โหลดเฉพาะหน้าที่มีสมการ)
 - **Typst**: สร้างหนังสือเวอร์ชัน PDF
 - **GitHub Pages**: สำหรับการ deploy
@@ -42,6 +42,7 @@ macOS: `brew install pandoc typst`
 
 - แก้เนื้อหาบทเรียนที่ `book/content/*.typ`
 - แก้ diagram/image ที่ `book/assets/`
+- เพิ่มแบบฝึกโต้ตอบ (interactive widget) ด้วย `#widget("name")` จาก `book/content/widgets.typ` และเขียน `book/assets/widgets/name.js` (ใน PDF จะแสดงเป็นลิงก์ไปเว็บไซต์)
 - แก้หน้าตาเว็บไซต์ที่ `docs/style.css`
 - แก้โครงสร้าง HTML/navigation/meta tags ที่ `scripts/build_docs.py`
 - ไม่ควรแก้ `docs/*.html` โดยตรง เพราะ `make site` จะสร้างไฟล์เหล่านี้ใหม่และเขียนทับ
@@ -123,7 +124,7 @@ cp-website/
 
 ### หนังสือ (Books)
 - [Competitive Programmer's Handbook](https://cses.fi/book/book.pdf) - หนังสือหลัก
-- [Principles of Algorithmic Problem Solving](https://www.csc.kth.se/~jsannemo/slask/main.pdf)
+- [Principles of Algorithmic Problem Solving](https://usaco.guide/PAPS.pdf)
 
 ### เว็บไซต์อ้างอิง (Reference Sites)
 - [CP-Algorithms](https://cp-algorithms.com/) - อัลกอริทึมต่างๆ อย่างละเอียด

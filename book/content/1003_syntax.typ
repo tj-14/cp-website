@@ -1,303 +1,228 @@
 #import "@preview/ilm:1.4.0": *
 #import table: cell, header
 
-== พื้นฐาน
+== C++ Syntax
 
-=== โปรแกรมที่ใช้เขียน
-- เริ่มด้วย VS Code #footnote[https://code.visualstudio.com/] กับ plugin cph #footnote[https://marketplace.visualstudio.com/items?itemName=DivyanshuAgrawal.competitive-programming-helper] น่าจะง่ายสุดแล้ว
+บทนี้สรุปภาษา C++ เท่าที่ต้องใช้ในการแข่งขัน ถ้าเคยเขียนภาษาอื่นมาก่อน ให้สังเกตจุดที่ C++ ต่างออกไป เช่น ต้องประกาศชนิดตัวแปรและระวังค่าล้น (overflow)
+
+=== เครื่องมือที่ใช้เขียน
+
+- เริ่มด้วย VS Code #footnote[https://code.visualstudio.com/] กับ extension Competitive Programming Helper (cph) #footnote[https://marketplace.visualstudio.com/items?itemName=DivyanshuAgrawal.competitive-programming-helper] ซึ่งช่วยรันโค้ดกับตัวอย่าง input/output ได้ในคลิกเดียว
+- ต้องมี compiler เช่น `g++` แล้ว compile ด้วยคำสั่ง `g++ -std=c++17 -O2 -Wall a.cpp -o a` (`-Wall` ช่วยเตือนข้อผิดพลาดที่พบบ่อย)
 
 === โค้ดเริ่มต้น
 
 ```cpp
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  // เขียนโปรแกรมที่นี่
   return 0;
 }
 ```
 
-- `bits/stdc++.h` เป็น library ครอบจักรวาล
-- `using namespace std` ใช้เพื่อความสะดวก
-  - เดิมต้องเขียน `std::cout << "Hello World!";` ในการแสดงผล `Hello World!` 
-  - ถ้ามี `using namespace std` จะไม่ต้องพิมพ์ `std::`
-  - ก็คือจะเหลือ `cout << "Hello World!;` พอ
+- `#include <bits/stdc++.h>` include ทุก library มาตรฐานในบรรทัดเดียว (ใช้ได้กับ `g++` ซึ่ง grader ส่วนใหญ่ใช้)
+- `using namespace std;` ทำให้เขียน `cout` แทน `std::cout` ได้
+- สองบรรทัดแรกใน `main` ทำให้ `cin`/`cout` เร็วขึ้นมาก ควรใส่เสมอเมื่อ input ใหญ่ (แต่หลังจากนั้นห้ามใช้ `scanf`/`printf` ปนกับ `cin`/`cout`)
 
 === Comments
 
-คอมเม้นท์ไว้บอกคอมว่าไม่ต้องรันบรรทัดนั้นๆ ทำได้สองแบบ
+Comment คือข้อความที่ compiler ไม่สนใจ ใช้อธิบายโค้ดให้คนอ่าน
 
 ```cpp
-// line comment 
+// line comment: ตั้งแต่ // ถึงท้ายบรรทัด
 
 /*
-block 
-comment
+  block comment
+  หลายบรรทัด
 */
 ```
 
-=== Variables Data Types
+=== ตัวแปรและชนิดข้อมูล
 
-ในภาษา C++ จำเป็นจะต้องประกาศ "ชนิด" ของตัวแปรเสมอ (ต่างจาก Python)
-
-ชนิดที่พบบ่อยคือ
-
-#show table.cell.where(y: 0): strong
-#set table(
-  stroke: (x, y) => if y == 0 {
-    (bottom: 0.7pt + black)
-  },
-)
+ใน C++ ต้องประกาศ *ชนิด* (type) ของตัวแปรเสมอ ซึ่งกำหนดว่าเก็บค่าอะไรได้และใช้หน่วยความจำเท่าไร
 
 #table(
-    columns: 3,
-    header(
-      [ชนิด],
-      [ขนาด (byte)],
-      [],
-    ),
-[`bool`      ],[ 1            ],[ ค่าความจริง true, false (0-1)],
-[`char`      ],[ 2            ],[ ตัวอักษร],
-[`int`       ],[ 4            ],[ จำนวนเต็ม],
-[`long long` ],[ 8            ],[ จำนวนเต็มที่เก็บค่าได้มากกว่า],
-[`float`     ],[ 4            ],[ จำนวนจริง],
-[`double`    ],[ 8            ],[ จำนวนจริงที่เก็บค่าได้มากกว่า],
+  columns: 3,
+  header([ชนิด], [ขนาด (byte)], [เก็บอะไร]),
+  [`bool`], [1], [`true` หรือ `false`],
+  [`char`], [1], [ตัวอักษรหนึ่งตัว เช่น `'a'` (จริง ๆ คือเลข ASCII)],
+  [`int`], [4], [จำนวนเต็ม ประมาณ $plus.minus 2.1 times 10^9$],
+  [`long long`], [8], [จำนวนเต็ม ประมาณ $plus.minus 9.2 times 10^18$],
+  [`double`], [8], [จำนวนจริง (ทศนิยม) ละเอียดประมาณ 15 หลัก],
+  [`string`], [-], [ข้อความ],
 )
 
-สาเหตุที่มีชนิดเดียวกันที่เก็บค่าได้แตกต่างกันเพราะการจองพื้นที่ memory ขนาดไม่เท่ากัน
+==== Overflow
+
+ถ้าค่าเกินขอบเขตของชนิด ผลลัพธ์จะผิดโดย *ไม่มี error เตือน* นี่คือสาเหตุอันดับต้น ๆ ที่ทำให้เสียคะแนน
+
+```cpp
+int a = 100000, b = 100000;
+long long wrong = a * b;              // ผิด! a * b คำนวณเป็น int แล้วล้นก่อน
+long long right = (long long)a * b;   // ถูก: 10000000000
+```
+
+กฎง่าย ๆ: ถ้าคำตอบหรือค่าระหว่างทางอาจเกิน $10^9$ ให้ใช้ `long long`
 
 === Input/Output
 
-- ใช้ `cin` ในการรับค่า โดยที่ `cin` จะดูชนิดของตัวแปรให้ตอนที่รับค่า
+ใช้ `cin >>` รับค่าและ `cout <<` แสดงผล `cin` จะข้ามช่องว่างและขึ้นบรรทัดใหม่ให้อัตโนมัติ และแปลงข้อมูลตามชนิดของตัวแปร
 
 ```cpp
-#include <bits/stdc++.h>
+int n;
+string name;
+cin >> n >> name;  // input: 5 alice
+cout << name << " has " << n << " apples\n";  // alice has 5 apples
+```
 
-using namespace std;
+`'\n'` คือขึ้นบรรทัดใหม่ ควรใช้แทน `endl` เพราะ `endl` สั่งล้าง buffer ทุกครั้งจึงช้ากว่ามากเมื่อพิมพ์หลายบรรทัด
 
-int main() {
-  int a;
-  cin >> a;
-  return 0;
+ชนิดของตัวแปรมีผลกับการรับค่า เช่น ถ้าพิมพ์ `5` ให้ตัวแปร `char` จะได้ตัวอักษร `'5'` ซึ่งมีรหัส ASCII เท่ากับ 53 ไม่ใช่เลข 5
+
+```cpp
+char c;
+cin >> c;               // input: 5
+cout << (int)c << '\n'; // 53
+cout << c - '0';        // 5 (แปลงตัวอักษรตัวเลขเป็นจำนวน)
+```
+
+การพิมพ์ทศนิยมให้กำหนดจำนวนตำแหน่งด้วย `fixed` และ `setprecision`
+
+```cpp
+double x = 2.0 / 3;
+cout << fixed << setprecision(3) << x;  // 0.667
+```
+
+=== Operators
+
+#table(
+  columns: 3,
+  header([operator], [ความหมาย], [ตัวอย่าง]),
+  [`+ - *`], [บวก ลบ คูณ], [`7 * 3` = 21],
+  [`/`], [หาร (ถ้าเป็น `int` ทั้งคู่จะปัดเศษทิ้ง)], [`7 / 2` = 3, `7.0 / 2` = 3.5],
+  [`%`], [เศษจากการหาร (ใช้กับจำนวนเต็ม)], [`7 % 3` = 1],
+  [`== !=`], [เท่ากัน ไม่เท่ากัน], [`a == b`],
+  [`< <= > >=`], [เปรียบเทียบ], [`a < b`],
+  [`&& || !`], [และ หรือ ไม่], [`a > 0 && b > 0`],
+  [`++ += -=`], [เพิ่ม/ลดค่า], [`i++`, `s += x`],
+)
+
+ระวัง: `-7 % 3` ใน C++ ได้ `-1` (ไม่ใช่ 2) ถ้าต้องการเศษที่ไม่ติดลบให้เขียน `((a % m) + m) % m`
+
+=== Control structures
+
+==== if / else
+
+```cpp
+if (x > 0) {
+  cout << "positive";
+} else if (x < 0) {
+  cout << "negative";
+} else {
+  cout << "zero";
 }
 ```
 
-หากพิมพ์ `5` หลังจากรันโปรแกรมแล้ว `a` จะมีค่าเท่ากับ $5$ ที่เป็น `integer`
+ระวังเขียน `if (x = 0)` (กำหนดค่า) แทน `if (x == 0)` (เปรียบเทียบ) ซึ่ง compile ผ่านแต่ทำงานผิด `-Wall` จะช่วยเตือน
 
-ถ้า
+==== for และ while
 
 ```cpp
-#include <bits/stdc++.h>
+for (int i = 0; i < 10; i++) {  // i = 0, 1, ..., 9
+  cout << i << ' ';
+}
 
-using namespace std;
-
-int main() {
-  char a;
-  cin >> a;
-  return 0;
+int n = 37;
+while (n > 0) {  // พิมพ์เลขฐานสองของ 37 จากหลักขวาไปซ้าย
+  cout << n % 2;
+  n /= 2;
 }
 ```
 
-แล้วพิมพ์ `5` หลังจากรันโปรแกรมแล้ว `a` จะมีค่าเท่ากับ `'5'` ที่เป็น `character`
-
-ตัวอย่างเช่น
-
-```cpp
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int main() {
-  char a;
-  int b;
-  cin >> a >> b;
-  int c = a;
-  cout << c << " " << b;
-  return 0;
-}
-```
-แล้วพิมพ์ `5 5` จะได้ผลลัพธ์เป็น `53 5` เนื่องจาก character `'5'` มีค่า ascii เป็น $53$ (ถูกแปลงค่า)
-
-- `'\n'` เป็น special character ที่ใช้สำหรับขึ้นบรรทัดใหม่ในการแสดงผล เช่น
-
-```cpp
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int main() {
-  char a;
-  int b;
-  cin >> a >> b;
-  int c = a;
-  cout << c << "\n" << b;
-  return 0;
-}
-```
-แล้วพิมพ์ `5 5` จะได้ผลลัพธ์เป็น 
-
-```
-53 
-5
-```
-
-- สังเกตว่า `cout` ต้องใช้เป็นท่อน ๆ คือส่ง `<<` ได้ทีละตัวแปรหรือทีละ string เท่านั้น
-
-- เช่นเดียวกัน `cin` ที่ใช้เป็นท่อน ๆ คือรับ `>>` เข้าทีละตัวแปร โดยตัด input ตามประเภทตัวแปร
-
-=== Control Structures
-
-==== condition
-
-- `if`-`else if`-`else`
-```cpp 
-if (x > 0)
-  cout << "x is positive";
-else if (x < 0)
-  cout << "x is negative";
-else
-  cout << "x is 0";
-```
-
-==== loop
-
-- `while`
-```cpp
-int i = 0;
-while (i < 10) {
-  cout << i << " ";
-  i++;
-} 
-```
-
-- `for`
-
-```cpp
-for (int i = 0; i < 10; i++) {
-  cout << i << " ";
-} 
-```
+ใช้ `break` เพื่อออกจาก loop ทันที และ `continue` เพื่อข้ามไปรอบถัดไป
 
 === Arrays
 
-ใน C++ นั้นตัวแปรทุกชนิดสามารถทำเป็นตัวแปรชุด (Array) ได้ด้วยการใส่วงเล็บ `[]` ด้านหลังชื่อตัวแปร เช่น
-
-จาก `int a` เป็นการประกาศตัวแปรที่เป็นจำนวนเต็มหนึ่งจำนวน
-
-สามารถเป็น `int a[10]` เป็นการประกาศตัวแปรที่เป็นจำนวนเต็ม `10` จำนวน โดยจะเรียกสมาชิกได้ เช่น
-
-`a[0]` เป็นการเรียกสมาชิกตัวแรกใน array นั้น
+Array เก็บข้อมูลชนิดเดียวกันหลายตัวต่อกัน เข้าถึงด้วย index ที่เริ่มจาก *0*
 
 ```cpp
-#include <bits/stdc++.h>
+int n;
+int a[100005];  // ประกาศให้ใหญ่กว่า n สูงสุดเล็กน้อย
 
-using namespace std;
+cin >> n;
+for (int i = 0; i < n; i++) cin >> a[i];  // a[0], a[1], ..., a[n-1]
 
-int main() {
-  int n;
-  int a[20];
-  cin >> n;
-  for (int i = 0; i < n; i++) {
-    cin >> a[i];
-  }
-  return 0;
-}
+long long sum = 0;
+for (int i = 0; i < n; i++) sum += a[i];
+cout << sum;
 ```
 
-ตัวอย่างด้านบนจะเป็นการรับค่า `n` เพื่อที่จะรับจำนวนเต็มต่ออีก $n$ จำนวน (ใช้ต่อในเงื่อนไขของ for loop)
+- Array ขนาด $n$ มี index $0$ ถึง $n - 1$ การเข้าถึง `a[n]` หรือ index ติดลบเป็นข้อผิดพลาดที่อาจไม่ crash แต่ให้คำตอบผิด
+- Array ขนาดใหญ่ (เกินประมาณ $10^5$ ตัว) ควรประกาศเป็น *global* คือนอก `main` เพราะตัวแปรใน function ใช้พื้นที่ stack ซึ่งมีจำกัด และ global array จะมีค่าเริ่มต้นเป็น 0 ให้อัตโนมัติ
 
-จากนั้นรับค่าเข้าสู่ `a[i]` ไปเรื่อย ๆ โดย $i=\{0,1,dots,n\}$
+==== Array หลายมิติ
 
 ```cpp
-#include <bits/stdc++.h>
+int grid[505][505];
 
-using namespace std;
-
-int main() {
-  int n;
-  int a[20];
-  cin >> n;
-  for (int i = 0; i < n; i++) {
-    cin >> a[i];
-  }
-  int sm = 0;
-  for (int i = 0; i < n; i++) {
-    sm += a[i];
-  }
-  cout << sm;
-  return 0;
-}
+int r, c;
+cin >> r >> c;
+for (int i = 0; i < r; i++)
+  for (int j = 0; j < c; j++)
+    cin >> grid[i][j];
 ```
-
-ตัวอย่างด้านบนเป็นการนำค่าที่รับเข้ามาไปใช้หาผลรวมต่อในตัวแปร `sm`
 
 === Strings
 
-ใน C++ มี `string` ให้ใช้ใน STL ซึ่งถูกรวมอยู่ใน `bits/stdc++.h` แล้ว
-
-จากที่ภาษา C ธรรมดาจะต้องใช้เป็น array of characters จึงสะดวกขึ้นเยอะ
+`string` เก็บข้อความและใช้งานคล้าย array ของ `char`
 
 ```cpp
-#include <bits/stdc++.h>
+string s;
+cin >> s;            // อ่านหนึ่งคำ (หยุดที่ช่องว่าง)
+cout << s.size();    // ความยาว
+cout << s[0];        // ตัวอักษรแรก
+s += "!";            // ต่อข้อความ
 
-using namespace std;
-
-int main() {
-  string a;
-  cin >> a;
-  cout << a;
-  return 0;
-}
+string line;
+getline(cin, line);  // อ่านทั้งบรรทัดรวมช่องว่าง
 ```
 
-ตัวอย่างด้านบนเป็นการรับค่า string แล้วส่งออกเลย
+ถ้าใช้ `getline` หลัง `cin >>` ต้องอ่านทิ้งบรรทัดที่ค้างอยู่ก่อนด้วย `cin.ignore()`
 
 === Functions
 
 ```cpp
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int addint(int a, int b) {
-  return a + b;
+long long square(long long x) {
+  return x * x;
 }
 
 int main() {
-  cout << addint(1, 4);
-  return 0;
+  cout << square(12);  // 144
 }
 ```
 
-ตัวอย่างด้านบนเป็นการสร้างฟังก์ชัน $f(a, b) = a+b$ โดยให้ชื่อว่า `addint` พร้อมตัวอย่างการเรียกใช้
+รายละเอียดเรื่อง function, parameter และ scope อยู่ในบท Function
 
-=== Array หลายมิติ
+=== ข้อผิดพลาดที่พบบ่อย
 
-```cpp
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int main() {
-  int a[5][5];
-  int n, m;
-  cin >> n >> m;
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      cin >> a[i][j];
-    }
-  }
-  return 0;
-}
-```
+- ใช้ `int` กับค่าที่เกิน $2.1 times 10^9$ (overflow)
+- ลืมว่า `7 / 2` เป็น 3 เมื่อหารจำนวนเต็ม
+- เข้าถึง array นอกขอบเขต โดยเฉพาะ `a[n]`
+- ประกาศ array ใหญ่ไว้ใน `main` จน stack overflow
+- ใช้ `endl` พิมพ์หลายแสนบรรทัดจนเกินเวลา
 
 === โจทย์ฝึกฝน (Practice Problems)
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1068")[Weird Algorithm]
+- #link("https://cses.fi/problemset/task/1068")[Weird Algorithm] (ระวัง overflow)
 - #link("https://cses.fi/problemset/task/1083")[Missing Number]
+- #link("https://cses.fi/problemset/task/1069")[Repetitions]
 - #link("https://cses.fi/problemset/task/1094")[Increasing Array]
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

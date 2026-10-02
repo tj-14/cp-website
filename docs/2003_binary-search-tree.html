@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม">
+    <meta name="description" content="Binary search tree (BST) คือ binary tree ที่ทุก node มีคุณสมบัติ">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Binary Search Tree | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม">
+    <meta property="og:description" content="Binary search tree (BST) คือ binary tree ที่ทุก node มีคุณสมบัติ">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2003_binary-search-tree.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2003_binary-search-tree.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <title>Binary Search Tree | คู่มือโอลิมปิกคอมพิวเตอร์</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -35,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -96,21 +109,22 @@
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
-                    <li><a href="#description">Description</a></li>
+                    <li><a href="#คำอธิบาย">คำอธิบาย</a></li>
                     <li><a href="#operations">Operations</a></li>
-                    <li><a href="#example">Example</a></li>
+                    <li><a href="#ความเร็วขึ้นกับความสูง">ความเร็วขึ้นกับความสูง</a></li>
+                    <li><a href="#implementation">Implementation</a></li>
+                    <li><a href="#ลองคิด">ลองคิด</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-<h4 id="description">Description<a class="heading-anchor" href="#description" aria-hidden="true" tabindex="-1">#</a></h4>
+<h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Binary search tree (BST) คือ binary tree ที่ทุก node มีคุณสมบัติ</p>
 <ul>
-<li><p>Binary Search Tree เป็น binary tree ที่มีคุณสมบัติเพิ่มเติม</p>
-<ul>
-<li><p>ทุกโหนดใน subtree ด้านซ้ายจะต้องมีค่าน้อยกว่า root</p></li>
-<li><p>ทุกโหนดใน subtree ด้านขวาจะต้องมีค่ามากกว่า root</p></li>
-<li><p>subtree ด้านซ้ายและด้านขวาจะต้องเป็น binary search tree</p></li>
-</ul></li>
+<li><p>ทุกค่าใน <strong>subtree ซ้าย</strong> น้อยกว่าค่าของ node</p></li>
+<li><p>ทุกค่าใน <strong>subtree ขวา</strong> มากกว่าค่าของ node</p></li>
 </ul>
+<p>คุณสมบัตินี้ทำให้ค้นหาได้เหมือน binary search: ที่แต่ละ node
+รู้ทันทีว่าค่าที่หาต้องอยู่ฝั่งไหน จึงตัดอีกฝั่งทิ้งได้ทั้งหมด</p>
 <figure>
 <p><img
 src="assets/diagrams/binary-tree.svg"
@@ -119,99 +133,129 @@ style="width:82.0%" /></p>
 trees. Original diagram for this guide.</p></figcaption>
 </figure>
 <h4 id="operations">Operations<a class="heading-anchor" href="#operations" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="search">Search<a class="heading-anchor" href="#search" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เริ่มที่ root ถ้าค่าที่หาน้อยกว่าให้ไปทางซ้าย มากกว่าไปทางขวา เท่ากันคือเจอ
+ถ้าเดินถึงช่องว่างแปลว่าไม่มี</p>
+<h5 id="insert">Insert<a class="heading-anchor" href="#insert" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เดินแบบเดียวกับ search จนถึงช่องว่าง แล้วใส่ node ใหม่ตรงนั้น</p>
+<h5 id="delete">Delete<a class="heading-anchor" href="#delete" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>หา node ที่จะลบก่อน แล้วแบ่งเป็นสามกรณี</p>
+<ol>
+<li><p><strong>เป็นใบ (leaf)</strong>: ลบได้เลย</p></li>
+<li><p><strong>มีลูกเดียว</strong>: ให้ลูกขึ้นมาแทนที่</p></li>
+<li><p><strong>มีสองลูก</strong>: หา <strong>successor</strong>
+คือค่าน้อยสุดใน subtree ขวา (เดินขวาหนึ่งครั้งแล้วซ้ายจนสุด) นำค่านั้นมาแทน แล้วลบ
+successor ตัวเดิม ซึ่งมีลูกไม่เกินหนึ่งตัวจึงเข้ากรณีที่ 1 หรือ 2</p></li>
+</ol>
+<h5 id="traversal">Traversal<a class="heading-anchor" href="#traversal" aria-hidden="true" tabindex="-1">#</a></h5>
+<p><strong>Inorder traversal</strong> (ซ้าย, node, ขวา) ของ BST ให้ค่าที่
+<strong>เรียงจากน้อยไปมาก</strong> เสมอ</p>
+<p>ลอง insert, search และ delete (ลองลบ 50 ซึ่งมีสองลูก) แล้วกด “ขั้นถัดไป”
+เพื่อดูเส้นทางที่เดิน จากนั้นเลือกตัวอย่าง “ใส่ค่าที่เรียงแล้ว” เพื่อดูว่า tree
+เสียรูปอย่างไร</p>
+<div class="widget" data-widget="bst"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<h4 id="ความเร็วขึ้นกับความสูง">ความเร็วขึ้นกับความสูง<a class="heading-anchor" href="#ความเร็วขึ้นกับความสูง" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ทุก operation เดินจาก root ลงไปหนึ่งเส้นทาง จึงใช้เวลา <span
+class="math inline">O(h)</span> เมื่อ <span class="math inline">h</span>
+คือความสูงของ tree</p>
 <ul>
-<li><p>Search</p></li>
-<li><p>Insertion</p></li>
-<li><p>Traversal</p>
-<ul>
-<li><p>Pre-order</p></li>
-<li><p>In-order</p></li>
-<li><p>Post-order</p></li>
-</ul></li>
+<li><p>ถ้า tree <strong>สมดุล</strong> (balanced) <span
+class="math inline">h \approx \log_{2}n</span> ทุก operation เป็น <span
+class="math inline">O\left( \log n \right)</span></p></li>
+<li><p>ถ้าใส่ค่าที่ <strong>เรียงแล้ว</strong> เช่น 10, 20, 30, …
+ทุกค่าจะต่อไปทางขวาเรื่อย ๆ จน tree กลายเป็นเส้นตรง <span class="math inline">h
+= n - 1</span> ทุก operation ช้าเป็น <span
+class="math inline">O(n)</span></p></li>
 </ul>
-<h4 id="example">Example<a class="heading-anchor" href="#example" aria-hidden="true" tabindex="-1">#</a></h4>
+<p><strong>Self-balancing BST</strong> เช่น AVL tree และ red-black tree
+จะปรับรูปร่าง (rotation) หลังทุก insert/delete ให้ความสูงเป็น <span
+class="math inline">O\left( \log n \right)</span> เสมอ <code>set</code>
+และ <code>map</code> ใน STL คือ red-black tree ในการแข่งขันจึงแทบไม่ต้องเขียน
+BST เอง แต่ต้องเข้าใจว่าทำไมมันเร็ว</p>
+<h4 id="implementation">Implementation<a class="heading-anchor" href="#implementation" aria-hidden="true" tabindex="-1">#</a></h4>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstring&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> tree<span class="op">[</span><span class="dv">1000</span><span class="op">];</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> insert<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>tree<span class="op">[</span>p<span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> tree<span class="op">[</span>p<span class="op">])</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> insert<span class="op">(</span>n<span class="op">,</span> p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> insert<span class="op">(</span>n<span class="op">,</span> p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> key<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  Node<span class="op">*</span> left <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  Node<span class="op">*</span> right <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Node<span class="op">*</span> insert<span class="op">(</span>Node<span class="op">*</span> t<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span>  <span class="co">// คืน root ใหม่ของ subtree</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>t <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="cf">return</span> <span class="kw">new</span> Node<span class="op">{</span>x<span class="op">};</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>x <span class="op">&lt;</span> t<span class="op">-&gt;</span>key<span class="op">)</span> t<span class="op">-&gt;</span>left <span class="op">=</span> insert<span class="op">(</span>t<span class="op">-&gt;</span>left<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>x <span class="op">&gt;</span> t<span class="op">-&gt;</span>key<span class="op">)</span> t<span class="op">-&gt;</span>right <span class="op">=</span> insert<span class="op">(</span>t<span class="op">-&gt;</span>right<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> t<span class="op">;</span>  <span class="co">// x ซ้ำ: ไม่ใส่</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> pre<span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>tree<span class="op">[</span>p<span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> tree<span class="op">[</span>p<span class="op">]);</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  pre<span class="op">(</span>p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  pre<span class="op">(</span>p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> contains<span class="op">(</span>Node<span class="op">*</span> t<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>t <span class="op">!=</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>x <span class="op">==</span> t<span class="op">-&gt;</span>key<span class="op">)</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="op">(</span>x <span class="op">&lt;</span> t<span class="op">-&gt;</span>key<span class="op">)</span> <span class="op">?</span> t<span class="op">-&gt;</span>left <span class="op">:</span> t<span class="op">-&gt;</span>right<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> in<span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>tree<span class="op">[</span>p<span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  in<span class="op">(</span>p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> tree<span class="op">[</span>p<span class="op">]);</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  in<span class="op">(</span>p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> pos<span class="op">(</span><span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>tree<span class="op">[</span>p<span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  pos<span class="op">(</span>p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  pos<span class="op">(</span>p <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> tree<span class="op">[</span>p<span class="op">]);</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> a<span class="op">[</span><span class="dv">5</span><span class="op">];</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">);</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> x<span class="op">;</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>x<span class="op">);</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> i<span class="op">;</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1000</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    tree<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>x<span class="op">--)</span> <span class="op">{</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">;</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>n<span class="op">);</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>tree<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      tree<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> n<span class="op">;</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>      tree<span class="op">[</span>insert<span class="op">(</span>n<span class="op">,</span> <span class="dv">0</span><span class="op">)]</span> <span class="op">=</span> n<span class="op">;</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(!</span>strcmp<span class="op">(</span>a<span class="op">,</span> <span class="st">&quot;PRE&quot;</span><span class="op">))</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    pre<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(!</span>strcmp<span class="op">(</span>a<span class="op">,</span> <span class="st">&quot;POS&quot;</span><span class="op">))</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    pos<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(!</span>strcmp<span class="op">(</span>a<span class="op">,</span> <span class="st">&quot;INF&quot;</span><span class="op">))</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    in<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(!</span>strcmp<span class="op">(</span>a<span class="op">,</span> <span class="st">&quot;BRF&quot;</span><span class="op">))</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1000</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>tree<span class="op">[</span>i<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> tree<span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Node<span class="op">*</span> erase<span class="op">(</span>Node<span class="op">*</span> t<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>t <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="cf">return</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>x <span class="op">&lt;</span> t<span class="op">-&gt;</span>key<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    t<span class="op">-&gt;</span>left <span class="op">=</span> erase<span class="op">(</span>t<span class="op">-&gt;</span>left<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>x <span class="op">&gt;</span> t<span class="op">-&gt;</span>key<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    t<span class="op">-&gt;</span>right <span class="op">=</span> erase<span class="op">(</span>t<span class="op">-&gt;</span>right<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>t<span class="op">-&gt;</span>left <span class="op">==</span> <span class="kw">nullptr</span> <span class="op">||</span> t<span class="op">-&gt;</span>right <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="op">{</span>  <span class="co">// กรณี 1 และ 2</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    Node<span class="op">*</span> child <span class="op">=</span> t<span class="op">-&gt;</span>left <span class="op">?</span> t<span class="op">-&gt;</span>left <span class="op">:</span> t<span class="op">-&gt;</span>right<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> t<span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> child<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>                                                <span class="co">// กรณี 3</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    Node<span class="op">*</span> s <span class="op">=</span> t<span class="op">-&gt;</span>right<span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>s<span class="op">-&gt;</span>left<span class="op">)</span> s <span class="op">=</span> s<span class="op">-&gt;</span>left<span class="op">;</span>  <span class="co">// successor</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    t<span class="op">-&gt;</span>key <span class="op">=</span> s<span class="op">-&gt;</span>key<span class="op">;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    t<span class="op">-&gt;</span>right <span class="op">=</span> erase<span class="op">(</span>t<span class="op">-&gt;</span>right<span class="op">,</span> s<span class="op">-&gt;</span>key<span class="op">);</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> t<span class="op">;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> inorder<span class="op">(</span>Node<span class="op">*</span> t<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>t <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  inorder<span class="op">(</span>t<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> t<span class="op">-&gt;</span>key <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span><span class="op">;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  inorder<span class="op">(</span>t<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  Node<span class="op">*</span> root <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> <span class="op">{</span><span class="dv">50</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">70</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">60</span><span class="op">,</span> <span class="dv">80</span><span class="op">})</span> root <span class="op">=</span> insert<span class="op">(</span>root<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  root <span class="op">=</span> erase<span class="op">(</span>root<span class="op">,</span> <span class="dv">50</span><span class="op">);</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  inorder<span class="op">(</span>root<span class="op">);</span>  <span class="co">// 20 30 40 60 70 80</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span> <span class="op">&lt;&lt;</span> contains<span class="op">(</span>root<span class="op">,</span> <span class="dv">40</span><span class="op">)</span> <span class="op">&lt;&lt;</span> contains<span class="op">(</span>root<span class="op">,</span> <span class="dv">50</span><span class="op">);</span>  <span class="co">// 10</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="ลองคิด">ลองคิด<a class="heading-anchor" href="#ลองคิด" aria-hidden="true" tabindex="-1">#</a></h4>
+<ol>
+<li><p>ใส่ 8, 3, 10, 1, 6 ลง BST ว่างตามลำดับ preorder traversal
+คืออะไร</p></li>
+<li><p>ลำดับการ insert แบบใดทำให้ BST ที่มี 7 node สูงน้อยที่สุด</p></li>
+</ol>
+<h5 id="เฉลย">เฉลย<a class="heading-anchor" href="#เฉลย" aria-hidden="true" tabindex="-1">#</a></h5>
+<ol>
+<li><p><code>8 3 1 6 10</code></p></li>
+<li><p>ใส่ค่ากลางก่อนแล้วค่อยใส่ค่ากลางของแต่ละครึ่ง เช่น 4, 2, 6, 1, 3, 5, 7
+ได้ความสูง 2 (สามชั้น)</p></li>
+</ol>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
-โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
+<p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ (ใช้
+<code>set</code>/<code>multiset</code> ซึ่งเป็น balanced BST)</p>
 <ul>
 <li><p><a href="https://cses.fi/problemset/task/1091">Concert
 Tickets</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1144">Salary
-Queries</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/2183">Missing Coin
-Sum</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1163">Traffic
+Lights</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/2163">Josephus Problem
+II</a> (ท้าทาย)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/bst.js"></script>
             <div class="page-nav">
                 <a href="2006_priority-queue.html" class="prev">Priority Queue</a>
                 <a href="2007_set-map.html" class="next">Set and Map</a>

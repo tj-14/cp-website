@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -111,6 +114,7 @@
                     <li><a href="#type">Type</a></li>
                     <li><a href="#terminology">Terminology</a></li>
                     <li><a href="#representation">Representation</a></li>
+                    <li><a href="#อ่านกราฟจาก-input">อ่านกราฟจาก input</a></li>
                     <li><a href="#traversal">Traversal</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
@@ -132,10 +136,10 @@ style="width:82.0%" /></p>
 guide.</p></figcaption>
 </figure>
 <ul>
-<li><p>ในกราฟด้านบนประกอบด้วย set of vertices <span
-class="math inline"><em>V</em> = {0, 1, 2, 3, 4}</span> และ set of edges
-<span
-class="math inline"><em>E</em> = {01, 12, 23, 34, 04, 14, 13}</span>.</p></li>
+<li><p>ในกราฟด้านบนประกอบด้วย set of vertices <span class="math inline">V
+= \left\{ 0,1,2,3,4 \right\}</span> และ set of edges <span
+class="math inline">E = \left\{ 01,12,23,34,04,14,13
+\right\}</span>.</p></li>
 <li><p>กราฟสามารถใช้ในการแก้ปัญหาจริงได้หลายปัญหา</p></li>
 <li><p>กราฟสามารถใช้แสดงแทนเครือข่าย</p></li>
 <li><p>เช่น เส้นทางในเมือง หรือเครือข่ายโทรศัพท์ หรือวงจรไฟฟ้า เป็นต้น</p></li>
@@ -178,15 +182,15 @@ role="doc-noteref"><sup>2</sup></a></p>
 <li><p>adjacency list</p></li>
 </ul>
 <h5 id="adjacency-matrix">Adjacency matrix<a class="heading-anchor" href="#adjacency-matrix" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ใช้ตาราง <span class="math inline"><em>n</em> × <em>n</em></span>
-เก็บว่า edge ระหว่างคู่ vertex มีหรือไม่</p>
+<p>ใช้ตาราง <span class="math inline">n \times n</span> เก็บว่า edge
+ระหว่างคู่ vertex มีหรือไม่</p>
 <ul>
-<li><p>ตรวจว่ามี edge จาก <span class="math inline"><em>u</em></span> ไป
-<span class="math inline"><em>v</em></span> ได้ใน <span
-class="math inline"><em>O</em>(1)</span></p></li>
-<li><p>ใช้หน่วยความจำ <span
-class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span></p></li>
-<li><p>เหมาะกับกราฟหนาแน่นหรือ <span class="math inline"><em>n</em></span>
+<li><p>ตรวจว่ามี edge จาก <span class="math inline">u</span> ไป <span
+class="math inline">v</span> ได้ใน <span
+class="math inline">O(1)</span></p></li>
+<li><p>ใช้หน่วยความจำ <span class="math inline">O\left( n^{2}
+\right)</span></p></li>
+<li><p>เหมาะกับกราฟหนาแน่นหรือ <span class="math inline">n</span>
 เล็ก</p></li>
 </ul>
 <pre
@@ -196,8 +200,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#c
 <h5 id="adjacency-list">Adjacency list<a class="heading-anchor" href="#adjacency-list" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>เก็บรายชื่อเพื่อนบ้านของแต่ละ vertex</p>
 <ul>
-<li><p>ใช้หน่วยความจำ <span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p></li>
+<li><p>ใช้หน่วยความจำ <span class="math inline">O(V + E)</span></p></li>
 <li><p>เหมาะกับกราฟส่วนใหญ่ในการแข่งขัน</p></li>
 <li><p>เดิน edge ทั้งหมดได้เร็ว</p></li>
 </ul>
@@ -209,17 +212,62 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;&gt;</span> adj<span class="op">(</span>n<span class="op">);</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>adj<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">({</span>v<span class="op">,</span> w<span class="op">});</span></span></code></pre>
+<h5 id="edge-list">Edge list<a class="heading-anchor" href="#edge-list" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เก็บ edge ทั้งหมดเป็นรายการ <code>(u, v, w)</code> เหมาะกับอัลกอริทึมที่ไล่ทุก
+edge เช่น Kruskal และ Bellman-Ford</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> edges<span class="op">;</span>  <span class="co">// (u, v, w)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>edges<span class="op">.</span>push_back<span class="op">({</span>u<span class="op">,</span> v<span class="op">,</span> w<span class="op">});</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><p>Adjacency matrix</p></th>
+<th><p>Adjacency list</p></th>
+<th><p>Edge list</p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>หน่วยความจำ</p></td>
+<td><p><span class="math inline">O\left( V^{2} \right)</span></p></td>
+<td><p><span class="math inline">O(V + E)</span></p></td>
+<td><p><span class="math inline">O(E)</span></p></td>
+</tr>
+<tr>
+<td><p>มี edge <span class="math inline">uv</span> ไหม</p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
+<td><p><span class="math inline">O\left( \text{deg}(u)
+\right)</span></p></td>
+<td><p><span class="math inline">O(E)</span></p></td>
+</tr>
+<tr>
+<td><p>ไล่เพื่อนบ้านของ <span class="math inline">u</span></p></td>
+<td><p><span class="math inline">O(V)</span></p></td>
+<td><p><span class="math inline">O\left( \text{deg}(u)
+\right)</span></p></td>
+<td><p><span class="math inline">O(E)</span></p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="อ่านกราฟจาก-input">อ่านกราฟจาก input<a class="heading-anchor" href="#อ่านกราฟจาก-input" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>โจทย์ส่วนใหญ่ให้ <span class="math inline">n</span> (จำนวน vertex) และ
+<span class="math inline">m</span> (จำนวน edge) ตามด้วย edge ทีละบรรทัด</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span>  <span class="co">// vertex หมายเลข 1..n</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> u<span class="op">,</span> v<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  cin <span class="op">&gt;&gt;</span> u <span class="op">&gt;&gt;</span> v<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  adj<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  adj<span class="op">[</span>v<span class="op">].</span>push_back<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ตรวจให้ดีว่าโจทย์ใช้หมายเลข vertex เริ่มที่ 0 หรือ 1</p>
 <h4 id="traversal">Traversal<a class="heading-anchor" href="#traversal" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><a
-href="https://usaco.guide/CPH.pdf#page=119">https://usaco.guide/CPH.pdf#page=119</a></p>
-<ul>
-<li><p>graph traversal</p></li>
-<li><p>DFS เหมาะกับการหา connected component, cycle และ topological
-sort</p></li>
-<li><p>BFS เหมาะกับ shortest path ใน unweighted graph</p></li>
-</ul>
-<p>เวลาทำงานของ traversal บน adjacency list คือ <span
-class="math inline"><em>O</em>(<em>V</em> + <em>E</em>)</span></p>
+<p>การเดินสำรวจกราฟ (BFS และ DFS) ใช้เวลา <span class="math inline">O(V +
+E)</span> บน adjacency list อ่านต่อพร้อม widget ให้ลองเดินทีละขั้นในบท Graph
+Algorithm</p>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>

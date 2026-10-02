@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ประกอบด้วยขั้นตอนหลักสามขั้นตอน">
+    <meta name="description" content="Divide and conquer แก้ปัญหาด้วยสามขั้นตอน">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Divide and Conquer | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="ประกอบด้วยขั้นตอนหลักสามขั้นตอน">
+    <meta property="og:description" content="Divide and conquer แก้ปัญหาด้วยสามขั้นตอน">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/3005_divide-conquer.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/3005_divide-conquer.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -107,179 +110,232 @@
                 <h4>ในบทนี้</h4>
                 <ul>
                     <li><a href="#หลักการ">หลักการ</a></li>
-                    <li><a href="#binary-search">Binary Search</a></li>
-                    <li><a href="#more-on-binary-search">More on Binary Search</a></li>
-                    <li><a href="#closest-pair">Closest Pair</a></li>
-                    <li><a href="#ปัญหาเลขยกกำลัง">ปัญหาเลขยกกำลัง</a></li>
-                    <li><a href="#จำนวน-fibonacci">จำนวน Fibonacci</a></li>
-                    <li><a href="#merge-sort">Merge Sort</a></li>
-                    <li><a href="#square-root-decomposition">Square Root Decomposition</a></li>
+                    <li><a href="#binary-search">Binary search</a></li>
+                    <li><a href="#binary-search-คำตอบ">Binary search คำตอบ</a></li>
+                    <li><a href="#fast-exponentiation">Fast exponentiation</a></li>
+                    <li><a href="#merge-sort">Merge sort</a></li>
+                    <li><a href="#หัวข้อเพิ่มเติม">หัวข้อเพิ่มเติม</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>ประกอบด้วยขั้นตอนหลักสามขั้นตอน</p>
-<ul>
-<li><p>Divide แบ่งปัญหาให้เป็นปัญหาเดียวกันที่ขนาดเล็กลง</p></li>
-<li><p>Conquer แก้ปัญหาย่อยๆ ให้ได้</p></li>
-<li><p>Combine</p></li>
-</ul>
-<p>รวบรวมคำตอบของปัญหาย่อยที่ถูกแก้แล้วมารวมกันเพื่อแก้ปัญหาเดิมที่ใหญ่กว่า</p></li>
-<li><p>ปัญหาที่ยังสามารถย่อยต่อเพื่อแก้ปัญหาได้เรียกว่า recursive case</p></li>
-<li><p>ปัญหาที่ขนาดเล็กเพียงพอที่จะแก้ปัญหาได้โดยไม่ต้องย่อยต่อเรียกว่า base
-case</p></li>
-<li><p>ปัญหาส่วนใหญ่จะใช้เวลา <span
-class="math inline"><em>O</em>(<em>N</em><sup>?</sup>log <em>N</em>)</span>
-โดย <span class="math inline">log <em>N</em></span></p></li>
-</ul>
-<p>มาจากการแบ่งปัญหาเป็นครึ่ง ๆ ไปเรื่อย ๆ</p>
-<h5 id="general-pseudocode">General Pseudocode<a class="heading-anchor" href="#general-pseudocode" aria-hidden="true" tabindex="-1">#</a></h5>
-<pre><code>DAC(p):
-    if is_base_case(p):
-        solve(p)
-    else:
-        divide p into p_1, p_2, ..., p_k
-        apply DAC(p_1), DAC(p_2), ..., DAC(p_k)
-        combine(DAC(p_1), DAC(p_2), ..., DAC(p_k))</code></pre>
-<h4 id="binary-search">Binary Search<a class="heading-anchor" href="#binary-search" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>การหาจำนวน (หรือคำตอบที่ต้องการ) ในอาเรย์ที่มีการเรียงแล้ว
-โดยตัวอัลกอริธึมจะตรวจสอบกับตัวเลขตรงกลาง
-ก่อนที่จะแบ่งอาร์เรย์ออกเป็นสองฝั่งเพื่อหาตัวเลขนั้นอีกครั้ง
-หากตัวเลขที่กำลังหาอยู่มากกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งขวา
-แต่ถ้าหากตัวเลขที่กำลังหาอยู่น้อยกว่าตัวเลขตรงกลาง ก็จะไปหาจำนวนนั้นในอาร์เรย์ฝั่งซ้าย</p>
-<h5 id="pattern">Pattern<a class="heading-anchor" href="#pattern" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>Divide and conquer แก้ปัญหาด้วยสามขั้นตอน</p>
+<ol>
+<li><p><strong>Divide</strong>: แบ่งปัญหาเป็นปัญหาแบบเดียวกันที่เล็กลง
+(มักแบ่งครึ่ง)</p></li>
+<li><p><strong>Conquer</strong>: แก้ปัญหาย่อยด้วย recursion
+จนเล็กพอจะตอบได้ทันที (base case)</p></li>
+<li><p><strong>Combine</strong>:
+รวมคำตอบของปัญหาย่อยเป็นคำตอบของปัญหาเดิม</p></li>
+</ol>
+<pre><code>solve(problem):
+    if problem is small enough:
+        return direct answer                 // base case
+    split problem into halves A and B         // divide
+    return combine(solve(A), solve(B))        // conquer + combine</code></pre>
+<p>การแบ่งครึ่งซ้ำ ๆ ทำได้ <span class="math inline">\log_{2}n</span> ชั้น
+ถ้าแต่ละชั้นทำงานรวม <span class="math inline">O(n)</span> เวลารวมจะเป็น
+<span class="math inline">O\left( n\log n \right)</span> (เช่น merge
+sort) และถ้าทิ้งครึ่งหนึ่งไปเลยทุกครั้ง จะเหลือ <span class="math inline">O\left(
+\log n \right)</span> (เช่น binary search)</p>
+<h4 id="binary-search">Binary search<a class="heading-anchor" href="#binary-search" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>หาค่าใน array <strong>ที่เรียงแล้ว</strong> โดยเทียบกับตัวตรงกลาง
+แล้วทิ้งครึ่งที่ไม่มีคำตอบแน่นอน ทุกขั้นช่วงที่เหลือเล็กลงครึ่งหนึ่ง จึงใช้เพียง <span
+class="math inline">O\left( \log n \right)</span> ขั้น (array <span
+class="math inline">10^{6}</span> ตัวใช้ไม่เกิน 20 ขั้น)</p>
+<p>รูปแบบที่ปลอดภัยที่สุดคือหา <strong>ตำแหน่งแรกที่
+<code>a[i] &gt;= x</code></strong> (lower bound) บนช่วงครึ่งเปิด
+<code>[lo, hi)</code></p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> N<span class="op">;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;=</span> hi<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mi <span class="op">=</span> <span class="op">(</span>lo <span class="op">+</span> hi<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// ระวัง overflow ตอน lo+hi</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>A<span class="op">[</span>mi<span class="op">]</span> <span class="op">&gt;</span> target<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    hi <span class="op">=</span> mi <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    lo <span class="op">=</span> mi <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h5 id="stl">STL<a class="heading-anchor" href="#stl" aria-hidden="true" tabindex="-1">#</a></h5>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> n<span class="op">;</span>          <span class="co">// คำตอบอยู่ใน [lo, hi] เสมอ (hi = n แปลว่าไม่มี)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;</span> hi<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> lo <span class="op">+</span> <span class="op">(</span>hi <span class="op">-</span> lo<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>mid<span class="op">]</span> <span class="op">&lt;</span> x<span class="op">)</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>  <span class="co">// a[mid] ไม่ใช่คำตอบ คำตอบอยู่ทางขวา</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> hi <span class="op">=</span> mid<span class="op">;</span>                 <span class="co">// a[mid] อาจเป็นคำตอบ เก็บ mid ไว้</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">// lo = ตำแหน่งแรกที่ a[lo] &gt;= x และ x มีใน array ถ้า lo &lt; n &amp;&amp; a[lo] == x</span></span></code></pre>
+<p>ลองหาค่าต่าง ๆ ใน array ที่มีค่าซ้ำ เปิด “ให้ฉันทายก่อน”
+เพื่อทายว่าแต่ละขั้นคำตอบอยู่ฝั่งไหน</p>
+<div class="widget" data-widget="binary-search"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<h5 id="ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย<a class="heading-anchor" href="#ข้อผิดพลาดที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h5>
 <ul>
-<li><p>upper_bound</p></li>
-<li><p>lower_bound</p></li>
+<li><p><strong>วนไม่จบ</strong>: ถ้าเขียน <code>lo = mid</code> แทน
+<code>lo = mid + 1</code> ช่วงอาจไม่เล็กลงเมื่อเหลือสองตัว</p></li>
+<li><p><strong>overflow</strong>: <code>(lo + hi) / 2</code> ล้นได้ถ้า
+<code>lo + hi</code> เกินขอบเขต <code>int</code> ใช้
+<code>lo + (hi - lo) / 2</code></p></li>
+<li><p><strong>ลืม sort</strong> ก่อน binary search</p></li>
+<li><p><strong>เข้าถึง <code>a[n]</code></strong>: เมื่อไม่มีคำตอบ
+<code>lo</code> จะเป็น <code>n</code> ต้องเช็คก่อนใช้
+<code>a[lo]</code></p></li>
 </ul>
-<h5 id="binary-search-คำตอบ">Binary Search คำตอบ<a class="heading-anchor" href="#binary-search-คำตอบ" aria-hidden="true" tabindex="-1">#</a></h5>
-<ul>
-<li><p>ปัญหาบางอย่างสามารถสมมุติคำตอบแล้ว check ได้เร็ว</p></li>
-<li><p>หากคำตอบมี pattern เช่น ถ้าค่าน้อยสามารถทำได้แล้วค่าที่มากกว่าจะทำได้ด้วยเสมอ
-ก็จะสามารถ binary search ได้</p></li>
-</ul>
-<h4 id="more-on-binary-search">More on Binary Search<a class="heading-anchor" href="#more-on-binary-search" aria-hidden="true" tabindex="-1">#</a></h4>
-<ul>
-<li><p>สอน Binary Search ฉบับสมบูรณ์โคตรๆ (aquablitz11) <a href="#fn1"
-class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a></p></li>
-<li><p><a class="resource-card" href="https://csacademy.com/lesson/binary_search/" target="_blank" rel="noopener"><strong>CS Academy interactive lesson</strong><span>csacademy.com</span></a></p></li>
-</ul>
-<h4 id="closest-pair">Closest Pair<a class="heading-anchor" href="#closest-pair" aria-hidden="true" tabindex="-1">#</a></h4>
-<p><a
-href="https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/">https://www.geeksforgeeks.org/closest-pair-of-points-using-divide-and-conquer-algorithm/</a></p>
-<h4 id="ปัญหาเลขยกกำลัง">ปัญหาเลขยกกำลัง<a class="heading-anchor" href="#ปัญหาเลขยกกำลัง" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>พิจารณาวิธีหาค่าของ <span
-class="math inline"><em>A</em><sup><em>N</em></sup></span>
-หากทำการคูณเลขตรงๆ จะเป็น <span
-class="math inline"><em>O</em>(<em>N</em>)</span></p>
-<p>ถ้าเราแบ่ง</p>
-<ul>
-<li><p>Recursive case</p>
-<ul>
-<li><p><span class="math inline">$A^{N} = A^{\left\{ \frac{N}{2}
-\right\}}c \cdot A^{\left\{ \frac{N}{2}
-\right\}}\text{  เมื่อ  }N\operatorname{mod}2 = 0$</span></p></li>
-<li><p><span class="math inline">$A^{N} = A^{\left\{ l\frac{N}{2}r
-\right\}}c \cdot A^{\left\{ l\frac{N}{2}r
-\right\}}\text{  เมื่อ  }N\operatorname{mod}2 = 1$</span></p></li>
-</ul></li>
-<li><p>Base case</p>
-<ul>
-<li><p><span
-class="math inline"><em>A</em><sup><em>N</em></sup> = <em>A</em> เมื่อ
-<em>N</em> = 1</span></p></li>
-<li><p><span class="math inline"><em>A</em><sup><em>N</em></sup> = 1 เมื่อ
-<em>N</em> = 0</span></p></li>
-</ul></li>
-</ul>
-<h4 id="จำนวน-fibonacci">จำนวน Fibonacci<a class="heading-anchor" href="#จำนวน-fibonacci" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>จำนวนฟิโบนัชชี (เขียนแทนว่า <span
-class="math inline"><em>F</em><sub><em>n</em></sub></span>)
-คือลำดับจำนวนที่ถูกนิยามจากผลบวกของจำนวนฟิโบนัชชีสองตัวก่อนหน้า
-โดยกำหนดให้จำนวนฟิโบนัชชีสองตัวแรกเป็น 0 และ 1 ตามลำดับ นั่นคือ</p>
-<p><span class="math display">$$F_{i} = \begin{cases}
-1\text{ if }i = 1 \\
-F_{i - 1} + F_{i - 2}\text{ else}
-\end{cases}$$</span></p>
-<p>โดยจะสามารถเขียนลำดับได้เป็น</p>
-<p><span
-class="math inline">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, …</span></p>
-<p>เพราะฉะนั้นแล้ว base case ก็คือ <span
-class="math inline">0 ≤ <em>i</em> ≤ 1</span> และ recursive case ก็คือ
-<span class="math inline"><em>i</em> ≥ 2</span></p>
-<h4 id="merge-sort">Merge Sort<a class="heading-anchor" href="#merge-sort" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>STL มีให้ใช้แล้วคือ <code>lower_bound</code> (แรกที่ <span
+class="math inline">\geq x</span>) และ <code>upper_bound</code> (แรกที่
+<span class="math inline">&gt; x</span>) ดูบท STL</p>
+<h4 id="binary-search-คำตอบ">Binary search คำตอบ<a class="heading-anchor" href="#binary-search-คำตอบ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>หลายโจทย์ถามหา <strong>ค่าน้อยสุด</strong> ที่ทำให้เงื่อนไขเป็นจริง
+ถ้าเงื่อนไขเป็นแบบ <strong>monotonic</strong> คือเมื่อค่าหนึ่งทำได้
+ค่าที่มากกว่าก็ทำได้เสมอ</p>
+<pre><code>t:        1  2  3  4  5  6  7  8
+ok(t):    F  F  F  F  T  T  T  T   ← หาตัว T ตัวแรก</code></pre>
+<p>ก็ binary search บนคำตอบได้ โดยไม่ต้องรู้สูตรตรง ๆ แค่เขียนฟังก์ชัน
+<code>ok(t)</code> ที่ตรวจได้เร็ว</p>
+<p>ตัวอย่าง (Factory Machines): มีเครื่องจักร <span
+class="math inline">n</span> เครื่อง เครื่องที่ <span
+class="math inline">i</span> ผลิตของหนึ่งชิ้นใช้เวลา <span
+class="math inline">k_{i}</span> ต้องการของ <span
+class="math inline">t</span> ชิ้น ใช้เวลาน้อยที่สุดเท่าไร ในเวลา <span
+class="math inline">T</span> เครื่องที่ <span class="math inline">i</span>
+ผลิตได้ <span class="math inline">\left\lfloor \frac{T}{k_{i}}
+\right\rfloor</span> ชิ้น ยิ่ง <span class="math inline">T</span>
+มากยิ่งผลิตได้มาก จึงเป็น monotonic</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> merge<span class="op">(</span><span class="dt">int</span> array<span class="op">[],</span> <span class="dt">int</span> <span class="at">const</span> left<span class="op">,</span> <span class="dt">int</span> <span class="at">const</span> mid<span class="op">,</span> <span class="dt">int</span> <span class="at">const</span> right<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="at">const</span> subArrayOne <span class="op">=</span> mid <span class="op">-</span> left <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="at">const</span> subArrayTwo <span class="op">=</span> right <span class="op">-</span> mid<span class="op">;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Create temp arrays</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="op">*</span>leftArray <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>subArrayOne<span class="op">],</span> <span class="op">*</span>rightArray <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>subArrayTwo<span class="op">];</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Copy data to temp arrays leftArray[] and rightArray[]</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> subArrayOne<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    leftArray<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> array<span class="op">[</span>left <span class="op">+</span> i<span class="op">];</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> subArrayTwo<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    rightArray<span class="op">[</span>j<span class="op">]</span> <span class="op">=</span> array<span class="op">[</span>mid <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> j<span class="op">];</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> indexOfSubArrayOne <span class="op">=</span> <span class="dv">0</span><span class="op">,</span>   <span class="co">// Initial index of first sub-array</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      indexOfSubArrayTwo <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>    <span class="co">// Initial index of second sub-array</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> indexOfMergedArray <span class="op">=</span> left<span class="op">;</span> <span class="co">// Initial index of merged array</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Merge the temp arrays back into array[left..right]</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>indexOfSubArrayOne <span class="op">&lt;</span> subArrayOne <span class="op">&amp;&amp;</span> indexOfSubArrayTwo <span class="op">&lt;</span> subArrayTwo<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>leftArray<span class="op">[</span>indexOfSubArrayOne<span class="op">]</span> <span class="op">&lt;=</span> rightArray<span class="op">[</span>indexOfSubArrayTwo<span class="op">])</span> <span class="op">{</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> leftArray<span class="op">[</span>indexOfSubArrayOne<span class="op">];</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>      indexOfSubArrayOne<span class="op">++;</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> rightArray<span class="op">[</span>indexOfSubArrayTwo<span class="op">];</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      indexOfSubArrayTwo<span class="op">++;</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    indexOfMergedArray<span class="op">++;</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Copy the remaining elements of</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">// left[], if there are any</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>indexOfSubArrayOne <span class="op">&lt;</span> subArrayOne<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> leftArray<span class="op">[</span>indexOfSubArrayOne<span class="op">];</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    indexOfSubArrayOne<span class="op">++;</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    indexOfMergedArray<span class="op">++;</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Copy the remaining elements of</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="co">// right[], if there are any</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>indexOfSubArrayTwo <span class="op">&lt;</span> subArrayTwo<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    array<span class="op">[</span>indexOfMergedArray<span class="op">]</span> <span class="op">=</span> rightArray<span class="op">[</span>indexOfSubArrayTwo<span class="op">];</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    indexOfSubArrayTwo<span class="op">++;</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    indexOfMergedArray<span class="op">++;</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="square-root-decomposition">Square Root Decomposition<a class="heading-anchor" href="#square-root-decomposition" aria-hidden="true" tabindex="-1">#</a></h4>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> ok<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> T<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> made <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> k <span class="op">:</span> machines<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    made <span class="op">+=</span> T <span class="op">/</span> k<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>made <span class="op">&gt;=</span> target<span class="op">)</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span>  <span class="co">// หยุดก่อนเพื่อกัน overflow</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> lo <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> hi <span class="op">=</span> <span class="fl">1e18</span><span class="op">;</span>  <span class="co">// hi ต้องทำได้แน่นอน</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;</span> hi<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> mid <span class="op">=</span> lo <span class="op">+</span> <span class="op">(</span>hi <span class="op">-</span> lo<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>ok<span class="op">(</span>mid<span class="op">))</span> hi <span class="op">=</span> mid<span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">// lo = เวลาน้อยสุดที่ทำได้</span></span></code></pre>
+<p>เวลา <span class="math inline">O\left( n\log(\text{hi})
+\right)</span>: binary search ประมาณ 60 รอบ รอบละ <span
+class="math inline">O(n)</span></p>
+<h4 id="fast-exponentiation">Fast exponentiation<a class="heading-anchor" href="#fast-exponentiation" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>คำนวณ <span class="math inline">a^{n}</span> ด้วยการคูณตรง ๆ ใช้ <span
+class="math inline">O(n)</span> แต่ถ้าแบ่งครึ่ง</p>
+<p><span class="math display">a^{n} = \begin{cases}
+1 &amp; \text{ if }n = 0 \\
+\left( a^{\frac{n}{2}} \right)^{2} &amp; \text{ if }n\text{ is even} \\
+\left( a^{\frac{n - 1}{2}} \right)^{2} \cdot a &amp; \text{ if }n\text{
+is odd}
+\end{cases}</span></p>
+<p>จะเหลือ <span class="math inline">O\left( \log n \right)</span> เพราะ
+<span class="math inline">n</span> ลดลงครึ่งหนึ่งทุกครั้ง (ระวังกรณีคี่: ต้องคูณ
+<span class="math inline">a</span> เพิ่มอีกหนึ่งตัว)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">long</span> <span class="dt">long</span> MOD <span class="op">=</span> <span class="fl">1e9</span> <span class="op">+</span> <span class="dv">7</span><span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> power<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> a<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> half <span class="op">=</span> power<span class="op">(</span>a<span class="op">,</span> n <span class="op">/</span> <span class="dv">2</span><span class="op">);</span>   <span class="co">// n / 2 ปัดลงอยู่แล้วเมื่อ n คี่</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> res <span class="op">=</span> half <span class="op">*</span> half <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> res <span class="op">=</span> res <span class="op">*</span> a <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>เขียนแบบ loop ได้โดยดูบิตของ <span class="math inline">n</span> ทีละบิต เช่น
+<span class="math inline">a^{13} = a^{8} \cdot a^{4} \cdot a^{1}</span>
+เพราะ <span class="math inline">13 = 1101_{2}</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> power<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> a<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> res <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">%=</span> MOD<span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>n <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">&amp;</span> <span class="dv">1</span><span class="op">)</span> res <span class="op">=</span> res <span class="op">*</span> a <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> a <span class="op">*</span> a <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    n <span class="op">&gt;&gt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="fibonacci-ใน-o-left-log-n-right">Fibonacci ใน <span class="math inline">O\left( \log n
+\right)</span><a class="heading-anchor" href="#fibonacci-ใน-o-left-log-n-right" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เพราะ <span class="math inline">\begin{pmatrix}
+F_{n + 1} \\
+F_{n}
+\end{pmatrix} = \begin{pmatrix}
+1 &amp; 1 \\
+1 &amp; 0
+\end{pmatrix}\begin{pmatrix}
+F_{n} \\
+F_{n - 1}
+\end{pmatrix}</span> จึงได้ <span class="math inline">F_{n}</span>
+จากการยกกำลังเมทริกซ์ <span class="math inline">2 \times 2</span>
+ด้วยวิธีเดียวกัน ใช้เวลา <span class="math inline">O\left( \log n
+\right)</span> แม้ <span class="math inline">n = 10^{18}</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> array<span class="op">&lt;</span>array<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">,</span> <span class="dv">2</span><span class="op">&gt;,</span> <span class="dv">2</span><span class="op">&gt;</span> Mat<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Mat mul<span class="op">(</span><span class="at">const</span> Mat<span class="op">&amp;</span> A<span class="op">,</span> <span class="at">const</span> Mat<span class="op">&amp;</span> B<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  Mat C<span class="op">{};</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        C<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>C<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">+</span> A<span class="op">[</span>i<span class="op">][</span>k<span class="op">]</span> <span class="op">*</span> B<span class="op">[</span>k<span class="op">][</span>j<span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> C<span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> fib<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> n<span class="op">)</span> <span class="op">{</span>  <span class="co">// F_0 = 0, F_1 = 1</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  Mat res <span class="op">=</span> <span class="op">{{{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">}}},</span> base <span class="op">=</span> <span class="op">{{{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">}}};</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>n <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">&amp;</span> <span class="dv">1</span><span class="op">)</span> res <span class="op">=</span> mul<span class="op">(</span>res<span class="op">,</span> base<span class="op">);</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    base <span class="op">=</span> mul<span class="op">(</span>base<span class="op">,</span> base<span class="op">);</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    n <span class="op">&gt;&gt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="merge-sort">Merge sort<a class="heading-anchor" href="#merge-sort" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>แบ่ง array เป็นสองครึ่ง sort แต่ละครึ่งด้วย recursion แล้ว
+<strong>merge</strong> สองครึ่งที่เรียงแล้วด้วยสองตัวชี้ ใช้เวลา <span
+class="math inline">O\left( n\log n \right)</span> เสมอ</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> a<span class="op">,</span> tmp<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> mergeSort<span class="op">(</span><span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span>  <span class="co">// sort a[l..r]</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">&gt;=</span> r<span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> m <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  mergeSort<span class="op">(</span>l<span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  mergeSort<span class="op">(</span>m <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">);</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> i <span class="op">=</span> l<span class="op">,</span> j <span class="op">=</span> m <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> k <span class="op">=</span> l<span class="op">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;=</span> m <span class="op">&amp;&amp;</span> j <span class="op">&lt;=</span> r<span class="op">)</span> tmp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;=</span> a<span class="op">[</span>j<span class="op">])</span> <span class="op">?</span> a<span class="op">[</span>i<span class="op">++]</span> <span class="op">:</span> a<span class="op">[</span>j<span class="op">++];</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;=</span> m<span class="op">)</span> tmp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> a<span class="op">[</span>i<span class="op">++];</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>j <span class="op">&lt;=</span> r<span class="op">)</span> tmp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> a<span class="op">[</span>j<span class="op">++];</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> t <span class="op">=</span> l<span class="op">;</span> t <span class="op">&lt;=</span> r<span class="op">;</span> t<span class="op">++)</span> a<span class="op">[</span>t<span class="op">]</span> <span class="op">=</span> tmp<span class="op">[</span>t<span class="op">];</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">// เรียกใช้: tmp.resize(n); mergeSort(0, n - 1);</span></span></code></pre>
+<p>ขั้น merge ช่วยนับ <strong>inversion</strong> (คู่ <span
+class="math inline">i &lt; j</span> ที่ <code>a[i] &gt; a[j]</code>)
+ได้ด้วย: ทุกครั้งที่หยิบจากฝั่งขวา ตัวที่เหลือในฝั่งซ้ายทั้งหมด <span class="math inline">m
+- i + 1</span> ตัวเป็น inversion กับมัน</p>
+<h4 id="หัวข้อเพิ่มเติม">หัวข้อเพิ่มเติม<a class="heading-anchor" href="#หัวข้อเพิ่มเติม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p><a
-href="https://usaco.guide/plat/sqrt?lang=cpp">https://usaco.guide/plat/sqrt?lang=cpp</a></p></li>
-<li><p><a
-href="https://cp-algorithms.com/data_structures/sqrt_decomposition.html">https://cp-algorithms.com/data_structures/sqrt_decomposition.html</a></p></li>
+<li><p><strong>Closest pair of points</strong>: แบ่งจุดเป็นสองฝั่งตามแกน
+<span class="math inline">x</span> แล้วตรวจเฉพาะแถบแคบ ๆ ตรงกลางตอนรวม ได้
+<span class="math inline">O\left( n\log n \right)</span> (CP-Algorithms
+<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>)</p></li>
+<li><p><strong>Square root decomposition</strong>: แบ่ง array เป็นก้อนละ
+<span class="math inline">\sqrt{n}</span> ตัว ตอบคำถามช่วงได้ <span
+class="math inline">O\left( \sqrt{n} \right)</span> (USACO Guide <a
+href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>, CP-Algorithms <a href="#fn3"
+class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>)</p></li>
+<li><p>สอน Binary Search ฉบับสมบูรณ์โคตร ๆ (aquablitz11) <a href="#fn4"
+class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></p></li>
 </ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a href="https://cses.fi/problemset/task/1085">Array
-Division</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1097">Removal
-Game</a></p></li>
+<li><p><a
+href="https://cses.fi/problemset/task/1095">Exponentiation</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1620">Factory
+Machines</a> (binary search คำตอบ)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1085">Array Division</a>
+(binary search คำตอบ)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/2422">Multiplication
+Table</a> (binary search คำตอบ)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1722">Fibonacci
+Numbers</a> (matrix exponentiation)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
@@ -289,11 +345,21 @@ role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p><a
-href="https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html">https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html</a><a
+href="https://cp-algorithms.com/geometry/nearest_points.html">https://cp-algorithms.com/geometry/nearest_points.html</a><a
 href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://usaco.guide/plat/sqrt?lang=cpp">https://usaco.guide/plat/sqrt?lang=cpp</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a
+href="https://cp-algorithms.com/data_structures/sqrt_decomposition.html">https://cp-algorithms.com/data_structures/sqrt_decomposition.html</a><a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a
+href="https://web.archive.org/web/20201104200918/https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html">https://web.archive.org/web/20201104200918/https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html</a><a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
+<script defer src="assets/widgets/binary-search.js"></script>
             <div class="page-nav">
                 <a href="3004_adhoc.html" class="prev">Ad-hoc Problems</a>
                 <a href="3100_graph-algorithm.html" class="next">Graph Algorithm</a>

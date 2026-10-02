@@ -5,11 +5,8 @@
 
 === คำอธิบาย
 
-- Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้
-    - ทุก ๆ สมาชิกจะมี priority ของตนเอง
-    - สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority ต่ำกว่า
-    - หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue
-- ใน priority queue สมาชิกที่มี priority สูงสุดจะถูกนำออกก่อน
+- Priority queue คล้าย queue แต่สมาชิกแต่ละตัวมี *priority* และตัวที่ priority สูงสุดจะถูกนำออกก่อนเสมอ ไม่ว่าจะเข้ามาเมื่อไร
+- ถ้า priority เท่ากัน `priority_queue` ของ STL *ไม่รับประกัน* ว่าตัวไหนออกก่อน ถ้าลำดับสำคัญให้ใส่ค่าที่ใช้ตัดสินเพิ่ม เช่น เก็บ pair ของ (priority, ลำดับที่เข้า)
 
 #figure(
   image("../assets/diagrams/priority-queue.svg", width: 86%),
@@ -24,8 +21,8 @@
 
 === Implementation
 
-- Heap: สามารถใช้ heap ในการสร้าง priority queue ได้
-- STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย
+- ภายในคือ *heap* (ดูวิธีทำงานทีละขั้นได้ใน widget ของบท Heap) ทุก operation จึงเป็น $O(log n)$
+- ในการแข่งขันใช้ `priority_queue` ของ STL ได้เลย
 
 โดยปกติ `priority_queue<int>` ใน C++ เป็น max-heap คือค่ามากที่สุดอยู่ด้านบน ถ้าต้องการ min-heap ให้ใช้ `greater<int>`
 
@@ -62,7 +59,32 @@ int main() {
 }
 ```
 
-ตัวอย่างด้านบนเป็น min-heap เพราะใช้ `greater<int>` ดังนั้น `top()` จะคืนค่าที่น้อยที่สุด
+ตัวอย่างด้านบนเป็น min-heap เพราะใช้ `greater<int>` ดังนั้น `top()` จะคืนค่าที่น้อยที่สุด ได้ผลลัพธ์
+
+```
+top 2
+top 3
+top 4
+```
+
+=== เรียงตามเงื่อนไขเอง
+
+ถ้าต้องการให้ priority มาจากหลายค่า ให้เก็บเป็น pair หรือ tuple ที่เรียงตามที่ต้องการ หรือเขียนตัวเปรียบเทียบเอง
+ระวังว่าตัวเปรียบเทียบของ `priority_queue` *กลับด้าน* จาก `sort`: คืน `true` เมื่อ `a` มี priority *ต่ำกว่า* `b`
+
+```cpp
+struct Task {
+  int deadline, id;
+};
+
+struct ByDeadline {
+  bool operator()(const Task& a, const Task& b) const {
+    return a.deadline > b.deadline;  // deadline มากกว่า = priority ต่ำกว่า
+  }
+};
+
+priority_queue<Task, vector<Task>, ByDeadline> pq;  // ดึงงานที่ deadline ใกล้สุดก่อน
+```
 
 === ใช้กับ pair
 
@@ -91,7 +113,8 @@ pq.push({0, start});
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1091")[Concert Tickets]
-- #link("https://cses.fi/problemset/task/1163")[Traffic Lights]
+- #link("https://cses.fi/problemset/task/1164")[Room Allocation]
+- #link("https://cses.fi/problemset/task/1671")[Shortest Routes I] (Dijkstra)
+- #link("https://cses.fi/problemset/task/1076")[Sliding Window Median] (ท้าทาย)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

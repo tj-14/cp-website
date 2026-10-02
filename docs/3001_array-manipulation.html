@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -110,6 +113,7 @@
                     <li><a href="#motivation-problem">Motivation problem</a></li>
                     <li><a href="#prefix-sum">Prefix sum</a></li>
                     <li><a href="#difference-array">Difference array</a></li>
+                    <li><a href="#prefix-sum-สองมิติ">Prefix sum สองมิติ</a></li>
                     <li><a href="#fenwick-tree">Fenwick Tree</a></li>
                     <li><a href="#segment-tree">Segment Tree</a></li>
                     <li><a href="#เลือกใช้อะไรดี">เลือกใช้อะไรดี</a></li>
@@ -122,30 +126,28 @@
 แล้วต้องตอบคำถามหรือแก้ไขค่าในช่วงของ array ให้เร็วกว่าไล่ดูทุกช่องทุกครั้ง</p>
 <p>ตัวอย่างคำถามที่พบบ่อย</p>
 <ul>
-<li><p>หาผลรวมช่วง <span
-class="math inline">[<em>l</em>, <em>r</em>]</span></p></li>
-<li><p>เพิ่มค่าทุกตำแหน่งในช่วง <span
-class="math inline">[<em>l</em>, <em>r</em>]</span></p></li>
+<li><p>หาผลรวมช่วง <span class="math inline">\lbrack
+l,r\rbrack</span></p></li>
+<li><p>เพิ่มค่าทุกตำแหน่งในช่วง <span class="math inline">\lbrack
+l,r\rbrack</span></p></li>
 <li><p>หาค่าน้อยสุดหรือมากสุดในช่วง</p></li>
 <li><p>นับจำนวนค่าที่ตรงเงื่อนไขบางอย่าง</p></li>
 </ul>
 <h4 id="motivation-problem">Motivation problem<a class="heading-anchor" href="#motivation-problem" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>ถ้ามี array ขนาด <span class="math inline"><em>n</em></span> และมีคำถาม
-<span class="math inline"><em>q</em></span> ครั้ง
-แต่ละครั้งถามผลรวมตั้งแต่ตำแหน่ง <span class="math inline"><em>l</em></span> ถึง
-<span class="math inline"><em>r</em></span> วิธีตรงไปตรงมาคือวนตั้งแต่ <span
-class="math inline"><em>l</em></span> ถึง <span
-class="math inline"><em>r</em></span></p>
+<p>ถ้ามี array ขนาด <span class="math inline">n</span> และมีคำถาม <span
+class="math inline">q</span> ครั้ง แต่ละครั้งถามผลรวมตั้งแต่ตำแหน่ง <span
+class="math inline">l</span> ถึง <span class="math inline">r</span>
+วิธีตรงไปตรงมาคือวนตั้งแต่ <span class="math inline">l</span> ถึง <span
+class="math inline">r</span></p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> l<span class="op">;</span> i <span class="op">&lt;=</span> r<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  sum <span class="op">+=</span> a<span class="op">[</span>i<span class="op">];</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>ถ้าแต่ละ query ใช้เวลา <span
-class="math inline"><em>O</em>(<em>n</em>)</span> เวลารวมจะเป็น <span
-class="math inline"><em>O</em>(<em>n</em><em>q</em>)</span> ซึ่งช้าเกินไปเมื่อ
-<span class="math inline"><em>n</em>, <em>q</em></span> มีค่าประมาณ <span
-class="math inline">10<sup>5</sup></span></p>
+<p>ถ้าแต่ละ query ใช้เวลา <span class="math inline">O(n)</span>
+เวลารวมจะเป็น <span class="math inline">O(nq)</span> ซึ่งช้าเกินไปเมื่อ <span
+class="math inline">n,q</span> มีค่าประมาณ <span
+class="math inline">10^{5}</span></p>
 <h4 id="prefix-sum">Prefix sum<a class="heading-anchor" href="#prefix-sum" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ถ้า array ไม่มีการแก้ไขค่า เราสามารถ preprocess ด้วย prefix sum ได้</p>
 <pre
@@ -153,16 +155,14 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  pref<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> pref<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>i<span class="op">];</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>ผลรวมช่วง <span class="math inline">[<em>l</em>, <em>r</em>]</span>
-คือ</p>
+<p>ผลรวมช่วง <span class="math inline">\lbrack l,r\rbrack</span> คือ</p>
 <p><code>pref[r] - pref[l-1]</code></p>
-<p>เวลา preprocess คือ <span
-class="math inline"><em>O</em>(<em>n</em>)</span> และตอบแต่ละ query ได้ใน
-<span class="math inline"><em>O</em>(1)</span></p>
+<p>เวลา preprocess คือ <span class="math inline">O(n)</span> และตอบแต่ละ
+query ได้ใน <span class="math inline">O(1)</span></p>
 <h4 id="difference-array">Difference array<a class="heading-anchor" href="#difference-array" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>ถ้าโจทย์ให้เพิ่มค่า <span class="math inline"><em>x</em></span>
-ทุกตำแหน่งในช่วง <span class="math inline">[<em>l</em>, <em>r</em>]</span>
-หลายครั้ง แล้วค่อยถามค่า array สุดท้าย ใช้ difference array ได้</p>
+<p>ถ้าโจทย์ให้เพิ่มค่า <span class="math inline">x</span> ทุกตำแหน่งในช่วง <span
+class="math inline">\lbrack l,r\rbrack</span> หลายครั้ง แล้วค่อยถามค่า array
+สุดท้าย ใช้ difference array ได้</p>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diff<span class="op">[</span>l<span class="op">]</span> <span class="op">+=</span> x<span class="op">;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>diff<span class="op">[</span>r <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-=</span> x<span class="op">;</span></span></code></pre>
@@ -175,37 +175,54 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#c
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  a<span class="op">[</span>i<span class="op">]</span> <span class="op">+=</span> cur<span class="op">;</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>เทคนิคนี้เหมาะกับโจทย์ offline ที่รู้ update ทั้งหมดก่อนตอบคำถาม</p>
+<p>ลองคลิกสองช่องเพื่อดูว่าผลรวมช่วงมาจาก prefix sum สองค่าอย่างไร
+แล้วเปลี่ยนเป็นโหมด difference array เพื่อเพิ่มค่าทั้งช่วงหลายครั้ง</p>
+<div class="widget" data-widget="prefix-sum"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<h4 id="prefix-sum-สองมิติ">Prefix sum สองมิติ<a class="heading-anchor" href="#prefix-sum-สองมิติ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>สำหรับตาราง ให้ <code>P[i][j]</code> เป็นผลรวมของสี่เหลี่ยมตั้งแต่ <span
+class="math inline">(1,1)</span> ถึง <span
+class="math inline">(i,j)</span> ผลรวมของสี่เหลี่ยม <span
+class="math inline">\left( r_{1},c_{1} \right)</span> ถึง <span
+class="math inline">\left( r_{2},c_{2} \right)</span> หาได้ใน <span
+class="math inline">O(1)</span> ด้วยหลัก inclusion-exclusion</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> m<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    P<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">+</span> P<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>j<span class="op">]</span> <span class="op">+</span> P<span class="op">[</span>i<span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> P<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> rect<span class="op">(</span><span class="dt">int</span> r1<span class="op">,</span> <span class="dt">int</span> c1<span class="op">,</span> <span class="dt">int</span> r2<span class="op">,</span> <span class="dt">int</span> c2<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> P<span class="op">[</span>r2<span class="op">][</span>c2<span class="op">]</span> <span class="op">-</span> P<span class="op">[</span>r1 <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>c2<span class="op">]</span> <span class="op">-</span> P<span class="op">[</span>r2<span class="op">][</span>c1 <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> P<span class="op">[</span>r1 <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>c1 <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <h4 id="fenwick-tree">Fenwick Tree<a class="heading-anchor" href="#fenwick-tree" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>Fenwick Tree หรือ Binary Indexed Tree ใช้ตอบ range sum และ point update
 ได้เร็ว</p>
 <ul>
-<li><p>update หนึ่งตำแหน่ง: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
-<li><p>query prefix sum: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
-<li><p>ใช้หน่วยความจำ <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
+<li><p>update หนึ่งตำแหน่ง: <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>query prefix sum: <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>ใช้หน่วยความจำ <span class="math inline">O(n)</span></p></li>
 </ul>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> bit<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> idx<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> val<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> idx <span class="op">&lt;=</span> n<span class="op">;</span> idx <span class="op">+=</span> idx <span class="op">&amp;</span> <span class="op">-</span>idx<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    bit<span class="op">[</span>idx<span class="op">]</span> <span class="op">+=</span> val<span class="op">;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum<span class="op">(</span><span class="dt">int</span> idx<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> idx <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> idx <span class="op">-=</span> idx <span class="op">&amp;</span> <span class="op">-</span>idx<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    res <span class="op">+=</span> bit<span class="op">[</span>idx<span class="op">];</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> range_sum<span class="op">(</span><span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> sum<span class="op">(</span>r<span class="op">)</span> <span class="op">-</span> sum<span class="op">(</span>l <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> bit<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> idx<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> val<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> idx <span class="op">&lt;=</span> n<span class="op">;</span> idx <span class="op">+=</span> idx <span class="op">&amp;</span> <span class="op">-</span>idx<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    bit<span class="op">[</span>idx<span class="op">]</span> <span class="op">+=</span> val<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum<span class="op">(</span><span class="dt">int</span> idx<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> idx <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> idx <span class="op">-=</span> idx <span class="op">&amp;</span> <span class="op">-</span>idx<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    res <span class="op">+=</span> bit<span class="op">[</span>idx<span class="op">];</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> range_sum<span class="op">(</span><span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> sum<span class="op">(</span>r<span class="op">)</span> <span class="op">-</span> sum<span class="op">(</span>l <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ใช้กับโจทย์ Dynamic Range Sum Queries <a href="#fn1"
 class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 ได้โดยตรง</p>
@@ -213,28 +230,50 @@ class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 <p>Segment Tree เหมาะเมื่อ operation ซับซ้อนกว่า sum เช่น min, max, gcd หรือมี
 range update</p>
 <ul>
-<li><p>build: <span
-class="math inline"><em>O</em>(<em>n</em>)</span></p></li>
-<li><p>query ช่วง: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
-<li><p>update หนึ่งตำแหน่ง: <span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></li>
+<li><p>build: <span class="math inline">O(n)</span></p></li>
+<li><p>query ช่วง: <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>update หนึ่งตำแหน่ง: <span class="math inline">O\left( \log n
+\right)</span></p></li>
 <li><p>ใช้หน่วยความจำประมาณ <span
-class="math inline"><em>O</em>(4<em>n</em>)</span></p></li>
+class="math inline">O(4n)</span></p></li>
 </ul>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> seg<span class="op">(</span><span class="dv">4</span> <span class="op">*</span> n<span class="op">);</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> build<span class="op">(</span><span class="dt">int</span> node<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">==</span> r<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>l<span class="op">];</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  build<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">,</span> l<span class="op">,</span> mid<span class="op">);</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  build<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">);</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">]</span> <span class="op">+</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> seg<span class="op">(</span><span class="dv">4</span> <span class="op">*</span> n<span class="op">);</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">// node เก็บผลรวมของช่วง [l, r] ลูกคือ 2*node และ 2*node+1</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> build<span class="op">(</span><span class="dt">int</span> node<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">==</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>l<span class="op">];</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  build<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">,</span> l<span class="op">,</span> mid<span class="op">);</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  build<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">);</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">]</span> <span class="op">+</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> update<span class="op">(</span><span class="dt">int</span> node<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> <span class="dt">int</span> pos<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> val<span class="op">)</span> <span class="op">{</span>  <span class="co">// a[pos] = val</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">==</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> val<span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>pos <span class="op">&lt;=</span> mid<span class="op">)</span> update<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">,</span> l<span class="op">,</span> mid<span class="op">,</span> pos<span class="op">,</span> val<span class="op">);</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> update<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">,</span> pos<span class="op">,</span> val<span class="op">);</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  seg<span class="op">[</span>node<span class="op">]</span> <span class="op">=</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">]</span> <span class="op">+</span> seg<span class="op">[</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> query<span class="op">(</span><span class="dt">int</span> node<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> <span class="dt">int</span> ql<span class="op">,</span> <span class="dt">int</span> qr<span class="op">)</span> <span class="op">{</span>  <span class="co">// ผลรวม a[ql..qr]</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>qr <span class="op">&lt;</span> l <span class="op">||</span> r <span class="op">&lt;</span> ql<span class="op">)</span> <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>              <span class="co">// ไม่ทับกันเลย</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>ql <span class="op">&lt;=</span> l <span class="op">&amp;&amp;</span> r <span class="op">&lt;=</span> qr<span class="op">)</span> <span class="cf">return</span> seg<span class="op">[</span>node<span class="op">];</span>    <span class="co">// อยู่ในช่วงทั้งหมด</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> query<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span><span class="op">,</span> l<span class="op">,</span> mid<span class="op">,</span> ql<span class="op">,</span> qr<span class="op">)</span> <span class="op">+</span> query<span class="op">(</span>node <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">,</span> ql<span class="op">,</span> qr<span class="op">);</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">// เรียกใช้: build(1, 1, n); update(1, 1, n, pos, val); query(1, 1, n, l, r);</span></span></code></pre>
+<p>เปลี่ยน <code>+</code> เป็น <code>min</code>, <code>max</code> หรือ
+<code>gcd</code> (และค่าที่คืนเมื่อไม่ทับกันเป็น identity ของ operation นั้น) ก็ได้
+segment tree สำหรับ operation อื่นทันที</p>
 <h4 id="เลือกใช้อะไรดี">เลือกใช้อะไรดี<a class="heading-anchor" href="#เลือกใช้อะไรดี" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 <thead>
@@ -248,32 +287,26 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#c
 <tbody>
 <tr>
 <td><p>Prefix sum</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span> หลัง
-preprocess</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+<td><p><span class="math inline">O(1)</span> หลัง preprocess</p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
 <td><p>ไม่มีการแก้ค่า</p></td>
 </tr>
 <tr>
 <td><p>Difference array</p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span> ต่อช่วง</p></td>
-<td><p><span class="math inline"><em>O</em>(<em>n</em>)</span>
-เพื่อสรุปผล</p></td>
+<td><p><span class="math inline">O(1)</span> ต่อช่วง</p></td>
+<td><p><span class="math inline">O(n)</span> เพื่อสรุปผล</p></td>
 <td><p>update หลายช่วงแบบ offline</p></td>
 </tr>
 <tr>
 <td><p>Fenwick Tree</p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 <td><p>sum และ frequency</p></td>
 </tr>
 <tr>
 <td><p>Segment Tree</p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 <td><p>operation หลากหลาย</p></td>
 </tr>
 </tbody>
@@ -293,12 +326,18 @@ id="fnref5" role="doc-noteref"><sup>5</sup></a></p></li>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
+<li><p><a href="https://cses.fi/problemset/task/1646">Static Range Sum
+Queries</a> (prefix sum)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1652">Forest Queries</a>
+(prefix sum 2 มิติ)</p></li>
 <li><p><a href="https://cses.fi/problemset/task/1660">Subarray Sums
 I</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1643">Maximum Subarray
 Sum</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/2216">Collecting
-Numbers</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1648">Dynamic Range Sum
+Queries</a> (Fenwick / segment tree)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1649">Dynamic Range
+Minimum Queries</a> (segment tree)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
@@ -325,6 +364,7 @@ href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
+<script defer src="assets/widgets/prefix-sum.js"></script>
             <div class="page-nav">
                 <a href="3000_greedy-algorithm.html" class="prev">Greedy Algorithm</a>
                 <a href="3002_search.html" class="next">Search</a>

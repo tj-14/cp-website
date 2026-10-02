@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้">
+    <meta name="description" content="Priority queue คล้าย queue แต่สมาชิกแต่ละตัวมี priority และตัวที่ priority สูงสุดจะถูกนำออกก่อนเสมอ ไม่ว่าจะเข้ามาเมื่อไร">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Priority Queue | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้">
+    <meta property="og:description" content="Priority queue คล้าย queue แต่สมาชิกแต่ละตัวมี priority และตัวที่ priority สูงสุดจะถูกนำออกก่อนเสมอ ไม่ว่าจะเข้ามาเมื่อไร">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/2006_priority-queue.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/2006_priority-queue.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -110,6 +113,7 @@
                     <li><a href="#operations">Operations</a></li>
                     <li><a href="#implementation">Implementation</a></li>
                     <li><a href="#ตัวอย่าง-stl">ตัวอย่าง (STL)</a></li>
+                    <li><a href="#เรียงตามเงื่อนไขเอง">เรียงตามเงื่อนไขเอง</a></li>
                     <li><a href="#ใช้กับ-pair">ใช้กับ pair</a></li>
                     <li><a href="#ข้อควรระวัง">ข้อควรระวัง</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
@@ -117,14 +121,12 @@
             </nav>
 <h4 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>Priority Queue เป็นส่วนเสริมของ queue โดยเพิ่มคุณสมบัติดังนี้</p>
-<ul>
-<li><p>ทุก ๆ สมาชิกจะมี priority ของตนเอง</p></li>
-<li><p>สมาชิกที่มี priority สูงสุดจะถูก dequeue ก่อนสมาชิกที่มี priority
-ต่ำกว่า</p></li>
-<li><p>หากมีสมาชิกที่ priority เท่ากัน จะถูกนำออกตามลำดับเข้าของ queue</p></li>
-</ul></li>
-<li><p>ใน priority queue สมาชิกที่มี priority สูงสุดจะถูกนำออกก่อน</p></li>
+<li><p>Priority queue คล้าย queue แต่สมาชิกแต่ละตัวมี
+<strong>priority</strong> และตัวที่ priority สูงสุดจะถูกนำออกก่อนเสมอ
+ไม่ว่าจะเข้ามาเมื่อไร</p></li>
+<li><p>ถ้า priority เท่ากัน <code>priority_queue</code> ของ STL
+<strong>ไม่รับประกัน</strong> ว่าตัวไหนออกก่อน ถ้าลำดับสำคัญให้ใส่ค่าที่ใช้ตัดสินเพิ่ม เช่น
+เก็บ pair ของ (priority, ลำดับที่เข้า)</p></li>
 </ul>
 <figure>
 <p><img
@@ -144,8 +146,10 @@ priority</p></li>
 </ul>
 <h4 id="implementation">Implementation<a class="heading-anchor" href="#implementation" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>Heap: สามารถใช้ heap ในการสร้าง priority queue ได้</p></li>
-<li><p>STL: ใน STL นั้นมี priority_queue ให้ใช้ได้เลย</p></li>
+<li><p>ภายในคือ <strong>heap</strong> (ดูวิธีทำงานทีละขั้นได้ใน widget ของบท
+Heap) ทุก operation จึงเป็น <span class="math inline">O\left( \log n
+\right)</span></p></li>
+<li><p>ในการแข่งขันใช้ <code>priority_queue</code> ของ STL ได้เลย</p></li>
 </ul>
 <p>โดยปกติ <code>priority_queue&lt;int&gt;</code> ใน C++ เป็น max-heap
 คือค่ามากที่สุดอยู่ด้านบน ถ้าต้องการ min-heap ให้ใช้
@@ -162,24 +166,22 @@ priority</p></li>
 <tr>
 <td><p>เพิ่มข้อมูล</p></td>
 <td><p><code>push</code></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 </tr>
 <tr>
 <td><p>ดูค่าบนสุด</p></td>
 <td><p><code>top</code></p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
 </tr>
 <tr>
 <td><p>ลบค่าบนสุด</p></td>
 <td><p><code>pop</code></p></td>
-<td><p><span
-class="math inline"><em>O</em>(log <em>n</em>)</span></p></td>
+<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
 </tr>
 <tr>
 <td><p>จำนวนสมาชิก</p></td>
 <td><p><code>size</code></p></td>
-<td><p><span class="math inline"><em>O</em>(1)</span></p></td>
+<td><p><span class="math inline">O(1)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -205,18 +207,39 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#c
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>ตัวอย่างด้านบนเป็น min-heap เพราะใช้ <code>greater&lt;int&gt;</code> ดังนั้น
-<code>top()</code> จะคืนค่าที่น้อยที่สุด</p>
+<code>top()</code> จะคืนค่าที่น้อยที่สุด ได้ผลลัพธ์</p>
+<pre><code>top 2
+top 3
+top 4</code></pre>
+<h4 id="เรียงตามเงื่อนไขเอง">เรียงตามเงื่อนไขเอง<a class="heading-anchor" href="#เรียงตามเงื่อนไขเอง" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ถ้าต้องการให้ priority มาจากหลายค่า ให้เก็บเป็น pair หรือ tuple
+ที่เรียงตามที่ต้องการ หรือเขียนตัวเปรียบเทียบเอง ระวังว่าตัวเปรียบเทียบของ
+<code>priority_queue</code> <strong>กลับด้าน</strong> จาก
+<code>sort</code>: คืน <code>true</code> เมื่อ <code>a</code> มี priority
+<strong>ต่ำกว่า</strong> <code>b</code></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Task <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> deadline<span class="op">,</span> id<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ByDeadline <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="kw">operator</span><span class="op">()(</span><span class="at">const</span> Task<span class="op">&amp;</span> a<span class="op">,</span> <span class="at">const</span> Task<span class="op">&amp;</span> b<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a<span class="op">.</span>deadline <span class="op">&gt;</span> b<span class="op">.</span>deadline<span class="op">;</span>  <span class="co">// deadline มากกว่า = priority ต่ำกว่า</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>priority_queue<span class="op">&lt;</span>Task<span class="op">,</span> vector<span class="op">&lt;</span>Task<span class="op">&gt;,</span> ByDeadline<span class="op">&gt;</span> pq<span class="op">;</span>  <span class="co">// ดึงงานที่ deadline ใกล้สุดก่อน</span></span></code></pre>
 <h4 id="ใช้กับ-pair">ใช้กับ pair<a class="heading-anchor" href="#ใช้กับ-pair" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ในการเขียน Dijkstra มักเก็บ pair เป็น <code>(distance, vertex)</code>
 และใช้ min-heap</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>priority_queue<span class="op">&lt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  greater<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pq<span class="op">;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pq<span class="op">.</span>push<span class="op">({</span><span class="dv">0</span><span class="op">,</span> start<span class="op">});</span></span></code></pre>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>priority_queue<span class="op">&lt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  greater<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pq<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>pq<span class="op">.</span>push<span class="op">({</span><span class="dv">0</span><span class="op">,</span> start<span class="op">});</span></span></code></pre>
 <p>เมื่อใช้ pair การเปรียบเทียบจะดูสมาชิกตัวแรกก่อน ถ้าเท่ากันจึงดูสมาชิกตัวที่สอง</p>
 <h4 id="ข้อควรระวัง">ข้อควรระวัง<a class="heading-anchor" href="#ข้อควรระวัง" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
@@ -232,10 +255,12 @@ heap</p></li>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a href="https://cses.fi/problemset/task/1091">Concert
-Tickets</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/1163">Traffic
-Lights</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1164">Room
+Allocation</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1671">Shortest Routes
+I</a> (Dijkstra)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1076">Sliding Window
+Median</a> (ท้าทาย)</p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ตัวอย่างฟังก์ชันที่มีใน bits/stdc++.h">
+    <meta name="description" content="Function คือการรวมกลุ่มคำสั่งที่ทำงานหนึ่งอย่างไว้ภายใต้ชื่อเดียว แล้วเรียกใช้ซ้ำได้ ช่วยให้โค้ดสั้นลง อ่านง่าย และแก้ bug ที่เดียวได้ผลทุกที่ที่เรียกใช้">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Function | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="ตัวอย่างฟังก์ชันที่มีใน bits/stdc++.h">
+    <meta property="og:description" content="Function คือการรวมกลุ่มคำสั่งที่ทำงานหนึ่งอย่างไว้ภายใต้ชื่อเดียว แล้วเรียกใช้ซ้ำได้ ช่วยให้โค้ดสั้นลง อ่านง่าย และแก้ bug ที่เดียวได้ผลทุกที่ที่เรียกใช้">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/1005_function.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/1005_function.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html" aria-current="page">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -106,229 +109,190 @@
             <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
                 <h4>ในบทนี้</h4>
                 <ul>
-                    <li><a href="#แนวคิด">แนวคิด</a></li>
-                    <li><a href="#การเขียนโปรแกรม">การเขียนโปรแกรม</a></li>
-                    <li><a href="#โจทย์ตัวอย่าง-ค่าถัดไปของฟังก์ชันเวียนเกิด">โจทย์ตัวอย่าง - ค่าถัดไปของฟังก์ชันเวียนเกิด</a></li>
-                    <li><a href="#โจทย์ตัวอย่าง-ระยะห่างระหว่างสองจุด">โจทย์ตัวอย่าง - ระยะห่างระหว่างสองจุด</a></li>
-                    <li><a href="#โจทย์ตัวอย่าง-ระยะห่าง-manhattan">โจทย์ตัวอย่าง - ระยะห่าง Manhattan</a></li>
-                    <li><a href="#ปัญหาที่พบบ่อย">ปัญหาที่พบบ่อย</a></li>
+                    <li><a href="#ฟังก์ชันสำเร็จรูป">ฟังก์ชันสำเร็จรูป</a></li>
+                    <li><a href="#เขียนฟังก์ชันเอง">เขียนฟังก์ชันเอง</a></li>
+                    <li><a href="#เทียบกับฟังก์ชันทางคณิตศาสตร์">เทียบกับฟังก์ชันทางคณิตศาสตร์</a></li>
+                    <li><a href="#pass-by-value-และ-pass-by-reference">Pass by value และ pass by reference</a></li>
+                    <li><a href="#scope-ของตัวแปร">Scope ของตัวแปร</a></li>
+                    <li><a href="#ตัวอย่าง">ตัวอย่าง</a></li>
+                    <li><a href="#ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
-<ul>
-<li><p>ตัวอย่างฟังก์ชันที่มีใน <code>bits/stdc++.h</code></p></li>
-<li><p>วิธีการเขียน user-defined functions</p></li>
-<li><p>เทียบมุมมองของฟังก์ชันทางคณิตศาสตร์และทางคอมพิวเตอร์</p></li>
-</ul>
-<h4 id="แนวคิด">แนวคิด<a class="heading-anchor" href="#แนวคิด" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>การเขียนฟังก์ชันในโปรแกรมเป็นการรวมกลุ่มคำสั่งเพื่อทำงานตามจุดประสงค์
-โดยสามารถเรียกใช้งานภายหลังในโปรแกรมนั้นได้</p>
-<h4 id="การเขียนโปรแกรม">การเขียนโปรแกรม<a class="heading-anchor" href="#การเขียนโปรแกรม" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="ตัวอย่างฟังก์ชันพร้อมเรียกใช้งาน">ตัวอย่างฟังก์ชันพร้อมเรียกใช้งาน<a class="heading-anchor" href="#ตัวอย่างฟังก์ชันพร้อมเรียกใช้งาน" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ใน C++ Standard Template Library (STL) จะมีฟังก์ชันพร้อมเรียกใช้งานให้ใช้
-ซึ่งเมื่อ</p>
+<p>Function คือการรวมกลุ่มคำสั่งที่ทำงานหนึ่งอย่างไว้ภายใต้ชื่อเดียว แล้วเรียกใช้ซ้ำได้
+ช่วยให้โค้ดสั้นลง อ่านง่าย และแก้ bug ที่เดียวได้ผลทุกที่ที่เรียกใช้</p>
+<h4 id="ฟังก์ชันสำเร็จรูป">ฟังก์ชันสำเร็จรูป<a class="heading-anchor" href="#ฟังก์ชันสำเร็จรูป" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>หลัง <code>#include &lt;bits/stdc++.h&gt;</code> จะมีฟังก์ชันให้ใช้มากมาย
+ที่ใช้บ่อยคือ</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span></code></pre>
-<p>แล้ว ในการเขียนโปรแกรมเชิงแข่งขันจะทำการ include STL ที่จำเป็นทั้งหมดมาให้
-ซึ่งตัวอย่างฟังก์ชันที่ใช้งานบ่อยครั้งมีดังนี้</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> abs<span class="op">(-</span><span class="dv">5</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>        <span class="co">// 5</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> sqrt<span class="op">(</span><span class="fl">64.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>     <span class="co">// 8</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> pow<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>     <span class="co">// 1024 (คืนค่าเป็น double)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> log2<span class="op">(</span><span class="dv">64</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>       <span class="co">// 6</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> gcd<span class="op">(</span><span class="dv">12</span><span class="op">,</span> <span class="dv">18</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>    <span class="co">// 6 (C++17)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> lcm<span class="op">(</span><span class="dv">4</span><span class="op">,</span> <span class="dv">6</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>      <span class="co">// 12 (C++17)</span></span></code></pre>
+<p>ระวัง: <code>pow</code> และ <code>sqrt</code> คืนค่าเป็น
+<code>double</code> ซึ่งอาจคลาดเคลื่อนเล็กน้อย เช่น
+<code>(int)pow(10, 2)</code> อาจได้ 99 บางเครื่อง
+ถ้าต้องการยกกำลังจำนวนเต็มให้เขียน loop คูณเอง หรือใช้ fast exponentiation ในบท
+Divide and Conquer</p>
+<h4 id="เขียนฟังก์ชันเอง">เขียนฟังก์ชันเอง<a class="heading-anchor" href="#เขียนฟังก์ชันเอง" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ฟังก์ชันหนึ่งประกอบด้วย</p>
 <ul>
-<li><p>abs, pow, sqrt, log2, exp จาก cmath</p></li>
-<li><p>swap, min, max, __gcd, next_permutation จาก algorithm</p></li>
+<li><p>ชนิดของค่าที่คืน (return type) ถ้าไม่คืนค่าใช้ <code>void</code></p></li>
+<li><p>ชื่อฟังก์ชัน</p></li>
+<li><p>parameters ที่รับเข้ามา</p></li>
+<li><p>ชุดคำสั่ง (body) และ <code>return</code></p></li>
 </ul>
 <pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;cmath examples</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;abs(-5): &quot;</span> <span class="op">&lt;&lt;</span> abs<span class="op">(-</span><span class="dv">5</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;pow(2, 3): &quot;</span> <span class="op">&lt;&lt;</span> pow<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;sqrt(64): &quot;</span> <span class="op">&lt;&lt;</span> sqrt<span class="op">(</span><span class="dv">64</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;log2(64): &quot;</span> <span class="op">&lt;&lt;</span> log2<span class="op">(</span><span class="dv">64</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;exp(3): &quot;</span> <span class="op">&lt;&lt;</span> exp<span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;algorithm examples</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> a <span class="op">=</span> <span class="dv">4</span><span class="op">,</span> b <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;a b: &quot;</span> <span class="op">&lt;&lt;</span> a <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span> <span class="op">&lt;&lt;</span> b <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  swap<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;a b: &quot;</span> <span class="op">&lt;&lt;</span> a <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span> <span class="op">&lt;&lt;</span> b <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;min(a, b): &quot;</span> <span class="op">&lt;&lt;</span> min<span class="op">(</span>a<span class="op">,</span> b<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;max(a, b): &quot;</span> <span class="op">&lt;&lt;</span> max<span class="op">(</span>a<span class="op">,</span> b<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;__gcd(a, b): &quot;</span> <span class="op">&lt;&lt;</span> __gcd<span class="op">(</span>a<span class="op">,</span> b<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>Output:</p>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> addition<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> greet<span class="op">(</span>string name<span class="op">)</span> <span class="op">{</span>     <span class="co">// void: ไม่คืนค่า</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Hello &quot;</span> <span class="op">&lt;&lt;</span> name <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> z <span class="op">=</span> addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">);</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;The result is &quot;</span> <span class="op">&lt;&lt;</span> z <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// The result is 8</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  greet<span class="op">(</span><span class="st">&quot;POSN&quot;</span><span class="op">);</span>                           <span class="co">// Hello POSN</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ฟังก์ชันต้องถูกประกาศ <strong>ก่อน</strong> จุดที่เรียกใช้ จึงมักเขียนไว้เหนือ
+<code>main</code></p>
+<h4 id="เทียบกับฟังก์ชันทางคณิตศาสตร์">เทียบกับฟังก์ชันทางคณิตศาสตร์<a class="heading-anchor" href="#เทียบกับฟังก์ชันทางคณิตศาสตร์" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ฟังก์ชัน <span class="math inline">f(x) = x^{2} + 1</span>
+ในคณิตศาสตร์เขียนเป็น C++ ได้ตรง ๆ โดยต้องระบุชนิดของ <span
+class="math inline">x</span> และผลลัพธ์เพิ่ม</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cmath examples             </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>abs<span class="op">(-</span><span class="dv">5</span><span class="op">):</span> <span class="dv">5</span>                 </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pow<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">):</span> <span class="dv">8</span>               </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sqrt<span class="op">(</span><span class="dv">64</span><span class="op">):</span> <span class="dv">8</span>                </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>log2<span class="op">(</span><span class="dv">64</span><span class="op">):</span> <span class="dv">6</span>                </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>exp<span class="op">(</span><span class="dv">3</span><span class="op">):</span> <span class="fl">20.0855</span>            </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>algorithm examples         </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>a b<span class="op">:</span> <span class="dv">4</span> <span class="dv">7</span>                   </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>a b<span class="op">:</span> <span class="dv">7</span> <span class="dv">4</span>                   </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>min<span class="op">(</span>a<span class="op">,</span> b<span class="op">):</span> <span class="dv">4</span>               </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>max<span class="op">(</span>a<span class="op">,</span> b<span class="op">):</span> <span class="dv">7</span> </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>__gcd<span class="op">(</span>a<span class="op">,</span> b<span class="op">):</span> <span class="dv">1</span></span></code></pre>
-<h5 id="user-defined-functions">User-defined functions<a class="heading-anchor" href="#user-defined-functions" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>เราสามารถเขียนฟังก์ชันด้วยตนเองได้ โดยการระบุ:</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> f<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x <span class="op">*</span> x <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ต่างจากคณิตศาสตร์ตรงที่ฟังก์ชันใน C++ อาจทำงานอื่นด้วย เช่น พิมพ์ผลหรือแก้ไขตัวแปร
+global (เรียกว่า side effect)</p>
+<h4 id="pass-by-value-และ-pass-by-reference">Pass by value และ pass by reference<a class="heading-anchor" href="#pass-by-value-และ-pass-by-reference" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ปกติ parameter จะ <strong>คัดลอกค่า</strong> เข้ามา (pass by value)
+การแก้ไขในฟังก์ชันจึงไม่กระทบตัวแปรต้นฉบับ ถ้าต้องการแก้ตัวแปรต้นฉบับ ให้ใส่
+<code>&amp;</code> หน้าชื่อ parameter (pass by reference)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> swapByValue<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> c <span class="op">=</span> a<span class="op">;</span> a <span class="op">=</span> b<span class="op">;</span> b <span class="op">=</span> c<span class="op">;</span>      <span class="co">// สลับแค่สำเนา</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> swapByRef<span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">int</span> <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> c <span class="op">=</span> a<span class="op">;</span> a <span class="op">=</span> b<span class="op">;</span> b <span class="op">=</span> c<span class="op">;</span>      <span class="co">// สลับตัวแปรต้นฉบับ</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> y <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  swapByValue<span class="op">(</span>x<span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span> <span class="op">&lt;&lt;</span> y <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// 0 1</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  swapByRef<span class="op">(</span>x<span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span> <span class="op">&lt;&lt;</span> y <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// 1 0</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="ส่ง-vector-และ-string-ด้วย-reference">ส่ง vector และ string ด้วย reference<a class="heading-anchor" href="#ส่ง-vector-และ-string-ด้วย-reference" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>การส่ง <code>vector</code> แบบ by value จะคัดลอกทั้งก้อนทุกครั้งที่เรียก
+ซึ่งใช้เวลา <span class="math inline">O(n)</span> ถ้าเรียกบ่อย (เช่น ใน
+recursion) จะ TLE ได้ ให้ส่งด้วย <code>const &amp;</code>
+เมื่อไม่ต้องการแก้ไข</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> total<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>v<span class="op">)</span> <span class="op">{</span>  <span class="co">// ไม่คัดลอก และห้ามแก้ v</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> s <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> v<span class="op">)</span> s <span class="op">+=</span> x<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> s<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="scope-ของตัวแปร">Scope ของตัวแปร<a class="heading-anchor" href="#scope-ของตัวแปร" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>ชนิด (type) ของค่าที่จะคืนค่า</p></li>
-<li><p>ชื่อ (name) ที่ใช้เรียกฟังก์ชันนั้น</p></li>
-<li><p>พารามิเตอร์ (parameters) ที่ไว้รับค่าเข้าสู่ฟังก์ชัน</p></li>
-<li><p>ชุดคำสั่ง (statements) ที่ระบุวิธีการทำงานของฟังก์ชันนั้น</p></li>
+<li><p><strong>Local variable</strong> ประกาศใน function หรือใน
+<code>{ }</code> ใช้ได้เฉพาะในบล็อกนั้น</p></li>
+<li><p><strong>Global variable</strong> ประกาศนอกทุก function ใช้ได้ทุกที่
+และมีค่าเริ่มต้นเป็น 0</p></li>
 </ul>
-<p>ในรูปแบบ:</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>type name <span class="op">(</span> param1<span class="op">,</span> param2<span class="op">,</span> <span class="op">...)</span> <span class="op">{</span> statements <span class="op">}</span></span></code></pre>
-<p>ตัวอย่างการเขียนฟังก์ชัน:</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> g<span class="op">;</span>  <span class="co">// global</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> addition<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> r <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span>  <span class="co">// r เป็น local ของ addition</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  g <span class="op">=</span> b<span class="op">;</span>          <span class="co">// แก้ global ได้</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> z <span class="op">=</span> addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;z is &quot;</span> <span class="op">&lt;&lt;</span> z <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// z is 8</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;g is &quot;</span> <span class="op">&lt;&lt;</span> g <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span>  <span class="co">// g is 3</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// cout &lt;&lt; r;  // error: &#39;r&#39; was not declared in this scope</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ในการแข่งขันนิยมใช้ global สำหรับ array ขนาดใหญ่และข้อมูลที่หลายฟังก์ชันใช้ร่วมกัน
+เช่น กราฟ</p>
+<h4 id="ตัวอย่าง">ตัวอย่าง<a class="heading-anchor" href="#ตัวอย่าง" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="ระยะทางระหว่างสองจุด">ระยะทางระหว่างสองจุด<a class="heading-anchor" href="#ระยะทางระหว่างสองจุด" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ระยะทางแบบยุคลิด (Euclidean) ระหว่าง <span class="math inline">A\left(
+x_{1},y_{1} \right)</span> และ <span class="math inline">B\left(
+x_{2},y_{2} \right)</span> คือ <span class="math inline">\sqrt{\left(
+x_{1} - x_{2} \right)^{2} + \left( y_{1} - y_{2} \right)^{2}}</span></p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> addition<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> r<span class="op">;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  r <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> r<span class="op">;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> z<span class="op">;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  z <span class="op">=</span> addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">);</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;The result is &quot;</span> <span class="op">&lt;&lt;</span> z<span class="op">;</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>Output:</p>
-<pre><code>The result is 8</code></pre>
-<h5 id="มุมมองของฟังก์ชัน">มุมมองของฟังก์ชัน<a class="heading-anchor" href="#มุมมองของฟังก์ชัน" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ทางคณิตศาสตร์จะเขียนฟังก์ชันอยู่ในรูป <span
-class="math inline"><em>y</em> = <em>f</em>(<em>x</em>)</span>
-ซึ่งเมื่อเทียบกับทางคอมพิวเตอร์แล้วจะเทียบเท่าเป็นฟังก์ชันที่มี:</p>
-<ul>
-<li><p>ไม่ได้ระบุชนิดค่าที่จะคืนออกมา</p></li>
-<li><p>ชื่อ f</p></li>
-<li><p>รับพารามิเตอร์ x</p></li>
-</ul>
-<p>ตัวอย่างฟังก์ชันเอกลักษณ์:</p>
-<p><span
-class="math inline"><em>f</em>(<em>x</em>) = <em>x</em></span></p>
-<p>ในภาษา C++:</p>
-<pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> f<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x<span class="op">;</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> dist<span class="op">(</span><span class="dt">double</span> x1<span class="op">,</span> <span class="dt">double</span> y1<span class="op">,</span> <span class="dt">double</span> x2<span class="op">,</span> <span class="dt">double</span> y2<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> sqrt<span class="op">((</span>x1 <span class="op">-</span> x2<span class="op">)</span> <span class="op">*</span> <span class="op">(</span>x1 <span class="op">-</span> x2<span class="op">)</span> <span class="op">+</span> <span class="op">(</span>y1 <span class="op">-</span> y2<span class="op">)</span> <span class="op">*</span> <span class="op">(</span>y1 <span class="op">-</span> y2<span class="op">));</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="โจทย์ตัวอย่าง-ค่าถัดไปของฟังก์ชันเวียนเกิด">โจทย์ตัวอย่าง - ค่าถัดไปของฟังก์ชันเวียนเกิด<a class="heading-anchor" href="#โจทย์ตัวอย่าง-ค่าถัดไปของฟังก์ชันเวียนเกิด" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="เนื้อหาโจทย์">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงเขียนฟังก์ชัน <code>next_a(int p, int pn)</code> หาค่า:</p>
-<p><span
-class="math inline"><em>a</em><sub><em>n</em></sub> = <em>a</em><sub>{<em>n</em> − 1}</sub> + <em>n</em> × 2</span></p>
-<p>เมื่อทราบค่า <span
-class="math inline"><em>a</em><sub>{<em>n</em> − 1}</sub></span></p>
-<h5 id="รหัสเทียม">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม" aria-hidden="true" tabindex="-1">#</a></h5>
+<h5 id="ระยะทางแบบ-manhattan">ระยะทางแบบ Manhattan<a class="heading-anchor" href="#ระยะทางแบบ-manhattan" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ระยะเมื่อเดินได้แค่แนวตั้งและแนวนอน เช่น เดินตามถนนที่ตัดเป็นตาราง: <span
+class="math inline">|x_{1} - x_{2}| + |y_{1} - y_{2}|</span></p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> next_a<span class="op">(</span><span class="dt">int</span> p<span class="op">,</span> <span class="dt">int</span> pn<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p <span class="op">+</span> <span class="op">(</span>pn <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> <span class="dv">2</span><span class="op">;</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> manhattan<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> x1<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> y1<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> x2<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> y2<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> abs<span class="op">(</span>x1 <span class="op">-</span> x2<span class="op">)</span> <span class="op">+</span> abs<span class="op">(</span>y1 <span class="op">-</span> y2<span class="op">);</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="โจทย์ตัวอย่าง-ระยะห่างระหว่างสองจุด">โจทย์ตัวอย่าง - ระยะห่างระหว่างสองจุด<a class="heading-anchor" href="#โจทย์ตัวอย่าง-ระยะห่างระหว่างสองจุด" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="เนื้อหาโจทย์-2">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-2" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>กำหนดให้ <span
-class="math inline"><em>A</em>(<em>x</em><sub>1</sub>, <em>y</em><sub>1</sub>)</span>
-และ <span
-class="math inline"><em>B</em>(<em>x</em><sub>2</sub>, <em>y</em><sub>2</sub>)</span>
-เป็นจุดสองจุดบนระนาบ</p>
-<h5 id="รหัสเทียม-2">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-2" aria-hidden="true" tabindex="-1">#</a></h5>
+<h5 id="ลำดับที่นิยามจากพจน์ก่อนหน้า">ลำดับที่นิยามจากพจน์ก่อนหน้า<a class="heading-anchor" href="#ลำดับที่นิยามจากพจน์ก่อนหน้า" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้า <span class="math inline">a_{1} = 2</span> และ <span
+class="math inline">a_{n} = a_{n - 1} + 2n</span>
+จะเขียนฟังก์ชันหาพจน์ถัดไปจากพจน์ก่อนหน้าได้</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> distance<span class="op">(</span><span class="dt">double</span> x1<span class="op">,</span> <span class="dt">double</span> y1<span class="op">,</span> <span class="dt">double</span> x2<span class="op">,</span> <span class="dt">double</span> y2<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sqrt<span class="op">((</span>x1 <span class="op">-</span> x2<span class="op">)</span> <span class="op">*</span> <span class="op">(</span>x1 <span class="op">-</span> x2<span class="op">)</span> <span class="op">+</span> <span class="op">(</span>y1 <span class="op">-</span> y2<span class="op">)</span> <span class="op">*</span> <span class="op">(</span>y1 <span class="op">-</span> y2<span class="op">));</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="โจทย์ตัวอย่าง-ระยะห่าง-manhattan">โจทย์ตัวอย่าง - ระยะห่าง Manhattan<a class="heading-anchor" href="#โจทย์ตัวอย่าง-ระยะห่าง-manhattan" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="เนื้อหาโจทย์-3">เนื้อหาโจทย์<a class="heading-anchor" href="#เนื้อหาโจทย์-3" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>จงเขียนฟังก์ชัน <code>manhattan(x1, y1, x2, y2)</code> เพื่อหาระยะ
-Manhattan ระหว่าง <span class="math inline"><em>A</em></span> และ <span
-class="math inline"><em>B</em></span></p>
-<h5 id="รหัสเทียม-3">รหัสเทียม<a class="heading-anchor" href="#รหัสเทียม-3" aria-hidden="true" tabindex="-1">#</a></h5>
-<pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> manhattan<span class="op">(</span><span class="dt">double</span> x1<span class="op">,</span> <span class="dt">double</span> y1<span class="op">,</span> <span class="dt">double</span> x2<span class="op">,</span> <span class="dt">double</span> y2<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> abs<span class="op">(</span>x1 <span class="op">-</span> x2<span class="op">)</span> <span class="op">+</span> abs<span class="op">(</span>y1 <span class="op">-</span> y2<span class="op">);</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<h4 id="ปัญหาที่พบบ่อย">ปัญหาที่พบบ่อย<a class="heading-anchor" href="#ปัญหาที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="scope-of-variables">Scope of variables<a class="heading-anchor" href="#scope-of-variables" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>แต่ละฟังก์ชันมี scope ของตัวเอง ตัวแปรแบ่งเป็น:</p>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> nextTerm<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> prev<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span>  <span class="co">// คืน a_n เมื่อรู้ a_(n-1)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> prev <span class="op">+</span> <span class="dv">2</span><span class="bu">LL</span> <span class="op">*</span> n<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> a <span class="op">=</span> <span class="dv">2</span><span class="op">;</span>  <span class="co">// a_1</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> n <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> n <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> n<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> nextTerm<span class="op">(</span>a<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> a <span class="op">&lt;&lt;</span> <span class="ch">&#39; &#39;</span><span class="op">;</span>  <span class="co">// 6 12 20 30</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="ข้อผิดพลาดที่พบบ่อย">ข้อผิดพลาดที่พบบ่อย<a class="heading-anchor" href="#ข้อผิดพลาดที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>Global variables</p></li>
-<li><p>Local variables</p></li>
+<li><p><strong>ลืม <code>return</code></strong> ในฟังก์ชันที่ไม่ใช่
+<code>void</code>: compile ผ่านแค่ warning แต่ค่าที่ได้เป็นขยะ (undefined
+behavior) ให้ compile ด้วย <code>-Wall</code> เสมอ</p></li>
+<li><p><strong>คาดว่าแก้ค่า parameter แล้วต้นฉบับจะเปลี่ยน</strong> แต่ลืมใส่
+<code>&amp;</code></p></li>
+<li><p><strong>ส่ง vector ขนาดใหญ่ by value</strong>
+ในฟังก์ชันที่ถูกเรียกบ่อย</p></li>
+<li><p><strong>ใช้ <code>pow</code> กับจำนวนเต็ม</strong>
+แล้วได้ค่าคลาดเคลื่อน</p></li>
 </ul>
-<p>ตัวอย่าง:</p>
-<pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> g<span class="op">;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> addition<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> r<span class="op">;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  g <span class="op">=</span> b<span class="op">;</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  r <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> r<span class="op">;</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> z<span class="op">;</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  z <span class="op">=</span> addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">);</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;z is &quot;</span> <span class="op">&lt;&lt;</span> z <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  cout <span class="op">&lt;&lt;</span> <span class="st">&quot;g is &quot;</span> <span class="op">&lt;&lt;</span> g<span class="op">;</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>Output:</p>
-<pre><code>z is 8
-g is 3
-
-Errors when accessing out-of-scope variables:
-
-cout &lt;&lt; &quot;z is &quot; &lt;&lt; z &lt;&lt; &quot;\n&quot;;</code></pre>
-<h5 id="return-type">Return/type<a class="heading-anchor" href="#return-type" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ลืม return จะเกิด warning</p>
-<pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> addition<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> r<span class="op">;</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  r <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-<p>Output:</p>
-<pre><code>warning: no return statement in function returning non-void</code></pre>
-<h5 id="arguments-passed-by-value-and-by-references">Arguments passed by value and by references<a class="heading-anchor" href="#arguments-passed-by-value-and-by-references" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>เพื่อให้เปลี่ยนค่าพารามิเตอร์ใช้ &amp; ข้างหน้า</p>
-<p>ตัวอย่าง:</p>
-<pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> swap<span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">int</span> <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> c <span class="op">=</span> a<span class="op">;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> b<span class="op">;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> c<span class="op">;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>in main<span class="op">:</span> <span class="dv">0</span> <span class="dv">1</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>in swap<span class="op">:</span> <span class="dv">1</span> <span class="dv">0</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>in main<span class="op">:</span> <span class="dv">1</span> <span class="dv">0</span></span></code></pre>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
 <li><p><a
 href="https://cses.fi/problemset/task/1070">Permutations</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1071">Number
+Spiral</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1072">Two
 Knights</a></p></li>
-<li><p><a href="https://cses.fi/problemset/task/2431">Digit
-Queries</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1617">Bit
+Strings</a></p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
             <div class="page-nav">
-                <a href="1004_recursion.html" class="prev">Recursion</a>
-                <a href="2005_big-o-notation.html" class="next">Big O Notation</a>
+                <a href="1002_stl.html" class="prev">Standard Template Library</a>
+                <a href="1004_recursion.html" class="next">Recursion</a>
             </div>
             </article>
         </main>

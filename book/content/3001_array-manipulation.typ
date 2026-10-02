@@ -1,5 +1,6 @@
 #import "@preview/ilm:1.4.0": *
 #import table: cell, header
+#import "widgets.typ": widget
 
 == Array Manipulation
 
@@ -65,6 +66,24 @@ for (int i = 1; i <= n; i++) {
 
 เทคนิคนี้เหมาะกับโจทย์ offline ที่รู้ update ทั้งหมดก่อนตอบคำถาม
 
+ลองคลิกสองช่องเพื่อดูว่าผลรวมช่วงมาจาก prefix sum สองค่าอย่างไร แล้วเปลี่ยนเป็นโหมด difference array เพื่อเพิ่มค่าทั้งช่วงหลายครั้ง
+
+#widget("prefix-sum")
+
+=== Prefix sum สองมิติ
+
+สำหรับตาราง ให้ `P[i][j]` เป็นผลรวมของสี่เหลี่ยมตั้งแต่ $(1, 1)$ ถึง $(i, j)$ ผลรวมของสี่เหลี่ยม $(r_1, c_1)$ ถึง $(r_2, c_2)$ หาได้ใน $O(1)$ ด้วยหลัก inclusion-exclusion
+
+```cpp
+for (int i = 1; i <= n; i++)
+  for (int j = 1; j <= m; j++)
+    P[i][j] = a[i][j] + P[i - 1][j] + P[i][j - 1] - P[i - 1][j - 1];
+
+long long rect(int r1, int c1, int r2, int c2) {
+  return P[r2][c2] - P[r1 - 1][c2] - P[r2][c1 - 1] + P[r1 - 1][c1 - 1];
+}
+```
+
 === Fenwick Tree
 
 Fenwick Tree หรือ Binary Indexed Tree ใช้ตอบ range sum และ point update ได้เร็ว
@@ -109,6 +128,7 @@ Segment Tree เหมาะเมื่อ operation ซับซ้อนก�
 ```cpp
 vector<long long> seg(4 * n);
 
+// node เก็บผลรวมของช่วง [l, r] ลูกคือ 2*node และ 2*node+1
 void build(int node, int l, int r) {
   if (l == r) {
     seg[node] = a[l];
@@ -119,7 +139,28 @@ void build(int node, int l, int r) {
   build(node * 2 + 1, mid + 1, r);
   seg[node] = seg[node * 2] + seg[node * 2 + 1];
 }
+
+void update(int node, int l, int r, int pos, long long val) {  // a[pos] = val
+  if (l == r) {
+    seg[node] = val;
+    return;
+  }
+  int mid = (l + r) / 2;
+  if (pos <= mid) update(node * 2, l, mid, pos, val);
+  else update(node * 2 + 1, mid + 1, r, pos, val);
+  seg[node] = seg[node * 2] + seg[node * 2 + 1];
+}
+
+long long query(int node, int l, int r, int ql, int qr) {  // ผลรวม a[ql..qr]
+  if (qr < l || r < ql) return 0;              // ไม่ทับกันเลย
+  if (ql <= l && r <= qr) return seg[node];    // อยู่ในช่วงทั้งหมด
+  int mid = (l + r) / 2;
+  return query(node * 2, l, mid, ql, qr) + query(node * 2 + 1, mid + 1, r, ql, qr);
+}
+// เรียกใช้: build(1, 1, n); update(1, 1, n, pos, val); query(1, 1, n, l, r);
 ```
+
+เปลี่ยน `+` เป็น `min`, `max` หรือ `gcd` (และค่าที่คืนเมื่อไม่ทับกันเป็น identity ของ operation นั้น) ก็ได้ segment tree สำหรับ operation อื่นทันที
 
 === เลือกใช้อะไรดี
 
@@ -143,8 +184,11 @@ void build(int node, int l, int r) {
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
+- #link("https://cses.fi/problemset/task/1646")[Static Range Sum Queries] (prefix sum)
+- #link("https://cses.fi/problemset/task/1652")[Forest Queries] (prefix sum 2 มิติ)
 - #link("https://cses.fi/problemset/task/1660")[Subarray Sums I]
 - #link("https://cses.fi/problemset/task/1643")[Maximum Subarray Sum]
-- #link("https://cses.fi/problemset/task/2216")[Collecting Numbers]
+- #link("https://cses.fi/problemset/task/1648")[Dynamic Range Sum Queries] (Fenwick / segment tree)
+- #link("https://cses.fi/problemset/task/1649")[Dynamic Range Minimum Queries] (segment tree)
 
 โจทย์เพิ่มเติม: #link("https://cses.fi/problemset/")[CSES Problem Set] และ #link("https://programming.in.th/")[programming.in.th]

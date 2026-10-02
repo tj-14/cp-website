@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="วิธีคิดสำหรับปัญหา optimization โดยทั่วไปแล้วจะมีขั้นตอน ซึ่งแต่ละขั้นจะมีตัวเลือกที่แตกต่างกันไป">
+    <meta name="description" content="ปัญหา optimization หลายข้อแก้ได้โดยตัดสินใจทีละขั้น Greedy คือการเลือกตัวเลือกที่ดูดีที่สุด ณ ตอนนั้น เสมอ โดยไม่ย้อนกลับมาเปลี่ยน…">
     <meta name="theme-color" content="#253241">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
     <meta property="og:locale" content="th_TH">
     <meta property="og:title" content="Greedy Algorithm | คู่มือโอลิมปิกคอมพิวเตอร์">
-    <meta property="og:description" content="วิธีคิดสำหรับปัญหา optimization โดยทั่วไปแล้วจะมีขั้นตอน ซึ่งแต่ละขั้นจะมีตัวเลือกที่แตกต่างกันไป">
+    <meta property="og:description" content="ปัญหา optimization หลายข้อแก้ได้โดยตัดสินใจทีละขั้น Greedy คือการเลือกตัวเลือกที่ดูดีที่สุด ณ ตอนนั้น เสมอ โดยไม่ย้อนกลับมาเปลี่ยน…">
     <meta property="og:url" content="https://tj-14.github.io/cp-website/3000_greedy-algorithm.html">
     <link rel="canonical" href="https://tj-14.github.io/cp-website/3000_greedy-algorithm.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,14 +17,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {
-            delimiters: [
-                {left: '$$', right: '$$', display: true},
-                {left: '$', right: '$', display: false}
-            ],
-            throwOnError: false
-        });"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
@@ -45,16 +48,16 @@
             <section>
                 <h2>ค่าย 1: Programming Basics</h2>
                 <ul>
-                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
-                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1003_syntax.html">C++ Syntax</a></li>
-                <li><a href="1004_recursion.html">Recursion</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
                 <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
                 </ul>
             </section>
             <section>
                 <h2>ค่าย 2: Data Structures</h2>
                 <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
                 <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
                 <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
                 <li><a href="2001_linked-list.html">Linked List</a></li>
@@ -108,60 +111,43 @@
                 <ul>
                     <li><a href="#หลักการ">หลักการ</a></li>
                     <li><a href="#ปัญหาการทอนเหรียญ">ปัญหาการทอนเหรียญ</a></li>
-                    <li><a href="#วิธีพิสูจน์ที่พบบ่อย">วิธีพิสูจน์ที่พบบ่อย</a></li>
-                    <li><a href="#ปัญหาการจัดตารางเวลา">ปัญหาการจัดตารางเวลา</a></li>
+                    <li><a href="#ปัญหาการจัดตารางเวลา-interval-scheduling">ปัญหาการจัดตารางเวลา (interval scheduling)</a></li>
+                    <li><a href="#พิสูจน์ว่า-greedy-ถูก">พิสูจน์ว่า greedy ถูก</a></li>
+                    <li><a href="#greedy-ที่พบบ่อยอีกสองแบบ">Greedy ที่พบบ่อยอีกสองแบบ</a></li>
                     <li><a href="#โจทย์ที่มักใช้-greedy">โจทย์ที่มักใช้ greedy</a></li>
                     <li><a href="#checklist">Checklist</a></li>
                     <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
                 </ul>
             </nav>
 <h4 id="หลักการ">หลักการ<a class="heading-anchor" href="#หลักการ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ปัญหา optimization หลายข้อแก้ได้โดยตัดสินใจทีละขั้น <strong>Greedy</strong>
+คือการเลือกตัวเลือกที่ดูดีที่สุด <strong>ณ ตอนนั้น</strong> เสมอ โดยไม่ย้อนกลับมาเปลี่ยน
+และหวังว่าการเลือกที่ดีที่สุดเฉพาะหน้า (local) จะนำไปสู่คำตอบที่ดีที่สุดโดยรวม
+(global)</p>
 <ul>
-<li><p>วิธีคิดสำหรับปัญหา optimization โดยทั่วไปแล้วจะมีขั้นตอน
-ซึ่งแต่ละขั้นจะมีตัวเลือกที่แตกต่างกันไป</p></li>
-<li><p>สำหรับหลายๆ ปัญหา optimization อาจจะไม่จำเป็นต้องใช้ dynamic
-programming เพื่อตัดสินตัวเลือกที่ดีที่สุด</p></li>
-<li><p>วิธีคิดแบบ greedy จะเลือกตัวเลือกที่ดีที่สุดในขณะนั้นๆ เสมอ
-โดยหวังว่าการเลือกตัวเลือกที่ดีที่สุดใน local จะนำไปสู่วิธีการแก้ปัญหาที่ดีที่สุดใน
-global</p></li>
-<li><p>วิธีคิดแบบ greedy จะไม่นำไปสู่วิธีการแก้ปัญหาที่ดีที่สุดเสมอไป
-มีเพียงบางปัญหาเท่านั้นที่สามารถนำไปใช้ได้</p></li>
-<li><p>การพิสูจน์ว่าสามารถใช้วิธีคิดแบบ greedy นั้นทำยาก
-บางครั้งการลองเขียนโค้ดไปเลยจะสะดวกกว่าการพิสูจน์</p></li>
+<li><p>ข้อดี: คิดง่าย เขียนสั้น และมักเร็ว (ส่วนใหญ่คือ sort แล้ววนหนึ่งรอบ <span
+class="math inline">O\left( n\log n \right)</span>)</p></li>
+<li><p>ข้อเสีย: <strong>ไม่ได้ถูกเสมอไป</strong> greedy
+ที่ดูสมเหตุสมผลหลายแบบให้คำตอบผิด จึงต้องมีเหตุผลหรือพิสูจน์ว่ากฎที่เลือกถูกต้อง</p></li>
 </ul>
-<p>โจทย์ greedy ที่ดีมักมีคุณสมบัติว่าเมื่อตัดสินใจเลือกบางอย่างแล้ว
-เราไม่จำเป็นต้องย้อนกลับมาเปลี่ยนการเลือกนั้นอีก</p>
 <h4 id="ปัญหาการทอนเหรียญ">ปัญหาการทอนเหรียญ<a class="heading-anchor" href="#ปัญหาการทอนเหรียญ" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>พิจารณาปัญหาที่ต้องการทอนเงินมูลค่า n โดยใช้เหรียญที่มีมูลค่า <span
-class="math inline">{<em>c</em><sub>1</sub>, <em>c</em><sub>2</sub>, <em>c</em>…, <em>c</em><sub><em>k</em></sub>}</span>
-จำนวนเหรียญที่น้อยที่สุดที่ต้องใช้เป็นเท่าไร?</p>
-<h5 id="ตัวอย่าง">ตัวอย่าง<a class="heading-anchor" href="#ตัวอย่าง" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>มูลค่าของเหรียญคือ</p>
-<p><span class="math inline">{1, 2, 5, 10, 20, 50, 100, 200}</span></p>
-<p>และ <strong>n</strong> = 520</p>
-<h5 id="greedy-approach">Greedy approach<a class="heading-anchor" href="#greedy-approach" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ตัวอย่างวิธีคิดแบบ greedy คือเลือกเหรียญที่มีมูลค่ามากสุดก่อนเสมอ
-จนกว่าเราจะสามารถรวมมูลค่าได้ถูกต้อง</p>
-<p><strong>คำเตือน</strong> วิธีคิดแบบ greedy ไม่จำเป็นจะเป็นวิธีที่ดีที่สุดเสมอไป
-กรณีนี้ขึ้นอยู่กับประเภทของเหรียญว่าสามารถใช้วิธี greedy ได้หรือไม่</p>
-<p>ตัวอย่าง counterexample คือเหรียญ <span
-class="math inline">{1, 3, 4}</span> และต้องทอน <span
-class="math inline">6</span> ถ้าเลือกเหรียญใหญ่สุดก่อนจะได้ <span
-class="math inline">4 + 1 + 1</span> ใช้ 3 เหรียญ แต่คำตอบที่ดีที่สุดคือ <span
-class="math inline">3 + 3</span> ใช้ 2 เหรียญ</p>
-<h4 id="วิธีพิสูจน์ที่พบบ่อย">วิธีพิสูจน์ที่พบบ่อย<a class="heading-anchor" href="#วิธีพิสูจน์ที่พบบ่อย" aria-hidden="true" tabindex="-1">#</a></h4>
-<h5 id="exchange-argument">Exchange argument<a class="heading-anchor" href="#exchange-argument" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>สมมติว่ามีคำตอบที่ดีที่สุดอยู่แล้ว แล้วแสดงว่าสามารถสลับบางส่วนของคำตอบนั้นให้เหมือน
-greedy choice ได้โดยคำตอบไม่แย่ลง ถ้าทำซ้ำไปเรื่อย ๆ จะได้ว่ามี optimal solution
-ที่ตรงกับ greedy</p>
-<h5 id="stay-ahead-argument">Stay-ahead argument<a class="heading-anchor" href="#stay-ahead-argument" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>เปรียบเทียบคำตอบของ greedy กับ optimal หลังจากตัดสินใจไปทีละขั้น แล้วพิสูจน์ว่า
-greedy ไม่เคยตามหลัง optimal เช่น เลือกงานได้ไม่น้อยกว่า หรือจบเร็วกว่าเสมอ</p>
-<h4 id="ปัญหาการจัดตารางเวลา">ปัญหาการจัดตารางเวลา<a class="heading-anchor" href="#ปัญหาการจัดตารางเวลา" aria-hidden="true" tabindex="-1">#</a></h4>
-<p>พิจารณาปัญหาที่ต้องการเรียง <strong>n</strong>
-งานซึ่งมีเวลาเริ่มและเวลาจบแตกต่างกันไป
-โดยต้องการให้สามารถจัดเรียงงานให้ได้จำนวนมากที่สุด</p>
-<h5 id="ตัวอย่าง-2">ตัวอย่าง<a class="heading-anchor" href="#ตัวอย่าง-2" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ต้องการทอนเงิน <span class="math inline">n</span> บาทด้วยเหรียญมูลค่า <span
+class="math inline">c_{1},c_{2},\cdots,c_{k}</span>
+ให้ใช้จำนวนเหรียญน้อยที่สุด</p>
+<p>กฎ greedy: <strong>หยิบเหรียญมูลค่ามากที่สุดที่ยังไม่เกินจำนวนที่เหลือ</strong>
+ทำซ้ำจนครบ</p>
+<p>เช่น เหรียญ <span class="math inline">\{
+1,2,5,10,20,50,100,200\}</span> และ <span class="math inline">n =
+520</span>: หยิบ <span class="math inline">200 + 200 + 100 + 20</span> ได้
+4 เหรียญ ซึ่งดีที่สุด</p>
+<p>แต่ถ้าเหรียญเป็น <span class="math inline">\{ 1,3,4\}</span> และ <span
+class="math inline">n = 6</span> greedy ได้ <span class="math inline">4 +
+1 + 1</span> (3 เหรียญ) ขณะที่คำตอบจริงคือ <span class="math inline">3 +
+3</span> (2 เหรียญ) greedy ใช้ได้กับชุดเหรียญบางแบบเท่านั้น กรณีทั่วไปต้องใช้ Dynamic
+Programming (ดูบท Dynamic Programming ซึ่งมี widget เปรียบเทียบทั้งสองวิธี)</p>
+<h4 id="ปัญหาการจัดตารางเวลา-interval-scheduling">ปัญหาการจัดตารางเวลา (interval scheduling)<a class="heading-anchor" href="#ปัญหาการจัดตารางเวลา-interval-scheduling" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>มีงาน <span class="math inline">n</span> งาน แต่ละงานมีเวลาเริ่มและเวลาจบ
+ทำได้ทีละงาน ต้องการเลือกงานที่ไม่ชนกันให้ได้ <strong>จำนวนมากที่สุด</strong></p>
 <table>
 <thead>
 <tr>
@@ -193,56 +179,105 @@ greedy ไม่เคยตามหลัง optimal เช่น เลือ
 </tr>
 </tbody>
 </table>
-<h5 id="คำอธิบาย">คำอธิบาย<a class="heading-anchor" href="#คำอธิบาย" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>แนวคิดที่เลือกงานถัดไปที่เลิกเร็วที่สุดเสมอ
-สามารถอ้างได้ว่าหากเราเลือกงานที่เลิกช้ากว่างานที่เราเลือก
-เราจะได้จำนวนงานอย่างมากที่สุดเท่ากับจำนวนงานที่เราเลือกด้วยวิธีเดิม
-เพราะฉะนั้นการเลือกงานที่เลิกช้ากว่าจะไม่สามารถให้คำตอบที่ดีกว่าได้</p>
-<p>ตัวอย่าง implementation</p>
+<p>มี greedy ที่น่าลองหลายแบบ</p>
+<ul>
+<li><p>เลือกงานที่ <strong>เริ่มเร็วสุด</strong> ก่อน</p></li>
+<li><p>เลือกงานที่ <strong>สั้นสุด</strong> ก่อน</p></li>
+<li><p>เลือกงานที่ <strong>จบเร็วสุด</strong> ก่อน</p></li>
+</ul>
+<p>ลองแต่ละกฎกับชุดงานต่าง ๆ แล้วดูว่ากฎไหนได้คำตอบดีที่สุดทุกครั้ง</p>
+<div class="widget" data-widget="interval-scheduling"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
+<p>มีเพียง <strong>จบเร็วสุดก่อน</strong> ที่ถูกเสมอ ตัวอย่างในตารางได้คำตอบ 2 งาน
+คือ A และ D</p>
 <pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> job<span class="op">;</span> <span class="co">// {end, start}</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> job<span class="op">;</span>  <span class="co">// {end, start} เพื่อให้ sort ตามเวลาจบ</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sort<span class="op">(</span>job<span class="op">.</span>begin<span class="op">(),</span> job<span class="op">.</span>end<span class="op">());</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> last_end <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ans <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>end<span class="op">,</span> start<span class="op">]</span> <span class="op">:</span> job<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>start <span class="op">&gt;=</span> last_end<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    ans<span class="op">++;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    last_end <span class="op">=</span> end<span class="op">;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lastEnd <span class="op">=</span> INT_MIN<span class="op">,</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>end<span class="op">,</span> start<span class="op">]</span> <span class="op">:</span> job<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>start <span class="op">&gt;=</span> lastEnd<span class="op">)</span> <span class="op">{</span>  <span class="co">// ไม่ชนกับงานล่าสุดที่เลือก</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    count<span class="op">++;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    lastEnd <span class="op">=</span> end<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h4 id="พิสูจน์ว่า-greedy-ถูก">พิสูจน์ว่า greedy ถูก<a class="heading-anchor" href="#พิสูจน์ว่า-greedy-ถูก" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="exchange-argument">Exchange argument<a class="heading-anchor" href="#exchange-argument" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>สมมติว่ามีคำตอบที่ดีที่สุด (optimal) อยู่แล้ว แล้วแสดงว่า <strong>สลับ</strong>
+บางส่วนให้เหมือน greedy ได้โดยคำตอบไม่แย่ลง ทำซ้ำไปเรื่อย ๆ จนได้คำตอบที่ตรงกับ
+greedy และยังดีที่สุด</p>
+<p>ตัวอย่างกับ interval scheduling: ให้ <span class="math inline">g</span>
+เป็นงานที่จบเร็วที่สุด และ <span class="math inline">o</span> เป็นงานแรกในคำตอบ
+optimal เพราะ <span class="math inline">g</span> จบไม่ช้ากว่า <span
+class="math inline">o</span> การเปลี่ยน <span class="math inline">o</span>
+เป็น <span class="math inline">g</span> จึงไม่ทำให้ชนกับงานถัดไปในคำตอบ
+จำนวนงานเท่าเดิม ดังนั้นมีคำตอบ optimal ที่เริ่มด้วย <span
+class="math inline">g</span> เสมอ แล้วใช้เหตุผลเดิมกับงานที่เหลือต่อไปได้</p>
+<h5 id="stay-ahead-argument">Stay-ahead argument<a class="heading-anchor" href="#stay-ahead-argument" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>เทียบ greedy กับ optimal หลังตัดสินใจทีละขั้น แล้วพิสูจน์ว่า greedy ไม่เคยตามหลัง
+เช่น หลังเลือกงานไป <span class="math inline">k</span> งาน งานที่ <span
+class="math inline">k</span> ของ greedy จบไม่ช้ากว่างานที่ <span
+class="math inline">k</span> ของ optimal เสมอ</p>
+<h5 id="หา-counterexample-ก่อนเสมอ">หา counterexample ก่อนเสมอ<a class="heading-anchor" href="#หา-counterexample-ก่อนเสมอ" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ก่อนเขียนโค้ด ให้ลองหาตัวอย่างเล็ก ๆ ที่กฎผิด (เหมือนที่ widget แสดง)
+ถ้าหาไม่เจอหลังลองหลายแบบ ค่อยพยายามพิสูจน์ หรือเขียน brute force มาเทียบผลกับ
+input สุ่ม (stress test)</p>
+<h4 id="greedy-ที่พบบ่อยอีกสองแบบ">Greedy ที่พบบ่อยอีกสองแบบ<a class="heading-anchor" href="#greedy-ที่พบบ่อยอีกสองแบบ" aria-hidden="true" tabindex="-1">#</a></h4>
+<h5 id="จับคู่ด้วยสองตัวชี้-two-pointers">จับคู่ด้วยสองตัวชี้ (two pointers)<a class="heading-anchor" href="#จับคู่ด้วยสองตัวชี้-two-pointers" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>โจทย์ Ferris Wheel: กระเช้าหนึ่งตัวรับได้ไม่เกิน 2 คนและน้ำหนักรวมไม่เกิน <span
+class="math inline">x</span> ใช้กระเช้าน้อยที่สุดกี่ตัว Sort
+น้ำหนักแล้วพยายามจับคนที่เบาที่สุดคู่กับคนที่หนักที่สุด ถ้าเกิน คนที่หนักที่สุดต้องนั่งคนเดียว</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sort<span class="op">(</span>w<span class="op">.</span>begin<span class="op">(),</span> w<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> j <span class="op">=</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> gondolas <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;=</span> j<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> j <span class="op">&amp;&amp;</span> w<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> w<span class="op">[</span>j<span class="op">]</span> <span class="op">&lt;=</span> x<span class="op">)</span> i<span class="op">++;</span>  <span class="co">// คนเบาสุดนั่งไปกับคนหนักสุด</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  j<span class="op">--;</span>                                  <span class="co">// คนหนักสุดได้กระเช้าแล้ว</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  gondolas<span class="op">++;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="เรียงตามเวลาที่ใช้">เรียงตามเวลาที่ใช้<a class="heading-anchor" href="#เรียงตามเวลาที่ใช้" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>โจทย์ Tasks and Deadlines: ทำงานทีละงาน งานที่ <span
+class="math inline">i</span> ใช้เวลา <span
+class="math inline">a_{i}</span> และได้คะแนน <span
+class="math inline">d_{i} - f_{i}</span> เมื่อ <span
+class="math inline">f_{i}</span> คือเวลาที่ทำเสร็จ คะแนนรวมคือ <span
+class="math inline">\sum d_{i} - \sum f_{i}</span> ส่วนแรกคงที่ จึงต้องทำให้
+<span class="math inline">\sum f_{i}</span> น้อยสุด ซึ่งได้จากการ
+<strong>ทำงานที่สั้นกว่าก่อน</strong> (exchange argument: ถ้างานยาวอยู่หน้างานสั้น
+สลับกันแล้ว <span class="math inline">\sum f_{i}</span> ลดลง)</p>
 <h4 id="โจทย์ที่มักใช้-greedy">โจทย์ที่มักใช้ greedy<a class="heading-anchor" href="#โจทย์ที่มักใช้-greedy" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>interval scheduling: เลือกงานที่จบเร็วสุด</p></li>
-<li><p>minimum number of rooms: ใช้ sweep line หรือ priority
-queue</p></li>
-<li><p>Huffman coding: รวมค่าน้อยสุดสองตัวเสมอ</p></li>
-<li><p>minimum spanning tree: Kruskal และ Prim เป็น greedy</p></li>
-<li><p>Dijkstra: เลือก node ที่ distance น้อยสุดที่ยังไม่ finalize</p></li>
+<li><p>Interval scheduling: เลือกงานที่จบเร็วสุด</p></li>
+<li><p>จำนวนห้องน้อยสุดสำหรับทุกงาน: sweep line หรือ priority queue</p></li>
+<li><p>Huffman coding: รวมสองค่าที่น้อยที่สุดเสมอ</p></li>
+<li><p>Minimum spanning tree: Kruskal และ Prim (บท Graph
+Algorithm)</p></li>
+<li><p>Dijkstra: เลือก node ที่ระยะน้อยสุดที่ยังไม่ยืนยัน</p></li>
 </ul>
 <h4 id="checklist">Checklist<a class="heading-anchor" href="#checklist" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
-<li><p>ระบุ objective ว่าต้อง maximize หรือ minimize อะไร</p></li>
-<li><p>เขียน greedy choice ให้ชัดเจน เช่น “เลือกงานที่จบเร็วสุด”</p></li>
-<li><p>หา counterexample ถ้ามี เพื่อไม่ใช้ greedy ผิดโจทย์</p></li>
-<li><p>ถ้าต้องพิสูจน์ ให้ลอง exchange argument ก่อน</p></li>
+<li><p>ระบุให้ชัดว่าต้อง maximize หรือ minimize อะไร</p></li>
+<li><p>เขียนกฎ greedy เป็นประโยคเดียว เช่น “เลือกงานที่จบเร็วสุด”</p></li>
+<li><p>ลองหา counterexample ด้วยตัวอย่างเล็ก ๆ</p></li>
+<li><p>ถ้าต้องพิสูจน์ ลอง exchange argument ก่อน</p></li>
 </ul>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
 <p>ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้
 โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน</p>
 <ul>
-<li><p><a href="https://cses.fi/problemset/task/1629">Movie
-Festival</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1629">Movie Festival</a>
+(interval scheduling)</p></li>
 <li><p><a href="https://cses.fi/problemset/task/1090">Ferris
 Wheel</a></p></li>
 <li><p><a href="https://cses.fi/problemset/task/1630">Tasks and
 Deadlines</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1074">Stick
+Lengths</a></p></li>
 </ul>
 <p>โจทย์เพิ่มเติม: <a href="https://cses.fi/problemset/">CSES Problem
 Set</a> และ <a
 href="https://programming.in.th/">programming.in.th</a></p>
 
+<script defer src="assets/widgets/interval-scheduling.js"></script>
             <div class="page-nav">
                 <a href="2009_review.html" class="prev">Review</a>
                 <a href="3001_array-manipulation.html" class="next">Array Manipulation</a>

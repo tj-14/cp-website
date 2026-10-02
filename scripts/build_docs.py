@@ -32,7 +32,6 @@ KATEX_VERSION = "0.16.47"
 KATEX_INTEGRITY = {
     "css": "sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA",
     "js": "sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp",
-    "auto": "sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz",
 }
 
 YEAR = datetime.date.today().year
@@ -45,19 +44,19 @@ SECTIONS = [
     ),
     (
         "ค่าย 1: Programming Basics",
-        "C++ syntax, functions, recursion, and STL basics",
+        "C++ syntax, STL basics, functions, and recursion",
         [
-            ("1001_basic", "การเขียนโปรแกรมเชิงแข่งขัน"),
-            ("1002_stl", "Standard Template Library"),
             ("1003_syntax", "C++ Syntax"),
-            ("1004_recursion", "Recursion"),
+            ("1002_stl", "Standard Template Library"),
             ("1005_function", "Function"),
+            ("1004_recursion", "Recursion"),
         ],
     ),
     (
         "ค่าย 2: Data Structures",
         "Core structures and complexity analysis",
         [
+            ("1001_basic", "การเขียนโปรแกรมเชิงแข่งขัน"),
             ("2005_big-o-notation", "Big O Notation"),
             ("2010_stack-queue", "Stack and Queue"),
             ("2001_linked-list", "Linked List"),
@@ -108,14 +107,17 @@ SECTION_OF = {slug: section_title for section_title, _, items in SECTIONS for sl
 
 KATEX_HEAD = f"""    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.css" integrity="{KATEX_INTEGRITY['css']}" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/katex.min.js" integrity="{KATEX_INTEGRITY['js']}" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@{KATEX_VERSION}/dist/contrib/auto-render.min.js" integrity="{KATEX_INTEGRITY['auto']}" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {{
-            delimiters: [
-                {{left: '$$', right: '$$', display: true}},
-                {{left: '$', right: '$', display: false}}
-            ],
-            throwOnError: false
-        }});"></script>"""
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {{
+            document.querySelectorAll('.content .math').forEach((el) => {{
+                katex.render(el.textContent, el, {{
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                }});
+            }});
+        }});
+    </script>"""
 
 COPY_BUTTON_SCRIPT = """    <script>
         document.querySelectorAll('.content pre').forEach((pre) => {
@@ -217,12 +219,15 @@ def enhance_resource_paragraphs(fragment: str) -> str:
 
 def render_content(path: Path) -> str:
     result = subprocess.run(
-        ["pandoc", "-f", "typst", "-t", "html", str(path)],
+        # --katex keeps raw TeX in .math spans on both pandoc 3.10 and 3.11+.
+        ["pandoc", "-f", "typst", "-t", "html", "--katex", str(path)],
         cwd=ROOT,
-        check=True,
+        check=False,  # handled below so pandoc's stderr reaches the user
         text=True,
         capture_output=True,
     )
+    if result.returncode != 0:
+        raise SystemExit(f"error: pandoc failed on {path.name}:\n{result.stderr}")
     fragment = shift_headings(result.stdout)
     fragment = fragment.replace("../assets/", "assets/")
     fragment = fragment.replace("book/assets/", "assets/")
@@ -230,7 +235,30 @@ def render_content(path: Path) -> str:
     fragment = re.sub(r'<div class="sourceCode"[^>]*>\s*(<pre[^>]*>)', r"\1", fragment)
     fragment = re.sub(r"</pre>\s*</div>", "</pre>", fragment)
     fragment = enhance_resource_paragraphs(fragment)
-    return fragment
+    return embed_widgets(fragment)
+
+
+# Emitted by #widget(...) in book/content/widgets.typ; see that file.
+WIDGET_MARKER = re.compile(r"<p>▶ Interactive: <code>([a-z0-9-]+)</code>.*?</p>", re.DOTALL)
+
+
+def embed_widgets(fragment: str) -> str:
+    names: list[str] = []
+
+    def repl(match: re.Match[str]) -> str:
+        name = match.group(1)
+        if not (BOOK_ASSETS / "widgets" / f"{name}.js").exists():
+            raise SystemExit(f"error: widget '{name}' has no book/assets/widgets/{name}.js")
+        if name not in names:
+            names.append(name)
+        return (
+            f'<div class="widget" data-widget="{name}">'
+            "<noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>"
+        )
+
+    fragment = WIDGET_MARKER.sub(repl, fragment)
+    scripts = "".join(f'\n<script defer src="assets/widgets/{name}.js"></script>' for name in names)
+    return fragment + scripts
 
 
 def slugify(text: str) -> str:
@@ -419,12 +447,14 @@ def wrap_page(
 """
 
 
-def build_index(entries: list[tuple[str, str, str]]) -> str:
+def build_index(entries: list[tuple[str, str, str]], interactive: set[str]) -> str:
     cards = []
+    badge = ' <span class="badge">โต้ตอบได้</span>'
     for section_title, section_desc, items in SECTIONS:
         links = []
         for slug, title in items:
-            links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a></li>')
+            mark = badge if slug in interactive else ""
+            links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a>{mark}</li>')
         cards.append(
             f"""            <section class="course-section">
                 <h3>{html.escape(section_title)}</h3>
@@ -458,7 +488,7 @@ def build_index(entries: list[tuple[str, str, str]]) -> str:
     <main id="main-content" class="container home" tabindex="-1">
         <section class="home-intro">
             <h2>เส้นทางเรียน Competitive Programming สำหรับนักเรียนไทย</h2>
-            <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที เว็บไซต์นี้สร้างจาก source เดียวกับหนังสือใน <code>book/content</code></p>
+            <p>อ่านตามลำดับค่าย สอวน. หรือค้นหาหัวข้อที่ต้องใช้ทบทวนได้ทันที บทที่มีป้าย <span class="badge">โต้ตอบได้</span> มีแบบฝึกให้ลองเดินอัลกอริทึมทีละขั้นและทายคำตอบ</p>
             <label class="search-box">
                 <span>ค้นหาหัวข้อ</span>
                 <input id="topic-search" type="search" placeholder="เช่น DP, graph, recursion, queue (กด / เพื่อค้นหา)" autocomplete="off">
@@ -514,13 +544,10 @@ def write_extras() -> None:
         f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n",
         encoding="utf-8",
     )
-    today = datetime.date.today().isoformat()
     pages = ["index.html"]
     pages += [f"{slug}.html" for slug, _ in ORDER if (BOOK / f"{slug}.typ").exists()]
-    urls = "\n".join(
-        f"  <url><loc>{SITE_URL}/{page}</loc><lastmod>{today}</lastmod></url>"
-        for page in pages
-    )
+    # No <lastmod>: a build-date stamp made CI's committed-docs check fail on any later day.
+    urls = "\n".join(f"  <url><loc>{SITE_URL}/{page}</loc></url>" for page in pages)
     (DOCS / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n',
         encoding="utf-8",
@@ -530,6 +557,7 @@ def write_extras() -> None:
 def main() -> None:
     copy_assets()
     entries: list[tuple[str, str, str]] = []
+    interactive: set[str] = set()
     for index, (slug, title) in enumerate(ORDER):
         source = BOOK / f"{slug}.typ"
         if not source.exists():
@@ -543,8 +571,10 @@ def main() -> None:
         (DOCS / f"{slug}.html").write_text(page_html, encoding="utf-8")
         heading_text = " ".join(label for _, label in sections)
         entries.append((slug, title, heading_text))
+        if "data-widget=" in fragment:
+            interactive.add(slug)
 
-    (DOCS / "index.html").write_text(build_index(entries), encoding="utf-8")
+    (DOCS / "index.html").write_text(build_index(entries, interactive), encoding="utf-8")
     write_extras()
     print(f"Built {len(entries)} lesson pages plus index, 404, robots.txt, sitemap.xml.")
 
