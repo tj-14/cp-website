@@ -1241,6 +1241,50 @@ footer a:hover {
     margin: 0;
 }
 
+.bs-cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin: 0.75rem 0;
+}
+
+.bs-cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 2.4rem;
+    padding: 0.15rem 0.3rem;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.bs-cell small,
+.bs-cell em {
+    color: var(--muted);
+    font-size: 0.65rem;
+    font-style: normal;
+    min-height: 1em;
+}
+
+.bs-cell.is-out {
+    opacity: 0.35;
+}
+
+.bs-cell.is-mid {
+    border-color: var(--nav-accent);
+    border-width: 3px;
+    background-color: var(--surface-hover);
+}
+
+.bs-cell.is-answer {
+    border-color: var(--memo-border);
+    border-width: 3px;
+    background-color: var(--memo-surface);
+    opacity: 1;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
