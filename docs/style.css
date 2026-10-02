@@ -1285,6 +1285,68 @@ footer a:hover {
     opacity: 1;
 }
 
+.tp-graph svg {
+    display: block;
+    margin: 0.5rem auto;
+    max-width: 100%;
+    height: auto;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.tp-edge {
+    stroke: var(--border-strong);
+    stroke-width: 1.8;
+}
+
+.tp-edge.is-gone {
+    stroke-dasharray: 3 4;
+    opacity: 0.4;
+}
+
+.tp-arrowhead {
+    fill: var(--border-strong);
+}
+
+.tp-node circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+}
+
+.tp-node text {
+    fill: var(--text);
+    text-anchor: middle;
+}
+
+.tp-node .tp-deg {
+    fill: var(--muted);
+    font-size: 11px;
+}
+
+.tp-node.is-ready circle {
+    fill: var(--memo-surface);
+    stroke: var(--memo-border);
+    stroke-width: 2.5;
+}
+
+.tp-node.is-done {
+    opacity: 0.35;
+}
+
+.tp-node[role="button"] {
+    cursor: pointer;
+}
+
+.tp-node:focus {
+    outline: none;
+}
+
+.tp-node:focus-visible circle {
+    stroke: var(--link);
+    stroke-width: 4;
+}
+
 /* Links in content */
 .content a {
     color: var(--link);
