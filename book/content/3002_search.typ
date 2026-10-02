@@ -114,7 +114,7 @@ https://visualgo.net/en/bst?slide=1
   [Permutation brute force], [$O(n!)$], [ต้องลองลำดับทั้งหมด],
   [BFS], [$O(V+E)$], [กราฟไม่มีน้ำหนักหรือหาจำนวนก้าวน้อยสุด],
   [DFS], [$O(V+E)$], [สำรวจ component, cycle, ordering],
-  [Meet in the middle], [$O(2^{n/2})$], [$n$ กลาง ๆ เช่น 30-44],
+  [Meet in the middle], [$O(2^(n/2))$], [$n$ กลาง ๆ เช่น 30-44],
 )
 
 === ข้อควรระวัง

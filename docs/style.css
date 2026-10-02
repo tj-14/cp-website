@@ -632,6 +632,13 @@ footer a:hover {
     font-family: Georgia, 'Times New Roman', serif;
 }
 
+/* Long display formulas scroll instead of widening the page on phones. */
+.content .math.display {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 /* Tables */
 .content table {
     width: 100%;
@@ -1076,6 +1083,54 @@ footer a:hover {
     border-color: var(--nav-accent);
     border-width: 3px;
     background-color: var(--surface-hover);
+}
+
+.ht-table {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 0.75rem 0;
+    font-family: 'Zenbones Brainy', 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+.ht-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.ht-row.is-hl {
+    background-color: var(--surface-hover);
+    box-shadow: inset 3px 0 0 var(--nav-accent);
+}
+
+.ht-index {
+    min-width: 2rem;
+    color: var(--muted);
+    text-align: right;
+    padding-right: 0.4rem;
+}
+
+.ht-key {
+    display: inline-block;
+    min-width: 2.2rem;
+    padding: 0.15rem 0.4rem;
+    text-align: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background-color: var(--surface);
+}
+
+.ht-row.is-hl .ht-key {
+    border-color: var(--nav-accent);
+}
+
+.ht-arrow,
+.ht-empty {
+    color: var(--muted);
 }
 
 /* Links in content */
