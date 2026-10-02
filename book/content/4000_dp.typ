@@ -132,7 +132,7 @@ Time $O(n^2)$ ถ้า transition ต้องลองจุดแบ่งท
 
 ลองทำโจทย์เหล่านี้จาก CSES Problem Set เพื่อฝึกใช้ทักษะจากบทนี้ โดยเริ่มจากโจทย์ที่ง่ายที่สุดก่อน
 
-- #link("https://cses.fi/problemset/task/1638")[Grid Paths]
+- #link("https://cses.fi/problemset/task/1638")[Grid Paths I]
 - #link("https://cses.fi/problemset/task/1158")[Book Shop] (0/1 knapsack)
 - #link("https://cses.fi/problemset/task/1639")[Edit Distance]
 - #link("https://cses.fi/problemset/task/1097")[Removal Game] (interval DP)

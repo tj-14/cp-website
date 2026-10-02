@@ -410,7 +410,7 @@ Time complexity $O(n + m)$
 
 === เพิ่มเติม
 
-- ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11) #footnote[http://tcpc.me/2019/08/19/state-graph-tutorial.html]
+- ตะลุยโจทย์ Graph ระดับโหดใน Competitive Programming (aquablitz11) #footnote[https://web.archive.org/web/20250515101547/https://tcpc.me/2019/08/19/state-graph-tutorial.html]
 - VisuAlgo: Graph Traversal #footnote[https://visualgo.net/en/dfsbfs], Single-Source Shortest Paths #footnote[https://visualgo.net/en/sssp], Minimum Spanning Tree #footnote[https://visualgo.net/en/mst]
 - CP-Algorithms: Dijkstra #footnote[https://cp-algorithms.com/graph/dijkstra.html], Bipartite check #footnote[https://cp-algorithms.com/graph/bipartite-check.html], SCC #footnote[https://cp-algorithms.com/graph/strongly-connected-components.html]
 - A\* Search (Red Blob Games) #footnote[https://www.redblobgames.com/pathfinding/a-star/introduction.html] ต่อยอดจาก Dijkstra ด้วยการประมาณระยะที่เหลือ

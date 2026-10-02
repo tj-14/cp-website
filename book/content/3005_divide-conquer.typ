@@ -179,7 +179,7 @@ void mergeSort(int l, int r) {  // sort a[l..r]
 
 - *Closest pair of points*: แบ่งจุดเป็นสองฝั่งตามแกน $x$ แล้วตรวจเฉพาะแถบแคบ ๆ ตรงกลางตอนรวม ได้ $O(n log n)$ (CP-Algorithms #footnote[https://cp-algorithms.com/geometry/nearest_points.html])
 - *Square root decomposition*: แบ่ง array เป็นก้อนละ $sqrt(n)$ ตัว ตอบคำถามช่วงได้ $O(sqrt(n))$ (USACO Guide #footnote[https://usaco.guide/plat/sqrt?lang=cpp], CP-Algorithms #footnote[https://cp-algorithms.com/data_structures/sqrt_decomposition.html])
-- สอน Binary Search ฉบับสมบูรณ์โคตร ๆ (aquablitz11) #footnote[https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html]
+- สอน Binary Search ฉบับสมบูรณ์โคตร ๆ (aquablitz11) #footnote[https://web.archive.org/web/20201104200918/https://aquablitz11.github.io/2019/04/12/complete-bsearch-tutorial.html]
 
 === โจทย์ฝึกฝน (Practice Problems)
 
