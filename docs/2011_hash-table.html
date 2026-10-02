@@ -248,8 +248,9 @@ Dee”) เท่ากัน ทั้งสองต้องอยู่ช�
 <h5 id="open-addressing-linear-probing">Open addressing (linear probing)<a class="heading-anchor" href="#open-addressing-linear-probing" aria-hidden="true" tabindex="-1">#</a></h5>
 <p>แต่ละช่องเก็บได้ key เดียว ถ้าช่องที่คำนวณได้ไม่ว่าง ให้ขยับไปช่องถัดไปเรื่อย ๆ
 จนเจอช่องว่าง การค้นหาเดินแบบเดียวกันและหยุดเมื่อเจอ key หรือเจอช่องว่าง</p>
-<p>ลอง insert และ search ทั้งสองวิธี แล้วเลือกตัวอย่าง “ชนกันเยอะ” (ทุก key หาร 7
-ลงตัว) เพื่อดูว่า key กองรวมกันอย่างไร</p>
+<p>ลอง insert และ search ทั้งสองวิธี แล้วเลือกตัวอย่าง “ชนกันเยอะ” (7, 14, 21, 28
+หาร 7 ลงตัวจึงลงช่อง 0 ทั้งหมด ส่วน 3 แสดงว่า key อื่นก็โดนกลุ่มนี้ขวางได้) เพื่อดูว่า key
+กองรวมกันอย่างไร</p>
 <div class="widget" data-widget="hash-table"><noscript><p>เปิด JavaScript เพื่อใช้งานแบบฝึกโต้ตอบนี้</p></noscript></div>
 <h4 id="เปรียบเทียบ">เปรียบเทียบ<a class="heading-anchor" href="#เปรียบเทียบ" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>

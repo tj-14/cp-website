@@ -63,6 +63,9 @@ const DsQuiz = (() => {
         },
     ];
 
+    // Options such as map<string, int> must not be parsed as HTML tags.
+    const escape = (text) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
     function render(root, s) {
         const box = root.querySelector('.qz-body');
         if (s.i >= QUESTIONS.length) {
@@ -78,9 +81,9 @@ const DsQuiz = (() => {
                 if (k === item.answer) cls = 'is-right';
                 else if (k === s.picked) cls = 'is-wrong';
             }
-            return `<button type="button" class="qz-option ${cls}" data-option="${k}" ${s.picked !== null ? 'disabled' : ''}>${o}</button>`;
+            return `<button type="button" class="qz-option ${cls}" data-option="${k}" ${s.picked !== null ? 'disabled' : ''}>${escape(o)}</button>`;
         }).join('');
-        const feedback = s.picked === null ? '' : `<p class="widget-explain">${s.picked === item.answer ? '✓ ถูกต้อง' : `✗ คำตอบคือ ${item.options[item.answer]}`} - ${item.why}</p>
+        const feedback = s.picked === null ? '' : `<p class="widget-explain">${s.picked === item.answer ? '✓ ถูกต้อง' : `✗ คำตอบคือ ${escape(item.options[item.answer])}`} - ${item.why}</p>
             <div class="widget-controls"><button type="button" data-act="next">${s.i + 1 < QUESTIONS.length ? 'ข้อถัดไป →' : 'ดูคะแนน'}</button></div>`;
         box.innerHTML = `<p class="widget-summary">ข้อ ${s.i + 1}/${QUESTIONS.length} - คะแนน ${s.score}</p>
             <p class="qz-q">${item.q}</p>

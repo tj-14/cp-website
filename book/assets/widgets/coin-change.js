@@ -64,7 +64,8 @@ const CoinChange = (() => {
             <div class="widget-table" tabindex="0" role="region" aria-label="ตาราง dp"></div>
             <p class="widget-explain" aria-live="polite"></p>
             <div class="widget-controls guess-row" hidden>
-                <label>ทาย <span class="guess-label"></span> = <input name="guess" type="number" min="0" size="4"></label>
+                <label>ทาย <span class="guess-label"></span> = <input name="guess" inputmode="numeric" size="6" placeholder="เลข หรือ ∞"></label>
+                <button type="button" data-act="infinity" title="ทอนไม่ได้">∞</button>
                 <button type="button" data-act="check">ตรวจคำตอบ</button>
                 <span class="widget-score"></span>
             </div>
@@ -159,6 +160,10 @@ const CoinChange = (() => {
             all: () => { s.filled = s.n + 1; },
             reset: () => {},
             check: () => checkGuess(root, s),
+            infinity: () => {
+                root.querySelector('[name="guess"]').value = '∞';
+                checkGuess(root, s);
+            },
         };
         root.addEventListener('click', (event) => {
             const act = event.target.dataset?.act;
