@@ -4,6 +4,8 @@
 
 บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนพฤษภาคม 2026 มีสามหัวข้อที่เชื่อมกัน: max flow เป็นเครื่องมือหลัก, bipartite matching เป็นกรณีพิเศษของ flow และ fixed parameter algorithms ใช้กับปัญหาที่ไม่มีอัลกอริทึม polynomial เช่น vertex cover บนกราฟทั่วไป
 
+- สไลด์: #link("https://docs.google.com/presentation/d/1IVMCJofXMjGq_zPMQiQce5jZH8tUiiAjwxg4jP2Jz4M/edit?usp=sharing")[Bipartite Matching, Max Flow, Fixed Parameter Algorithms (May'26)]
+
 ลองเล่นตัวอย่างโต้ตอบประกอบบทนี้
 
 - #link("https://tossatree.com/assets/writing/ioi/gemini-code-edmonds-karp-dinic.html")[Edmonds-Karp vs Dinic Visualizer]: ใส่กราฟเองแล้วเดินทีละขั้น เทียบสองอัลกอริทึม
@@ -159,8 +161,10 @@ Time $O(2^k m)$
 
 ==== Kernelization
 
-ก่อนแตก branch ให้ลดขนาดกราฟด้วยกฎที่ปลอดภัยเสมอ (Buss's kernel)
+ก่อนแตก branch ให้ลดขนาดกราฟด้วยกฎที่ปลอดภัยเสมอ (data reduction)
 
+- vertex ที่ degree เป็น 0 ไม่ต้องเลือก ตัดทิ้งได้เลย
+- vertex ที่ degree เป็น 1 ไม่ต้องเลือก แต่เลือก *เพื่อนบ้าน* ของมันแทนแล้วลด $k$ ลง 1 เพราะเพื่อนบ้านครอบ edge เดียวกันได้และอาจครอบ edge อื่นด้วย จึงไม่แย่กว่า
 - vertex ที่ degree มากกว่า $k$ *ต้อง* อยู่ใน cover เพราะถ้าไม่เลือกมัน ต้องเลือกเพื่อนบ้านทั้งหมดซึ่งเกิน $k$ ตัว จึงเลือกแล้วลด $k$ ลง 1
 - หลังจากนั้นทุก vertex มี degree ไม่เกิน $k$ ดังนั้น $k$ ตัวครอบได้ไม่เกิน $k^2$ edge ถ้าเหลือ edge มากกว่า $k^2$ ตอบ "ไม่ได้" ทันที
 
@@ -170,14 +174,26 @@ Time $O(2^k m)$
 
 === โจทย์ฝึกฝน (Practice Problems)
 
+Max flow และ bipartite matching
+
 - #link("https://cses.fi/problemset/task/1694")[Download Speed] (max flow)
 - #link("https://cses.fi/problemset/task/1695")[Police Chase] (min cut)
 - #link("https://cses.fi/problemset/task/1696")[School Dance] (bipartite matching)
 - #link("https://cses.fi/problemset/task/1711")[Distinct Routes] (flow + หาเส้นทางจาก flow)
+- #link("https://open.kattis.com/problems/gopher2")[Kattis Gopher II] และ #link("https://open.kattis.com/problems/borders")[Kattis Borders]
+- #link("https://codeforces.com/contest/498/problem/c")[CF 498C] และ #link("https://codeforces.com/contest/1288/problem/f")[CF 1288F]
+
+Fixed parameter algorithms
+
+- `o56_mar_c2_minswitch` บน #link("https://new.evaluator.thailandoi.org/")[Evaluator]
+- #link("https://dmoj.ca/problem/apio07p3")[APIO 2007 Zoo]
+- #link("https://theory.cpe.ku.ac.th/wiki/index.php/Apr23_steiner")[Apr23 Steiner]
 
 === อ่านเพิ่ม
 
 - #link("https://cp-algorithms.com/graph/edmonds_karp.html")[Edmonds-Karp (CP-Algorithms)], #link("https://cp-algorithms.com/graph/dinic.html")[Dinic (CP-Algorithms)]
 - #link("https://cp-algorithms.com/graph/kuhn_maximum_bipartite_matching.html")[Kuhn's Algorithm (CP-Algorithms)]
-- #link("https://usaco.guide/adv/max-flow?lang=cpp")[Maximum Flow (USACO Guide)]
+- #link("https://usaco.guide/adv/max-flow?lang=cpp")[Maximum Flow (USACO Guide)], #link("https://www.baeldung.com/cs/augmenting-path")[What Is an Augmenting Path? (Baeldung)]
+- Matching: #link("https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/matching.pdf")[CMSC 451: Maximum Bipartite Matching], #link("https://www.columbia.edu/~cs2035/courses/ieor8100.F12/lec4.pdf")[Matching Algorithms for Bipartite Graphs (Columbia)]
+- FPT: #link("https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/aed959d42cce7eecb98670bd7d0dd9c5_MIT6_046JS15_writtenlec18.pdf")[MIT 6.046 Lecture 18 notes] และ #link("https://www.youtube.com/watch?v=4q-jmGrmxKs")[วิดีโอ], #link("https://www.youtube.com/watch?v=JWXLmutvSTA&list=PLii-CvAgf-8iYRTa2kVTJSZEb7cSEf7-I")[Fixed-parameter algorithms ภาษาไทย (วิดีโอ)] และ #link("https://gitlab.com/jittat/public-lecture-notes/-/blob/main/ioi/2567/fixed-parameter-algorithms/2024-03-13-fixed-parameters.pdf?ref_type=heads")[lecture notes]
 - #link("https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)")[König's theorem (Wikipedia)], #link("https://en.wikipedia.org/wiki/Parameterized_complexity")[Parameterized complexity (Wikipedia)]

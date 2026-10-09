@@ -128,6 +128,11 @@
 มีสามหัวข้อที่เชื่อมกัน: max flow เป็นเครื่องมือหลัก, bipartite matching
 เป็นกรณีพิเศษของ flow และ fixed parameter algorithms ใช้กับปัญหาที่ไม่มีอัลกอริทึม
 polynomial เช่น vertex cover บนกราฟทั่วไป</p>
+<ul>
+<li><p>สไลด์: <a
+href="https://docs.google.com/presentation/d/1IVMCJofXMjGq_zPMQiQce5jZH8tUiiAjwxg4jP2Jz4M/edit?usp=sharing">Bipartite
+Matching, Max Flow, Fixed Parameter Algorithms (May’26)</a></p></li>
+</ul>
 <p>ลองเล่นตัวอย่างโต้ตอบประกอบบทนี้</p>
 <ul>
 <li><p><a
@@ -317,8 +322,12 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#c
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
 <p>Time <span class="math inline">O\left( 2^{k}m \right)</span></p>
 <h5 id="kernelization">Kernelization<a class="heading-anchor" href="#kernelization" aria-hidden="true" tabindex="-1">#</a></h5>
-<p>ก่อนแตก branch ให้ลดขนาดกราฟด้วยกฎที่ปลอดภัยเสมอ (Buss’s kernel)</p>
+<p>ก่อนแตก branch ให้ลดขนาดกราฟด้วยกฎที่ปลอดภัยเสมอ (data reduction)</p>
 <ul>
+<li><p>vertex ที่ degree เป็น 0 ไม่ต้องเลือก ตัดทิ้งได้เลย</p></li>
+<li><p>vertex ที่ degree เป็น 1 ไม่ต้องเลือก แต่เลือก <strong>เพื่อนบ้าน</strong>
+ของมันแทนแล้วลด <span class="math inline">k</span> ลง 1 เพราะเพื่อนบ้านครอบ
+edge เดียวกันได้และอาจครอบ edge อื่นด้วย จึงไม่แย่กว่า</p></li>
 <li><p>vertex ที่ degree มากกว่า <span class="math inline">k</span>
 <strong>ต้อง</strong> อยู่ใน cover เพราะถ้าไม่เลือกมัน ต้องเลือกเพื่อนบ้านทั้งหมดซึ่งเกิน
 <span class="math inline">k</span> ตัว จึงเลือกแล้วลด <span
@@ -335,6 +344,7 @@ class="math inline">k</span> ดังนั้น <span class="math inline">k</
 class="math inline">k</span> ด้วย color coding หรือ DP บน tree
 decomposition ที่ treewidth เล็ก</p>
 <h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Max flow และ bipartite matching</p>
 <ul>
 <li><p><a href="https://cses.fi/problemset/task/1694">Download Speed</a>
 (max flow)</p></li>
@@ -344,6 +354,22 @@ decomposition ที่ treewidth เล็ก</p>
 (bipartite matching)</p></li>
 <li><p><a href="https://cses.fi/problemset/task/1711">Distinct
 Routes</a> (flow + หาเส้นทางจาก flow)</p></li>
+<li><p><a href="https://open.kattis.com/problems/gopher2">Kattis Gopher
+II</a> และ <a href="https://open.kattis.com/problems/borders">Kattis
+Borders</a></p></li>
+<li><p><a href="https://codeforces.com/contest/498/problem/c">CF
+498C</a> และ <a href="https://codeforces.com/contest/1288/problem/f">CF
+1288F</a></p></li>
+</ul>
+<p>Fixed parameter algorithms</p>
+<ul>
+<li><p><code>o56_mar_c2_minswitch</code> บน <a
+href="https://new.evaluator.thailandoi.org/">Evaluator</a></p></li>
+<li><p><a href="https://dmoj.ca/problem/apio07p3">APIO 2007
+Zoo</a></p></li>
+<li><p><a
+href="https://theory.cpe.ku.ac.th/wiki/index.php/Apr23_steiner">Apr23
+Steiner</a></p></li>
 </ul>
 <h4 id="อ่านเพิ่ม">อ่านเพิ่ม<a class="heading-anchor" href="#อ่านเพิ่ม" aria-hidden="true" tabindex="-1">#</a></h4>
 <ul>
@@ -356,7 +382,22 @@ href="https://cp-algorithms.com/graph/dinic.html">Dinic
 href="https://cp-algorithms.com/graph/kuhn_maximum_bipartite_matching.html">Kuhn’s
 Algorithm (CP-Algorithms)</a></p></li>
 <li><p><a href="https://usaco.guide/adv/max-flow?lang=cpp">Maximum Flow
-(USACO Guide)</a></p></li>
+(USACO Guide)</a>, <a
+href="https://www.baeldung.com/cs/augmenting-path">What Is an Augmenting
+Path? (Baeldung)</a></p></li>
+<li><p>Matching: <a
+href="https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/matching.pdf">CMSC
+451: Maximum Bipartite Matching</a>, <a
+href="https://www.columbia.edu/~cs2035/courses/ieor8100.F12/lec4.pdf">Matching
+Algorithms for Bipartite Graphs (Columbia)</a></p></li>
+<li><p>FPT: <a
+href="https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/aed959d42cce7eecb98670bd7d0dd9c5_MIT6_046JS15_writtenlec18.pdf">MIT
+6.046 Lecture 18 notes</a> และ <a
+href="https://www.youtube.com/watch?v=4q-jmGrmxKs">วิดีโอ</a>, <a
+href="https://www.youtube.com/watch?v=JWXLmutvSTA&amp;list=PLii-CvAgf-8iYRTa2kVTJSZEb7cSEf7-I">Fixed-parameter
+algorithms ภาษาไทย (วิดีโอ)</a> และ <a
+href="https://gitlab.com/jittat/public-lecture-notes/-/blob/main/ioi/2567/fixed-parameter-algorithms/2024-03-13-fixed-parameters.pdf?ref_type=heads">lecture
+notes</a></p></li>
 <li><p><a
 href="https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)">König’s
 theorem (Wikipedia)</a>, <a
