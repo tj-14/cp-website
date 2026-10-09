@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  PANDOC_VERSION: "3.11"
+  PANDOC_VERSION: "3.12"
   TYPST_VERSION: 0.15.1
 
 jobs:

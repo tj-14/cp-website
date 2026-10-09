@@ -286,36 +286,36 @@ segment tree สำหรับ operation อื่นทันที</p>
 <table>
 <thead>
 <tr>
-<th><p>เทคนิค</p></th>
-<th><p>update</p></th>
-<th><p>query</p></th>
-<th><p>เหมาะกับ</p></th>
+<th>เทคนิค</th>
+<th>update</th>
+<th>query</th>
+<th>เหมาะกับ</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><p>Prefix sum</p></td>
-<td><p><span class="math inline">O(1)</span> หลัง preprocess</p></td>
-<td><p><span class="math inline">O(1)</span></p></td>
-<td><p>ไม่มีการแก้ค่า</p></td>
+<td>Prefix sum</td>
+<td><span class="math inline">O(1)</span> หลัง preprocess</td>
+<td><span class="math inline">O(1)</span></td>
+<td>ไม่มีการแก้ค่า</td>
 </tr>
 <tr>
-<td><p>Difference array</p></td>
-<td><p><span class="math inline">O(1)</span> ต่อช่วง</p></td>
-<td><p><span class="math inline">O(n)</span> เพื่อสรุปผล</p></td>
-<td><p>update หลายช่วงแบบ offline</p></td>
+<td>Difference array</td>
+<td><span class="math inline">O(1)</span> ต่อช่วง</td>
+<td><span class="math inline">O(n)</span> เพื่อสรุปผล</td>
+<td>update หลายช่วงแบบ offline</td>
 </tr>
 <tr>
-<td><p>Fenwick Tree</p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p>sum และ frequency</p></td>
+<td>Fenwick Tree</td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td>sum และ frequency</td>
 </tr>
 <tr>
-<td><p>Segment Tree</p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p>operation หลากหลาย</p></td>
+<td>Segment Tree</td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td>operation หลากหลาย</td>
 </tr>
 </tbody>
 </table>

@@ -130,75 +130,74 @@ operation นั้นได้เร็ว</p>
 <table>
 <thead>
 <tr>
-<th><p>โครงสร้าง</p></th>
-<th><p>STL</p></th>
-<th><p>เพิ่ม</p></th>
-<th><p>ลบ</p></th>
-<th><p>ค้นหา / ดูค่า</p></th>
+<th>โครงสร้าง</th>
+<th>STL</th>
+<th>เพิ่ม</th>
+<th>ลบ</th>
+<th>ค้นหา / ดูค่า</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><p>Dynamic array</p></td>
-<td><p><code>vector</code></p></td>
-<td><p>ท้าย <span class="math inline">O(1)</span>*</p></td>
-<td><p>ท้าย <span class="math inline">O(1)</span>, กลาง <span
-class="math inline">O(n)</span></p></td>
-<td><p>ตัวที่ <span class="math inline">i</span>: <span
+<td>Dynamic array</td>
+<td><code>vector</code></td>
+<td>ท้าย <span class="math inline">O(1)</span>*</td>
+<td>ท้าย <span class="math inline">O(1)</span>, กลาง <span
+class="math inline">O(n)</span></td>
+<td>ตัวที่ <span class="math inline">i</span>: <span
 class="math inline">O(1)</span>, หาค่า: <span
-class="math inline">O(n)</span></p></td>
+class="math inline">O(n)</span></td>
 </tr>
 <tr>
-<td><p>Linked list</p></td>
-<td><p><code>list</code></p></td>
-<td><p><span class="math inline">O(1)</span> เมื่อรู้ตำแหน่ง</p></td>
-<td><p><span class="math inline">O(1)</span> เมื่อรู้ตำแหน่ง</p></td>
-<td><p><span class="math inline">O(n)</span></p></td>
+<td>Linked list</td>
+<td><code>list</code></td>
+<td><span class="math inline">O(1)</span> เมื่อรู้ตำแหน่ง</td>
+<td><span class="math inline">O(1)</span> เมื่อรู้ตำแหน่ง</td>
+<td><span class="math inline">O(n)</span></td>
 </tr>
 <tr>
-<td><p>Stack</p></td>
-<td><p><code>stack</code></p></td>
-<td><p>บนสุด <span class="math inline">O(1)</span></p></td>
-<td><p>บนสุด <span class="math inline">O(1)</span></p></td>
-<td><p>บนสุด <span class="math inline">O(1)</span></p></td>
+<td>Stack</td>
+<td><code>stack</code></td>
+<td>บนสุด <span class="math inline">O(1)</span></td>
+<td>บนสุด <span class="math inline">O(1)</span></td>
+<td>บนสุด <span class="math inline">O(1)</span></td>
 </tr>
 <tr>
-<td><p>Queue</p></td>
-<td><p><code>queue</code></p></td>
-<td><p>ท้าย <span class="math inline">O(1)</span></p></td>
-<td><p>หน้า <span class="math inline">O(1)</span></p></td>
-<td><p>หน้า/ท้าย <span class="math inline">O(1)</span></p></td>
+<td>Queue</td>
+<td><code>queue</code></td>
+<td>ท้าย <span class="math inline">O(1)</span></td>
+<td>หน้า <span class="math inline">O(1)</span></td>
+<td>หน้า/ท้าย <span class="math inline">O(1)</span></td>
 </tr>
 <tr>
-<td><p>Deque</p></td>
-<td><p><code>deque</code></p></td>
-<td><p>หัว/ท้าย <span class="math inline">O(1)</span></p></td>
-<td><p>หัว/ท้าย <span class="math inline">O(1)</span></p></td>
-<td><p>ตัวที่ <span class="math inline">i</span>: <span
-class="math inline">O(1)</span></p></td>
+<td>Deque</td>
+<td><code>deque</code></td>
+<td>หัว/ท้าย <span class="math inline">O(1)</span></td>
+<td>หัว/ท้าย <span class="math inline">O(1)</span></td>
+<td>ตัวที่ <span class="math inline">i</span>: <span
+class="math inline">O(1)</span></td>
 </tr>
 <tr>
-<td><p>Heap</p></td>
-<td><p><code>priority_queue</code></p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p>ค่าสูงสุด <span class="math inline">O\left( \log n
-\right)</span></p></td>
-<td><p>ค่าสูงสุด <span class="math inline">O(1)</span></p></td>
+<td>Heap</td>
+<td><code>priority_queue</code></td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td>ค่าสูงสุด <span class="math inline">O\left( \log n \right)</span></td>
+<td>ค่าสูงสุด <span class="math inline">O(1)</span></td>
 </tr>
 <tr>
-<td><p>Balanced BST</p></td>
-<td><p><code>set</code>, <code>map</code></p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span></p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span>, มี
-<code>lower_bound</code></p></td>
+<td>Balanced BST</td>
+<td><code>set</code>, <code>map</code></td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td><span class="math inline">O\left( \log n \right)</span></td>
+<td><span class="math inline">O\left( \log n \right)</span>, มี
+<code>lower_bound</code></td>
 </tr>
 <tr>
-<td><p>Hash table</p></td>
-<td><p><code>unordered_set</code>, <code>unordered_map</code></p></td>
-<td><p>เฉลี่ย <span class="math inline">O(1)</span></p></td>
-<td><p>เฉลี่ย <span class="math inline">O(1)</span></p></td>
-<td><p>เฉลี่ย <span class="math inline">O(1)</span>, ไม่เรียงลำดับ</p></td>
+<td>Hash table</td>
+<td><code>unordered_set</code>, <code>unordered_map</code></td>
+<td>เฉลี่ย <span class="math inline">O(1)</span></td>
+<td>เฉลี่ย <span class="math inline">O(1)</span></td>
+<td>เฉลี่ย <span class="math inline">O(1)</span>, ไม่เรียงลำดับ</td>
 </tr>
 </tbody>
 </table>
