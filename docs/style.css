@@ -1425,6 +1425,77 @@ footer a:hover {
     margin-top: 0;
 }
 
+/* Wide screens: fit the whole course map in one screen. The two short opening
+   sections (orientation, camp 1) stack in the first column; the rest span both rows. */
+@media (min-width: 1200px) {
+    .home {
+        max-width: 1400px;
+    }
+
+    .home-intro {
+        max-width: none;
+        margin: 0.25rem 0 1rem;
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        column-gap: 2rem;
+        align-items: end;
+    }
+
+    .home-intro h2 {
+        font-size: 1.5rem;
+        grid-column: 1;
+    }
+
+    .home-intro p {
+        grid-column: 1;
+        margin: 0;
+    }
+
+    .search-box {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        margin-top: 0;
+    }
+
+    .search-results {
+        grid-column: 2;
+    }
+
+    .course-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-rows: auto 1fr;
+        grid-auto-flow: column;
+        margin-bottom: 1rem;
+    }
+
+    .course-section:nth-child(-n + 2) {
+        grid-column: 1;
+        align-self: start;
+    }
+
+    .course-section:nth-child(n + 3) {
+        grid-row: 1 / span 2;
+    }
+
+    .course-section {
+        padding: 0.9rem 1.1rem;
+        line-height: 1.5;
+    }
+
+    .course-section p {
+        margin-bottom: 0.6rem;
+        font-size: 0.92rem;
+    }
+
+    .course-section li {
+        margin-bottom: 0.1rem;
+    }
+
+    .course-section .topic-list li {
+        margin-bottom: 0;
+    }
+}
+
 @media (max-width: 1024px) and (min-width: 769px) {
     .page-layout {
         grid-template-columns: 220px minmax(0, 1fr);
