@@ -207,37 +207,38 @@ memoization” แล้วสังเกตว่าต้นไม้เล�
 <table>
 <thead>
 <tr>
-<th>ฟังก์ชัน</th>
-<th>จำนวนการเรียก</th>
-<th>Time</th>
-<th>ความลึกของ stack</th>
+<th><p>ฟังก์ชัน</p></th>
+<th><p>จำนวนการเรียก</p></th>
+<th><p>Time</p></th>
+<th><p>ความลึกของ stack</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>factorial(n)</code></td>
-<td><span class="math inline">n</span></td>
-<td><span class="math inline">O(n)</span></td>
-<td><span class="math inline">n</span></td>
+<td><p><code>factorial(n)</code></p></td>
+<td><p><span class="math inline">n</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
 </tr>
 <tr>
-<td><code>fib(n)</code></td>
-<td>โตประมาณ <span class="math inline">1.6^{n}</span></td>
-<td><span class="math inline">O\left( 2^{n} \right)</span></td>
-<td><span class="math inline">n</span></td>
+<td><p><code>fib(n)</code></p></td>
+<td><p>โตประมาณ <span class="math inline">1.6^{n}</span></p></td>
+<td><p><span class="math inline">O\left( 2^{n} \right)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
 </tr>
 <tr>
-<td><code>fib(n)</code> + memoization</td>
-<td><span class="math inline">2n - 1</span></td>
-<td><span class="math inline">O(n)</span></td>
-<td><span class="math inline">n</span></td>
+<td><p><code>fib(n)</code> + memoization</p></td>
+<td><p><span class="math inline">2n - 1</span></p></td>
+<td><p><span class="math inline">O(n)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
 </tr>
 <tr>
-<td><code>gen(0)</code> สร้างลำดับยาว <span class="math inline">n</span>
-ค่า <span class="math inline">0..r - 1</span></td>
-<td><span class="math inline">\approx r^{n}</span></td>
-<td><span class="math inline">O\left( nr^{n} \right)</span></td>
-<td><span class="math inline">n</span></td>
+<td><p><code>gen(0)</code> สร้างลำดับยาว <span
+class="math inline">n</span> ค่า <span class="math inline">0..r -
+1</span></p></td>
+<td><p><span class="math inline">\approx r^{n}</span></p></td>
+<td><p><span class="math inline">O\left( nr^{n} \right)</span></p></td>
+<td><p><span class="math inline">n</span></p></td>
 </tr>
 </tbody>
 </table>

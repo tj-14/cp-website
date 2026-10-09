@@ -181,43 +181,43 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#c
 <table>
 <thead>
 <tr>
-<th>ชนิด</th>
-<th>ขนาด (byte)</th>
-<th>เก็บอะไร</th>
+<th><p>ชนิด</p></th>
+<th><p>ขนาด (byte)</p></th>
+<th><p>เก็บอะไร</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>bool</code></td>
-<td>1</td>
-<td><code>true</code> หรือ <code>false</code></td>
+<td><p><code>bool</code></p></td>
+<td><p>1</p></td>
+<td><p><code>true</code> หรือ <code>false</code></p></td>
 </tr>
 <tr>
-<td><code>char</code></td>
-<td>1</td>
-<td>ตัวอักษรหนึ่งตัว เช่น <code>'a'</code> (จริง ๆ คือเลข ASCII)</td>
+<td><p><code>char</code></p></td>
+<td><p>1</p></td>
+<td><p>ตัวอักษรหนึ่งตัว เช่น <code>'a'</code> (จริง ๆ คือเลข ASCII)</p></td>
 </tr>
 <tr>
-<td><code>int</code></td>
-<td>4</td>
-<td>จำนวนเต็ม ประมาณ <span class="math inline">\pm 2.1 \times
-10^{9}</span></td>
+<td><p><code>int</code></p></td>
+<td><p>4</p></td>
+<td><p>จำนวนเต็ม ประมาณ <span class="math inline">\pm 2.1 \times
+10^{9}</span></p></td>
 </tr>
 <tr>
-<td><code>long long</code></td>
-<td>8</td>
-<td>จำนวนเต็ม ประมาณ <span class="math inline">\pm 9.2 \times
-10^{18}</span></td>
+<td><p><code>long long</code></p></td>
+<td><p>8</p></td>
+<td><p>จำนวนเต็ม ประมาณ <span class="math inline">\pm 9.2 \times
+10^{18}</span></p></td>
 </tr>
 <tr>
-<td><code>double</code></td>
-<td>8</td>
-<td>จำนวนจริง (ทศนิยม) ละเอียดประมาณ 15 หลัก</td>
+<td><p><code>double</code></p></td>
+<td><p>8</p></td>
+<td><p>จำนวนจริง (ทศนิยม) ละเอียดประมาณ 15 หลัก</p></td>
 </tr>
 <tr>
-<td><code>string</code></td>
-<td>-</td>
-<td>ข้อความ</td>
+<td><p><code>string</code></p></td>
+<td><p>-</p></td>
+<td><p>ข้อความ</p></td>
 </tr>
 </tbody>
 </table>
@@ -258,46 +258,46 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#c
 <table>
 <thead>
 <tr>
-<th>operator</th>
-<th>ความหมาย</th>
-<th>ตัวอย่าง</th>
+<th><p>operator</p></th>
+<th><p>ความหมาย</p></th>
+<th><p>ตัวอย่าง</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>+ - *</code></td>
-<td>บวก ลบ คูณ</td>
-<td><code>7 * 3</code> = 21</td>
+<td><p><code>+ - *</code></p></td>
+<td><p>บวก ลบ คูณ</p></td>
+<td><p><code>7 * 3</code> = 21</p></td>
 </tr>
 <tr>
-<td><code>/</code></td>
-<td>หาร (ถ้าเป็น <code>int</code> ทั้งคู่จะปัดเศษทิ้ง)</td>
-<td><code>7 / 2</code> = 3, <code>7.0 / 2</code> = 3.5</td>
+<td><p><code>/</code></p></td>
+<td><p>หาร (ถ้าเป็น <code>int</code> ทั้งคู่จะปัดเศษทิ้ง)</p></td>
+<td><p><code>7 / 2</code> = 3, <code>7.0 / 2</code> = 3.5</p></td>
 </tr>
 <tr>
-<td><code>%</code></td>
-<td>เศษจากการหาร (ใช้กับจำนวนเต็ม)</td>
-<td><code>7 % 3</code> = 1</td>
+<td><p><code>%</code></p></td>
+<td><p>เศษจากการหาร (ใช้กับจำนวนเต็ม)</p></td>
+<td><p><code>7 % 3</code> = 1</p></td>
 </tr>
 <tr>
-<td><code>== !=</code></td>
-<td>เท่ากัน ไม่เท่ากัน</td>
-<td><code>a == b</code></td>
+<td><p><code>== !=</code></p></td>
+<td><p>เท่ากัน ไม่เท่ากัน</p></td>
+<td><p><code>a == b</code></p></td>
 </tr>
 <tr>
-<td><code>&lt; &lt;= &gt; &gt;=</code></td>
-<td>เปรียบเทียบ</td>
-<td><code>a &lt; b</code></td>
+<td><p><code>&lt; &lt;= &gt; &gt;=</code></p></td>
+<td><p>เปรียบเทียบ</p></td>
+<td><p><code>a &lt; b</code></p></td>
 </tr>
 <tr>
-<td><code>&amp;&amp; || !</code></td>
-<td>และ หรือ ไม่</td>
-<td><code>a &gt; 0 &amp;&amp; b &gt; 0</code></td>
+<td><p><code>&amp;&amp; || !</code></p></td>
+<td><p>และ หรือ ไม่</p></td>
+<td><p><code>a &gt; 0 &amp;&amp; b &gt; 0</code></p></td>
 </tr>
 <tr>
-<td><code>++ += -=</code></td>
-<td>เพิ่ม/ลดค่า</td>
-<td><code>i++</code>, <code>s += x</code></td>
+<td><p><code>++ += -=</code></p></td>
+<td><p>เพิ่ม/ลดค่า</p></td>
+<td><p><code>i++</code>, <code>s += x</code></p></td>
 </tr>
 </tbody>
 </table>

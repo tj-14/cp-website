@@ -186,30 +186,30 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#c
 <thead>
 <tr>
 <th></th>
-<th>BFS</th>
-<th>DFS</th>
+<th><p>BFS</p></th>
+<th><p>DFS</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>โครงสร้างข้อมูล</td>
-<td>queue</td>
-<td>recursion (call stack) หรือ stack</td>
+<td><p>โครงสร้างข้อมูล</p></td>
+<td><p>queue</p></td>
+<td><p>recursion (call stack) หรือ stack</p></td>
 </tr>
 <tr>
-<td>ลำดับการเยี่ยม</td>
-<td>ตามระยะห่างจากจุดเริ่ม</td>
-<td>ลึกก่อน แล้วถอยกลับ</td>
+<td><p>ลำดับการเยี่ยม</p></td>
+<td><p>ตามระยะห่างจากจุดเริ่ม</p></td>
+<td><p>ลึกก่อน แล้วถอยกลับ</p></td>
 </tr>
 <tr>
-<td>ใช้บ่อยกับ</td>
-<td>shortest path ไม่มีน้ำหนัก, grid</td>
-<td>component, cycle, topological sort, tree</td>
+<td><p>ใช้บ่อยกับ</p></td>
+<td><p>shortest path ไม่มีน้ำหนัก, grid</p></td>
+<td><p>component, cycle, topological sort, tree</p></td>
 </tr>
 <tr>
-<td>ข้อควรระวัง</td>
-<td>ใช้หน่วยความจำตามความกว้างของชั้น</td>
-<td>recursion ลึกมากอาจ stack overflow</td>
+<td><p>ข้อควรระวัง</p></td>
+<td><p>ใช้หน่วยความจำตามความกว้างของชั้น</p></td>
+<td><p>recursion ลึกมากอาจ stack overflow</p></td>
 </tr>
 </tbody>
 </table>
@@ -355,36 +355,37 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#
 <table>
 <thead>
 <tr>
-<th>สถานการณ์</th>
-<th>อัลกอริทึม</th>
-<th>Time</th>
-<th>หมายเหตุ</th>
+<th><p>สถานการณ์</p></th>
+<th><p>อัลกอริทึม</p></th>
+<th><p>Time</p></th>
+<th><p>หมายเหตุ</p></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ไม่มีน้ำหนัก</td>
-<td>BFS</td>
-<td><span class="math inline">O(n + m)</span></td>
-<td>เร็วและง่ายที่สุด</td>
+<td><p>ไม่มีน้ำหนัก</p></td>
+<td><p>BFS</p></td>
+<td><p><span class="math inline">O(n + m)</span></p></td>
+<td><p>เร็วและง่ายที่สุด</p></td>
 </tr>
 <tr>
-<td>น้ำหนักไม่ติดลบ, จุดเริ่มเดียว</td>
-<td>Dijkstra</td>
-<td><span class="math inline">O\left( (n + m)\log n \right)</span></td>
-<td>ใช้บ่อยที่สุด</td>
+<td><p>น้ำหนักไม่ติดลบ, จุดเริ่มเดียว</p></td>
+<td><p>Dijkstra</p></td>
+<td><p><span class="math inline">O\left( (n + m)\log n
+\right)</span></p></td>
+<td><p>ใช้บ่อยที่สุด</p></td>
 </tr>
 <tr>
-<td>มีน้ำหนักติดลบ</td>
-<td>Bellman-Ford</td>
-<td><span class="math inline">O(nm)</span></td>
-<td>ตรวจ negative cycle ได้</td>
+<td><p>มีน้ำหนักติดลบ</p></td>
+<td><p>Bellman-Ford</p></td>
+<td><p><span class="math inline">O(nm)</span></p></td>
+<td><p>ตรวจ negative cycle ได้</p></td>
 </tr>
 <tr>
-<td>ทุกคู่, <span class="math inline">n</span> เล็ก</td>
-<td>Floyd-Warshall</td>
-<td><span class="math inline">O\left( n^{3} \right)</span></td>
-<td>เขียนสั้นที่สุด</td>
+<td><p>ทุกคู่, <span class="math inline">n</span> เล็ก</p></td>
+<td><p>Floyd-Warshall</p></td>
+<td><p><span class="math inline">O\left( n^{3} \right)</span></p></td>
+<td><p>เขียนสั้นที่สุด</p></td>
 </tr>
 </tbody>
 </table>
