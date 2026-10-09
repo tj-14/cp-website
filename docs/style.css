@@ -286,6 +286,20 @@ footer a:hover {
     margin-bottom: 0.35rem;
 }
 
+.course-section .topic-list {
+    margin: 0.3rem 0 0.6rem;
+    padding-left: 1.1rem;
+    font-size: 0.9em;
+}
+
+.course-section .topic-list li {
+    margin-bottom: 0.15rem;
+}
+
+.course-section .topic-list a {
+    color: var(--muted-strong);
+}
+
 .course-section a,
 .content a,
 .breadcrumb a {

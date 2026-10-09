@@ -73,23 +73,19 @@ SECTIONS = [
     ),
     (
         "ต่อยอด: Algorithms",
-        "Greedy, search, dynamic programming, and divide and conquer",
+        "Greedy, search, dynamic programming, divide and conquer, and graph algorithms",
         [
             ("3000_greedy-algorithm", "Greedy Algorithm"),
             ("3001_array-manipulation", "Array Manipulation"),
             ("3002_search", "Search"),
             ("3003_dynamic-programming", "Dynamic Programming"),
+            ("4000_dp", "Dynamic Programming Advanced"),
             ("3004_adhoc", "Ad-hoc Problems"),
             ("3005_divide-conquer", "Divide and Conquer"),
-        ],
-    ),
-    (
-        "Graph Algorithms",
-        "Graph traversal, ordering, paths, circuits, and applications",
-        [
             ("3100_graph-algorithm", "Graph Algorithm"),
             ("3101_topo-sort", "Topological Sort"),
             ("3102_path-circuit", "Path and Circuit"),
+            ("9000_resources", "Resources"),
         ],
     ),
     (
@@ -101,15 +97,11 @@ SECTIONS = [
             ("5002_flow-matching-fpt", "Max Flow, Matching, and FPT"),
         ],
     ),
-    (
-        "เพิ่มเติม",
-        "Advanced notes and learning resources",
-        [
-            ("4000_dp", "Dynamic Programming Advanced"),
-            ("9000_resources", "Resources"),
-        ],
-    ),
 ]
+
+# Sections whose chapters are broad enough that the home page lists each chapter's topics.
+TOPIC_SECTIONS = {"ค่าย สสวท.: IOI Training Camp"}
+TOPIC_SKIP_PREFIXES = ("โจทย์ฝึกฝน", "อ่านเพิ่ม")
 
 ORDER = [item for _, _, items in SECTIONS for item in items]
 SECTION_OF = {slug: section_title for section_title, _, items in SECTIONS for slug, _ in items}
@@ -456,14 +448,28 @@ def wrap_page(
 """
 
 
-def build_index(entries: list[tuple[str, str, str]], interactive: set[str]) -> str:
+def topic_list(slug: str, topics: list[tuple[str, str]]) -> str:
+    links = "".join(
+        f'<li><a href="{slug}.html#{section_id}">{html.escape(label)}</a></li>'
+        for section_id, label in topics
+        if not label.startswith(TOPIC_SKIP_PREFIXES)
+    )
+    return f'<ul class="topic-list">{links}</ul>' if links else ""
+
+
+def build_index(
+    entries: list[tuple[str, str, str]],
+    interactive: set[str],
+    topics: dict[str, list[tuple[str, str]]],
+) -> str:
     cards = []
     badge = ' <span class="badge">โต้ตอบได้</span>'
     for section_title, section_desc, items in SECTIONS:
         links = []
         for slug, title in items:
             mark = badge if slug in interactive else ""
-            links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a>{mark}</li>')
+            sub = topic_list(slug, topics.get(slug, [])) if section_title in TOPIC_SECTIONS else ""
+            links.append(f'                    <li><a href="{slug}.html">{html.escape(title)}</a>{mark}{sub}</li>')
         cards.append(
             f"""            <section class="course-section">
                 <h3>{html.escape(section_title)}</h3>
@@ -567,6 +573,7 @@ def main() -> None:
     copy_assets()
     entries: list[tuple[str, str, str]] = []
     interactive: set[str] = set()
+    topics: dict[str, list[tuple[str, str]]] = {}
     for index, (slug, title) in enumerate(ORDER):
         source = BOOK / f"{slug}.typ"
         if not source.exists():
@@ -580,10 +587,11 @@ def main() -> None:
         (DOCS / f"{slug}.html").write_text(page_html, encoding="utf-8")
         heading_text = " ".join(label for _, label in sections)
         entries.append((slug, title, heading_text))
+        topics[slug] = sections
         if "data-widget=" in fragment:
             interactive.add(slug)
 
-    (DOCS / "index.html").write_text(build_index(entries, interactive), encoding="utf-8")
+    (DOCS / "index.html").write_text(build_index(entries, interactive, topics), encoding="utf-8")
     write_extras()
     print(f"Built {len(entries)} lesson pages plus index, 404, robots.txt, sitemap.xml.")
 
