@@ -62,6 +62,11 @@
 - #link("https://atcoder.jp/")[AtCoder] โจทย์คุณภาพดี ใช้คู่กับ #link("https://kenkoooo.com/atcoder/")[AtCoder Problems] เพื่อเลือกโจทย์ตามระดับ
 - #link("https://open.kattis.com/")[Kattis]
 
+=== สำหรับค่าย สสวท.
+
+- #link("https://thailand-oi-task-team.github.io/materials/")[เอกสารค่าย สสวท. (ThailandOI)] รวมเอกสารและลิงก์จากค่ายตุลาและค่ายมีนาแต่ละปี
+- บท Advanced Data Structures, DP Optimization และ Max Flow, Matching และ FPT ในคู่มือนี้ สรุปจากสไลด์ที่ใช้สอนในค่าย
+
 === วิธีใช้เวลาอ่านเฉลย
 
 - อ่านเฉพาะ idea ก่อน อย่าเพิ่งดู code
