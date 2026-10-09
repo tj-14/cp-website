@@ -92,6 +92,14 @@
                 </ul>
             </section>
             <section>
+                <h2>ค่าย สสวท.: IOI Training Camp</h2>
+                <ul>
+                <li><a href="5000_advanced-data-structures.html">Advanced Data Structures</a></li>
+                <li><a href="5001_dp-optimization.html">DP Optimization</a></li>
+                <li><a href="5002_flow-matching-fpt.html">Max Flow, Matching, and FPT</a></li>
+                </ul>
+            </section>
+            <section>
                 <h2>เพิ่มเติม</h2>
                 <ul>
                 <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
@@ -163,37 +171,37 @@ class="math inline">1.7 \times 10^{6}</span> คำสั่ง เร็วม�
 <table>
 <thead>
 <tr>
-<th><p>ขนาด <span class="math inline">n</span></p></th>
-<th><p>complexity ที่ควรใช้</p></th>
+<th>ขนาด <span class="math inline">n</span></th>
+<th>complexity ที่ควรใช้</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><p><span class="math inline">n \leq 10</span></p></td>
-<td><p><span class="math inline">O(n!)</span></p></td>
+<td><span class="math inline">n \leq 10</span></td>
+<td><span class="math inline">O(n!)</span></td>
 </tr>
 <tr>
-<td><p><span class="math inline">n \leq 20</span></p></td>
-<td><p><span class="math inline">O\left( 2^{n} \right)</span> หรือ <span
-class="math inline">O\left( 2^{n}n \right)</span></p></td>
+<td><span class="math inline">n \leq 20</span></td>
+<td><span class="math inline">O\left( 2^{n} \right)</span> หรือ <span
+class="math inline">O\left( 2^{n}n \right)</span></td>
 </tr>
 <tr>
-<td><p><span class="math inline">n \leq 500</span></p></td>
-<td><p><span class="math inline">O\left( n^{3} \right)</span></p></td>
+<td><span class="math inline">n \leq 500</span></td>
+<td><span class="math inline">O\left( n^{3} \right)</span></td>
 </tr>
 <tr>
-<td><p><span class="math inline">n \leq 5000</span></p></td>
-<td><p><span class="math inline">O\left( n^{2} \right)</span></p></td>
+<td><span class="math inline">n \leq 5000</span></td>
+<td><span class="math inline">O\left( n^{2} \right)</span></td>
 </tr>
 <tr>
-<td><p><span class="math inline">n \leq 10^{6}</span></p></td>
-<td><p><span class="math inline">O\left( n\log n \right)</span> หรือ
-<span class="math inline">O(n)</span></p></td>
+<td><span class="math inline">n \leq 10^{6}</span></td>
+<td><span class="math inline">O\left( n\log n \right)</span> หรือ <span
+class="math inline">O(n)</span></td>
 </tr>
 <tr>
-<td><p><span class="math inline">n</span> ใหญ่กว่านั้น</p></td>
-<td><p><span class="math inline">O\left( \log n \right)</span> หรือ <span
-class="math inline">O(1)</span> (มักเป็นสูตรคณิตศาสตร์)</p></td>
+<td><span class="math inline">n</span> ใหญ่กว่านั้น</td>
+<td><span class="math inline">O\left( \log n \right)</span> หรือ <span
+class="math inline">O(1)</span> (มักเป็นสูตรคณิตศาสตร์)</td>
 </tr>
 </tbody>
 </table>
@@ -204,31 +212,31 @@ class="math inline">O(1)</span> (มักเป็นสูตรคณิต�
 <table>
 <thead>
 <tr>
-<th><p>สัญลักษณ์</p></th>
-<th><p>ความหมาย</p></th>
-<th><p>สาเหตุที่พบบ่อย</p></th>
+<th>สัญลักษณ์</th>
+<th>ความหมาย</th>
+<th>สาเหตุที่พบบ่อย</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><p>P</p></td>
-<td><p>ผ่าน (Pass)</p></td>
-<td><p>-</p></td>
+<td>P</td>
+<td>ผ่าน (Pass)</td>
+<td>-</td>
 </tr>
 <tr>
-<td><p>-</p></td>
-<td><p>คำตอบผิด (Wrong Answer)</p></td>
-<td><p>วิธีคิดผิด, ลืม edge case, overflow, รูปแบบ output ผิด</p></td>
+<td>-</td>
+<td>คำตอบผิด (Wrong Answer)</td>
+<td>วิธีคิดผิด, ลืม edge case, overflow, รูปแบบ output ผิด</td>
 </tr>
 <tr>
-<td><p>X</p></td>
-<td><p>โปรแกรมพัง (Runtime Error)</p></td>
-<td><p>เข้าถึง array นอกขอบเขต, หารด้วย 0, recursion ลึกเกิน</p></td>
+<td>X</td>
+<td>โปรแกรมพัง (Runtime Error)</td>
+<td>เข้าถึง array นอกขอบเขต, หารด้วย 0, recursion ลึกเกิน</td>
 </tr>
 <tr>
-<td><p>T</p></td>
-<td><p>เกินเวลา (Time Limit Exceeded)</p></td>
-<td><p>complexity สูงเกินไป, วนไม่รู้จบ, I/O ช้า</p></td>
+<td>T</td>
+<td>เกินเวลา (Time Limit Exceeded)</td>
+<td>complexity สูงเกินไป, วนไม่รู้จบ, I/O ช้า</td>
 </tr>
 </tbody>
 </table>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนมีนาคม 2025 ต่อจากบท Dynamic Programming ขั้นสูง ซึ่งเน้นการ ออกแบบ state และ transition…">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="DP Optimization | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนมีนาคม 2025 ต่อจากบท Dynamic Programming ขั้นสูง ซึ่งเน้นการ ออกแบบ state และ transition…">
+    <meta property="og:url" content="https://tossatree.com/cp-website/5001_dp-optimization.html">
+    <link rel="canonical" href="https://tossatree.com/cp-website/5001_dp-optimization.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>DP Optimization | คู่มือโอลิมปิกคอมพิวเตอร์</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย สสวท.: IOI Training Camp</h2>
+                <ul>
+                <li><a href="5000_advanced-data-structures.html">Advanced Data Structures</a></li>
+                <li><a href="5001_dp-optimization.html" aria-current="page">DP Optimization</a></li>
+                <li><a href="5002_flow-matching-fpt.html">Max Flow, Matching, and FPT</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main id="main-content" tabindex="-1">
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
+
+            <article class="content">
+<h3 id="dp-optimization">DP Optimization<a class="heading-anchor" href="#dp-optimization" aria-hidden="true" tabindex="-1">#</a></h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#convex-hull-trick-และ-li-chao-tree">Convex Hull Trick และ Li Chao Tree</a></li>
+                    <li><a href="#slope-trick">Slope Trick</a></li>
+                    <li><a href="#broken-profile-dp-plug-dp">Broken Profile DP (Plug DP)</a></li>
+                    <li><a href="#divide-and-conquer-optimization">Divide and Conquer Optimization</a></li>
+                    <li><a href="#wqs-binary-search-aliens-trick">WQS Binary Search (Aliens Trick)</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
+                    <li><a href="#อ่านเพิ่ม">อ่านเพิ่ม</a></li>
+                </ul>
+            </nav>
+<p>บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนมีนาคม 2025 ต่อจากบท
+Dynamic Programming ขั้นสูง ซึ่งเน้นการ <strong>ออกแบบ</strong> state และ
+transition ที่นี่สมมติว่าออกแบบ DP ได้แล้วแต่ช้าเกินไป เช่น <span
+class="math inline">O\left( n^{2} \right)</span> หรือ <span
+class="math inline">O\left( kn^{2} \right)</span> แล้วใช้โครงสร้างของ
+transition เพื่อลดเวลา</p>
+<ul>
+<li><p>สไลด์: <a
+href="https://docs.google.com/presentation/d/1h3v_uF4F0dW-j4JTjOrFzOpn2X6XM4wWw3iSlx76naE/edit?usp=sharing">Advanced
+Dynamic Programming (Mar’25)</a></p></li>
+<li><p>ชุดโจทย์ใน vjudge: <a
+href="https://vjudge.net/contest/700721">contest 1</a>, <a
+href="https://vjudge.net/contest/700742">contest 2</a>, <a
+href="https://vjudge.net/contest/700730">contest 3</a></p></li>
+</ul>
+<h4 id="convex-hull-trick-และ-li-chao-tree">Convex Hull Trick และ Li Chao Tree<a class="heading-anchor" href="#convex-hull-trick-และ-li-chao-tree" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>หลายโจทย์มี transition รูป</p>
+<p><span class="math display">\text{ dp}\lbrack i\rbrack =
+\min\limits_{j &lt; i}\left( m_{j} \cdot x_{i} + c_{j}
+\right)</span></p>
+<p>โดย <span class="math inline">m_{j}</span> และ <span
+class="math inline">c_{j}</span> ขึ้นกับ <span class="math inline">j</span>
+เท่านั้น และ <span class="math inline">x_{i}</span> ขึ้นกับ <span
+class="math inline">i</span> เท่านั้น มองแต่ละ <span
+class="math inline">j</span> เป็น <strong>เส้นตรง</strong> <span
+class="math inline">y = m_{j}x + c_{j}</span> คำถามจะกลายเป็น “ที่ <span
+class="math inline">x = x_{i}</span> เส้นไหนต่ำสุด”</p>
+<p>ตัวอย่าง <a href="https://atcoder.jp/contests/dp/tasks/dp_z">Frog
+3</a>: กบกระโดดจากหิน <span class="math inline">j</span> ไปหิน <span
+class="math inline">i</span> เสีย <span class="math inline">\left( h_{i}
+- h_{j} \right)^{2} + C</span> เมื่อกระจายกำลังสอง</p>
+<p><span class="math display">\text{ dp}\lbrack i\rbrack = h_{i}^{2} + C
++ \min\limits_{j &lt; i}\left( - 2h_{j} \cdot h_{i} + \text{ dp}\lbrack
+j\rbrack + h_{j}^{2} \right)</span></p>
+<p>ได้เส้นตรง <span class="math inline">m_{j} = - 2h_{j}</span> และ <span
+class="math inline">c_{j} = \text{ dp}\lbrack j\rbrack +
+h_{j}^{2}</span> ซึ่ง query ที่ <span class="math inline">x = h_{i}</span>
+เส้นที่ต่ำสุดในแต่ละจุดรวมกันเป็น <strong>lower envelope</strong> ซึ่งเป็นรูป
+convex</p>
+<p><strong>Li Chao tree</strong> คือ segment tree บนแกน <span
+class="math inline">x</span> ที่แต่ละ node เก็บเส้นเดียว คือเส้นที่ดีที่สุด ณ
+จุดกึ่งกลางของช่วงนั้น เมื่อเพิ่มเส้นใหม่ เส้นที่แพ้ตรงกลางจะชนะได้แค่ครึ่งเดียว (ซ้ายหรือขวา)
+จึงส่งลงไปแค่ฝั่งเดียว ทั้ง insert และ query ใช้ <span
+class="math inline">O\left( \log X \right)</span> เมื่อ <span
+class="math inline">X</span> คือขนาดของแกน <span
+class="math inline">x</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Line <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> m<span class="op">,</span> c<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> <span class="kw">operator</span><span class="op">()(</span><span class="dt">long</span> <span class="dt">long</span> x<span class="op">)</span> <span class="at">const</span> <span class="op">{</span> <span class="cf">return</span> m <span class="op">*</span> x <span class="op">+</span> c<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Line t<span class="op">[</span><span class="dv">4</span> <span class="op">*</span> X<span class="op">];</span>  <span class="co">// ทุก node เริ่มเป็น {0, INF}, เก็บค่าต่ำสุด, x อยู่ในช่วง [0, X)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insert<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> Line nw<span class="op">)</span> <span class="op">{</span>  <span class="co">// ช่วง [l, r)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> winLeft <span class="op">=</span> nw<span class="op">(</span>l<span class="op">)</span> <span class="op">&lt;</span> t<span class="op">[</span>v<span class="op">](</span>l<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> winMid <span class="op">=</span> nw<span class="op">(</span>mid<span class="op">)</span> <span class="op">&lt;</span> t<span class="op">[</span>v<span class="op">](</span>mid<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>winMid<span class="op">)</span> swap<span class="op">(</span>t<span class="op">[</span>v<span class="op">],</span> nw<span class="op">);</span>  <span class="co">// node เก็บเส้นที่ชนะตรงกลาง</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>r <span class="op">-</span> l <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>winLeft <span class="op">!=</span> winMid<span class="op">)</span> insert<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">,</span> l<span class="op">,</span> mid<span class="op">,</span> nw<span class="op">);</span>  <span class="co">// เส้นที่แพ้อาจชนะทางซ้าย</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> insert<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid<span class="op">,</span> r<span class="op">,</span> nw<span class="op">);</span>                <span class="co">// หรือทางขวา</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> query<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> res <span class="op">=</span> t<span class="op">[</span>v<span class="op">](</span>x<span class="op">);</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>r <span class="op">-</span> l <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>x <span class="op">&lt;</span> mid<span class="op">)</span> <span class="cf">return</span> min<span class="op">(</span>res<span class="op">,</span> query<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">,</span> l<span class="op">,</span> mid<span class="op">,</span> x<span class="op">));</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> min<span class="op">(</span>res<span class="op">,</span> query<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> mid<span class="op">,</span> r<span class="op">,</span> x<span class="op">));</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ถ้าเส้นเข้ามาเรียงตาม slope และ query เรียงตาม <span
+class="math inline">x</span> ด้วย ใช้ <strong>convex hull trick</strong>
+แบบ deque ได้ <span class="math inline">O(1)</span> ต่อครั้ง แต่ Li Chao tree
+เขียนง่ายกว่าและไม่ต้องการเงื่อนไขเรื่องลำดับ</p>
+<h4 id="slope-trick">Slope Trick<a class="heading-anchor" href="#slope-trick" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Slope trick ใช้กับ DP ที่ <span
+class="math inline">\text{dp}_{i}(x)</span> เป็นฟังก์ชันของค่า <span
+class="math inline">x</span> ที่</p>
+<ul>
+<li><p>ต่อเนื่อง และเป็นเส้นตรงเป็นท่อน ๆ (piecewise linear)</p></li>
+<li><p>slope เป็นจำนวนเต็ม</p></li>
+<li><p>เป็น convex</p></li>
+</ul>
+<p>แทนที่จะเก็บค่าทุก <span class="math inline">x</span> ให้เก็บแค่
+<strong>จุดหักเห</strong> (breakpoint) ที่ slope เปลี่ยนทีละ 1 ไว้ใน heap หรือ
+multiset การบวกฟังก์ชันอย่าง <span class="math inline">|x - a|</span>
+จึงเป็นแค่การเพิ่ม breakpoint</p>
+<p>ตัวอย่าง <a href="https://cses.fi/problemset/task/2132">Increasing
+Array II</a>: เพิ่มหรือลดสมาชิกทีละ 1 ให้น้อยครั้งที่สุดจนได้ array ไม่ลดลง</p>
+<p>ให้ <span class="math inline">f_{i}(x)</span> คือค่าใช้จ่ายน้อยสุดของ <span
+class="math inline">i</span> ตัวแรกเมื่อตัวที่ <span
+class="math inline">i</span> มีค่า <strong>ไม่เกิน</strong> <span
+class="math inline">x</span> แล้ว <span class="math inline">f_{i}(x) =
+\min\limits_{y \leq x}\left( f_{i - 1}(y) + |y - a_{i}| \right)</span>
+ฟังก์ชันนี้เป็น convex และไม่เพิ่มขึ้น จึงเก็บเฉพาะ breakpoint ทางซ้ายใน max-heap</p>
+<ul>
+<li><p>บวก <span class="math inline">|x - a_{i}|</span>: เพิ่ม breakpoint
+ที่ <span class="math inline">a_{i}</span></p></li>
+<li><p>ถ้า breakpoint ขวาสุด (<code>top</code>) มากกว่า <span
+class="math inline">a_{i}</span> ค่าต่ำสุดเพิ่มขึ้น <code>top - a_i</code>
+และการตัดส่วนที่ slope เป็นบวกทิ้ง (ขั้น <span class="math inline">\min</span> บน
+<span class="math inline">y \leq x</span>) คือการ pop <code>top</code>
+ออก</p></li>
+</ul>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>priority_queue<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> pq<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> ans <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> a <span class="op">:</span> arr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  pq<span class="op">.</span>push<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>pq<span class="op">.</span>top<span class="op">()</span> <span class="op">&gt;</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ans <span class="op">+=</span> pq<span class="op">.</span>top<span class="op">()</span> <span class="op">-</span> a<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    pq<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    pq<span class="op">.</span>push<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ถ้าโจทย์ต้องการ <strong>เพิ่มขึ้นแท้</strong> (strictly increasing) ให้ใช้
+<span class="math inline">a_{i} - i</span> แทน <span
+class="math inline">a_{i}</span> ซึ่งเป็นโจทย์ <a
+href="https://codeforces.com/contest/713/problem/C">CF 713C Sonya and
+Problem Wihtout a Legend</a></p>
+<h4 id="broken-profile-dp-plug-dp">Broken Profile DP (Plug DP)<a class="heading-anchor" href="#broken-profile-dp-plug-dp" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ใช้กับโจทย์ปูกระเบื้องหรือเติมตารางที่มีมิติหนึ่งเล็ก (ประมาณ <span
+class="math inline">n \leq 10</span>) แทนที่จะเติมทีละ
+<strong>คอลัมน์</strong> ทั้งคอลัมน์ ให้เติมทีละ <strong>ช่อง</strong> แล้วเก็บ mask
+<span class="math inline">n</span> บิตเป็น “รอยต่อ” (plug หรือ profile)
+ระหว่างส่วนที่เติมแล้วกับส่วนที่ยังไม่เติม</p>
+<p>ตัวอย่าง <a href="https://cses.fi/problemset/task/2181">Counting
+Tilings</a>: นับวิธีปูตาราง <span class="math inline">n \times m</span>
+ด้วยโดมิโน <span class="math inline">1 \times 2</span></p>
+<p>เติมทีละคอลัมน์ ในคอลัมน์เติมจากบนลงล่าง ตอนอยู่ที่ช่อง <span
+class="math inline">(i,j)</span> บิตที่ <span class="math inline">r &lt;
+i</span> บอกว่าช่อง <span class="math inline">(r,j + 1)</span>
+ถูกจองแล้วหรือยัง และบิตที่ <span class="math inline">r \geq i</span> บอกว่าช่อง
+<span class="math inline">(r,j)</span> ถูกจองแล้วหรือยัง</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> dp<span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> n<span class="op">,</span> <span class="dv">0</span><span class="op">),</span> nd<span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> n<span class="op">);</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> m<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">(</span>nd<span class="op">.</span>begin<span class="op">(),</span> nd<span class="op">.</span>end<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> mask <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> mask <span class="op">&lt;</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> n<span class="op">);</span> mask<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>dp<span class="op">[</span>mask<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>mask <span class="op">&gt;&gt;</span> i <span class="op">&amp;</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span>  <span class="co">// ช่องนี้ถูกจองแล้ว ช่องถัดไปทางขวายังว่าง</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        nd<span class="op">[</span>mask <span class="op">^</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> i<span class="op">)]</span> <span class="op">=</span> <span class="op">(</span>nd<span class="op">[</span>mask <span class="op">^</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> i<span class="op">)]</span> <span class="op">+</span> dp<span class="op">[</span>mask<span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="co">// วางแนวนอน: จองช่อง (i, j + 1)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      nd<span class="op">[</span>mask <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> i<span class="op">)]</span> <span class="op">=</span> <span class="op">(</span>nd<span class="op">[</span>mask <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> i<span class="op">)]</span> <span class="op">+</span> dp<span class="op">[</span>mask<span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="co">// วางแนวตั้ง: จองช่อง (i + 1, j)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>i <span class="op">+</span> <span class="dv">1</span> <span class="op">&lt;</span> n <span class="op">&amp;&amp;</span> <span class="op">!(</span>mask <span class="op">&gt;&gt;</span> <span class="op">(</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&amp;</span> <span class="dv">1</span><span class="op">))</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        nd<span class="op">[</span>mask <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="op">(</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">))]</span> <span class="op">=</span> <span class="op">(</span>nd<span class="op">[</span>mask <span class="op">|</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="op">(</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">))]</span> <span class="op">+</span> dp<span class="op">[</span>mask<span class="op">])</span> <span class="op">%</span> MOD<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    swap<span class="op">(</span>dp<span class="op">,</span> nd<span class="op">);</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">// คำตอบ dp[0]: ไม่มีโดมิโนยื่นออกนอกตาราง</span></span></code></pre>
+<p>Time <span class="math inline">O\left( nm2^{n} \right)</span>
+ถ้าเติมทีละคอลัมน์ทั้งคอลัมน์จะต้องลองทุกคู่ mask ได้ <span
+class="math inline">O\left( m4^{n} \right)</span></p>
+<h4 id="divide-and-conquer-optimization">Divide and Conquer Optimization<a class="heading-anchor" href="#divide-and-conquer-optimization" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ใช้กับ DP แบ่ง array เป็น <span class="math inline">k</span> กลุ่ม</p>
+<p><span class="math display">\text{ dp}_{k}\lbrack i\rbrack =
+\min\limits_{j &lt; i}\left( \text{dp}_{k - 1}\lbrack j\rbrack + C(j,i)
+\right)</span></p>
+<p>โดย <span class="math inline">C(j,i)</span> คือค่าใช้จ่ายของกลุ่มสมาชิก
+<span class="math inline">j + 1</span> ถึง <span
+class="math inline">i</span> ถ้าทำตรง ๆ ใช้ <span
+class="math inline">O\left( kn^{2} \right)</span></p>
+<p>ให้ <span class="math inline">\text{opt}(i)</span> คือ <span
+class="math inline">j</span> ที่ดีที่สุดของ <span class="math inline">i</span>
+ถ้า <span class="math inline">\text{opt}(i) \leq \text{ opt}(i +
+1)</span> เสมอ (monotone ซึ่งเป็นจริงเมื่อ <span class="math inline">C</span>
+ทำตาม quadrangle inequality) เราคำนวณ <code>dp[mid]</code> ก่อน
+แล้วรู้ว่าครึ่งซ้ายต้องหา <span class="math inline">j</span> ไม่เกิน
+<code>opt(mid)</code> และครึ่งขวาหาจาก <code>opt(mid)</code> ขึ้นไป
+แต่ละชั้นของ recursion ตรวจรวม <span class="math inline">O(n)</span> ตัว
+จึงได้ <span class="math inline">O\left( n\log n \right)</span> ต่อ layer
+และ <span class="math inline">O\left( kn\log n \right)</span> ทั้งหมด</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">long</span> <span class="dt">long</span> INF <span class="op">=</span> <span class="fl">1e18</span><span class="op">;</span>  <span class="co">// ไม่ใช้ LLONG_MAX เพราะ INF + C จะ overflow</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> dp_prev<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> INF<span class="op">),</span> dp_cur<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> INF<span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> compute<span class="op">(</span><span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> <span class="dt">int</span> optl<span class="op">,</span> <span class="dt">int</span> optr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">&gt;</span> r<span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  pair<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> best <span class="op">=</span> <span class="op">{</span>LLONG_MAX<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> optl<span class="op">;</span> j <span class="op">&lt;=</span> min<span class="op">(</span>mid <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> optr<span class="op">);</span> j<span class="op">++)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    best <span class="op">=</span> min<span class="op">(</span>best<span class="op">,</span> <span class="op">{</span>dp_prev<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> C<span class="op">(</span>j<span class="op">,</span> mid<span class="op">),</span> j<span class="op">});</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  dp_cur<span class="op">[</span>mid<span class="op">]</span> <span class="op">=</span> best<span class="op">.</span>first<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  compute<span class="op">(</span>l<span class="op">,</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> optl<span class="op">,</span> best<span class="op">.</span>second<span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  compute<span class="op">(</span>mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">,</span> best<span class="op">.</span>second<span class="op">,</span> optr<span class="op">);</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">// dp_prev[0] = 0;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">// for (int g = 1; g &lt;= k; g++) { compute(1, n, 0, n - 1); swap(dp_prev, dp_cur); }</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">// คำตอบ dp_prev[n]</span></span></code></pre>
+<p>เทคนิคใกล้เคียงกันคือ <strong>Knuth optimization</strong> สำหรับ interval
+DP ที่ <span class="math inline">\text{opt}\lbrack l\rbrack\lbrack r -
+1\rbrack \leq \text{ opt}\lbrack l\rbrack\lbrack r\rbrack \leq \text{
+opt}\lbrack l + 1\rbrack\lbrack r\rbrack</span> ลดจาก <span
+class="math inline">O\left( n^{3} \right)</span> เหลือ <span
+class="math inline">O\left( n^{2} \right)</span></p>
+<h4 id="wqs-binary-search-aliens-trick">WQS Binary Search (Aliens Trick)<a class="heading-anchor" href="#wqs-binary-search-aliens-trick" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ถ้าโจทย์บังคับให้ใช้ <strong>พอดี</strong> <span
+class="math inline">k</span> กลุ่ม (หรือเลือกพอดี <span
+class="math inline">k</span> ชิ้น) state ต้องมีมิติ <span
+class="math inline">k</span> เพิ่มขึ้นมา แนวคิด WQS คือเอาเงื่อนไขนั้นออก แล้ว
+<strong>ปรับ</strong> <span class="math inline">\lambda</span>
+ทุกครั้งที่เปิดกลุ่มใหม่แทน</p>
+<ul>
+<li><p><span class="math inline">\lambda</span> มาก: DP
+จะเลือกใช้กลุ่มน้อย</p></li>
+<li><p><span class="math inline">\lambda</span> น้อย: DP
+จะเลือกใช้กลุ่มมาก</p></li>
+<li><p>binary search <span class="math inline">\lambda</span>
+จนได้จำนวนกลุ่มพอดี <span class="math inline">k</span> แล้วคืนค่าปรับ <span
+class="math inline">\lambda k</span></p></li>
+</ul>
+<p>ใช้ได้เมื่อคำตอบ <span class="math inline">g(k)</span> (ค่าที่ดีที่สุดเมื่อใช้พอดี
+<span class="math inline">k</span> กลุ่ม) เป็น <strong>convex</strong> ใน
+<span class="math inline">k</span> ซึ่งมักต้องเชื่อจากการทดลองด้วย brute force
+เล็ก ๆ มากกว่าพิสูจน์ในห้องสอบ</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// solve(lambda): DP ที่ไม่มีมิติ k แต่บวก lambda ทุกครั้งที่เปิดกลุ่มใหม่</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">// คืน {ค่าต่ำสุด, จำนวนกลุ่มน้อยสุดที่ได้ค่านั้น} (ถ้าเสมอให้เลือกกลุ่มน้อย)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> MAX_SLOPE<span class="op">;</span>  <span class="co">// ขอบบนของ |g(k) - g(k + 1)|</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;</span> hi<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> mid <span class="op">=</span> <span class="op">(</span>lo <span class="op">+</span> hi<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>solve<span class="op">(</span>mid<span class="op">).</span>cnt <span class="op">&lt;=</span> k<span class="op">)</span> hi <span class="op">=</span> mid<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> answer <span class="op">=</span> solve<span class="op">(</span>lo<span class="op">).</span>val <span class="op">-</span> lo <span class="op">*</span> k<span class="op">;</span></span></code></pre>
+<p>การ tie-break ให้นับกลุ่มน้อยสุดสำคัญมาก: บาง <span
+class="math inline">\lambda</span> ให้คำตอบเท่ากันหลายจำนวนกลุ่ม และ <span
+class="math inline">k</span> อาจไม่ใช่ค่าที่ DP คืนมาพอดี แต่สูตร <span
+class="math inline">\text{val } - \lambda k</span> ยังถูกต้อง</p>
+<p>Time <span class="math inline">O\left( T\log(\text{MAX\_SLOPE})
+\right)</span> เมื่อ <span class="math inline">T</span> คือเวลาของ DP
+ที่ไม่มีมิติ <span class="math inline">k</span></p>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Convex hull trick และ Li Chao tree</p>
+<ul>
+<li><p><a href="https://atcoder.jp/contests/dp/tasks/dp_z">AtCoder DP Z
+- Frog 3</a></p></li>
+<li><p><a href="https://codeforces.com/problemset/problem/932/F">CF 932F
+Escape Through Leaf</a> (Li Chao tree + small-to-large)</p></li>
+<li><p><a href="https://codeforces.com/contest/631/problem/E">CF
+631E</a>, <a href="https://codeforces.com/contest/660/problem/F">CF
+660F</a>, <a href="https://codeforces.com/contest/311/problem/B">CF
+311B</a>, <a href="https://codeforces.com/contest/673/problem/E">CF
+673E</a>, <a href="https://codeforces.com/contest/455/problem/E">CF
+455E</a>, <a href="https://codeforces.com/contest/1179/problem/D">CF
+1179D</a></p></li>
+</ul>
+<p>เทคนิคอื่น</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/2132">Increasing Array
+II</a> และ <a href="https://codeforces.com/contest/713/problem/C">CF
+713C</a> (slope trick)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/2181">Counting
+Tilings</a> (broken profile)</p></li>
+<li><p><a href="https://codeforces.com/contest/321/problem/E">CF 321E
+Ciel and Gondolas</a> และ <a
+href="https://codeforces.com/contest/868/problem/F">CF 868F Yet Another
+Minimization Problem</a> (D&amp;C optimization)</p></li>
+<li><p><a href="https://codeforces.com/contest/739/problem/E">CF 739E
+Gosha is hunting</a> (WQS)</p></li>
+</ul>
+<h4 id="อ่านเพิ่ม">อ่านเพิ่ม<a class="heading-anchor" href="#อ่านเพิ่ม" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p>Li Chao tree: <a
+href="https://robert1003.github.io/2020/02/06/li-chao-segment-tree.html">A
+Simple Introduction to Li-Chao Segment Tree</a>, <a
+href="https://codeforces.com/blog/entry/86731">Li Chao Tree
+Extended</a>, <a
+href="https://www.youtube.com/watch?v=qTE1OSUNR3w">Convex Hull Trick
+Visualisation</a>, <a
+href="https://robert1003.github.io/2020/02/17/dp-opt-convex-hull-trick.html">Convex
+Hull Optimization</a></p></li>
+<li><p>Slope trick: <a
+href="https://codeforces.com/blog/entry/77298">Slope trick
+explained</a>, <a
+href="https://codeforces.com/blog/entry/47821">Tutorial Slope Trick</a>,
+<a href="https://www.youtube.com/watch?v=p8RxN6Y9OOA">Slope Trick
+Visualised</a></p></li>
+<li><p>Broken profile: <a
+href="https://codeforces.com/blog/entry/90841">An Introduction to Plug
+DP</a>, <a
+href="https://usaco.guide/adv/dp-more?lang=cpp#dp-on-broken-profile">DP
+on Broken Profile (USACO Guide)</a></p></li>
+<li><p>D&amp;C และ Knuth: <a
+href="https://cp-algorithms.com/dynamic_programming/divide-and-conquer-dp.html">Divide
+and Conquer DP (CP-Algorithms)</a>, <a
+href="https://robert1003.github.io/2020/02/25/dp-opt-divide-and-conquer.html">Divide
+and Conquer Optimization</a>, <a
+href="https://robert1003.github.io/2020/02/29/dp-opt-knuth.html">Knuth
+Optimization</a></p></li>
+<li><p>WQS: <a
+href="https://robert1003.github.io/2020/02/26/dp-opt-wqs-binary-search.html">WQS
+Binary Search Optimization</a>, <a
+href="https://codeforces.com/blog/entry/49691">DP optimization from N^3
+to N log^2 N</a>, <a
+href="https://codeforces.com/blog/entry/60302">Intuition behind Aliens
+trick</a>, <a
+href="https://www.serbanology.com/vault/The%20Trick%20From%20Aliens">The
+Trick From Aliens</a></p></li>
+</ul>
+
+            <div class="page-nav">
+                <a href="5000_advanced-data-structures.html" class="prev">Advanced Data Structures</a>
+                <a href="5002_flow-matching-fpt.html" class="next">Max Flow, Matching, and FPT</a>
+            </div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            if (!navigator.clipboard) return;
+            const code = pre.querySelector('code');
+            const text = (code || pre).textContent;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(text).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
+</body>
+</html>

@@ -62,6 +62,12 @@
 #include "content/3101_topo-sort.typ"
 #include "content/3102_path-circuit.typ"
 
+= ค่าย สสวท.
+
+#include "content/5000_advanced-data-structures.typ"
+#include "content/5001_dp-optimization.typ"
+#include "content/5002_flow-matching-fpt.typ"
+
 = จิปาถะ
 
 #include "content/9000_resources.typ"

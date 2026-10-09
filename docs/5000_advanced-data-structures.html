@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนตุลาคม 2024 สำหรับผู้ที่ผ่าน สอวน. และ TOI มาแล้ว จึงถือว่าเขียน segment tree, DFS บน tree และ binary…">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Advanced Data Structures | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนตุลาคม 2024 สำหรับผู้ที่ผ่าน สอวน. และ TOI มาแล้ว จึงถือว่าเขียน segment tree, DFS บน tree และ binary…">
+    <meta property="og:url" content="https://tossatree.com/cp-website/5000_advanced-data-structures.html">
+    <link rel="canonical" href="https://tossatree.com/cp-website/5000_advanced-data-structures.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Advanced Data Structures | คู่มือโอลิมปิกคอมพิวเตอร์</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย สสวท.: IOI Training Camp</h2>
+                <ul>
+                <li><a href="5000_advanced-data-structures.html" aria-current="page">Advanced Data Structures</a></li>
+                <li><a href="5001_dp-optimization.html">DP Optimization</a></li>
+                <li><a href="5002_flow-matching-fpt.html">Max Flow, Matching, and FPT</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main id="main-content" tabindex="-1">
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
+
+            <article class="content">
+<h3 id="advanced-data-structures">Advanced Data Structures<a class="heading-anchor" href="#advanced-data-structures" aria-hidden="true" tabindex="-1">#</a></h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#lowest-common-ancestor-lca">Lowest Common Ancestor (LCA)</a></li>
+                    <li><a href="#fenwick-tree-binary-indexed-tree">Fenwick Tree (Binary Indexed Tree)</a></li>
+                    <li><a href="#lazy-เลื่อนงานไปทำทีหลัง">Lazy: เลื่อนงานไปทำทีหลัง</a></li>
+                    <li><a href="#persistent-segment-tree">Persistent Segment Tree</a></li>
+                    <li><a href="#heavy-light-decomposition-hld">Heavy-Light Decomposition (HLD)</a></li>
+                    <li><a href="#treap-ไม่ออกสอบ">Treap (ไม่ออกสอบ)</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
+                    <li><a href="#อ่านเพิ่ม">อ่านเพิ่ม</a></li>
+                </ul>
+            </nav>
+<p>บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนตุลาคม 2024
+สำหรับผู้ที่ผ่าน สอวน. และ TOI มาแล้ว จึงถือว่าเขียน segment tree, DFS บน tree และ
+binary search ได้คล่อง</p>
+<ul>
+<li><p>สไลด์: <a
+href="https://docs.google.com/presentation/d/1jmAi2EfKdaHVtguGUg9acrTliq7tm36kW6EPNvQKK4k/edit?usp=sharing">Advanced
+Data Structures (Oct’24)</a></p></li>
+<li><p>เฉลยโจทย์ในสไลด์: <a
+href="https://docs.google.com/presentation/d/1l6Ech3VsNqPxJNm8kqnhsojcqDZ6PMT5vXl1D3SkhHU/edit">Advanced
+Data Structures (sol)</a></p></li>
+</ul>
+<p>ควรมองโครงสร้างข้อมูลขั้นสูงจากสองมุม</p>
+<ol>
+<li><p><strong>คิดขึ้นมาได้อย่างไร</strong>:
+โครงสร้างแต่ละแบบแก้จุดช้าของแบบที่ง่ายกว่า เช่น LCA แบบเดินทีละขั้นช้า จึงกระโดดทีละ
+<span class="math inline">2^{j}</span></p></li>
+<li><p><strong>ใช้เป็นชิ้นส่วนอย่างไร</strong>: โจทย์ระดับนี้ไม่ค่อยถามโครงสร้างตรง ๆ
+แต่ต้องแปลงโจทย์ให้เหลือ “update ช่วง / query ช่วง” หรือ “query บนเส้นทางใน tree”
+ก่อน</p></li>
+</ol>
+<h4 id="lowest-common-ancestor-lca">Lowest Common Ancestor (LCA)<a class="heading-anchor" href="#lowest-common-ancestor-lca" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>LCA ของ <span class="math inline">u</span> และ <span
+class="math inline">v</span> ใน rooted tree คือ vertex
+ที่ลึกที่สุดที่เป็นบรรพบุรุษของทั้งคู่</p>
+<p>วิธีตรงไปตรงมาคือยก vertex ที่ลึกกว่าขึ้นจนลึกเท่ากัน แล้วยกทั้งคู่ขึ้นทีละขั้นจนเจอกัน ซึ่งใช้
+<span class="math inline">O(n)</span> ต่อคำถาม</p>
+<p><strong>Binary lifting</strong> เก็บ <code>up[j][v]</code> =
+บรรพบุรุษลำดับที่ <span class="math inline">2^{j}</span> ของ <span
+class="math inline">v</span> เพราะ <span class="math inline">2^{j} =
+2^{j - 1} + 2^{j - 1}</span> จึงคำนวณได้จาก
+<code>up[j][v] = up[j-1][up[j-1][v]]</code> ทำให้กระโดดระยะใดก็ได้ใน <span
+class="math inline">O\left( \log n \right)</span> ขั้น ตามบิตของระยะนั้น</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> LOG <span class="op">=</span> <span class="dv">18</span><span class="op">;</span>  <span class="co">// 2^18 &gt; 2e5</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> up<span class="op">[</span>LOG<span class="op">][</span>N<span class="op">],</span> dep<span class="op">[</span>N<span class="op">];</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs<span class="op">(</span><span class="dt">int</span> u<span class="op">,</span> <span class="dt">int</span> p<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  up<span class="op">[</span><span class="dv">0</span><span class="op">][</span>u<span class="op">]</span> <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> adj<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>v <span class="op">==</span> p<span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dep<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> dep<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    dfs<span class="op">(</span>v<span class="op">,</span> u<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> build<span class="op">(</span><span class="dt">int</span> root<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  dfs<span class="op">(</span>root<span class="op">,</span> root<span class="op">);</span>  <span class="co">// พ่อของ root คือตัวเอง จะได้ไม่กระโดดออกนอก tree</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> LOG<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> v <span class="op">&lt;</span> n<span class="op">;</span> v<span class="op">++)</span> up<span class="op">[</span>j<span class="op">][</span>v<span class="op">]</span> <span class="op">=</span> up<span class="op">[</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>up<span class="op">[</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>v<span class="op">]];</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lca<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>dep<span class="op">[</span>a<span class="op">]</span> <span class="op">&lt;</span> dep<span class="op">[</span>b<span class="op">])</span> swap<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> diff <span class="op">=</span> dep<span class="op">[</span>a<span class="op">]</span> <span class="op">-</span> dep<span class="op">[</span>b<span class="op">];</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> LOG<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>diff <span class="op">&gt;&gt;</span> j <span class="op">&amp;</span> <span class="dv">1</span><span class="op">)</span> a <span class="op">=</span> up<span class="op">[</span>j<span class="op">][</span>a<span class="op">];</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>a <span class="op">==</span> b<span class="op">)</span> <span class="cf">return</span> a<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> LOG <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> j<span class="op">--)</span> <span class="op">{</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>up<span class="op">[</span>j<span class="op">][</span>a<span class="op">]</span> <span class="op">!=</span> up<span class="op">[</span>j<span class="op">][</span>b<span class="op">])</span> <span class="op">{</span>  <span class="co">// ยังไม่เจอกัน กระโดดได้อย่างปลอดภัย</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      a <span class="op">=</span> up<span class="op">[</span>j<span class="op">][</span>a<span class="op">];</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      b <span class="op">=</span> up<span class="op">[</span>j<span class="op">][</span>b<span class="op">];</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> up<span class="op">[</span><span class="dv">0</span><span class="op">][</span>a<span class="op">];</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ระยะทางระหว่าง <span class="math inline">u</span> กับ <span
+class="math inline">v</span> คือ
+<code>dep[u] + dep[v] - 2 * dep[lca(u, v)]</code></p>
+<h4 id="fenwick-tree-binary-indexed-tree">Fenwick Tree (Binary Indexed Tree)<a class="heading-anchor" href="#fenwick-tree-binary-indexed-tree" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>ถ้าต้องการแค่ point update กับ prefix sum, Fenwick tree สั้นกว่า segment
+tree มาก ช่อง <code>bit[i]</code> เก็บผลรวมช่วงยาว <code>i &amp; -i</code>
+(บิตต่ำสุดของ <span class="math inline">i</span>) ที่จบที่ <span
+class="math inline">i</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> bit<span class="op">[</span>N<span class="op">];</span>  <span class="co">// 1-indexed</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> i<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i <span class="op">+=</span> i <span class="op">&amp;</span> <span class="op">-</span>i<span class="op">)</span> bit<span class="op">[</span>i<span class="op">]</span> <span class="op">+=</span> x<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> prefix<span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span>  <span class="co">// a[1] + ... + a[i]</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> s <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">-=</span> i <span class="op">&amp;</span> <span class="op">-</span>i<span class="op">)</span> s <span class="op">+=</span> bit<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> s<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">// sum ของ [l, r] = prefix(r) - prefix(l - 1)</span></span></code></pre>
+<p>ซ้อนลูปสองชั้นจะได้ <strong>2D Fenwick tree</strong> สำหรับผลรวมสี่เหลี่ยม ใช้
+<span class="math inline">O\left( \log^{2}n \right)</span> ต่อคำสั่ง</p>
+<h4 id="lazy-เลื่อนงานไปทำทีหลัง">Lazy: เลื่อนงานไปทำทีหลัง<a class="heading-anchor" href="#lazy-เลื่อนงานไปทำทีหลัง" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>แนวคิด lazy คือ <strong>ไม่ทำงานจนกว่าจะจำเป็น</strong>
+แล้วจดไว้ว่าค้างอะไรอยู่</p>
+<h5 id="lazy-deletion-ใน-heap">Lazy deletion ใน heap<a class="heading-anchor" href="#lazy-deletion-ใน-heap" aria-hidden="true" tabindex="-1">#</a></h5>
+<p><code>priority_queue</code> ลบสมาชิกที่ไม่ใช่ top ไม่ได้ วิธีแก้คือเก็บอีก heap
+หนึ่งไว้จดว่า “ลบแล้ว” และค่อยทิ้งตอนมันขึ้นมาเป็น top</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>priority_queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> pq<span class="op">,</span> removed<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> erase<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span> removed<span class="op">.</span>push<span class="op">(</span>x<span class="op">);</span> <span class="op">}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> top<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>removed<span class="op">.</span>empty<span class="op">()</span> <span class="op">&amp;&amp;</span> pq<span class="op">.</span>top<span class="op">()</span> <span class="op">==</span> removed<span class="op">.</span>top<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    pq<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    removed<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> pq<span class="op">.</span>top<span class="op">();</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="lazy-propagation-ใน-segment-tree">Lazy propagation ใน segment tree<a class="heading-anchor" href="#lazy-propagation-ใน-segment-tree" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้าบวก <span class="math inline">x</span> ทั้งช่วง <span
+class="math inline">\lbrack l,r\rbrack</span> โดย update ทีละตัวจะใช้ <span
+class="math inline">O\left( n\log n \right)</span> แทนที่จะเป็นอย่างนั้น เมื่อ
+node ครอบช่วงทั้งหมดก็หยุดลงไปแล้วจดค่า <code>lz</code> ไว้ที่ node นั้น
+พอต้องลงไปที่ลูกครั้งถัดไปจึง <strong>push</strong> ค่าที่ค้างลงไป</p>
+<p>ฟังก์ชันที่ต้องคิดให้ครบมีสี่ตัว: build, update, query และ push (pushdown)</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> t<span class="op">[</span><span class="dv">4</span> <span class="op">*</span> N<span class="op">],</span> lz<span class="op">[</span><span class="dv">4</span> <span class="op">*</span> N<span class="op">];</span>  <span class="co">// range add, range sum</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> apply<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> len<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  t<span class="op">[</span>v<span class="op">]</span> <span class="op">+=</span> x <span class="op">*</span> len<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  lz<span class="op">[</span>v<span class="op">]</span> <span class="op">+=</span> x<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> push<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> tl<span class="op">,</span> <span class="dt">int</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>lz<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> tm <span class="op">=</span> <span class="op">(</span>tl <span class="op">+</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  apply<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">,</span> tm <span class="op">-</span> tl <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> lz<span class="op">[</span>v<span class="op">]);</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  apply<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="fu">tr</span> <span class="op">-</span> tm<span class="op">,</span> lz<span class="op">[</span>v<span class="op">]);</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  lz<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> update<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> tl<span class="op">,</span> <span class="dt">int</span> <span class="fu">tr</span><span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>r <span class="op">&lt;</span> tl <span class="op">||</span> <span class="fu">tr</span> <span class="op">&lt;</span> l<span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">&lt;=</span> tl <span class="op">&amp;&amp;</span> <span class="fu">tr</span> <span class="op">&lt;=</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    apply<span class="op">(</span>v<span class="op">,</span> <span class="fu">tr</span> <span class="op">-</span> tl <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  push<span class="op">(</span>v<span class="op">,</span> tl<span class="op">,</span> <span class="fu">tr</span><span class="op">);</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> tm <span class="op">=</span> <span class="op">(</span>tl <span class="op">+</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  update<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">,</span> tl<span class="op">,</span> tm<span class="op">,</span> l<span class="op">,</span> r<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  update<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> tm <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="fu">tr</span><span class="op">,</span> l<span class="op">,</span> r<span class="op">,</span> x<span class="op">);</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  t<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> t<span class="op">[</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">]</span> <span class="op">+</span> t<span class="op">[</span><span class="dv">2</span> <span class="op">*</span> v <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> query<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> tl<span class="op">,</span> <span class="dt">int</span> <span class="fu">tr</span><span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>r <span class="op">&lt;</span> tl <span class="op">||</span> <span class="fu">tr</span> <span class="op">&lt;</span> l<span class="op">)</span> <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">&lt;=</span> tl <span class="op">&amp;&amp;</span> <span class="fu">tr</span> <span class="op">&lt;=</span> r<span class="op">)</span> <span class="cf">return</span> t<span class="op">[</span>v<span class="op">];</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  push<span class="op">(</span>v<span class="op">,</span> tl<span class="op">,</span> <span class="fu">tr</span><span class="op">);</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> tm <span class="op">=</span> <span class="op">(</span>tl <span class="op">+</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> query<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v<span class="op">,</span> tl<span class="op">,</span> tm<span class="op">,</span> l<span class="op">,</span> r<span class="op">)</span> <span class="op">+</span> query<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> v <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> tm <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="fu">tr</span><span class="op">,</span> l<span class="op">,</span> r<span class="op">);</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>ถ้ามี update หลายแบบ เช่น <strong>set</strong> และ <strong>add</strong>
+ให้เก็บ lazy แยกกัน (<code>lzSet</code>, <code>lzAdd</code>)
+และคิดให้ดีว่าเมื่อซ้อนกันต้องทำอะไรก่อน เช่น set ล้าง add ที่ค้างอยู่ทั้งหมด</p>
+<h4 id="persistent-segment-tree">Persistent Segment Tree<a class="heading-anchor" href="#persistent-segment-tree" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Persistent data structure เก็บ <strong>ทุกเวอร์ชัน</strong> หลังการ update
+แต่ละครั้ง และ query เวอร์ชันเก่าได้</p>
+<p>สังเกตว่า point update เปลี่ยนแค่ node บนเส้นทางจาก root ถึง leaf ซึ่งมี <span
+class="math inline">O\left( \log n \right)</span> node จึงสร้าง node
+ใหม่เฉพาะเส้นทางนั้น แล้วชี้ไปที่ลูกเดิมสำหรับส่วนที่ไม่เปลี่ยน แต่ละเวอร์ชันจำแค่ root
+ของตัวเอง</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node <span class="op">{</span> <span class="dt">long</span> <span class="dt">long</span> sum<span class="op">;</span> <span class="dt">int</span> l<span class="op">,</span> r<span class="op">;</span> <span class="op">};</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>Node<span class="op">&gt;</span> nodes <span class="op">=</span> <span class="op">{{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">}};</span>  <span class="co">// node 0 คือ tree ว่าง ลูกชี้กลับมาที่ตัวเอง</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> update<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> tl<span class="op">,</span> <span class="dt">int</span> <span class="fu">tr</span><span class="op">,</span> <span class="dt">int</span> pos<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> val<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  Node copy <span class="op">=</span> nodes<span class="op">[</span>v<span class="op">];</span>  <span class="co">// copy node เดิม</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> u <span class="op">=</span> nodes<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  nodes<span class="op">.</span>push_back<span class="op">(</span>copy<span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>tl <span class="op">==</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    nodes<span class="op">[</span>u<span class="op">].</span>sum <span class="op">=</span> val<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> tm <span class="op">=</span> <span class="op">(</span>tl <span class="op">+</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>pos <span class="op">&lt;=</span> tm<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> child <span class="op">=</span> update<span class="op">(</span>nodes<span class="op">[</span>v<span class="op">].</span>l<span class="op">,</span> tl<span class="op">,</span> tm<span class="op">,</span> pos<span class="op">,</span> val<span class="op">);</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    nodes<span class="op">[</span>u<span class="op">].</span>l <span class="op">=</span> child<span class="op">;</span>  <span class="co">// เก็บใส่ตัวแปรก่อน: push_back ใน update อาจย้าย memory ของ nodes</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> child <span class="op">=</span> update<span class="op">(</span>nodes<span class="op">[</span>v<span class="op">].</span>r<span class="op">,</span> tm <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="fu">tr</span><span class="op">,</span> pos<span class="op">,</span> val<span class="op">);</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    nodes<span class="op">[</span>u<span class="op">].</span>r <span class="op">=</span> child<span class="op">;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  nodes<span class="op">[</span>u<span class="op">].</span>sum <span class="op">=</span> nodes<span class="op">[</span>nodes<span class="op">[</span>u<span class="op">].</span>l<span class="op">].</span>sum <span class="op">+</span> nodes<span class="op">[</span>nodes<span class="op">[</span>u<span class="op">].</span>r<span class="op">].</span>sum<span class="op">;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> u<span class="op">;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> query<span class="op">(</span><span class="dt">int</span> v<span class="op">,</span> <span class="dt">int</span> tl<span class="op">,</span> <span class="dt">int</span> <span class="fu">tr</span><span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>v <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> r <span class="op">&lt;</span> tl <span class="op">||</span> <span class="fu">tr</span> <span class="op">&lt;</span> l<span class="op">)</span> <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>l <span class="op">&lt;=</span> tl <span class="op">&amp;&amp;</span> <span class="fu">tr</span> <span class="op">&lt;=</span> r<span class="op">)</span> <span class="cf">return</span> nodes<span class="op">[</span>v<span class="op">].</span>sum<span class="op">;</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> tm <span class="op">=</span> <span class="op">(</span>tl <span class="op">+</span> <span class="fu">tr</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> query<span class="op">(</span>nodes<span class="op">[</span>v<span class="op">].</span>l<span class="op">,</span> tl<span class="op">,</span> tm<span class="op">,</span> l<span class="op">,</span> r<span class="op">)</span> <span class="op">+</span> query<span class="op">(</span>nodes<span class="op">[</span>v<span class="op">].</span>r<span class="op">,</span> tm <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="fu">tr</span><span class="op">,</span> l<span class="op">,</span> r<span class="op">);</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">// roots[k] = update(roots[k - 1], 0, n - 1, pos, val);</span></span></code></pre>
+<p>หน่วยความจำรวม <span class="math inline">O\left( n + q\log n
+\right)</span> ต่างจากการ copy ทั้ง tree ทุกครั้งซึ่งใช้ <span
+class="math inline">O(nq)</span></p>
+<h4 id="heavy-light-decomposition-hld">Heavy-Light Decomposition (HLD)<a class="heading-anchor" href="#heavy-light-decomposition-hld" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>HLD ใช้ตอบ query บน <strong>เส้นทาง</strong> ใน tree เช่น
+“ค่ามากสุดบนเส้นทาง <span class="math inline">u</span> ถึง <span
+class="math inline">v</span>” พร้อม update ค่าใน vertex</p>
+<ul>
+<li><p><strong>Heavy child</strong> ของ <span
+class="math inline">v</span> คือลูกที่ subtree ใหญ่ที่สุด ลูกที่เหลือเป็น
+<strong>light child</strong></p></li>
+<li><p>ต่อ heavy edge กันได้เป็น <strong>heavy path</strong> และแต่ละ vertex
+อยู่ใน heavy path เดียว</p></li>
+<li><p>ทุกครั้งที่เดินผ่าน light edge ขึ้นไป ขนาด subtree อย่างน้อยเท่าตัว
+ดังนั้นเส้นทางใด ๆ ผ่าน light edge ไม่เกิน <span class="math inline">O\left(
+\log n \right)</span> ครั้ง</p></li>
+</ul>
+<p>ถ้า DFS โดยไปที่ heavy child ก่อนเสมอ แต่ละ heavy path จะได้ลำดับ
+<code>in[]</code> ที่ติดกัน จึงใช้ segment tree ตัวเดียวบน <code>in[]</code> ได้
+เส้นทางหนึ่งแตกเป็น <span class="math inline">O\left( \log n \right)</span>
+ช่วง แต่ละช่วงใช้ <span class="math inline">O\left( \log n \right)</span>
+รวม <span class="math inline">O\left( \log^{2}n \right)</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// g[v] คือรายชื่อลูก (rooted tree ที่ root = 0) หลัง dfs_sz ลูกตัวแรกคือ heavy child</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sz<span class="op">[</span>N<span class="op">],</span> par<span class="op">[</span>N<span class="op">],</span> dep<span class="op">[</span>N<span class="op">],</span> in<span class="op">[</span>N<span class="op">],</span> out<span class="op">[</span>N<span class="op">],</span> nxt<span class="op">[</span>N<span class="op">],</span> timer <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs_sz<span class="op">(</span><span class="dt">int</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  sz<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>u <span class="op">:</span> g<span class="op">[</span>v<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    par<span class="op">[</span>u<span class="op">]</span> <span class="op">=</span> v<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    dep<span class="op">[</span>u<span class="op">]</span> <span class="op">=</span> dep<span class="op">[</span>v<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    dfs_sz<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    sz<span class="op">[</span>v<span class="op">]</span> <span class="op">+=</span> sz<span class="op">[</span>u<span class="op">];</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sz<span class="op">[</span>u<span class="op">]</span> <span class="op">&gt;</span> sz<span class="op">[</span>g<span class="op">[</span>v<span class="op">][</span><span class="dv">0</span><span class="op">]])</span> swap<span class="op">(</span>u<span class="op">,</span> g<span class="op">[</span>v<span class="op">][</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> dfs_hld<span class="op">(</span><span class="dt">int</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  in<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> timer<span class="op">++;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">:</span> g<span class="op">[</span>v<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    nxt<span class="op">[</span>u<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>u <span class="op">==</span> g<span class="op">[</span>v<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">?</span> nxt<span class="op">[</span>v<span class="op">]</span> <span class="op">:</span> u<span class="op">);</span>  <span class="co">// nxt = หัวของ heavy path</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    dfs_hld<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  out<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> timer<span class="op">;</span>  <span class="co">// subtree ของ v คือช่วง [in[v], out[v])</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> path_max<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span>  <span class="co">// seg_max(l, r) = max ของ segment tree บนช่วง [l, r]</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> res <span class="op">=</span> INT_MIN<span class="op">;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>nxt<span class="op">[</span>a<span class="op">]</span> <span class="op">!=</span> nxt<span class="op">[</span>b<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>dep<span class="op">[</span>nxt<span class="op">[</span>a<span class="op">]]</span> <span class="op">&lt;</span> dep<span class="op">[</span>nxt<span class="op">[</span>b<span class="op">]])</span> swap<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> max<span class="op">(</span>res<span class="op">,</span> seg_max<span class="op">(</span>in<span class="op">[</span>nxt<span class="op">[</span>a<span class="op">]],</span> in<span class="op">[</span>a<span class="op">]));</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> par<span class="op">[</span>nxt<span class="op">[</span>a<span class="op">]];</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>dep<span class="op">[</span>a<span class="op">]</span> <span class="op">&gt;</span> dep<span class="op">[</span>b<span class="op">])</span> swap<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> max<span class="op">(</span>res<span class="op">,</span> seg_max<span class="op">(</span>in<span class="op">[</span>a<span class="op">],</span> in<span class="op">[</span>b<span class="op">]));</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">// เริ่มด้วย dfs_sz(0); nxt[0] = 0; dfs_hld(0);</span></span></code></pre>
+<p>ข้อดีของการเรียงแบบนี้คือได้ทั้ง path query และ subtree query (ช่วง
+<code>[in[v], out[v])</code>) ในโครงสร้างเดียว</p>
+<h4 id="treap-ไม่ออกสอบ">Treap (ไม่ออกสอบ)<a class="heading-anchor" href="#treap-ไม่ออกสอบ" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>Treap คือ binary search tree ที่แต่ละ node มี priority แบบสุ่ม และเรียงเป็น
+heap ตาม priority ทำให้ความสูงเฉลี่ย <span class="math inline">O\left( \log
+n \right)</span> รุ่นที่ใช้บ่อยคือ <strong>implicit treap</strong> ซึ่ง
+split/merge ตามตำแหน่ง ใช้ตัด แปะ หรือกลับด้านช่วงของ array ได้ใน <span
+class="math inline">O\left( \log n \right)</span></p>
+<p>อ่านเพิ่ม: <a
+href="https://cp-algorithms.com/data_structures/treap.html">Treap
+(CP-Algorithms)</a>, <a
+href="https://usaco.guide/adv/treaps?lang=cpp">Treaps (USACO Guide)</a>,
+<a
+href="https://www.youtube.com/watch?v=obNToo8ZfTk&amp;list=PLrOEQRd-CQtRp8TRICVsyG9bFqu-IfW1Z">วิดีโอ
+Treap</a></p>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>LCA</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1687">Company Queries
+I</a> (binary lifting)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1688">Company Queries
+II</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1135">Distance
+Queries</a></p></li>
+<li><p><code>o61_mar_c1_salary</code> (ฝึก LCA) และ
+<code>o60_may4_power</code> (LCA + observation) บน Evaluator</p></li>
+</ul>
+<p>Fenwick tree และ lazy segment tree</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1648">Dynamic Range Sum
+Queries</a></p></li>
+<li><p><a href="https://cses.fi/problemset/task/1739">Forest Queries
+II</a> (2D Fenwick)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1735">Range Updates and
+Sums</a> (set และ add)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1736">Polynomial
+Queries</a></p></li>
+<li><p><code>o60_oct_c2_tower</code> (lazy เบื้องต้น) และ
+<code>o61_may02_bread</code> (lazy ยากขึ้น) บน Evaluator</p></li>
+<li><p><a href="https://oj.uz/problem/view/IOI07_sails">IOI 2007
+Sails</a>, <a href="https://codeforces.com/problemset/problem/446/C">CF
+446C</a>, <a href="https://codeforces.com/problemset/problem/242/E">CF
+242E</a>, <a href="https://codeforces.com/problemset/problem/1114/F">CF
+1114F</a></p></li>
+</ul>
+<p>Persistent และ HLD</p>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1737">Range Queries and
+Copies</a> (persistent segment tree)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/2134">Path Queries
+II</a> (HLD)</p></li>
+<li><p><a
+href="https://acm.timus.ru/problem.aspx?space=1&amp;num=1553">Timus 1553
+Caves and Tunnels</a> (HLD)</p></li>
+<li><p><code>o57_mar_c2_circleempire</code> บน Evaluator</p></li>
+</ul>
+<h4 id="อ่านเพิ่ม">อ่านเพิ่ม<a class="heading-anchor" href="#อ่านเพิ่ม" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p>LCA: <a
+href="https://usaco.guide/plat/binary-jump?lang=cpp">Binary Jumping
+(USACO Guide)</a>, <a
+href="https://cp-algorithms.com/graph/lca_binary_lifting.html">Binary
+Lifting (CP-Algorithms)</a>, <a href="https://youtu.be/9qHdxEKF6qs">วิดีโอ
+LCA ภาษาไทย</a></p></li>
+<li><p>Fenwick: <a
+href="https://cp-algorithms.com/data_structures/fenwick.html">Fenwick
+Tree (CP-Algorithms)</a></p></li>
+<li><p>Lazy segment tree: <a
+href="https://cp-algorithms.com/data_structures/segment_tree.html#range-updates-lazy-propagation">Range
+updates (CP-Algorithms)</a>, <a
+href="https://usaco.guide/plat/RURQ?lang=cpp">Range Update Range Query
+(USACO Guide)</a></p></li>
+<li><p>Persistent: <a
+href="https://usaco.guide/adv/persistent?lang=cpp">Persistent Data
+Structures (USACO Guide)</a></p></li>
+<li><p>HLD: <a href="https://codeforces.com/blog/entry/53170">Easiest
+HLD with subtree queries</a>, <a
+href="https://cp-algorithms.com/graph/hld.html">HLD (CP-Algorithms)</a>,
+<a href="https://usaco.guide/plat/hld?lang=cpp">HLD (USACO
+Guide)</a></p></li>
+<li><p>HKOI training: <a
+href="https://assets.hkoi.org/training2024/ds-ii.pdf">DS (II)</a>, <a
+href="https://assets.hkoi.org/training2024/ds-iii.pdf">DS (III)</a>, <a
+href="https://assets.hkoi.org/training2024/ds-iv.pdf">DS
+(IV)</a></p></li>
+</ul>
+
+            <div class="page-nav">
+                <a href="3102_path-circuit.html" class="prev">Path and Circuit</a>
+                <a href="5001_dp-optimization.html" class="next">DP Optimization</a>
+            </div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            if (!navigator.clipboard) return;
+            const code = pre.querySelector('code');
+            const text = (code || pre).textContent;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(text).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนพฤษภาคม 2026 มีสามหัวข้อที่เชื่อมกัน: max flow เป็นเครื่องมือหลัก, bipartite matching เป็นกรณีพิเศษของ…">
+    <meta name="theme-color" content="#253241">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="Max Flow, Matching, and FPT | คู่มือโอลิมปิกคอมพิวเตอร์">
+    <meta property="og:description" content="บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนพฤษภาคม 2026 มีสามหัวข้อที่เชื่อมกัน: max flow เป็นเครื่องมือหลัก, bipartite matching เป็นกรณีพิเศษของ…">
+    <meta property="og:url" content="https://tossatree.com/cp-website/5002_flow-matching-fpt.html">
+    <link rel="canonical" href="https://tossatree.com/cp-website/5002_flow-matching-fpt.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <title>Max Flow, Matching, and FPT | คู่มือโอลิมปิกคอมพิวเตอร์</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.js" integrity="sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp" crossorigin="anonymous"></script>
+    <script>
+        // pandoc --katex leaves raw TeX in .math spans; render them once KaTeX loads.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content .math').forEach((el) => {
+                katex.render(el.textContent, el, {
+                    displayMode: el.classList.contains('display'),
+                    throwOnError: false,
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหา</a>
+    <header>
+        <h1><a href="index.html">คู่มือโอลิมปิกคอมพิวเตอร์</a></h1>
+        <p>Computer Olympiad Guide for Thai High School Students</p>
+    </header>
+
+    <div class="container page-layout">
+        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
+            <section>
+                <h2>เริ่มต้น</h2>
+                <ul>
+                <li><a href="0000_competitive-programming-starter.html">โครงสร้างเนื้อหาการสอน</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 1: Programming Basics</h2>
+                <ul>
+                <li><a href="1003_syntax.html">C++ Syntax</a></li>
+                <li><a href="1002_stl.html">Standard Template Library</a></li>
+                <li><a href="1005_function.html">Function</a></li>
+                <li><a href="1004_recursion.html">Recursion</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย 2: Data Structures</h2>
+                <ul>
+                <li><a href="1001_basic.html">การเขียนโปรแกรมเชิงแข่งขัน</a></li>
+                <li><a href="2005_big-o-notation.html">Big O Notation</a></li>
+                <li><a href="2010_stack-queue.html">Stack and Queue</a></li>
+                <li><a href="2001_linked-list.html">Linked List</a></li>
+                <li><a href="2002_dynamic-array.html">Dynamic Array</a></li>
+                <li><a href="2004_binary-tree.html">Binary Tree</a></li>
+                <li><a href="2008_heap.html">Heap</a></li>
+                <li><a href="2006_priority-queue.html">Priority Queue</a></li>
+                <li><a href="2003_binary-search-tree.html">Binary Search Tree</a></li>
+                <li><a href="2007_set-map.html">Set and Map</a></li>
+                <li><a href="2000_graph-structure.html">Graph Structure</a></li>
+                <li><a href="2011_hash-table.html">Hash Table</a></li>
+                <li><a href="2009_review.html">Review</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ต่อยอด: Algorithms</h2>
+                <ul>
+                <li><a href="3000_greedy-algorithm.html">Greedy Algorithm</a></li>
+                <li><a href="3001_array-manipulation.html">Array Manipulation</a></li>
+                <li><a href="3002_search.html">Search</a></li>
+                <li><a href="3003_dynamic-programming.html">Dynamic Programming</a></li>
+                <li><a href="3004_adhoc.html">Ad-hoc Problems</a></li>
+                <li><a href="3005_divide-conquer.html">Divide and Conquer</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Graph Algorithms</h2>
+                <ul>
+                <li><a href="3100_graph-algorithm.html">Graph Algorithm</a></li>
+                <li><a href="3101_topo-sort.html">Topological Sort</a></li>
+                <li><a href="3102_path-circuit.html">Path and Circuit</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>ค่าย สสวท.: IOI Training Camp</h2>
+                <ul>
+                <li><a href="5000_advanced-data-structures.html">Advanced Data Structures</a></li>
+                <li><a href="5001_dp-optimization.html">DP Optimization</a></li>
+                <li><a href="5002_flow-matching-fpt.html" aria-current="page">Max Flow, Matching, and FPT</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>เพิ่มเติม</h2>
+                <ul>
+                <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
+                <li><a href="9000_resources.html">Resources</a></li>
+                </ul>
+            </section>
+        </aside>
+        <main id="main-content" tabindex="-1">
+            <div class="breadcrumb">
+                <a href="index.html">← กลับสู่หน้าหลัก (Back to Home)</a>
+            </div>
+
+            <article class="content">
+<h3 id="max-flow-matching-และ-fpt">Max Flow, Matching และ FPT<a class="heading-anchor" href="#max-flow-matching-และ-fpt" aria-hidden="true" tabindex="-1">#</a></h3>
+            <nav class="lesson-toc" aria-label="สารบัญในบทเรียน">
+                <h4>ในบทนี้</h4>
+                <ul>
+                    <li><a href="#max-flow">Max Flow</a></li>
+                    <li><a href="#bipartite-matching">Bipartite Matching</a></li>
+                    <li><a href="#fixed-parameter-algorithms-fpt">Fixed Parameter Algorithms (FPT)</a></li>
+                    <li><a href="#โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)</a></li>
+                    <li><a href="#อ่านเพิ่ม">อ่านเพิ่ม</a></li>
+                </ul>
+            </nav>
+<p>บทนี้สรุปจากการสอนค่าย สสวท. (IOI Training Camp) เดือนพฤษภาคม 2026
+มีสามหัวข้อที่เชื่อมกัน: max flow เป็นเครื่องมือหลัก, bipartite matching
+เป็นกรณีพิเศษของ flow และ fixed parameter algorithms ใช้กับปัญหาที่ไม่มีอัลกอริทึม
+polynomial เช่น vertex cover บนกราฟทั่วไป</p>
+<p>ลองเล่นตัวอย่างโต้ตอบประกอบบทนี้</p>
+<ul>
+<li><p><a
+href="https://tossatree.com/assets/writing/ioi/gemini-code-edmonds-karp-dinic.html">Edmonds-Karp
+vs Dinic Visualizer</a>: ใส่กราฟเองแล้วเดินทีละขั้น เทียบสองอัลกอริทึม</p></li>
+<li><p><a
+href="https://tossatree.com/assets/writing/ioi/gemini-code-vertex-cover.html">Vertex
+Cover Solver</a>: ดู kernelization และการแตก branch ของ FPT</p></li>
+</ul>
+<h4 id="max-flow">Max Flow<a class="heading-anchor" href="#max-flow" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>มี directed graph ที่แต่ละ edge มี <strong>capacity</strong> <span
+class="math inline">c(u,v)</span> ต้องการส่ง <strong>flow</strong> จาก
+source <span class="math inline">s</span> ไป sink <span
+class="math inline">t</span> ให้มากที่สุด โดย</p>
+<ul>
+<li><p>flow บน edge ไม่เกิน capacity</p></li>
+<li><p>ทุก vertex ยกเว้น <span class="math inline">s</span> และ <span
+class="math inline">t</span> มี flow เข้าเท่ากับ flow ออก</p></li>
+</ul>
+<h5 id="residual-graph-และ-augmenting-path">Residual graph และ augmenting path<a class="heading-anchor" href="#residual-graph-และ-augmenting-path" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ถ้าส่ง flow <span class="math inline">f</span> บน edge <span
+class="math inline">u \rightarrow v</span> ไปแล้ว เหลือส่งเพิ่มได้ <span
+class="math inline">c(u,v) - f</span> และ <strong>ถอนคืน</strong> ได้
+<span class="math inline">f</span> ซึ่งแทนด้วย reverse edge <span
+class="math inline">v \rightarrow u</span> ที่มี capacity <span
+class="math inline">f</span> กราฟของความจุที่เหลือนี้เรียกว่า <strong>residual
+graph</strong></p>
+<p><strong>Ford-Fulkerson</strong>: ตราบใดที่ยังมีเส้นทางจาก <span
+class="math inline">s</span> ถึง <span class="math inline">t</span> ใน
+residual graph (augmenting path) ให้ส่ง flow เพิ่มตามเส้นทางนั้นเท่ากับ capacity
+ที่น้อยที่สุดบนเส้นทาง reverse edge สำคัญมาก เพราะทำให้แก้การตัดสินใจที่ผิดก่อนหน้าได้</p>
+<ul>
+<li><p><strong>Edmonds-Karp</strong>: เลือก augmenting path ที่สั้นที่สุดด้วย BFS
+ได้ <span class="math inline">O\left( VE^{2} \right)</span></p></li>
+<li><p><strong>Dinic</strong>: BFS แบ่ง vertex เป็นชั้นตามระยะจาก <span
+class="math inline">s</span> แล้ว DFS ส่ง flow เฉพาะ edge ที่ไปชั้นถัดไปจนตัน
+(blocking flow) ได้ <span class="math inline">O\left( V^{2}E
+\right)</span> และเร็วกว่านั้นมากในทางปฏิบัติ บนกราฟที่ capacity เป็น 1 ทั้งหมดได้
+<span class="math inline">O\left( E\sqrt{V} \right)</span></p></li>
+</ul>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Edge <span class="op">{</span> <span class="dt">int</span> to<span class="op">;</span> <span class="dt">long</span> <span class="dt">long</span> cap<span class="op">;</span> <span class="op">};</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>Edge<span class="op">&gt;</span> edges<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> g<span class="op">;</span>     <span class="co">// g[u] = index ของ edge ที่ออกจาก u</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> level<span class="op">,</span> it<span class="op">;</span>     <span class="co">// ทั้งสามตัว assign ขนาด n ก่อนใช้</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add_edge<span class="op">(</span><span class="dt">int</span> u<span class="op">,</span> <span class="dt">int</span> v<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> cap<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  g<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">(</span>edges<span class="op">.</span>size<span class="op">());</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  edges<span class="op">.</span>push_back<span class="op">({</span>v<span class="op">,</span> cap<span class="op">});</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  g<span class="op">[</span>v<span class="op">].</span>push_back<span class="op">(</span>edges<span class="op">.</span>size<span class="op">());</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  edges<span class="op">.</span>push_back<span class="op">({</span>u<span class="op">,</span> <span class="dv">0</span><span class="op">});</span>  <span class="co">// reverse edge ของ edge id อยู่ที่ id ^ 1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> bfs<span class="op">(</span><span class="dt">int</span> s<span class="op">,</span> <span class="dt">int</span> t<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  fill<span class="op">(</span>level<span class="op">.</span>begin<span class="op">(),</span> level<span class="op">.</span>end<span class="op">(),</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  level<span class="op">[</span>s<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  q<span class="op">.</span>push<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> id <span class="op">:</span> g<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> v <span class="op">=</span> edges<span class="op">[</span>id<span class="op">].</span>to<span class="op">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>edges<span class="op">[</span>id<span class="op">].</span>cap <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> level<span class="op">[</span>v<span class="op">]</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        level<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> level<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> level<span class="op">[</span>t<span class="op">]</span> <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> dfs<span class="op">(</span><span class="dt">int</span> u<span class="op">,</span> <span class="dt">int</span> t<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> pushed<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>u <span class="op">==</span> t<span class="op">)</span> <span class="cf">return</span> pushed<span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>i <span class="op">=</span> it<span class="op">[</span>u<span class="op">];</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>g<span class="op">[</span>u<span class="op">].</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span>  <span class="co">// it[u] ข้าม edge ที่ตันแล้ว</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> id <span class="op">=</span> g<span class="op">[</span>u<span class="op">][</span>i<span class="op">],</span> v <span class="op">=</span> edges<span class="op">[</span>id<span class="op">].</span>to<span class="op">;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>edges<span class="op">[</span>id<span class="op">].</span>cap <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> level<span class="op">[</span>v<span class="op">]</span> <span class="op">!=</span> level<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">long</span> got <span class="op">=</span> dfs<span class="op">(</span>v<span class="op">,</span> t<span class="op">,</span> min<span class="op">(</span>pushed<span class="op">,</span> edges<span class="op">[</span>id<span class="op">].</span>cap<span class="op">));</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>got <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>      edges<span class="op">[</span>id<span class="op">].</span>cap <span class="op">-=</span> got<span class="op">;</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>      edges<span class="op">[</span>id <span class="op">^</span> <span class="dv">1</span><span class="op">].</span>cap <span class="op">+=</span> got<span class="op">;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> got<span class="op">;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> max_flow<span class="op">(</span><span class="dt">int</span> s<span class="op">,</span> <span class="dt">int</span> t<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">long</span> flow <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>bfs<span class="op">(</span>s<span class="op">,</span> t<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">(</span>it<span class="op">.</span>begin<span class="op">(),</span> it<span class="op">.</span>end<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> f <span class="op">=</span> dfs<span class="op">(</span>s<span class="op">,</span> t<span class="op">,</span> LLONG_MAX<span class="op">))</span> flow <span class="op">+=</span> f<span class="op">;</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> flow<span class="op">;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<h5 id="max-flow-min-cut-theorem">Max-flow min-cut theorem<a class="heading-anchor" href="#max-flow-min-cut-theorem" aria-hidden="true" tabindex="-1">#</a></h5>
+<p><strong>Cut</strong> คือการแบ่ง vertex เป็นฝั่ง <span
+class="math inline">S</span> (มี <span class="math inline">s</span>) และ
+<span class="math inline">T</span> (มี <span
+class="math inline">t</span>) ขนาดของ cut คือผลรวม capacity ของ edge จาก
+<span class="math inline">S</span> ไป <span class="math inline">T</span>
+ทฤษฎีบทบอกว่า <strong>max flow = min cut</strong> และหลังรัน max flow แล้ว
+vertex ที่ไปถึงได้จาก <span class="math inline">s</span> ใน residual graph
+คือฝั่ง <span class="math inline">S</span> ของ min cut</p>
+<p>โจทย์ที่ถาม “ตัด edge น้อยสุดให้ <span class="math inline">s</span> ไปไม่ถึง
+<span class="math inline">t</span>” จึงเป็น max flow โดยตรง เช่น <a
+href="https://cses.fi/problemset/task/1695">Police Chase</a></p>
+<h4 id="bipartite-matching">Bipartite Matching<a class="heading-anchor" href="#bipartite-matching" aria-hidden="true" tabindex="-1">#</a></h4>
+<p><strong>Matching</strong> คือเซตของ edge ที่ไม่มี vertex ร่วมกัน ใน
+bipartite graph (ฝั่งซ้าย <span class="math inline">L</span> ฝั่งขวา <span
+class="math inline">R</span>) ต้องการ matching ใหญ่ที่สุด เช่น
+จับคู่นักเรียนกับงาน</p>
+<p>แปลงเป็น max flow ได้ทันที: <span class="math inline">s \rightarrow
+u</span> ทุก <span class="math inline">u \in L</span>, <span
+class="math inline">u \rightarrow v</span> ทุก edge, <span
+class="math inline">v \rightarrow t</span> ทุก <span
+class="math inline">v \in R</span> โดยทุก edge capacity 1 ขนาด max flow
+คือขนาด matching ใหญ่สุด และ Dinic บนกราฟนี้คือ <strong>Hopcroft-Karp</strong>
+ซึ่งได้ <span class="math inline">O\left( E\sqrt{V} \right)</span></p>
+<p>ถ้า <span class="math inline">V</span> ไม่ใหญ่ <strong>Kuhn’s
+algorithm</strong> เขียนสั้นกว่า: สำหรับ <span class="math inline">u</span>
+แต่ละตัวลองหา augmenting path ด้วย DFS ถ้า <span
+class="math inline">v</span> ว่างก็จับคู่เลย ถ้าไม่ว่างให้ลองย้ายคู่เดิมของ <span
+class="math inline">v</span> ไปที่อื่น ใช้ <span
+class="math inline">O(VE)</span></p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> adj<span class="op">;</span>  <span class="co">// adj[u] = vertex ฝั่งขวาที่ u (ฝั่งซ้าย) จับคู่ได้</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> mt<span class="op">;</span>           <span class="co">// mt[v] = คู่ของ v ฝั่งขวา หรือ -1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> used<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> try_kuhn<span class="op">(</span><span class="dt">int</span> u<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> adj<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>used<span class="op">[</span>v<span class="op">])</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    used<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mt<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span> <span class="op">||</span> try_kuhn<span class="op">(</span>mt<span class="op">[</span>v<span class="op">]))</span> <span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      mt<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> u<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> max_matching<span class="op">(</span><span class="dt">int</span> nl<span class="op">,</span> <span class="dt">int</span> nr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  mt<span class="op">.</span>assign<span class="op">(</span>nr<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> nl<span class="op">;</span> u<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    used<span class="op">.</span>assign<span class="op">(</span>nr<span class="op">,</span> <span class="kw">false</span><span class="op">);</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>try_kuhn<span class="op">(</span>u<span class="op">))</span> res<span class="op">++;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p><strong>König’s theorem</strong>: ใน bipartite graph ขนาด
+<strong>minimum vertex cover</strong> (เซต vertex น้อยสุดที่แตะทุก edge)
+เท่ากับขนาด maximum matching จึงหาได้ด้วย flow ใน polynomial time</p>
+<h4 id="fixed-parameter-algorithms-fpt">Fixed Parameter Algorithms (FPT)<a class="heading-anchor" href="#fixed-parameter-algorithms-fpt" aria-hidden="true" tabindex="-1">#</a></h4>
+<p>บนกราฟทั่วไป minimum vertex cover เป็น NP-hard จึงไม่น่าจะมีอัลกอริทึม
+polynomial แต่ถ้าโจทย์บอกว่าคำตอบ <span class="math inline">k</span> เล็ก
+(เช่น <span class="math inline">k \leq 20</span>) ขณะที่ <span
+class="math inline">n</span> ใหญ่ เราแยกความยากไปไว้ที่ <span
+class="math inline">k</span> ได้</p>
+<p>ปัญหาเป็น <strong>fixed parameter tractable</strong> (FPT) ถ้าแก้ได้ใน
+<span class="math inline">O\left( f(k) \cdot \text{ poly}(n)
+\right)</span> เช่น <span class="math inline">O\left( 2^{k}(n + m)
+\right)</span> ซึ่งเร็วกว่า <span class="math inline">O\left( n^{k}
+\right)</span> จากการลองทุกเซตขนาด <span class="math inline">k</span>
+มาก</p>
+<h5 id="bounded-search-tree">Bounded search tree<a class="heading-anchor" href="#bounded-search-tree" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>สำหรับ edge <span class="math inline">(u,v)</span> ใด ๆ ที่ยังไม่ถูกครอบ
+cover <strong>ต้อง</strong> มี <span class="math inline">u</span> หรือ
+<span class="math inline">v</span> อย่างน้อยหนึ่งตัว จึงแตกเป็นสองกรณี
+แต่ละกรณีใช้งบ <span class="math inline">k</span> ไป 1 ความลึกไม่เกิน <span
+class="math inline">k</span> จึงมีไม่เกิน <span
+class="math inline">2^{k}</span> ใบ</p>
+<pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// มี vertex cover ขนาดไม่เกิน k ที่ครอบทุก edge ใน es หรือไม่</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> vertex_cover<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>es<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>es<span class="op">.</span>empty<span class="op">())</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>k <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span> <span class="op">[</span>u<span class="op">,</span> v<span class="op">]</span> <span class="op">=</span> es<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> pick <span class="op">:</span> <span class="op">{</span>u<span class="op">,</span> v<span class="op">})</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> rest<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>a<span class="op">,</span> b<span class="op">]</span> <span class="op">:</span> es<span class="op">)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>a <span class="op">!=</span> pick <span class="op">&amp;&amp;</span> b <span class="op">!=</span> pick<span class="op">)</span> rest<span class="op">.</span>push_back<span class="op">({</span>a<span class="op">,</span> b<span class="op">});</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>vertex_cover<span class="op">(</span>rest<span class="op">,</span> k <span class="op">-</span> <span class="dv">1</span><span class="op">))</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
+<p>Time <span class="math inline">O\left( 2^{k}m \right)</span></p>
+<h5 id="kernelization">Kernelization<a class="heading-anchor" href="#kernelization" aria-hidden="true" tabindex="-1">#</a></h5>
+<p>ก่อนแตก branch ให้ลดขนาดกราฟด้วยกฎที่ปลอดภัยเสมอ (Buss’s kernel)</p>
+<ul>
+<li><p>vertex ที่ degree มากกว่า <span class="math inline">k</span>
+<strong>ต้อง</strong> อยู่ใน cover เพราะถ้าไม่เลือกมัน ต้องเลือกเพื่อนบ้านทั้งหมดซึ่งเกิน
+<span class="math inline">k</span> ตัว จึงเลือกแล้วลด <span
+class="math inline">k</span> ลง 1</p></li>
+<li><p>หลังจากนั้นทุก vertex มี degree ไม่เกิน <span
+class="math inline">k</span> ดังนั้น <span class="math inline">k</span>
+ตัวครอบได้ไม่เกิน <span class="math inline">k^{2}</span> edge ถ้าเหลือ edge
+มากกว่า <span class="math inline">k^{2}</span> ตอบ “ไม่ได้” ทันที</p></li>
+</ul>
+<p>กราฟที่เหลือ (kernel) มีขนาดขึ้นกับ <span class="math inline">k</span> เท่านั้น
+จึงรวมเป็น <span class="math inline">O\left( n + m + 2^{k}k^{2}
+\right)</span></p>
+<p>แนวคิด FPT ยังใช้กับปัญหาอื่น เช่น หา path ยาว <span
+class="math inline">k</span> ด้วย color coding หรือ DP บน tree
+decomposition ที่ treewidth เล็ก</p>
+<h4 id="โจทย์ฝึกฝน-practice-problems">โจทย์ฝึกฝน (Practice Problems)<a class="heading-anchor" href="#โจทย์ฝึกฝน-practice-problems" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p><a href="https://cses.fi/problemset/task/1694">Download Speed</a>
+(max flow)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1695">Police Chase</a>
+(min cut)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1696">School Dance</a>
+(bipartite matching)</p></li>
+<li><p><a href="https://cses.fi/problemset/task/1711">Distinct
+Routes</a> (flow + หาเส้นทางจาก flow)</p></li>
+</ul>
+<h4 id="อ่านเพิ่ม">อ่านเพิ่ม<a class="heading-anchor" href="#อ่านเพิ่ม" aria-hidden="true" tabindex="-1">#</a></h4>
+<ul>
+<li><p><a
+href="https://cp-algorithms.com/graph/edmonds_karp.html">Edmonds-Karp
+(CP-Algorithms)</a>, <a
+href="https://cp-algorithms.com/graph/dinic.html">Dinic
+(CP-Algorithms)</a></p></li>
+<li><p><a
+href="https://cp-algorithms.com/graph/kuhn_maximum_bipartite_matching.html">Kuhn’s
+Algorithm (CP-Algorithms)</a></p></li>
+<li><p><a href="https://usaco.guide/adv/max-flow?lang=cpp">Maximum Flow
+(USACO Guide)</a></p></li>
+<li><p><a
+href="https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)">König’s
+theorem (Wikipedia)</a>, <a
+href="https://en.wikipedia.org/wiki/Parameterized_complexity">Parameterized
+complexity (Wikipedia)</a></p></li>
+</ul>
+
+            <div class="page-nav">
+                <a href="5001_dp-optimization.html" class="prev">DP Optimization</a>
+                <a href="4000_dp.html" class="next">Dynamic Programming Advanced</a>
+            </div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2023-2026 Computer Olympiad Guide | เนื้อหาจากประสบการณ์การสอนค่าย สอวน.</p>
+        <p>สนามฝึกซ้อม: <a href="https://programming.in.th/" target="_blank" rel="noopener">programming.in.th</a> | <a href="https://cses.fi/problemset/" target="_blank" rel="noopener">CSES Problem Set</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.content pre').forEach((pre) => {
+            if (!navigator.clipboard) return;
+            const code = pre.querySelector('code');
+            const text = (code || pre).textContent;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-btn';
+            button.textContent = 'คัดลอก';
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(text).then(() => {
+                    button.textContent = 'คัดลอกแล้ว';
+                    setTimeout(() => { button.textContent = 'คัดลอก'; }, 1500);
+                }, () => { button.textContent = 'คัดลอกไม่สำเร็จ'; });
+            });
+            pre.appendChild(button);
+        });
+    </script>
+</body>
+</html>

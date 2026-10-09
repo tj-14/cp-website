@@ -92,6 +92,14 @@
                 </ul>
             </section>
             <section>
+                <h2>ค่าย สสวท.: IOI Training Camp</h2>
+                <ul>
+                <li><a href="5000_advanced-data-structures.html">Advanced Data Structures</a></li>
+                <li><a href="5001_dp-optimization.html">DP Optimization</a></li>
+                <li><a href="5002_flow-matching-fpt.html">Max Flow, Matching, and FPT</a></li>
+                </ul>
+            </section>
+            <section>
                 <h2>เพิ่มเติม</h2>
                 <ul>
                 <li><a href="4000_dp.html">Dynamic Programming Advanced</a></li>
@@ -250,39 +258,38 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#c
 <table>
 <thead>
 <tr>
-<th><p>เทคนิค</p></th>
-<th><p>จำนวนสถานะ</p></th>
-<th><p>ใช้เมื่อ</p></th>
+<th>เทคนิค</th>
+<th>จำนวนสถานะ</th>
+<th>ใช้เมื่อ</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><p>Subset brute force</p></td>
-<td><p><span class="math inline">O\left( 2^{n} \right)</span></p></td>
-<td><p><span class="math inline">n</span>
-เล็กและต้องลองเลือกหรือไม่เลือก</p></td>
+<td>Subset brute force</td>
+<td><span class="math inline">O\left( 2^{n} \right)</span></td>
+<td><span class="math inline">n</span> เล็กและต้องลองเลือกหรือไม่เลือก</td>
 </tr>
 <tr>
-<td><p>Permutation brute force</p></td>
-<td><p><span class="math inline">O(n!)</span></p></td>
-<td><p>ต้องลองลำดับทั้งหมด</p></td>
+<td>Permutation brute force</td>
+<td><span class="math inline">O(n!)</span></td>
+<td>ต้องลองลำดับทั้งหมด</td>
 </tr>
 <tr>
-<td><p>Backtracking + pruning</p></td>
-<td><p>ขึ้นกับการตัดกิ่ง</p></td>
-<td><p>มีเงื่อนไขที่ตรวจได้ระหว่างสร้างคำตอบ</p></td>
+<td>Backtracking + pruning</td>
+<td>ขึ้นกับการตัดกิ่ง</td>
+<td>มีเงื่อนไขที่ตรวจได้ระหว่างสร้างคำตอบ</td>
 </tr>
 <tr>
-<td><p>BFS บน state</p></td>
-<td><p><span class="math inline">O\left( \text{states } + \text{
-transitions} \right)</span></p></td>
-<td><p>หาจำนวนขั้นน้อยสุด</p></td>
+<td>BFS บน state</td>
+<td><span class="math inline">O\left( \text{states } + \text{
+transitions} \right)</span></td>
+<td>หาจำนวนขั้นน้อยสุด</td>
 </tr>
 <tr>
-<td><p>Meet in the middle</p></td>
-<td><p><span class="math inline">O\left( 2^{\frac{n}{2}}
-\right)</span></p></td>
-<td><p><span class="math inline">n</span> กลาง ๆ เช่น 30-44</p></td>
+<td>Meet in the middle</td>
+<td><span class="math inline">O\left( 2^{\frac{n}{2}}
+\right)</span></td>
+<td><span class="math inline">n</span> กลาง ๆ เช่น 30-44</td>
 </tr>
 </tbody>
 </table>

@@ -93,6 +93,15 @@ SECTIONS = [
         ],
     ),
     (
+        "ค่าย สสวท.: IOI Training Camp",
+        "Advanced topics after POSN and TOI: data structures, DP optimization, and flow",
+        [
+            ("5000_advanced-data-structures", "Advanced Data Structures"),
+            ("5001_dp-optimization", "DP Optimization"),
+            ("5002_flow-matching-fpt", "Max Flow, Matching, and FPT"),
+        ],
+    ),
+    (
         "เพิ่มเติม",
         "Advanced notes and learning resources",
         [

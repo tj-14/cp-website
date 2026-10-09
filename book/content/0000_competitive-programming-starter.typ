@@ -24,12 +24,20 @@
 
 === ระดับสูงขึ้น: อัลกอริทึม
 
-เทคนิคที่ใช้ในการแข่งขันระดับผู้แทนศูนย์และ สสวท.
+เทคนิคที่ใช้ในการแข่งขันระดับผู้แทนศูนย์และ TOI
 
 - greedy, prefix sum และ data structure สำหรับช่วงข้อมูล
 - search, divide and conquer และ binary search
 - dynamic programming
 - graph algorithms: BFS/DFS, shortest path, MST, topological sort และอื่น ๆ
+
+=== ค่าย สสวท.: IOI Training Camp
+
+สำหรับผู้ที่ผ่าน สอวน. และ TOI แล้ว เนื้อหาเป็นหัวข้อขั้นสูงที่สอนในค่ายคัดผู้แทนประเทศไทย ปีละไม่กี่ครั้ง
+
+- advanced data structures: LCA, lazy/persistent segment tree, heavy-light decomposition
+- DP optimization: convex hull trick, slope trick, divide and conquer, WQS binary search
+- max flow, bipartite matching และ fixed parameter algorithms
 
 === วิธีใช้คู่มือนี้
 

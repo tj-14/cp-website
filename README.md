@@ -17,6 +17,7 @@ A guide website for Thai high school students interested in Computer Olympiad co
 - **ค่าย 1**: พื้นฐานการเขียนโปรแกรม C/C++
 - **ค่าย 2**: โครงสร้างข้อมูลและอัลกอริทึม
 - **ระดับสูงขึ้น**: เทคนิคขั้นสูงและการแก้ปัญหา
+- **ค่าย สสวท.**: หัวข้อ IOI Training Camp เช่น advanced data structures, DP optimization, max flow
 
 ## 🛠️ เทคโนโลยี (Tech Stack)
 
