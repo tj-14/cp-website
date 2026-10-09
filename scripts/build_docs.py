@@ -399,9 +399,19 @@ def site_nav(current_slug: str) -> str:
                 </ul>
             </section>"""
         )
+    # Open by default so the nav works without JavaScript; the inline script collapses it
+    # on phone widths before first paint so lessons are not pushed below ~35 links.
     return f"""        <aside class="site-nav" aria-label="สารบัญหลัก">
+            <details class="site-nav-menu" open>
+            <summary>สารบัญบทเรียน</summary>
             <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
 {chr(10).join(groups)}
+            </details>
+            <script>
+                if (matchMedia('(max-width: 768px)').matches) {{
+                    document.currentScript.previousElementSibling.open = false;
+                }}
+            </script>
         </aside>"""
 
 

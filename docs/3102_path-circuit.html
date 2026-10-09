@@ -38,6 +38,8 @@
 
     <div class="container page-layout">
         <aside class="site-nav" aria-label="สารบัญหลัก">
+            <details class="site-nav-menu" open>
+            <summary>สารบัญบทเรียน</summary>
             <a class="site-nav-home" href="index.html">ภาพรวมหลักสูตร</a>
             <section>
                 <h2>เริ่มต้น</h2>
@@ -96,6 +98,12 @@
                 <li><a href="5002_flow-matching-fpt.html">Max Flow, Matching, and FPT</a></li>
                 </ul>
             </section>
+            </details>
+            <script>
+                if (matchMedia('(max-width: 768px)').matches) {
+                    document.currentScript.previousElementSibling.open = false;
+                }
+            </script>
         </aside>
         <main id="main-content" tabindex="-1">
             <div class="breadcrumb">

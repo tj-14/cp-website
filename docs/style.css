@@ -330,6 +330,10 @@ footer a:hover {
     box-shadow: 0 1px 3px var(--shadow-soft);
 }
 
+.site-nav-menu > summary {
+    display: none;
+}
+
 .site-nav-home {
     display: block;
     font-weight: 700;
@@ -1452,6 +1456,18 @@ footer a:hover {
     .site-nav {
         position: static;
         max-height: none;
+        padding: 0.75rem 1rem;
+    }
+
+    .site-nav-menu > summary {
+        display: list-item;
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--heading);
+    }
+
+    .site-nav-menu[open] > summary {
+        margin-bottom: 1rem;
     }
 
     .content {
